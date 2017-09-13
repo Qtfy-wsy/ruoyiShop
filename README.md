@@ -1,5 +1,5 @@
 # payshop
-qq 2123957932
+qq 1439226817
 
 
 
@@ -15,15 +15,8 @@ qq 2123957932
  添加luence搜索
 - 1、后端
 - 核心框架：Spring Framework 4.0
--  分布式框架： zookeeper dubbox2.8.4 分布式锁
--   分布式调用链 zikpin brove
--  分布式日志分析 elk  Elasticsearch，Logstash，Kibana 
--     Elasticsearch：搜索，提供分布式全文搜索引擎
-- 　　Logstash: 日志收集，管理，存储
-- 　　Kibana ：日志的过滤web 展示
--  分布式监控  dubbo-monitor  dubbo-admin
+
 -    mq通信框架  kafka  redis mongodb
--     分库分表 sharding jdbc
 - - 安全框架：Apache Shiro 1.2
    
 - 视图框架：Spring MVC 4.0
@@ -70,8 +63,12 @@ qq 2123957932
 
 
 
-使用技术和后台同  
+### 使用技术和后台同 
+ 
 http://git.oschina.net/catshen/cat
+### 分布式版本
+
+http://git.oschina.net/catshen/zscat_sw
 
 
 
