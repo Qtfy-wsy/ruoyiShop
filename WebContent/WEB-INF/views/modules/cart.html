@@ -1,0 +1,136 @@
+<div class="tabbable">
+	<ul class="nav nav-tabs" id="myTab">
+		<li class="active"><a data-toggle="tab" href="#home"> <i
+				class="green ace-icon fa fa-list-alt bigger-120"></i> 列表
+		</a></li>
+		
+	</ul>
+
+	<div class="tab-content">
+		<div id="home" class="tab-pane active clearfix">
+			
+		
+		<div id="profile" class="tab-pane">
+			
+			<div style="padding:10px;clear: both;">  
+			    <div id="psLine" style="height:600px;"></div>  
+			</div>  
+			 <div style="padding:10px;clear: both;">  
+			    <div id="psLine1" style="height:600px;"></div>  
+			</div> 
+			<div style="padding:10px;clear: both;">  
+			    <div id="psLine2" style="height:600px;"></div>  
+			</div> 
+			<div style="padding:10px;clear: both;">  
+			    <div id="psLine3" style="height:600px;"></div>  
+			</div> 
+			<div style="padding:10px;clear: both;">  
+			    <div id="psLine4" style="height:600px;"></div>  
+			</div> 
+			<div style="padding:10px;clear: both;">  
+			    <div id="psLine5" style="height:600px;"></div>  
+			</div> 
+<script src="${ctxPath!}/static/echarts/echarts.min.js"></script>  
+<script type="text/javascript">  
+    //图表  
+    var psLineChar = echarts.init(document.getElementById('psLine'));  
+    var psLineChar1 = echarts.init(document.getElementById('psLine1'));  
+    var psLineChar2 = echarts.init(document.getElementById('psLine2'));  
+    var psLineChar3 = echarts.init(document.getElementById('psLine3'));  
+    var psLineChar4 = echarts.init(document.getElementById('psLine4')); 
+    var psLineChar5 = echarts.init(document.getElementById('psLine5'));  
+    //查询  
+    function loadDrugs() {  
+        psLineChar.clear();  
+        psLineChar.showLoading({text: '正在努力的读取数据中...'});  
+        $.getJSON('${ctxPath!}/chart/chart', function (data) {  
+            if (data.status ==0) {  
+                psLineChar.setOption(data.data, true);  
+                psLineChar.hideLoading();  
+            } else {  
+                alert('提示', data.msg);  
+            }  
+        }).error(function(){
+        	alert('11');
+        });  
+    }
+    function loadDrugs1() {  
+        psLineChar1.clear();  
+        psLineChar1.showLoading({text: '正在努力的读取数据中...'});  
+        $.getJSON('${ctxPath!}/chart/chart1', function (data) {  
+            if (data.status ==0) {  
+                psLineChar1.setOption(data.data, true);  
+                psLineChar1.hideLoading();  
+            } else {  
+                alert('提示', data.msg);  
+            }  
+        }).error(function(){
+        	alert('11');
+        }); 
+    }
+    function loadDrugs2() {  
+        psLineChar2.clear();  
+        psLineChar2.showLoading({text: '正在努力的读取数据中...'});  
+        $.getJSON('${ctxPath!}/chart/chart2', function (data) {  
+            if (data.status ==0) {  
+                psLineChar2.setOption(data.data, true);  
+                psLineChar2.hideLoading();  
+            } else {  
+                alert('提示', data.msg);  
+            }  
+        }).error(function(){
+        	alert('11');
+        });  
+    }
+    function loadDrugs3() {  
+        psLineChar3.clear();  
+        psLineChar3.showLoading({text: '正在努力的读取数据中...'});  
+        $.getJSON('${ctxPath!}/chart/chart3', function (data) {  
+            if (data.status ==0) {  
+                psLineChar3.setOption(data.data, true);  
+                psLineChar3.hideLoading();  
+            } else {  
+                alert('提示', data.msg);  
+            }  
+        });  
+    }
+       
+    function loadDrugs4() {  
+        psLineChar4.clear();  
+        psLineChar4.showLoading({text: '正在努力的读取数据中...'});  
+        $.getJSON('${ctxPath!}/chart/chart4', function (data) {  
+            if (data.status ==0) {  
+                psLineChar4.setOption(data.data, true);  
+                psLineChar4.hideLoading();  
+            } else {  
+                alert('提示', data.msg);  
+            }  
+        });  
+    }
+    function loadDrugs5() {  
+        psLineChar5.clear();  
+        psLineChar5.showLoading({text: '正在努力的读取数据中...'});  
+        $.getJSON('${ctxPath!}/chart/chart5', function (data) {  
+            if (data.status ==0) {  
+                psLineChar5.setOption(data.data, true);  
+                psLineChar5.hideLoading();  
+            } else {  
+                alert('提示', data.msg);  
+            }  
+        });  
+    }  
+    //载入图表  
+    loadDrugs();  loadDrugs1();loadDrugs2();loadDrugs3();loadDrugs5();
+</script>  
+		
+		</div>
+	</div>	
+		
+	</div>
+</div>
+<script type="text/javascript">
+//日期框
+$('.date-picker').datepicker();
+</script>
+
+<#save isHide="yes" subBtnId="buyTotal-save-btn" formId="buyTotal-save-form" />

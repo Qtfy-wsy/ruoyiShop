@@ -1,0 +1,86 @@
+<div class="layer">
+	<form name="FormPost" id="address-save" class="FormGrid"  method="post"
+		action="${ctxPath}/address/save">
+		
+		<input type="hidden" value="${address.id!}" name="id"/>
+		<table class="EditTable" width="100%">
+			<tbody>
+				<tr style="display: none;">
+					<td class="ui-state-error" id="FormError"></td>
+				</tr>
+								<tr class="FormData">
+			<td class="CaptionTD">会员ID</td>
+			<td class="DataTD width-100"><input type="text" name="memberId" datatype="*"
+			nullmsg="请输入会员ID！" value="${address.memberId!}"></td>
+		</tr>
+		<tr class="FormData">
+			<td class="CaptionTD">会员姓名</td>
+			<td class="DataTD width-100"><input type="text" name="trueName" datatype="*"
+			nullmsg="请输入会员姓名！" value="${address.trueName!}"></td>
+		</tr>
+		<tr class="FormData">
+			<td class="CaptionTD">地区ID</td>
+			<td class="DataTD width-100"><input type="text" name="areaId" datatype="*"
+			nullmsg="请输入地区ID！" value="${address.areaId!}"></td>
+		</tr>
+		<tr class="FormData">
+			<td class="CaptionTD">市级ID</td>
+			<td class="DataTD width-100"><input type="text" name="cityId" datatype="*"
+			nullmsg="请输入市级ID！" value="${address.cityId!}"></td>
+		</tr>
+		<tr class="FormData">
+			<td class="CaptionTD">地区内容</td>
+			<td class="DataTD width-100"><input type="text" name="areaInfo" datatype="*"
+			nullmsg="请输入地区内容！" value="${address.areaInfo!}"></td>
+		</tr>
+		<tr class="FormData">
+			<td class="CaptionTD">地址</td>
+			<td class="DataTD width-100"><input type="text" name="address" datatype="*"
+			nullmsg="请输入地址！" value="${address.address!}"></td>
+		</tr>
+		<tr class="FormData">
+			<td class="CaptionTD">座机电话</td>
+			<td class="DataTD width-100"><input type="text" name="telPhone" datatype="*"
+			nullmsg="请输入座机电话！" value="${address.telPhone!}"></td>
+		</tr>
+		<tr class="FormData">
+			<td class="CaptionTD">手机电话</td>
+			<td class="DataTD width-100"><input type="text" name="mobPhone" datatype="*"
+			nullmsg="请输入手机电话！" value="${address.mobPhone!}"></td>
+		</tr>
+		<tr class="FormData">
+			<td class="CaptionTD">1默认收货地址</td>
+			<td class="DataTD width-100"><input type="text" name="isDefault" datatype="*"
+			nullmsg="请输入1默认收货地址！" value="${address.isDefault!}"></td>
+		</tr>
+		<tr class="FormData">
+			<td class="CaptionTD">省级id</td>
+			<td class="DataTD width-100"><input type="text" name="provinceId" datatype="*"
+			nullmsg="请输入省级id！" value="${address.provinceId!}"></td>
+		</tr>
+		<tr class="FormData">
+			<td class="CaptionTD">邮编</td>
+			<td class="DataTD width-100"><input type="text" name="zipCode" datatype="*"
+			nullmsg="请输入邮编！" value="${address.zipCode!}"></td>
+		</tr>
+
+				<!-- <tr class="FormData">
+					<td class="CaptionTD">描述</td>
+					<td class="DataTD">
+						<textarea name="description" class="autosize-transition form-control "
+						style="resize: none;">${address.description!}</textarea>	
+					</td>
+				</tr> -->
+			</tbody>
+		</table>
+	</form>
+</div>
+<#save formId="address-save" />
+
+<script type="text/javascript">
+
+//描述框自动扩张高度
+$('textarea[class*=autosize]').autosize({append: "\n"});
+//日期框
+$('.date-picker').datepicker();
+</script>

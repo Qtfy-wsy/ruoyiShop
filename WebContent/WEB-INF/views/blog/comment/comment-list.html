@@ -1,0 +1,46 @@
+<table class="table table-striped table-bordered table-hover nomargin-bottom">
+	<thead>
+		<tr>
+			<th class="center">用户IP</th>
+			<th class="center">博客</th>
+			<th class="center">内容</th>
+			<th class="center">评论时间</th>
+			<th class="center">状态</th>
+			<th class="center">操作</th>
+		</tr>
+	</thead>
+
+	<tbody>
+		@for(item in page.list){
+			<tr>
+				<td class="center">${item.userip!}</td>
+				<td class="center">${item.blogid!}</td>
+				<td class="center">${item.content!}</td>
+				<td class="center">${item.commentdate!}</td>
+				<td class="center">${item.state!}</td>
+				<td class="center">
+					<div class="hidden-sm hidden-xs action-buttons">
+						<a class="green" href="javascript:void(0);" 
+							data-mode="page" data-title="编辑"
+							data-url="${ctxPath}/comment/edit/showlayer"
+							data-data="{id:'${item.id}'}" 
+						>
+							<i class="ace-icon fa fa-pencil bigger-130"></i>
+						</a>
+
+						<a class="red" href="javascript:void(0);" 
+							data-mode="del" data-title="删除操作"
+							data-msg="你确定删除此数据吗?"
+							data-url="${ctxPath}/comment/delete" 
+							data-data="{id:'${item.id}',type:'${item.type}',value:'${item.value}'}"
+						>
+							<i class="ace-icon fa fa-trash-o bigger-130"></i>
+						</a>
+					</div>
+				</td>
+			</tr>
+		@}
+	</tbody>
+</table>
+<div class="space-8"></div>
+<#paginate page="${page}" />

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zsTrade.web.bases.mapper.PaymentMapper">
+
+	<sql id="basePaymentColumns">
+		id,payment_code,payment_name,payment_config,payment_state,is_del,create_time,update_time,payment_logo
+	</sql>
+
+</mapper>

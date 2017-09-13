@@ -1,0 +1,71 @@
+<div class="layer">
+	<form name="FormPost" id="articleClass-save" class="FormGrid"  method="post"
+		action="${ctxPath}/articleClass/save">
+		
+		<input type="hidden" value="${articleClass.id!}" name="id"/>
+		<table class="EditTable" width="100%">
+			<tbody>
+				<tr style="display: none;">
+					<td class="ui-state-error" id="FormError"></td>
+				</tr>
+								<tr class="FormData">
+			<td class="CaptionTD">分类标识码</td>
+			<td class="DataTD width-100"><input type="text" name="acCode" datatype="*"
+			nullmsg="请输入分类标识码！" value="${articleClass.acCode!}"></td>
+		</tr>
+		<tr class="FormData">
+			<td class="CaptionTD">分类名称</td>
+			<td class="DataTD width-100"><input type="text" name="acName" datatype="*"
+			nullmsg="请输入分类名称！" value="${articleClass.acName!}"></td>
+		</tr>
+		<tr class="FormData">
+			<td class="CaptionTD">父ID</td>
+			<td class="DataTD width-100"><input type="text" name="acParentId" datatype="*"
+			nullmsg="请输入父ID！" value="${articleClass.acParentId!}"></td>
+		</tr>
+		<tr class="FormData">
+			<td class="CaptionTD">排序</td>
+			<td class="DataTD width-100"><input type="text" name="acSort" datatype="*"
+			nullmsg="请输入排序！" value="${articleClass.acSort!}"></td>
+		</tr>
+		<tr class="FormData">
+			<td class="CaptionTD">isDel</td>
+			<td class="DataTD width-100"><input type="text" name="isDel" datatype="*"
+			nullmsg="请输入isDel！" value="${articleClass.isDel!}"></td>
+		</tr>
+		<tr class="FormData">
+			<td class="CaptionTD">创建时间</td>
+			<td class="DataTD width-100"><input type="text" name="createTime" datatype="*"
+			nullmsg="请输入创建时间！" value="${articleClass.createTime!}"></td>
+		</tr>
+		<tr class="FormData">
+			<td class="CaptionTD">修改时间</td>
+			<td class="DataTD width-100"><input type="text" name="updateTime" datatype="*"
+			nullmsg="请输入修改时间！" value="${articleClass.updateTime!}"></td>
+		</tr>
+		<tr class="FormData">
+			<td class="CaptionTD">分类状态0:启用;1:停用</td>
+			<td class="DataTD width-100"><input type="text" name="acStatus" datatype="*"
+			nullmsg="请输入分类状态0:启用;1:停用！" value="${articleClass.acStatus!}"></td>
+		</tr>
+
+				<!-- <tr class="FormData">
+					<td class="CaptionTD">描述</td>
+					<td class="DataTD">
+						<textarea name="description" class="autosize-transition form-control "
+						style="resize: none;">${articleClass.description!}</textarea>	
+					</td>
+				</tr> -->
+			</tbody>
+		</table>
+	</form>
+</div>
+<#save formId="articleClass-save" />
+
+<script type="text/javascript">
+
+//描述框自动扩张高度
+$('textarea[class*=autosize]').autosize({append: "\n"});
+//日期框
+$('.date-picker').datepicker();
+</script>

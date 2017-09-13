@@ -1,0 +1,41 @@
+<div class="layer">
+	<form name="FormPost" id="floorProduct-save" class="FormGrid"  method="post"
+		action="${ctxPath}/floorProduct/save">
+		
+		<input type="hidden" value="${floorProduct.id!}" name="id"/>
+		<table class="EditTable" width="100%">
+			<tbody>
+				<tr style="display: none;">
+					<td class="ui-state-error" id="FormError"></td>
+				</tr>
+								<tr class="FormData">
+			<td class="CaptionTD">productid</td>
+			<td class="DataTD width-100"><input type="text" name="productid" datatype="*"
+			nullmsg="请输入productid！" value="${floorProduct.productid!}"></td>
+		</tr>
+		<tr class="FormData">
+			<td class="CaptionTD">floorid</td>
+			<td class="DataTD width-100"><input type="text" name="floorid" datatype="*"
+			nullmsg="请输入floorid！" value="${floorProduct.floorid!}"></td>
+		</tr>
+
+				<!-- <tr class="FormData">
+					<td class="CaptionTD">描述</td>
+					<td class="DataTD">
+						<textarea name="description" class="autosize-transition form-control "
+						style="resize: none;">${floorProduct.description!}</textarea>	
+					</td>
+				</tr> -->
+			</tbody>
+		</table>
+	</form>
+</div>
+<#save formId="floorProduct-save" />
+
+<script type="text/javascript">
+
+//描述框自动扩张高度
+$('textarea[class*=autosize]').autosize({append: "\n"});
+//日期框
+$('.date-picker').datepicker();
+</script>

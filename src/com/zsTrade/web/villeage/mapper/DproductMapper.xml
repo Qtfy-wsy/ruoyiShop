@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zsTrade.web.villeage.mapper.DproductMapper">
+
+	<sql id="villeageDproductColumns">
+		id,title,tag,remark,summary,clickhit,typeid,img,typename,type,orderby,prices,imgmore,create_by,create_date,del_flag,replyhit,sellhit,iscom,villageid
+	</sql>
+
+</mapper>

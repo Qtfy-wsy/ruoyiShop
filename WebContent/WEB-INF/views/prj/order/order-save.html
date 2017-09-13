@@ -1,0 +1,66 @@
+<div class="layer">
+	<form name="FormPost" id="order-save" class="FormGrid"  method="post"
+		action="${ctxPath}/order/save">
+		
+		<input type="hidden" value="${order.id!}" name="id"/>
+		<table class="EditTable" width="100%">
+			<tbody>
+				<tr style="display: none;">
+					<td class="ui-state-error" id="FormError"></td>
+				</tr>
+								<tr class="FormData">
+			<td class="CaptionTD">总价格</td>
+			<td class="DataTD width-100"><input type="text" name="totalprice" datatype="*"
+			nullmsg="请输入总价格！" value="${order.totalprice!}"></td>
+		</tr>
+		<tr class="FormData">
+			<td class="CaptionTD">总个数</td>
+			<td class="DataTD width-100"><input type="text" name="totalcount" datatype="*"
+			nullmsg="请输入总个数！" value="${order.totalcount!}"></td>
+		</tr>
+		<tr class="FormData">
+			<td class="CaptionTD">ordersn</td>
+			<td class="DataTD width-100"><input type="text" name="ordersn" datatype="*"
+			nullmsg="请输入ordersn！" value="${order.ordersn!}"></td>
+		</tr>
+		<tr class="FormData">
+			<td class="CaptionTD">status</td>
+			<td class="DataTD width-100"><input type="text" name="status" datatype="*"
+			nullmsg="请输入status！" value="${order.status!}"></td>
+		</tr>
+		<tr class="FormData">
+			<td class="CaptionTD">userid</td>
+			<td class="DataTD width-100"><input type="text" name="userid" datatype="*"
+			nullmsg="请输入userid！" value="${order.userid!}"></td>
+		</tr>
+		<tr class="FormData">
+			<td class="CaptionTD">createdate</td>
+			<td class="DataTD width-100"><input type="text" data-date-format="yyyy-mm-dd" readonly="readonly" class="date-picker" name="createdate" datatype="*"
+			nullmsg="请输入createdate！" value="${order.createdate!}"></td>
+		</tr>
+		<tr class="FormData">
+			<td class="CaptionTD">paymentid</td>
+			<td class="DataTD width-100"><input type="text" name="paymentid" datatype="*"
+			nullmsg="请输入paymentid！" value="${order.paymentid!}"></td>
+		</tr>
+
+				<!-- <tr class="FormData">
+					<td class="CaptionTD">描述</td>
+					<td class="DataTD">
+						<textarea name="description" class="autosize-transition form-control "
+						style="resize: none;">${order.description!}</textarea>	
+					</td>
+				</tr> -->
+			</tbody>
+		</table>
+	</form>
+</div>
+<#save formId="order-save" />
+
+<script type="text/javascript">
+
+//描述框自动扩张高度
+$('textarea[class*=autosize]').autosize({append: "\n"});
+//日期框
+$('.date-picker').datepicker();
+</script>

@@ -1,0 +1,38 @@
+/** [powerBy] */
+
+package [packagePree].[model].service;
+import java.util.Map;
+
+import com.github.pagehelper.PageInfo;
+import [commonpackagePree].base.BaseService;
+import [packagePree].[model].model.[entityClass];
+
+ /**
+ * 
+ * @author [author] [date]
+ * @Email: [email]
+ * @version [version]
+ *	[description]
+ */
+public interface [entityClass]Service extends BaseService<[entityClass]>{
+
+	
+
+	
+	/**
+	 * 保存或更新
+	 * 
+	 * @param [entityClass]
+	 * @return
+	 */
+	public int save[entityClass]([entityClass] [entityClass]) ;
+	/**
+	 * 删除
+	* @param [entityClass]
+	* @return
+	 */
+	public int delete[entityClass]([entityClass] [entityClass]);
+
+	public PageInfo<[entityClass]> findPageInfo(Map<String, Object> params);
+
+}

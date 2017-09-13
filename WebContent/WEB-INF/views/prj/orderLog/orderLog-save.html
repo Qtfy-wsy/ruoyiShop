@@ -1,0 +1,61 @@
+<div class="layer">
+	<form name="FormPost" id="orderLog-save" class="FormGrid"  method="post"
+		action="${ctxPath}/orderLog/save">
+		
+		<input type="hidden" value="${orderLog.id!}" name="id"/>
+		<table class="EditTable" width="100%">
+			<tbody>
+				<tr style="display: none;">
+					<td class="ui-state-error" id="FormError"></td>
+				</tr>
+								<tr class="FormData">
+			<td class="CaptionTD">订单id</td>
+			<td class="DataTD width-100"><input type="text" name="orderId" datatype="*"
+			nullmsg="请输入订单id！" value="${orderLog.orderId!}"></td>
+		</tr>
+		<tr class="FormData">
+			<td class="CaptionTD">订单状态信息</td>
+			<td class="DataTD width-100"><input type="text" name="orderState" datatype="*"
+			nullmsg="请输入订单状态信息！" value="${orderLog.orderState!}"></td>
+		</tr>
+		<tr class="FormData">
+			<td class="CaptionTD">下一步订单状态信息</td>
+			<td class="DataTD width-100"><input type="text" name="changeState" datatype="*"
+			nullmsg="请输入下一步订单状态信息！" value="${orderLog.changeState!}"></td>
+		</tr>
+		<tr class="FormData">
+			<td class="CaptionTD">订单状态描述</td>
+			<td class="DataTD width-100"><input type="text" name="stateInfo" datatype="*"
+			nullmsg="请输入订单状态描述！" value="${orderLog.stateInfo!}"></td>
+		</tr>
+		<tr class="FormData">
+			<td class="CaptionTD">处理时间</td>
+			<td class="DataTD width-100"><input type="text" name="createTime" datatype="*"
+			nullmsg="请输入处理时间！" value="${orderLog.createTime!}"></td>
+		</tr>
+		<tr class="FormData">
+			<td class="CaptionTD">操作人</td>
+			<td class="DataTD width-100"><input type="text" name="operator" datatype="*"
+			nullmsg="请输入操作人！" value="${orderLog.operator!}"></td>
+		</tr>
+
+				<!-- <tr class="FormData">
+					<td class="CaptionTD">描述</td>
+					<td class="DataTD">
+						<textarea name="description" class="autosize-transition form-control "
+						style="resize: none;">${orderLog.description!}</textarea>	
+					</td>
+				</tr> -->
+			</tbody>
+		</table>
+	</form>
+</div>
+<#save formId="orderLog-save" />
+
+<script type="text/javascript">
+
+//描述框自动扩张高度
+$('textarea[class*=autosize]').autosize({append: "\n"});
+//日期框
+$('.date-picker').datepicker();
+</script>

@@ -1,0 +1,51 @@
+<div class="layer">
+	<form name="FormPost" id="favorites-save" class="FormGrid"  method="post"
+		action="${ctxPath}/favorites/save">
+		
+		<input type="hidden" value="${favorites.id!}" name="id"/>
+		<table class="EditTable" width="100%">
+			<tbody>
+				<tr style="display: none;">
+					<td class="ui-state-error" id="FormError"></td>
+				</tr>
+								<tr class="FormData">
+			<td class="CaptionTD">收藏ID</td>
+			<td class="DataTD width-100"><input type="text" name="favId" datatype="*"
+			nullmsg="请输入收藏ID！" value="${favorites.favId!}"></td>
+		</tr>
+		<tr class="FormData">
+			<td class="CaptionTD">收藏类型</td>
+			<td class="DataTD width-100"><input type="text" name="favType" datatype="*"
+			nullmsg="请输入收藏类型！" value="${favorites.favType!}"></td>
+		</tr>
+		<tr class="FormData">
+			<td class="CaptionTD">收藏时间</td>
+			<td class="DataTD width-100"><input type="text" name="favTime" datatype="*"
+			nullmsg="请输入收藏时间！" value="${favorites.favTime!}"></td>
+		</tr>
+		<tr class="FormData">
+			<td class="CaptionTD">memberId</td>
+			<td class="DataTD width-100"><input type="text" name="memberId" datatype="*"
+			nullmsg="请输入memberId！" value="${favorites.memberId!}"></td>
+		</tr>
+
+				<!-- <tr class="FormData">
+					<td class="CaptionTD">描述</td>
+					<td class="DataTD">
+						<textarea name="description" class="autosize-transition form-control "
+						style="resize: none;">${favorites.description!}</textarea>	
+					</td>
+				</tr> -->
+			</tbody>
+		</table>
+	</form>
+</div>
+<#save formId="favorites-save" />
+
+<script type="text/javascript">
+
+//描述框自动扩张高度
+$('textarea[class*=autosize]').autosize({append: "\n"});
+//日期框
+$('.date-picker').datepicker();
+</script>

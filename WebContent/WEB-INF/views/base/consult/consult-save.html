@@ -1,0 +1,101 @@
+<div class="layer">
+	<form name="FormPost" id="consult-save" class="FormGrid"  method="post"
+		action="${ctxPath}/consult/save">
+		
+		<input type="hidden" value="${consult.id!}" name="id"/>
+		<table class="EditTable" width="100%">
+			<tbody>
+				<tr style="display: none;">
+					<td class="ui-state-error" id="FormError"></td>
+				</tr>
+								<tr class="FormData">
+			<td class="CaptionTD">商品编号</td>
+			<td class="DataTD width-100"><input type="text" name="goodsId" datatype="*"
+			nullmsg="请输入商品编号！" value="${consult.goodsId!}"></td>
+		</tr>
+		<tr class="FormData">
+			<td class="CaptionTD">商品名称</td>
+			<td class="DataTD width-100"><input type="text" name="cgoodsName" datatype="*"
+			nullmsg="请输入商品名称！" value="${consult.cgoodsName!}"></td>
+		</tr>
+		<tr class="FormData">
+			<td class="CaptionTD">咨询发布者会员编号(0：游客)</td>
+			<td class="DataTD width-100"><input type="text" name="memberId" datatype="*"
+			nullmsg="请输入咨询发布者会员编号(0：游客)！" value="${consult.memberId!}"></td>
+		</tr>
+		<tr class="FormData">
+			<td class="CaptionTD">会员名称</td>
+			<td class="DataTD width-100"><input type="text" name="cmemberName" datatype="*"
+			nullmsg="请输入会员名称！" value="${consult.cmemberName!}"></td>
+		</tr>
+		<tr class="FormData">
+			<td class="CaptionTD">店铺编号</td>
+			<td class="DataTD width-100"><input type="text" name="storeId" datatype="*"
+			nullmsg="请输入店铺编号！" value="${consult.storeId!}"></td>
+		</tr>
+		<tr class="FormData">
+			<td class="CaptionTD">咨询发布者邮箱</td>
+			<td class="DataTD width-100"><input type="text" name="email" datatype="*"
+			nullmsg="请输入咨询发布者邮箱！" value="${consult.email!}"></td>
+		</tr>
+		<tr class="FormData">
+			<td class="CaptionTD">咨询内容</td>
+			<td class="DataTD width-100"><input type="text" name="consultContent" datatype="*"
+			nullmsg="请输入咨询内容！" value="${consult.consultContent!}"></td>
+		</tr>
+		<tr class="FormData">
+			<td class="CaptionTD">咨询添加时间</td>
+			<td class="DataTD width-100"><input type="text" name="consultAddtime" datatype="*"
+			nullmsg="请输入咨询添加时间！" value="${consult.consultAddtime!}"></td>
+		</tr>
+		<tr class="FormData">
+			<td class="CaptionTD">咨询回复内容</td>
+			<td class="DataTD width-100"><input type="text" name="consultReply" datatype="*"
+			nullmsg="请输入咨询回复内容！" value="${consult.consultReply!}"></td>
+		</tr>
+		<tr class="FormData">
+			<td class="CaptionTD">咨询回复时间</td>
+			<td class="DataTD width-100"><input type="text" name="consultReplyTime" datatype="*"
+			nullmsg="请输入咨询回复时间！" value="${consult.consultReplyTime!}"></td>
+		</tr>
+		<tr class="FormData">
+			<td class="CaptionTD">0表示不匿名 1表示匿名</td>
+			<td class="DataTD width-100"><input type="text" name="isanonymous" datatype="*"
+			nullmsg="请输入0表示不匿名 1表示匿名！" value="${consult.isanonymous!}"></td>
+		</tr>
+		<tr class="FormData">
+			<td class="CaptionTD">isDel</td>
+			<td class="DataTD width-100"><input type="text" name="isDel" datatype="*"
+			nullmsg="请输入isDel！" value="${consult.isDel!}"></td>
+		</tr>
+		<tr class="FormData">
+			<td class="CaptionTD">创建时间</td>
+			<td class="DataTD width-100"><input type="text" name="createTime" datatype="*"
+			nullmsg="请输入创建时间！" value="${consult.createTime!}"></td>
+		</tr>
+		<tr class="FormData">
+			<td class="CaptionTD">修改时间</td>
+			<td class="DataTD width-100"><input type="text" name="updateTime" datatype="*"
+			nullmsg="请输入修改时间！" value="${consult.updateTime!}"></td>
+		</tr>
+
+				<!-- <tr class="FormData">
+					<td class="CaptionTD">描述</td>
+					<td class="DataTD">
+						<textarea name="description" class="autosize-transition form-control "
+						style="resize: none;">${consult.description!}</textarea>	
+					</td>
+				</tr> -->
+			</tbody>
+		</table>
+	</form>
+</div>
+<#save formId="consult-save" />
+
+<script type="text/javascript">
+
+//描述框自动扩张高度
+$('textarea[class*=autosize]').autosize({append: "\n"});
+//日期框
+$('.date-picker').datepicker();
+</script>

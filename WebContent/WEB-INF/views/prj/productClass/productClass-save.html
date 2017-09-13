@@ -1,0 +1,48 @@
+<div class="layer">
+	<form name="FormPost" id="productClass-save" class="FormGrid"  method="post"
+		action="${ctxPath}/productClass/save">
+		
+		<input type="hidden" value="${productClass.id!}" name="id"/>
+		<table class="EditTable" width="100%">
+			<tbody>
+				<tr style="display: none;">
+					<td class="ui-state-error" id="FormError"></td>
+				</tr>
+			<tr class="FormData">
+			<td class="CaptionTD">分类名称</td>
+			<td class="DataTD width-100"><input type="text" name="name" datatype="*"
+			nullmsg="请输入分类名称！" value="${productClass.name!}"></td>
+		</tr>
+		
+		
+<tr class="FormData">
+<td class="CaptionTD">上级栏目</td>
+<td class="DataTD">
+<#treeselect url="productClass/tree" modelNameValue="${pProductClass.name!}" 
+	modelIdValue="${pProductClass.id!1}" selectIds="${pProductClass.id!}"
+	curId="${productClass.id!}" />
+</td>
+</tr>
+<input type="hidden" value="${pProductClass.parentIds!}" name="parentIds" />
+<input type="hidden" value="${productClass.parentIds!}" name="oldParentIds" />
+
+				<!-- <tr class="FormData">
+					<td class="CaptionTD">描述</td>
+					<td class="DataTD">
+						<textarea name="description" class="autosize-transition form-control "
+						style="resize: none;">${productClass.description!}</textarea>	
+					</td>
+				</tr> -->
+			</tbody>
+		</table>
+	</form>
+</div>
+<#save formId="productClass-save" />
+
+<script type="text/javascript">
+
+//描述框自动扩张高度
+$('textarea[class*=autosize]').autosize({append: "\n"});
+//日期框
+$('.date-picker').datepicker();
+</script>

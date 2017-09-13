@@ -1,0 +1,89 @@
+/** [powerBy] */
+package [packagePree].[model].controller;
+
+import javax.annotation.Resource;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import [packagePree].[model].service.[entityClass]Service;
+import com.github.pagehelper.PageInfo;
+import [packagePree].[model].model.[entityClass];
+import [commonpackagePree].utils.LogUtils;
+/**
+ * 
+ * @author [author] [date]
+ * @Email: [email]
+ * @version [version]
+ *	[description]
+ */
+@Controller
+@RequestMapping("[lowerentity]")
+public class [entityClass]Controller {
+
+	@Resource
+	private [entityClass]Service [entityClass]Service;
+	
+	@RequestMapping
+	public String to[entityClass](Model model){
+		return "[model]/[lowerentity]/[lowerentity]";
+	}
+	/**
+	 * 分页显示字典table
+	 * @param params
+	 * @return
+	 */
+	@RequestMapping(value = "list", method = RequestMethod.POST)
+	public String list(@RequestParam(required = false, value = "pageNum", defaultValue = "1")int pageNum,
+			@RequestParam(required = false, value = "pageSize", defaultValue = "15")int pageSize,
+	@ModelAttribute [entityClass] [entityClass], Model model) {
+		PageInfo<[entityClass]> page = [entityClass]Service.selectPage(pageNum, pageSize, [entityClass]);
+		model.addAttribute("page", page);
+		return "[model]/[lowerentity]/[lowerentity]-list";
+	}
+	/**
+	 * 添加或更新区域
+	 * @param params
+	 * @return
+	 */
+	@RequestMapping(value = "save", method = RequestMethod.POST)
+	public @ResponseBody Integer save(@ModelAttribute [entityClass] [entityClass]) {
+		try {
+			return [entityClass]Service.save[entityClass]([entityClass]);
+		} catch (Exception e) {
+			LogUtils.ERROR_LOG.error(e.getMessage());
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	/**
+	 * 删除字典
+	* @param id
+	* @return
+	 */
+	@RequestMapping(value="delete",method=RequestMethod.POST)
+	public @ResponseBody Integer del(@ModelAttribute [entityClass] [entityClass]){
+		try {
+			return [entityClass]Service.delete[entityClass]([entityClass]);
+		} catch (Exception e) {
+			LogUtils.ERROR_LOG.error(e.getMessage());
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	
+	
+	@RequestMapping(value="{mode}/showlayer",method=RequestMethod.POST)
+	public String showLayer(Long id, Model model){
+		[entityClass] [lowerentity] = [entityClass]Service.selectByPrimaryKey(id);
+		model.addAttribute("[lowerentity]", [lowerentity]);
+		return "[model]/[lowerentity]/[lowerentity]-save";
+	}
+	
+}

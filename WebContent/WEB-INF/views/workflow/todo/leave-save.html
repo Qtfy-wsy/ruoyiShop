@@ -1,0 +1,86 @@
+<div class="layer">
+	<form name="FormPost" id="leave-save" class="FormGrid"  method="post"
+		action="${ctxPath}/leave/save">
+		
+		<input type="hidden" value="${leave.id!}" name="id"/>
+		<table class="EditTable" width="100%">
+			<tbody>
+				<tr style="display: none;">
+					<td class="ui-state-error" id="FormError"></td>
+				</tr>
+								<tr class="FormData">
+			<td class="CaptionTD">endtime</td>
+			<td class="DataTD width-100"><input type="text" data-date-format="yyyy-mm-dd" readonly="readonly" class="date-picker" name="endtime" datatype="*"
+			nullmsg="请输入endtime！" value="${leave.endtime!}"></td>
+		</tr>
+		<tr class="FormData">
+			<td class="CaptionTD">leavedays</td>
+			<td class="DataTD width-100"><input type="text" name="leavedays" datatype="*"
+			nullmsg="请输入leavedays！" value="${leave.leavedays!}"></td>
+		</tr>
+		<tr class="FormData">
+			<td class="CaptionTD">leavetype</td>
+			<td class="DataTD width-100"><input type="text" name="leavetype" datatype="*"
+			nullmsg="请输入leavetype！" value="${leave.leavetype!}"></td>
+		</tr>
+		<tr class="FormData">
+			<td class="CaptionTD">processinstanceid</td>
+			<td class="DataTD width-100"><input type="text" name="processinstanceid" datatype="*"
+			nullmsg="请输入processinstanceid！" value="${leave.processinstanceid!}"></td>
+		</tr>
+		<tr class="FormData">
+			<td class="CaptionTD">reason</td>
+			<td class="DataTD width-100"><input type="text" name="reason" datatype="*"
+			nullmsg="请输入reason！" value="${leave.reason!}"></td>
+		</tr>
+		<tr class="FormData">
+			<td class="CaptionTD">sponsorloginid</td>
+			<td class="DataTD width-100"><input type="text" name="sponsorloginid" datatype="*"
+			nullmsg="请输入sponsorloginid！" value="${leave.sponsorloginid!}"></td>
+		</tr>
+		<tr class="FormData">
+			<td class="CaptionTD">starttime</td>
+			<td class="DataTD width-100"><input type="text" data-date-format="yyyy-mm-dd" readonly="readonly" class="date-picker" name="starttime" datatype="*"
+			nullmsg="请输入starttime！" value="${leave.starttime!}"></td>
+		</tr>
+		<tr class="FormData">
+			<td class="CaptionTD">depauditopinion</td>
+			<td class="DataTD width-100"><input type="text" name="depauditopinion" datatype="*"
+			nullmsg="请输入depauditopinion！" value="${leave.depauditopinion!}"></td>
+		</tr>
+		<tr class="FormData">
+			<td class="CaptionTD">hrauditopinion</td>
+			<td class="DataTD width-100"><input type="text" name="hrauditopinion" datatype="*"
+			nullmsg="请输入hrauditopinion！" value="${leave.hrauditopinion!}"></td>
+		</tr>
+		<tr class="FormData">
+			<td class="CaptionTD">fileid</td>
+			<td class="DataTD width-100"><input type="text" name="fileid" datatype="*"
+			nullmsg="请输入fileid！" value="${leave.fileid!}"></td>
+		</tr>
+		<tr class="FormData">
+			<td class="CaptionTD">filename</td>
+			<td class="DataTD width-100"><input type="text" name="filename" datatype="*"
+			nullmsg="请输入filename！" value="${leave.filename!}"></td>
+		</tr>
+
+				<!-- <tr class="FormData">
+					<td class="CaptionTD">描述</td>
+					<td class="DataTD">
+						<textarea name="description" class="autosize-transition form-control "
+						style="resize: none;">${leave.description!}</textarea>	
+					</td>
+				</tr> -->
+			</tbody>
+		</table>
+	</form>
+</div>
+<#save formId="leave-save" />
+
+<script type="text/javascript">
+
+//描述框自动扩张高度
+$('textarea[class*=autosize]').autosize({append: "\n"});
+//日期框
+$('.date-picker').datepicker();
+</script>

@@ -1,0 +1,83 @@
+
+<table class="table table-striped table-bordered table-hover nomargin-bottom">
+	<thead>
+		<tr>
+							
+			<th class="center">流程名称</th>
+			<th class="center">发起人</th>
+			<th class="center">任务名称</th>
+			<th class="center">任务创建日期</th>
+			<th class="center">任务逾期日</th>
+			<th class="center">操作</th>
+		</tr>
+	</thead>
+
+	<tbody>
+		@for(item in page.data){
+			<tr>
+			<td class="center">${item.definitionName!}${item.processInstanceId!}</td>
+			<td class="center">${item.sponsor!}</td>
+			<td class="center">
+			<a href='javascript:void(0)' class='tooltips' data-original-title='点击查看流程图' data-placement='right' onclick='$("#rcs").showFlowChart("${item.processInstanceId!}")'>${item.taskName!}</a>
+			</td>
+			
+			<td class="center">${item.createTime!}</td>
+			<td class="center">${item.createTime!}</td>
+
+				<td class="center">
+				 @if(null == item.assignee){
+				 <a class="green" href="javascript:void(0);" 
+							 data-title="编辑"
+							data-definition-key="${item.definitionKey}"
+							data-task-key="${item.taskKey}"
+							data-task-id="${item.id}"
+							onclick="claim(${item.definitionKey},${item.taskKey},${item.id})"
+							
+						>签收
+						</a>
+					
+				@}else{
+				<a class="green" href="javascript:void(0);" 
+							 data-title="编辑"
+							data-definition-key="${item.definitionKey}"
+							data-task-key="${item.taskKey}"
+							data-task-id="${item.id}"
+							onclick="handle1('${item.definitionKey}','${item.taskKey}','${item.id}')"
+						>
+						办理
+						</a>
+				
+				 @}
+				
+				</td>
+			</tr>
+		@}
+	</tbody>
+</table>
+<div class="space-8"></div>
+<script type="text/javascript">
+	
+	function claim(definitionkey,taskkey,taskid){
+		$.ajax({
+			type : "POST",
+			url : ctx+"/workflow/task/claim/"+taskid,
+			success : function(data){
+				//unBlockUI();
+				if(data == "success"){
+					alert("签收成功！");
+				}
+			},
+			error : function(error) {
+				alert(error);
+			//	unBlockUI();
+			}
+		});
+	}
+	function handle1(definitionkey,taskkey,taskid){
+		alert(definitionkey);
+		alert(ctxPath);
+		window.location.href = ctxPath+"/workflow/task/handle/"+definitionkey+"/"+taskkey+"/"+taskid;
+	}
+</script>
+
+

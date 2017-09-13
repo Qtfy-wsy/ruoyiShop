@@ -1,0 +1,45 @@
+@for( table in tables) {
+<table class="table table-striped table-bordered table-hover nomargin-bottom">
+	 @var tremarks = "";
+    @if(table.remarks!=null && table.remarks!=""){
+    @tremarks = " - " + table.remarks;
+    @}
+    <tr>
+        <th colspan="5">表：${table.name!} ${tremarks!}</th>
+        <th colspan="1"><a href="${ctxPath}/database/gen/${table.name!}">代码生成</a></th>
+    </tr>
+    <tr>
+        <th scope="col">列名</th>
+        <th scope="col">类型</th>
+        <th scope="col">备注</th>
+        <th scope="col">主键</th>
+        <th scope="col">可空</th>
+        <th scope="col">默认值</th>
+    </tr>
+    @for( column in table.baseColumns) {
+        @var columnName = column.name;
+        @var jdbcTypeName = column.jdbcTypeName;
+        @var remarks = column.remarks;
+        @var PK = column.pk;
+        @var NULL = column.nullable;
+        @var defaultValue = column.defaultValue;
+
+        @if(!column.JDBCDateColumn && !column.JDBCTimeColumn) {
+            @jdbcTypeName = jdbcTypeName + "(" + column.length;
+            @if(column.scale > 0){
+                @jdbcTypeName = jdbcTypeName + ","+column.scale;
+            @}
+            @jdbcTypeName = jdbcTypeName +  ")";
+        @}
+        <tr>
+            <td>${columnName!}</td>
+            <td>${jdbcTypeName!}</td>
+            <td>${remarks!}</td>
+            <td>${PK!?"Y":"N"}</td>
+            <td>${NULL?"Y":"N"}</td>
+            <td>${column.defaultValue!}</td>
+        </tr>
+    @}
+@}
+</table>
+<div class="space-8"></div>

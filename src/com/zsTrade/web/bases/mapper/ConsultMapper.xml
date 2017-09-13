@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zsTrade.web.bases.mapper.ConsultMapper">
+
+	<sql id="baseConsultColumns">
+		id,goods_id,cgoods_name,member_id,cmember_name,store_id,email,consult_content,consult_addtime,consult_reply,consult_reply_time,isanonymous,is_del,create_time,update_time
+	</sql>
+
+</mapper>

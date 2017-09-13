@@ -1,0 +1,64 @@
+<!-- ueditor所需引入 -->
+@layout("/layout/ueditor.html"){}
+
+<div class="layer">
+	<form name="FormPost" id="article-save" class="FormGrid"  method="post"
+		action="${ctxPath}/article/save" enctype="multipart/form-data">
+		
+		<input type="hidden" value="${article.id!}" name="id"/>
+		<table class="EditTable" width="100%">
+			<tbody>
+				<tr style="display: none;">
+					<td class="ui-state-error" id="FormError"></td>
+				</tr>
+			<tr class="FormData">
+			<td class="CaptionTD">标题</td>
+			<td class="DataTD width-100"><input type="text" name="title" datatype="*"
+			nullmsg="请输入title！" value="${article.title!}"></td>
+		</tr>
+		<tr class="FormData">
+			<td class="CaptionTD">大标题</td>
+			<td class="DataTD width-100"><input type="text" name="name" datatype="*"
+			nullmsg="请输入name！" value="${article.name!}"></td>
+		</tr>
+		<tr class="FormData">
+			<td class="CaptionTD">类型</td>
+			<td class="DataTD width-100"><input type="text" name="type" datatype="*"
+			nullmsg="请输入type！" value="${article.type!}"></td>
+		</tr>
+		<tr class="FormData">
+					<td class="CaptionTD">内容</td>
+					<td>
+					<textarea  style="width:93%;height:290px" name="remark" id="remark">${product.remark!}</textarea>
+					</td>
+				
+				<input type="hidden" name="contentNoTag" id="contentNoTag" />
+				<input type="hidden" name="summary" id="summary" />
+		</tr>
+		<tr class="FormData">
+					<td colspan="2" class="CaptionTD"><span class="btn btn-info btn-block bigger-120" onclick="backValue()" id="product-save-btn">保 存</span>
+					</td>
+		
+			</tbody>
+		</table>
+	</form>
+</div>
+
+
+<script type="text/javascript">
+
+	function backValue(){
+		var content=UE.getEditor('remark').getContent();
+    	var contentNoTag=UE.getEditor('remark').getContentTxt();
+    	var summary=UE.getEditor('remark').getContentTxt().substr(0,155);
+    
+    	$("#content").val(content);
+    	$("#contentNoTag").val(contentNoTag);
+    	$("#summary").val(summary);
+    	$("#article-save").submit();
+	}
+	function reurl(){ 
+		UE.getEditor('remark');
+	} 
+	setTimeout('reurl()',500); 
+</script>

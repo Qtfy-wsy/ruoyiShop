@@ -1,0 +1,56 @@
+<div class="layer">
+	<form name="FormPost" id="cart-save" class="FormGrid"  method="post"
+		action="${ctxPath}/cart/save">
+		
+		<input type="hidden" value="${cart.id!}" name="id"/>
+		<table class="EditTable" width="100%">
+			<tbody>
+				<tr style="display: none;">
+					<td class="ui-state-error" id="FormError"></td>
+				</tr>
+								<tr class="FormData">
+			<td class="CaptionTD">goodsid</td>
+			<td class="DataTD width-100"><input type="text" name="goodsid" datatype="*"
+			nullmsg="请输入goodsid！" value="${cart.goodsid!}"></td>
+		</tr>
+		<tr class="FormData">
+			<td class="CaptionTD">userid</td>
+			<td class="DataTD width-100"><input type="text" name="userid" datatype="*"
+			nullmsg="请输入userid！" value="${cart.userid!}"></td>
+		</tr>
+		<tr class="FormData">
+			<td class="CaptionTD">goodsname</td>
+			<td class="DataTD width-100"><input type="text" name="goodsname" datatype="*"
+			nullmsg="请输入goodsname！" value="${cart.goodsname!}"></td>
+		</tr>
+		<tr class="FormData">
+			<td class="CaptionTD">price</td>
+			<td class="DataTD width-100"><input type="text" name="price" datatype="*"
+			nullmsg="请输入price！" value="${cart.price!}"></td>
+		</tr>
+		<tr class="FormData">
+			<td class="CaptionTD">count</td>
+			<td class="DataTD width-100"><input type="text" name="count" datatype="*"
+			nullmsg="请输入count！" value="${cart.count!}"></td>
+		</tr>
+
+				<!-- <tr class="FormData">
+					<td class="CaptionTD">描述</td>
+					<td class="DataTD">
+						<textarea name="description" class="autosize-transition form-control "
+						style="resize: none;">${cart.description!}</textarea>	
+					</td>
+				</tr> -->
+			</tbody>
+		</table>
+	</form>
+</div>
+<#save formId="cart-save" />
+
+<script type="text/javascript">
+
+//描述框自动扩张高度
+$('textarea[class*=autosize]').autosize({append: "\n"});
+//日期框
+$('.date-picker').datepicker();
+</script>

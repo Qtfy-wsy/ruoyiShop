@@ -1,0 +1,56 @@
+<div class="layer">
+	<form name="FormPost" id="reply-save" class="FormGrid"  method="post"
+		action="${ctxPath}/reply/save">
+		
+		<input type="hidden" value="${reply.id!}" name="id"/>
+		<table class="EditTable" width="100%">
+			<tbody>
+				<tr style="display: none;">
+					<td class="ui-state-error" id="FormError"></td>
+				</tr>
+								<tr class="FormData">
+			<td class="CaptionTD">goodsid</td>
+			<td class="DataTD width-100"><input type="text" name="goodsid" datatype="*"
+			nullmsg="请输入goodsid！" value="${reply.goodsid!}"></td>
+		</tr>
+		<tr class="FormData">
+			<td class="CaptionTD">content</td>
+			<td class="DataTD width-100"><input type="text" name="content" datatype="*"
+			nullmsg="请输入content！" value="${reply.content!}"></td>
+		</tr>
+		<tr class="FormData">
+			<td class="CaptionTD">createdate</td>
+			<td class="DataTD width-100"><input type="text" data-date-format="yyyy-mm-dd" readonly="readonly" class="date-picker" name="createdate" datatype="*"
+			nullmsg="请输入createdate！" value="${reply.createdate!}"></td>
+		</tr>
+		<tr class="FormData">
+			<td class="CaptionTD">status</td>
+			<td class="DataTD width-100"><input type="text" name="status" datatype="*"
+			nullmsg="请输入status！" value="${reply.status!}"></td>
+		</tr>
+		<tr class="FormData">
+			<td class="CaptionTD">userid</td>
+			<td class="DataTD width-100"><input type="text" name="userid" datatype="*"
+			nullmsg="请输入userid！" value="${reply.userid!}"></td>
+		</tr>
+
+				<!-- <tr class="FormData">
+					<td class="CaptionTD">描述</td>
+					<td class="DataTD">
+						<textarea name="description" class="autosize-transition form-control "
+						style="resize: none;">${reply.description!}</textarea>	
+					</td>
+				</tr> -->
+			</tbody>
+		</table>
+	</form>
+</div>
+<#save formId="reply-save" />
+
+<script type="text/javascript">
+
+//描述框自动扩张高度
+$('textarea[class*=autosize]').autosize({append: "\n"});
+//日期框
+$('.date-picker').datepicker();
+</script>

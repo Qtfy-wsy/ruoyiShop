@@ -1,0 +1,77 @@
+<div class="tabbable">
+	<ul class="nav nav-tabs" id="myTab">
+		<li class="active"><a data-toggle="tab" href="#home"> <i
+				class="green ace-icon fa fa-list-alt bigger-120"></i> 列表
+		</a></li>
+		@if(auth.hasPermission("base:express:add")){
+		<li class=""><a data-toggle="tab" href="#profile">
+		<i class="green ace-icon fa fa-plus bigger-120"></i> 添加
+		</a></li>
+		@}
+	</ul>
+
+	<div class="tab-content">
+		<div id="home" class="tab-pane active clearfix">
+			<form action="${ctxPath}/express/list" method="post" id="search-form" target="list-page" class="clearfix">
+				
+				<div class="pull-left width-30">
+					<label>描述：</label>
+					<input type="text" class="width-80" name="description"/>
+				</div>
+				<div class="pull-left"><span class="btn btn-info btn-sm " id="search-btn">查 询</span></div>
+			</form>
+			<hr/>
+			<div id="list-page"></div>
+			<script type="text/javascript">
+				$("#search-form").getPageList({'submitBtnId':'search-btn'})
+			</script>
+		</div>
+
+		<div id="profile" class="tab-pane">
+			<form action="${ctxPath!}/express/save" method="post" id="express-save-form">
+								<div class="center padding-10">
+			<label>公司名称：</label>
+			<input type="text" class="width-50" name="eName" datatype="*"  nullmsg="请输入公司名称！"/>
+		</div>
+		<div class="center padding-10">
+			<label>状态：</label>
+			<input type="text" class="width-50" name="eState" datatype="*"  nullmsg="请输入状态！"/>
+		</div>
+		<div class="center padding-10">
+			<label>编号：</label>
+			<input type="text" class="width-50" name="eCode" datatype="*"  nullmsg="请输入编号！"/>
+		</div>
+		<div class="center padding-10">
+			<label>首字母：</label>
+			<input type="text" class="width-50" name="eLetter" datatype="*"  nullmsg="请输入首字母！"/>
+		</div>
+		<div class="center padding-10">
+			<label>1常用0不常用：</label>
+			<input type="text" class="width-50" name="eOrder" datatype="*"  nullmsg="请输入1常用0不常用！"/>
+		</div>
+		<div class="center padding-10">
+			<label>公司网址：</label>
+			<input type="text" class="width-50" name="eUrl" datatype="*"  nullmsg="请输入公司网址！"/>
+		</div>
+		<div class="center padding-10">
+			<label>删除标记：</label>
+			<input type="text" class="width-50" name="isDel" datatype="*"  nullmsg="请输入删除标记！"/>
+		</div>
+
+				<!-- <div class="center padding-10" >
+					<label style="vertical-align: top;">描述：</label>
+					<textarea type="text" class="width-50" name="description"></textarea>
+				</div> -->
+				<div class="margin-t15">
+					<span class="btn btn-info btn-block bigger-120" id="express-save-btn">保 存</span>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+<script type="text/javascript">
+//日期框
+$('.date-picker').datepicker();
+</script>
+
+<#save isHide="yes" subBtnId="express-save-btn" formId="express-save-form" />

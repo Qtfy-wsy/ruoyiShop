@@ -1,0 +1,73 @@
+<div class="layer">
+	<form name="FormPost" id="floor-save" class="FormGrid"  method="post"
+		action="${ctxPath}/floor/save"  enctype="multipart/form-data">
+		
+		<input type="hidden" value="${floor.id!}" name="id"/>
+		<table class="EditTable" width="100%">
+			<tbody>
+				<tr style="display: none;">
+					<td class="ui-state-error" id="FormError"></td>
+				</tr>
+		<tr class="FormData">
+			<td class="CaptionTD">楼层简介</td>
+			<td class="DataTD width-100"><input type="text" name="title" datatype="*"
+			nullmsg="请输入title！" value="${floor.title!}"></td>
+		</tr>		
+		<tr class="FormData">
+			<td class="CaptionTD">楼层名称</td>
+			<td class="DataTD width-100"><input type="text" name="name" datatype="*"
+			nullmsg="请输入类型名称！" value="${floor.name!}"></td>
+		</tr>
+		
+		<tr class="FormData">
+			<td class="CaptionTD">广告链接</td>
+			<td class="DataTD width-100"><input type="text" name="advurl" datatype="*"
+			nullmsg="请输入类型名称！" value="${floor.advurl!}"></td>
+		</tr>
+		<tr class="FormData">
+			<td class="CaptionTD">楼层广告</td>
+			<td class="DataTD width-100">
+			<input type="file"  id="imgs" name="imgs" datatype="*"  nullmsg="请输入楼层广告！"/></td>
+		</tr>
+		<tr class="FormData">
+			<td class="CaptionTD">商品类型排序</td>
+			<td class="DataTD width-100"><input type="text" name="typesort" datatype="*"
+			nullmsg="请输入商品类型排序！" value="${floor.typesort!}"></td>
+		</tr>
+		
+		<tr class="FormData">
+			<td class="CaptionTD">楼层简介</td>
+			<td class="DataTD width-100"><input type="text" name="title" datatype="*"
+			nullmsg="请输入title！" value="${floor.title!}"></td>
+		</tr>
+		<tr class="FormData">
+			<td class="CaptionTD"><span class="btn btn-info btn-block bigger-120" onclick="backValue()" id="product-save-btn">保 存</span></td>
+			<td class="DataTD width-100"></td>
+		</tr>
+		
+		
+			</tbody>
+		</table>
+	</form>
+</div>
+<script type="text/javascript">
+
+	//上传
+	$('#imgs').ace_file_input({
+		no_file:'请选择图片 ...',
+		btn_choose:'选择',
+		btn_change:'更改',
+		droppable:false,
+		onchange:null,
+		thumbnail:false //| true | large
+		//whitelist:'gif|png|jpg|jpeg'
+		//blacklist:'exe|php'
+		//onchange:''
+		//
+	});
+		function backValue(){
+	    	$("#floor-save").submit();
+		}
+		
+	</script>
+

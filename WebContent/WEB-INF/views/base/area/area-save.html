@@ -1,0 +1,71 @@
+<div class="layer">
+	<form name="FormPost" id="area-save" class="FormGrid"  method="post"
+		action="${ctxPath}/area/save">
+		
+		<input type="hidden" value="${area.id!}" name="id"/>
+		<table class="EditTable" width="100%">
+			<tbody>
+				<tr style="display: none;">
+					<td class="ui-state-error" id="FormError"></td>
+				</tr>
+								<tr class="FormData">
+			<td class="CaptionTD">地区名称</td>
+			<td class="DataTD width-100"><input type="text" name="areaName" datatype="*"
+			nullmsg="请输入地区名称！" value="${area.areaName!}"></td>
+		</tr>
+		<tr class="FormData">
+			<td class="CaptionTD">地区父ID</td>
+			<td class="DataTD width-100"><input type="text" name="parentId" datatype="*"
+			nullmsg="请输入地区父ID！" value="${area.parentId!}"></td>
+		</tr>
+		<tr class="FormData">
+			<td class="CaptionTD">排序</td>
+			<td class="DataTD width-100"><input type="text" name="areaSort" datatype="*"
+			nullmsg="请输入排序！" value="${area.areaSort!}"></td>
+		</tr>
+		<tr class="FormData">
+			<td class="CaptionTD">地区深度，从1开始</td>
+			<td class="DataTD width-100"><input type="text" name="areaDeep" datatype="*"
+			nullmsg="请输入地区深度，从1开始！" value="${area.areaDeep!}"></td>
+		</tr>
+		<tr class="FormData">
+			<td class="CaptionTD">是否删除0:未删除;1:已删除</td>
+			<td class="DataTD width-100"><input type="text" name="isDel" datatype="*"
+			nullmsg="请输入是否删除0:未删除;1:已删除！" value="${area.isDel!}"></td>
+		</tr>
+		<tr class="FormData">
+			<td class="CaptionTD">创建时间</td>
+			<td class="DataTD width-100"><input type="text" name="createTime" datatype="*"
+			nullmsg="请输入创建时间！" value="${area.createTime!}"></td>
+		</tr>
+		<tr class="FormData">
+			<td class="CaptionTD">修改时间</td>
+			<td class="DataTD width-100"><input type="text" name="updateTime" datatype="*"
+			nullmsg="请输入修改时间！" value="${area.updateTime!}"></td>
+		</tr>
+		<tr class="FormData">
+			<td class="CaptionTD">parentIds</td>
+			<td class="DataTD width-100"><input type="text" name="parentIds" datatype="*"
+			nullmsg="请输入parentIds！" value="${area.parentIds!}"></td>
+		</tr>
+
+				<!-- <tr class="FormData">
+					<td class="CaptionTD">描述</td>
+					<td class="DataTD">
+						<textarea name="description" class="autosize-transition form-control "
+						style="resize: none;">${area.description!}</textarea>	
+					</td>
+				</tr> -->
+			</tbody>
+		</table>
+	</form>
+</div>
+<#save formId="area-save" />
+
+<script type="text/javascript">
+
+//描述框自动扩张高度
+$('textarea[class*=autosize]').autosize({append: "\n"});
+//日期框
+$('.date-picker').datepicker();
+</script>

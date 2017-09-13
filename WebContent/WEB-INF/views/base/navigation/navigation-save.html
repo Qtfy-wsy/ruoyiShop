@@ -1,0 +1,81 @@
+<div class="layer">
+	<form name="FormPost" id="navigation-save" class="FormGrid"  method="post"
+		action="${ctxPath}/navigation/save">
+		
+		<input type="hidden" value="${navigation.id!}" name="id"/>
+		<table class="EditTable" width="100%">
+			<tbody>
+				<tr style="display: none;">
+					<td class="ui-state-error" id="FormError"></td>
+				</tr>
+								<tr class="FormData">
+			<td class="CaptionTD">类别，0自定义导航，1商品分类，2文章导航，3活动导航，默认为0</td>
+			<td class="DataTD width-100"><input type="text" name="navType" datatype="*"
+			nullmsg="请输入类别，0自定义导航，1商品分类，2文章导航，3活动导航，默认为0！" value="${navigation.navType!}"></td>
+		</tr>
+		<tr class="FormData">
+			<td class="CaptionTD">导航标题</td>
+			<td class="DataTD width-100"><input type="text" name="navTitle" datatype="*"
+			nullmsg="请输入导航标题！" value="${navigation.navTitle!}"></td>
+		</tr>
+		<tr class="FormData">
+			<td class="CaptionTD">导航链接</td>
+			<td class="DataTD width-100"><input type="text" name="navUrl" datatype="*"
+			nullmsg="请输入导航链接！" value="${navigation.navUrl!}"></td>
+		</tr>
+		<tr class="FormData">
+			<td class="CaptionTD">导航位置，0头部，1中部，2底部，默认为0</td>
+			<td class="DataTD width-100"><input type="text" name="navLocation" datatype="*"
+			nullmsg="请输入导航位置，0头部，1中部，2底部，默认为0！" value="${navigation.navLocation!}"></td>
+		</tr>
+		<tr class="FormData">
+			<td class="CaptionTD">是否以新窗口打开，0为否，1为是，默认为0</td>
+			<td class="DataTD width-100"><input type="text" name="navNewOpen" datatype="*"
+			nullmsg="请输入是否以新窗口打开，0为否，1为是，默认为0！" value="${navigation.navNewOpen!}"></td>
+		</tr>
+		<tr class="FormData">
+			<td class="CaptionTD">排序</td>
+			<td class="DataTD width-100"><input type="text" name="navSort" datatype="*"
+			nullmsg="请输入排序！" value="${navigation.navSort!}"></td>
+		</tr>
+		<tr class="FormData">
+			<td class="CaptionTD">类别ID，对应着nav_type中的内容，默认为0</td>
+			<td class="DataTD width-100"><input type="text" name="itemId" datatype="*"
+			nullmsg="请输入类别ID，对应着nav_type中的内容，默认为0！" value="${navigation.itemId!}"></td>
+		</tr>
+		<tr class="FormData">
+			<td class="CaptionTD">isDel</td>
+			<td class="DataTD width-100"><input type="text" name="isDel" datatype="*"
+			nullmsg="请输入isDel！" value="${navigation.isDel!}"></td>
+		</tr>
+		<tr class="FormData">
+			<td class="CaptionTD">创建时间</td>
+			<td class="DataTD width-100"><input type="text" name="createTime" datatype="*"
+			nullmsg="请输入创建时间！" value="${navigation.createTime!}"></td>
+		</tr>
+		<tr class="FormData">
+			<td class="CaptionTD">修改时间</td>
+			<td class="DataTD width-100"><input type="text" name="updateTime" datatype="*"
+			nullmsg="请输入修改时间！" value="${navigation.updateTime!}"></td>
+		</tr>
+
+				<!-- <tr class="FormData">
+					<td class="CaptionTD">描述</td>
+					<td class="DataTD">
+						<textarea name="description" class="autosize-transition form-control "
+						style="resize: none;">${navigation.description!}</textarea>	
+					</td>
+				</tr> -->
+			</tbody>
+		</table>
+	</form>
+</div>
+<#save formId="navigation-save" />
+
+<script type="text/javascript">
+
+//描述框自动扩张高度
+$('textarea[class*=autosize]').autosize({append: "\n"});
+//日期框
+$('.date-picker').datepicker();
+</script>

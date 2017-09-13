@@ -1,0 +1,71 @@
+<div class="layer">
+	<form name="FormPost" id="payment-save" class="FormGrid"  method="post"
+		action="${ctxPath}/payment/save">
+		
+		<input type="hidden" value="${payment.id!}" name="id"/>
+		<table class="EditTable" width="100%">
+			<tbody>
+				<tr style="display: none;">
+					<td class="ui-state-error" id="FormError"></td>
+				</tr>
+								<tr class="FormData">
+			<td class="CaptionTD">支付代码名称</td>
+			<td class="DataTD width-100"><input type="text" name="paymentCode" datatype="*"
+			nullmsg="请输入支付代码名称！" value="${payment.paymentCode!}"></td>
+		</tr>
+		<tr class="FormData">
+			<td class="CaptionTD">支付名称</td>
+			<td class="DataTD width-100"><input type="text" name="paymentName" datatype="*"
+			nullmsg="请输入支付名称！" value="${payment.paymentName!}"></td>
+		</tr>
+		<tr class="FormData">
+			<td class="CaptionTD">支付接口配置信息</td>
+			<td class="DataTD width-100"><input type="text" name="paymentConfig" datatype="*"
+			nullmsg="请输入支付接口配置信息！" value="${payment.paymentConfig!}"></td>
+		</tr>
+		<tr class="FormData">
+			<td class="CaptionTD">接口状态0禁用1启用</td>
+			<td class="DataTD width-100"><input type="text" name="paymentState" datatype="*"
+			nullmsg="请输入接口状态0禁用1启用！" value="${payment.paymentState!}"></td>
+		</tr>
+		<tr class="FormData">
+			<td class="CaptionTD">是否删除0:未删除;1:已删除</td>
+			<td class="DataTD width-100"><input type="text" name="isDel" datatype="*"
+			nullmsg="请输入是否删除0:未删除;1:已删除！" value="${payment.isDel!}"></td>
+		</tr>
+		<tr class="FormData">
+			<td class="CaptionTD">创建时间</td>
+			<td class="DataTD width-100"><input type="text" name="createTime" datatype="*"
+			nullmsg="请输入创建时间！" value="${payment.createTime!}"></td>
+		</tr>
+		<tr class="FormData">
+			<td class="CaptionTD">修改时间</td>
+			<td class="DataTD width-100"><input type="text" name="updateTime" datatype="*"
+			nullmsg="请输入修改时间！" value="${payment.updateTime!}"></td>
+		</tr>
+		<tr class="FormData">
+			<td class="CaptionTD">支付方式logo</td>
+			<td class="DataTD width-100"><input type="text" name="paymentLogo" datatype="*"
+			nullmsg="请输入支付方式logo！" value="${payment.paymentLogo!}"></td>
+		</tr>
+
+				<!-- <tr class="FormData">
+					<td class="CaptionTD">描述</td>
+					<td class="DataTD">
+						<textarea name="description" class="autosize-transition form-control "
+						style="resize: none;">${payment.description!}</textarea>	
+					</td>
+				</tr> -->
+			</tbody>
+		</table>
+	</form>
+</div>
+<#save formId="payment-save" />
+
+<script type="text/javascript">
+
+//描述框自动扩张高度
+$('textarea[class*=autosize]').autosize({append: "\n"});
+//日期框
+$('.date-picker').datepicker();
+</script>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zsTrade.web.prj.mapper.ProductMapper">
+
+	<sql id="prjProductColumns">
+		id,title,tag,remark,summary,clickhit,typeid,img,typename,type,orderby,prices,imgmore,create_by,create_date,del_flag
+	</sql>
+    <select id="selectProductByFloor" resultType="com.zsTrade.web.prj.model.Product">
+		
+		SELECT * from t_product p LEFT JOIN t_floor_product f 
+        on p.id=f.productid where f.floorid =#{id}
+	</select>
+	
+	<select id="getProductByFloorid" resultType="com.zsTrade.web.prj.model.Product">
+		SELECT * from t_product p LEFT JOIN t_floor_product f 
+        on p.id=f.productid where f.floorid =#{id}
+	</select>
+	<select id="selectgoodsListByType" resultType="com.zsTrade.web.prj.model.Product" parameterType="java.lang.Long">
+	select * from t_product t where t.type in (
+	select c.id  from t_product_class c where FIND_IN_SET(#{type},c.parent_ids))
+	</select>
+	
+	
+</mapper>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zsTrade.web.bases.mapper.AddressMapper">
+
+	<sql id="baseAddressColumns">
+		id,member_id,true_name,area_id,city_id,area_info,address,tel_phone,mob_phone,is_default,province_id,zip_code
+	</sql>
+
+
+	<update id="updateByMemberId">
+		update shop_address set is_default = #{isDefault} where member_id=#{memberId}
+	</update>
+</mapper>

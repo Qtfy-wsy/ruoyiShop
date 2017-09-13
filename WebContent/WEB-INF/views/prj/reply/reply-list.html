@@ -1,0 +1,54 @@
+<table class="table table-striped table-bordered table-hover nomargin-bottom">
+	<thead>
+		<tr>
+								<th class="center">goodsid</th>
+			<th class="center">content</th>
+			<th class="center">createdate</th>
+			<th class="center">status</th>
+			<th class="center">userid</th>
+			<th class="center">username</th>
+
+			<th class="center">操作</th>
+		</tr>
+	</thead>
+
+	<tbody>
+		@for(item in page.list){
+			<tr>
+								<td class="center">${item.goodsid!}</td>
+			<td class="center">${item.content!}</td>
+			<td class="center">${item.createdate!}</td>
+			<td class="center">${item.status!}</td>
+			<td class="center">${item.userid!}</td>
+			<td class="center">${item.username!}</td>
+
+				<td class="center">
+					<div class="hidden-sm hidden-xs action-buttons">
+					@if(auth.hasPermission("prj:reply:edit")){
+						<a class="green" href="javascript:void(0);" 
+							data-mode="page" data-title="编辑"
+							data-url="${ctxPath}/reply/edit/showlayer"
+							data-data="{id:'${item.id}'}" 
+						>
+							<i class="ace-icon fa fa-pencil bigger-130"></i>
+						</a>
+					@}
+					
+					@if(auth.hasPermission("prj:reply:delete")){
+						<a class="red" href="javascript:void(0);" 
+							data-mode="del" data-title="删除操作"
+							data-msg="你确定删除此数据吗?"
+							data-url="${ctxPath}/reply/delete" 
+							data-data="{id:'${item.id}',type:'${item.type}',value:'${item.value}'}"
+						>
+							<i class="ace-icon fa fa-trash-o bigger-130"></i>
+						</a>
+					@}
+					</div>
+				</td>
+			</tr>
+		@}
+	</tbody>
+</table>
+<div class="space-8"></div>
+<#paginate page="${page}" />

@@ -1,0 +1,93 @@
+<div class="tabbable">
+	<ul class="nav nav-tabs" id="myTab">
+		<li class="active"><a data-toggle="tab" href="#home"> <i
+				class="green ace-icon fa fa-list-alt bigger-120"></i> 列表
+		</a></li>
+		@if(auth.hasPermission("workflow:leave:add")){
+		<li class=""><a data-toggle="tab" href="#profile">
+		<i class="green ace-icon fa fa-plus bigger-120"></i> 添加
+		</a></li>
+		@}
+	</ul>
+
+	<div class="tab-content">
+		<div id="home" class="tab-pane active clearfix">
+			<form action="${ctxPath}/leave/list" method="post" id="search-form" target="list-page" class="clearfix">
+				
+				<div class="pull-left width-30">
+					<label>描述：</label>
+					<input type="text" class="width-80" name="description"/>
+				</div>
+				<div class="pull-left"><span class="btn btn-info btn-sm " id="search-btn">查 询</span></div>
+			</form>
+			<hr/>
+			<div id="list-page"></div>
+			<script type="text/javascript">
+				$("#search-form").getPageList({'submitBtnId':'search-btn'})
+			</script>
+		</div>
+
+		<div id="profile" class="tab-pane">
+			<form action="${ctxPath!}/leave/save" method="post" id="leave-save-form">
+								<div class="center padding-10">
+			<label>endtime：</label>
+			<input type="text" data-date-format="yyyy-mm-dd" readonly="readonly" class="width-50 span10 date-picker" name="endtime" datatype="*"  nullmsg="请输入endtime！"/>
+		</div>
+		<div class="center padding-10">
+			<label>leavedays：</label>
+			<input type="text" class="width-50" name="leavedays" datatype="*"  nullmsg="请输入leavedays！"/>
+		</div>
+		<div class="center padding-10">
+			<label>leavetype：</label>
+			<input type="text" class="width-50" name="leavetype" datatype="*"  nullmsg="请输入leavetype！"/>
+		</div>
+		<div class="center padding-10">
+			<label>processinstanceid：</label>
+			<input type="text" class="width-50" name="processinstanceid" datatype="*"  nullmsg="请输入processinstanceid！"/>
+		</div>
+		<div class="center padding-10">
+			<label>reason：</label>
+			<input type="text" class="width-50" name="reason" datatype="*"  nullmsg="请输入reason！"/>
+		</div>
+		<div class="center padding-10">
+			<label>sponsorloginid：</label>
+			<input type="text" class="width-50" name="sponsorloginid" datatype="*"  nullmsg="请输入sponsorloginid！"/>
+		</div>
+		<div class="center padding-10">
+			<label>starttime：</label>
+			<input type="text" data-date-format="yyyy-mm-dd" readonly="readonly" class="width-50 span10 date-picker" name="starttime" datatype="*"  nullmsg="请输入starttime！"/>
+		</div>
+		<div class="center padding-10">
+			<label>depauditopinion：</label>
+			<input type="text" class="width-50" name="depauditopinion" datatype="*"  nullmsg="请输入depauditopinion！"/>
+		</div>
+		<div class="center padding-10">
+			<label>hrauditopinion：</label>
+			<input type="text" class="width-50" name="hrauditopinion" datatype="*"  nullmsg="请输入hrauditopinion！"/>
+		</div>
+		<div class="center padding-10">
+			<label>fileid：</label>
+			<input type="text" class="width-50" name="fileid" datatype="*"  nullmsg="请输入fileid！"/>
+		</div>
+		<div class="center padding-10">
+			<label>filename：</label>
+			<input type="text" class="width-50" name="filename" datatype="*"  nullmsg="请输入filename！"/>
+		</div>
+
+				<!-- <div class="center padding-10" >
+					<label style="vertical-align: top;">描述：</label>
+					<textarea type="text" class="width-50" name="description"></textarea>
+				</div> -->
+				<div class="margin-t15">
+					<span class="btn btn-info btn-block bigger-120" id="leave-save-btn">保 存</span>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+<script type="text/javascript">
+//日期框
+$('.date-picker').datepicker();
+</script>
+
+<#save isHide="yes" subBtnId="leave-save-btn" formId="leave-save-form" />

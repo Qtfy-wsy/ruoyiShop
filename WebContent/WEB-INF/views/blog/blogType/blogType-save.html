@@ -1,0 +1,36 @@
+<div class="layer">
+	<form name="FormPost" id="blogType-save" class="FormGrid"  method="post"
+		action="${ctxPath}/blogType/save">
+		
+		<input type="hidden" value="${blogType.id!}" name="id"/>
+		<table class="EditTable" width="100%">
+			<tbody>
+				<tr style="display: none;">
+					<td class="ui-state-error" id="FormError"></td>
+				</tr>
+				<tr class="FormData">
+					<td class="CaptionTD">标签</td>
+					<td class="DataTD width-100"><input type="text"
+						name="typename" datatype="*"  nullmsg="请输入类型名！"
+						value="${blogType.typename!}"></td>
+				</tr>
+				
+				<tr class="FormData">
+					<td class="CaptionTD">排序</td>
+					<td class="DataTD">
+					<input type="text" value="${blogType.orderno!}" name="orderno"/>
+					</td>
+				</tr>
+				
+			</tbody>
+		</table>
+	</form>
+</div>
+<#save formId="blogType-save" />
+
+<script type="text/javascript">
+
+//描述框自动扩张高度
+$('textarea[class*=autosize]').autosize({append: "\n"});
+
+</script>

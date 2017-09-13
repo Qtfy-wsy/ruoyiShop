@@ -1,0 +1,66 @@
+<div class="layer">
+	<form name="FormPost" id="blogTemplate-save" class="FormGrid"  method="post"
+		action="${ctxPath}/blogTemplate/save">
+		
+		<input type="hidden" value="${blogTemplate.id!}" name="id"/>
+		<table class="EditTable" width="100%">
+			<tbody>
+				<tr style="display: none;">
+					<td class="ui-state-error" id="FormError"></td>
+				</tr>
+								<tr class="FormData">
+			<td class="CaptionTD">标题</td>
+			<td class="DataTD width-100"><input type="text" name="title" datatype="*"
+			nullmsg="请输入标题！" value="${blogTemplate.title!}"></td>
+		</tr>
+		<tr class="FormData">
+			<td class="CaptionTD">摘要</td>
+			<td class="DataTD width-100"><input type="text" name="summary" datatype="*"
+			nullmsg="请输入摘要！" value="${blogTemplate.summary!}"></td>
+		</tr>
+		<tr class="FormData">
+			<td class="CaptionTD">发布时间</td>
+			<td class="DataTD width-100"><input type="text" data-date-format="yyyy-mm-dd" readonly="readonly" class="date-picker" name="releasedate" datatype="*"
+			nullmsg="请输入发布时间！" value="${blogTemplate.releasedate!}"></td>
+		</tr>
+		<tr class="FormData">
+			<td class="CaptionTD">clickhit</td>
+			<td class="DataTD width-100"><input type="text" name="clickhit" datatype="*"
+			nullmsg="请输入clickhit！" value="${blogTemplate.clickhit!}"></td>
+		</tr>
+		<tr class="FormData">
+			<td class="CaptionTD">replyhit</td>
+			<td class="DataTD width-100"><input type="text" name="replyhit" datatype="*"
+			nullmsg="请输入replyhit！" value="${blogTemplate.replyhit!}"></td>
+		</tr>
+		<tr class="FormData">
+			<td class="CaptionTD">content</td>
+			<td class="DataTD width-100"><input type="text" name="content" datatype="*"
+			nullmsg="请输入content！" value="${blogTemplate.content!}"></td>
+		</tr>
+		<tr class="FormData">
+			<td class="CaptionTD">keyword</td>
+			<td class="DataTD width-100"><input type="text" name="keyword" datatype="*"
+			nullmsg="请输入keyword！" value="${blogTemplate.keyword!}"></td>
+		</tr>
+
+				<!-- <tr class="FormData">
+					<td class="CaptionTD">描述</td>
+					<td class="DataTD">
+						<textarea name="description" class="autosize-transition form-control "
+						style="resize: none;">${blogTemplate.description!}</textarea>	
+					</td>
+				</tr> -->
+			</tbody>
+		</table>
+	</form>
+</div>
+<#save formId="blogTemplate-save" />
+
+<script type="text/javascript">
+
+//描述框自动扩张高度
+$('textarea[class*=autosize]').autosize({append: "\n"});
+//日期框
+$('.date-picker').datepicker();
+</script>

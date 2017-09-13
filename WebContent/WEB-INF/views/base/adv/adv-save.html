@@ -1,0 +1,76 @@
+<div class="layer">
+	<form name="FormPost" id="adv-save" class="FormGrid"  method="post"
+		action="${ctxPath}/adv/save">
+		
+		<input type="hidden" value="${adv.id!}" name="id"/>
+		<table class="EditTable" width="100%">
+			<tbody>
+				<tr style="display: none;">
+					<td class="ui-state-error" id="FormError"></td>
+				</tr>
+								<tr class="FormData">
+			<td class="CaptionTD">广告位id</td>
+			<td class="DataTD width-100"><input type="text" name="apId" datatype="*"
+			nullmsg="请输入广告位id！" value="${adv.apId!}"></td>
+		</tr>
+		<tr class="FormData">
+			<td class="CaptionTD">标题</td>
+			<td class="DataTD width-100"><input type="text" name="advTitle" datatype="*"
+			nullmsg="请输入标题！" value="${adv.advTitle!}"></td>
+		</tr>
+		<tr class="FormData">
+			<td class="CaptionTD">广告内容</td>
+			<td class="DataTD width-100"><input type="text" name="advUrl" datatype="*"
+			nullmsg="请输入广告内容！" value="${adv.advUrl!}"></td>
+		</tr>
+		<tr class="FormData">
+			<td class="CaptionTD">广告开始时间</td>
+			<td class="DataTD width-100"><input type="text" name="startDate" datatype="*"
+			nullmsg="请输入广告开始时间！" value="${adv.startDate!}"></td>
+		</tr>
+		<tr class="FormData">
+			<td class="CaptionTD">广告结束时间</td>
+			<td class="DataTD width-100"><input type="text" name="endDate" datatype="*"
+			nullmsg="请输入广告结束时间！" value="${adv.endDate!}"></td>
+		</tr>
+		<tr class="FormData">
+			<td class="CaptionTD">幻灯片排序</td>
+			<td class="DataTD width-100"><input type="text" name="sort" datatype="*"
+			nullmsg="请输入幻灯片排序！" value="${adv.sort!}"></td>
+		</tr>
+		<tr class="FormData">
+			<td class="CaptionTD">广告点击率</td>
+			<td class="DataTD width-100"><input type="text" name="clickNum" datatype="*"
+			nullmsg="请输入广告点击率！" value="${adv.clickNum!}"></td>
+		</tr>
+		<tr class="FormData">
+			<td class="CaptionTD">会员购买的广告是否通过审核0未审核1审核已通过2审核未通过</td>
+			<td class="DataTD width-100"><input type="text" name="isAllow" datatype="*"
+			nullmsg="请输入会员购买的广告是否通过审核0未审核1审核已通过2审核未通过！" value="${adv.isAllow!}"></td>
+		</tr>
+		<tr class="FormData">
+			<td class="CaptionTD">resUrl</td>
+			<td class="DataTD width-100"><input type="text" name="resUrl" datatype="*"
+			nullmsg="请输入resUrl！" value="${adv.resUrl!}"></td>
+		</tr>
+
+				<!-- <tr class="FormData">
+					<td class="CaptionTD">描述</td>
+					<td class="DataTD">
+						<textarea name="description" class="autosize-transition form-control "
+						style="resize: none;">${adv.description!}</textarea>	
+					</td>
+				</tr> -->
+			</tbody>
+		</table>
+	</form>
+</div>
+<#save formId="adv-save" />
+
+<script type="text/javascript">
+
+//描述框自动扩张高度
+$('textarea[class*=autosize]').autosize({append: "\n"});
+//日期框
+$('.date-picker').datepicker();
+</script>

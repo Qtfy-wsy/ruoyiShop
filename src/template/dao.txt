@@ -1,0 +1,20 @@
+/** [powerBy] */
+
+package [packagePree].[model].mapper;
+import java.util.List;
+import java.util.Map;
+import com.github.abel533.mapper.Mapper;
+import [packagePree].[model].model.[entityClass];
+
+
+/**
+ * 
+ * @author [author] [date]
+ * @Email: [email]
+ * @version [version]
+ *	[description]
+ */
+public interface [entityClass]Mapper extends Mapper<[entityClass]>{
+	public List<[entityClass]> findPageInfo(Map<String, Object> params);
+	
+}

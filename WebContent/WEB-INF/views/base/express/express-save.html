@@ -1,0 +1,66 @@
+<div class="layer">
+	<form name="FormPost" id="express-save" class="FormGrid"  method="post"
+		action="${ctxPath}/express/save">
+		
+		<input type="hidden" value="${express.id!}" name="id"/>
+		<table class="EditTable" width="100%">
+			<tbody>
+				<tr style="display: none;">
+					<td class="ui-state-error" id="FormError"></td>
+				</tr>
+								<tr class="FormData">
+			<td class="CaptionTD">公司名称</td>
+			<td class="DataTD width-100"><input type="text" name="eName" datatype="*"
+			nullmsg="请输入公司名称！" value="${express.eName!}"></td>
+		</tr>
+		<tr class="FormData">
+			<td class="CaptionTD">状态</td>
+			<td class="DataTD width-100"><input type="text" name="eState" datatype="*"
+			nullmsg="请输入状态！" value="${express.eState!}"></td>
+		</tr>
+		<tr class="FormData">
+			<td class="CaptionTD">编号</td>
+			<td class="DataTD width-100"><input type="text" name="eCode" datatype="*"
+			nullmsg="请输入编号！" value="${express.eCode!}"></td>
+		</tr>
+		<tr class="FormData">
+			<td class="CaptionTD">首字母</td>
+			<td class="DataTD width-100"><input type="text" name="eLetter" datatype="*"
+			nullmsg="请输入首字母！" value="${express.eLetter!}"></td>
+		</tr>
+		<tr class="FormData">
+			<td class="CaptionTD">1常用0不常用</td>
+			<td class="DataTD width-100"><input type="text" name="eOrder" datatype="*"
+			nullmsg="请输入1常用0不常用！" value="${express.eOrder!}"></td>
+		</tr>
+		<tr class="FormData">
+			<td class="CaptionTD">公司网址</td>
+			<td class="DataTD width-100"><input type="text" name="eUrl" datatype="*"
+			nullmsg="请输入公司网址！" value="${express.eUrl!}"></td>
+		</tr>
+		<tr class="FormData">
+			<td class="CaptionTD">删除标记</td>
+			<td class="DataTD width-100"><input type="text" name="isDel" datatype="*"
+			nullmsg="请输入删除标记！" value="${express.isDel!}"></td>
+		</tr>
+
+				<!-- <tr class="FormData">
+					<td class="CaptionTD">描述</td>
+					<td class="DataTD">
+						<textarea name="description" class="autosize-transition form-control "
+						style="resize: none;">${express.description!}</textarea>	
+					</td>
+				</tr> -->
+			</tbody>
+		</table>
+	</form>
+</div>
+<#save formId="express-save" />
+
+<script type="text/javascript">
+
+//描述框自动扩张高度
+$('textarea[class*=autosize]').autosize({append: "\n"});
+//日期框
+$('.date-picker').datepicker();
+</script>

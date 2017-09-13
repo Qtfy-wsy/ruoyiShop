@@ -1,0 +1,81 @@
+<div class="layer">
+	<form name="FormPost" id="article-save" class="FormGrid"  method="post"
+		action="${ctxPath}/article/save">
+		
+		<input type="hidden" value="${article.id!}" name="id"/>
+		<table class="EditTable" width="100%">
+			<tbody>
+				<tr style="display: none;">
+					<td class="ui-state-error" id="FormError"></td>
+				</tr>
+								<tr class="FormData">
+			<td class="CaptionTD">分类id</td>
+			<td class="DataTD width-100"><input type="text" name="acId" datatype="*"
+			nullmsg="请输入分类id！" value="${article.acId!}"></td>
+		</tr>
+		<tr class="FormData">
+			<td class="CaptionTD">跳转链接</td>
+			<td class="DataTD width-100"><input type="text" name="articleUrl" datatype="*"
+			nullmsg="请输入跳转链接！" value="${article.articleUrl!}"></td>
+		</tr>
+		<tr class="FormData">
+			<td class="CaptionTD">是否显示，0为否，1为是，默认为1</td>
+			<td class="DataTD width-100"><input type="text" name="articleShow" datatype="*"
+			nullmsg="请输入是否显示，0为否，1为是，默认为1！" value="${article.articleShow!}"></td>
+		</tr>
+		<tr class="FormData">
+			<td class="CaptionTD">排序</td>
+			<td class="DataTD width-100"><input type="text" name="articleSort" datatype="*"
+			nullmsg="请输入排序！" value="${article.articleSort!}"></td>
+		</tr>
+		<tr class="FormData">
+			<td class="CaptionTD">标题</td>
+			<td class="DataTD width-100"><input type="text" name="articleTitle" datatype="*"
+			nullmsg="请输入标题！" value="${article.articleTitle!}"></td>
+		</tr>
+		<tr class="FormData">
+			<td class="CaptionTD">内容</td>
+			<td class="DataTD width-100"><input type="text" name="articleContent" datatype="*"
+			nullmsg="请输入内容！" value="${article.articleContent!}"></td>
+		</tr>
+		<tr class="FormData">
+			<td class="CaptionTD">0:未删除;1.已删除</td>
+			<td class="DataTD width-100"><input type="text" name="isDel" datatype="*"
+			nullmsg="请输入0:未删除;1.已删除！" value="${article.isDel!}"></td>
+		</tr>
+		<tr class="FormData">
+			<td class="CaptionTD">创建时间</td>
+			<td class="DataTD width-100"><input type="text" name="createTime" datatype="*"
+			nullmsg="请输入创建时间！" value="${article.createTime!}"></td>
+		</tr>
+		<tr class="FormData">
+			<td class="CaptionTD">修改时间</td>
+			<td class="DataTD width-100"><input type="text" name="updateTime" datatype="*"
+			nullmsg="请输入修改时间！" value="${article.updateTime!}"></td>
+		</tr>
+		<tr class="FormData">
+			<td class="CaptionTD">articleTime</td>
+			<td class="DataTD width-100"><input type="text" name="articleTime" datatype="*"
+			nullmsg="请输入articleTime！" value="${article.articleTime!}"></td>
+		</tr>
+
+				<!-- <tr class="FormData">
+					<td class="CaptionTD">描述</td>
+					<td class="DataTD">
+						<textarea name="description" class="autosize-transition form-control "
+						style="resize: none;">${article.description!}</textarea>	
+					</td>
+				</tr> -->
+			</tbody>
+		</table>
+	</form>
+</div>
+<#save formId="article-save" />
+
+<script type="text/javascript">
+
+//描述框自动扩张高度
+$('textarea[class*=autosize]').autosize({append: "\n"});
+//日期框
+$('.date-picker').datepicker();
+</script>

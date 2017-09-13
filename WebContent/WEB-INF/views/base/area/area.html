@@ -1,0 +1,81 @@
+<div class="tabbable">
+	<ul class="nav nav-tabs" id="myTab">
+		<li class="active"><a data-toggle="tab" href="#home"> <i
+				class="green ace-icon fa fa-list-alt bigger-120"></i> 列表
+		</a></li>
+		@if(auth.hasPermission("base:area:add")){
+		<li class=""><a data-toggle="tab" href="#profile">
+		<i class="green ace-icon fa fa-plus bigger-120"></i> 添加
+		</a></li>
+		@}
+	</ul>
+
+	<div class="tab-content">
+		<div id="home" class="tab-pane active clearfix">
+			<form action="${ctxPath}/area/list" method="post" id="search-form" target="list-page" class="clearfix">
+				
+				<div class="pull-left width-30">
+					<label>描述：</label>
+					<input type="text" class="width-80" name="description"/>
+				</div>
+				<div class="pull-left"><span class="btn btn-info btn-sm " id="search-btn">查 询</span></div>
+			</form>
+			<hr/>
+			<div id="list-page"></div>
+			<script type="text/javascript">
+				$("#search-form").getPageList({'submitBtnId':'search-btn'})
+			</script>
+		</div>
+
+		<div id="profile" class="tab-pane">
+			<form action="${ctxPath!}/area/save" method="post" id="area-save-form">
+								<div class="center padding-10">
+			<label>地区名称：</label>
+			<input type="text" class="width-50" name="areaName" datatype="*"  nullmsg="请输入地区名称！"/>
+		</div>
+		<div class="center padding-10">
+			<label>地区父ID：</label>
+			<input type="text" class="width-50" name="parentId" datatype="*"  nullmsg="请输入地区父ID！"/>
+		</div>
+		<div class="center padding-10">
+			<label>排序：</label>
+			<input type="text" class="width-50" name="areaSort" datatype="*"  nullmsg="请输入排序！"/>
+		</div>
+		<div class="center padding-10">
+			<label>地区深度，从1开始：</label>
+			<input type="text" class="width-50" name="areaDeep" datatype="*"  nullmsg="请输入地区深度，从1开始！"/>
+		</div>
+		<div class="center padding-10">
+			<label>是否删除0:未删除;1:已删除：</label>
+			<input type="text" class="width-50" name="isDel" datatype="*"  nullmsg="请输入是否删除0:未删除;1:已删除！"/>
+		</div>
+		<div class="center padding-10">
+			<label>创建时间：</label>
+			<input type="text" class="width-50" name="createTime" datatype="*"  nullmsg="请输入创建时间！"/>
+		</div>
+		<div class="center padding-10">
+			<label>修改时间：</label>
+			<input type="text" class="width-50" name="updateTime" datatype="*"  nullmsg="请输入修改时间！"/>
+		</div>
+		<div class="center padding-10">
+			<label>parentIds：</label>
+			<input type="text" class="width-50" name="parentIds" datatype="*"  nullmsg="请输入parentIds！"/>
+		</div>
+
+				<!-- <div class="center padding-10" >
+					<label style="vertical-align: top;">描述：</label>
+					<textarea type="text" class="width-50" name="description"></textarea>
+				</div> -->
+				<div class="margin-t15">
+					<span class="btn btn-info btn-block bigger-120" id="area-save-btn">保 存</span>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+<script type="text/javascript">
+//日期框
+$('.date-picker').datepicker();
+</script>
+
+<#save isHide="yes" subBtnId="area-save-btn" formId="area-save-form" />

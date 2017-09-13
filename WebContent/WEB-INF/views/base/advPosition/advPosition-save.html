@@ -1,0 +1,71 @@
+<div class="layer">
+	<form name="FormPost" id="advPosition-save" class="FormGrid"  method="post"
+		action="${ctxPath}/advPosition/save">
+		
+		<input type="hidden" value="${advPosition.id!}" name="id"/>
+		<table class="EditTable" width="100%">
+			<tbody>
+				<tr style="display: none;">
+					<td class="ui-state-error" id="FormError"></td>
+				</tr>
+								<tr class="FormData">
+			<td class="CaptionTD">广告位置名</td>
+			<td class="DataTD width-100"><input type="text" name="apName" datatype="*"
+			nullmsg="请输入广告位置名！" value="${advPosition.apName!}"></td>
+		</tr>
+		<tr class="FormData">
+			<td class="CaptionTD">广告位简介</td>
+			<td class="DataTD width-100"><input type="text" name="apIntro" datatype="*"
+			nullmsg="请输入广告位简介！" value="${advPosition.apIntro!}"></td>
+		</tr>
+		<tr class="FormData">
+			<td class="CaptionTD">广告类别：0图片1文字2幻灯3Flash</td>
+			<td class="DataTD width-100"><input type="text" name="apClass" datatype="*"
+			nullmsg="请输入广告类别：0图片1文字2幻灯3Flash！" value="${advPosition.apClass!}"></td>
+		</tr>
+		<tr class="FormData">
+			<td class="CaptionTD">广告展示方式：0幻灯片1多广告展示2单广告展示</td>
+			<td class="DataTD width-100"><input type="text" name="apDisplay" datatype="*"
+			nullmsg="请输入广告展示方式：0幻灯片1多广告展示2单广告展示！" value="${advPosition.apDisplay!}"></td>
+		</tr>
+		<tr class="FormData">
+			<td class="CaptionTD">广告位是否启用：0不启用1启用</td>
+			<td class="DataTD width-100"><input type="text" name="isUse" datatype="*"
+			nullmsg="请输入广告位是否启用：0不启用1启用！" value="${advPosition.isUse!}"></td>
+		</tr>
+		<tr class="FormData">
+			<td class="CaptionTD">广告位宽度</td>
+			<td class="DataTD width-100"><input type="text" name="apWidth" datatype="*"
+			nullmsg="请输入广告位宽度！" value="${advPosition.apWidth!}"></td>
+		</tr>
+		<tr class="FormData">
+			<td class="CaptionTD">广告位高度</td>
+			<td class="DataTD width-100"><input type="text" name="apHeight" datatype="*"
+			nullmsg="请输入广告位高度！" value="${advPosition.apHeight!}"></td>
+		</tr>
+		<tr class="FormData">
+			<td class="CaptionTD">取值键</td>
+			<td class="DataTD width-100"><input type="text" name="apKey" datatype="*"
+			nullmsg="请输入取值键！" value="${advPosition.apKey!}"></td>
+		</tr>
+
+				<!-- <tr class="FormData">
+					<td class="CaptionTD">描述</td>
+					<td class="DataTD">
+						<textarea name="description" class="autosize-transition form-control "
+						style="resize: none;">${advPosition.description!}</textarea>	
+					</td>
+				</tr> -->
+			</tbody>
+		</table>
+	</form>
+</div>
+<#save formId="advPosition-save" />
+
+<script type="text/javascript">
+
+//描述框自动扩张高度
+$('textarea[class*=autosize]').autosize({append: "\n"});
+//日期框
+$('.date-picker').datepicker();
+</script>

@@ -1,0 +1,89 @@
+<div class="tabbable">
+	<ul class="nav nav-tabs" id="myTab">
+		<li class="active"><a data-toggle="tab" href="#home"> <i
+				class="green ace-icon fa fa-list-alt bigger-120"></i> 列表
+		</a></li>
+		@if(auth.hasPermission("base:navigation:add")){
+		<li class=""><a data-toggle="tab" href="#profile">
+		<i class="green ace-icon fa fa-plus bigger-120"></i> 添加
+		</a></li>
+		@}
+	</ul>
+
+	<div class="tab-content">
+		<div id="home" class="tab-pane active clearfix">
+			<form action="${ctxPath}/navigation/list" method="post" id="search-form" target="list-page" class="clearfix">
+				
+				<div class="pull-left width-30">
+					<label>描述：</label>
+					<input type="text" class="width-80" name="description"/>
+				</div>
+				<div class="pull-left"><span class="btn btn-info btn-sm " id="search-btn">查 询</span></div>
+			</form>
+			<hr/>
+			<div id="list-page"></div>
+			<script type="text/javascript">
+				$("#search-form").getPageList({'submitBtnId':'search-btn'})
+			</script>
+		</div>
+
+		<div id="profile" class="tab-pane">
+			<form action="${ctxPath!}/navigation/save" method="post" id="navigation-save-form">
+								<div class="center padding-10">
+			<label>类别，0自定义导航，1商品分类，2文章导航，3活动导航，默认为0：</label>
+			<input type="text" class="width-50" name="navType" datatype="*"  nullmsg="请输入类别，0自定义导航，1商品分类，2文章导航，3活动导航，默认为0！"/>
+		</div>
+		<div class="center padding-10">
+			<label>导航标题：</label>
+			<input type="text" class="width-50" name="navTitle" datatype="*"  nullmsg="请输入导航标题！"/>
+		</div>
+		<div class="center padding-10">
+			<label>导航链接：</label>
+			<input type="text" class="width-50" name="navUrl" datatype="*"  nullmsg="请输入导航链接！"/>
+		</div>
+		<div class="center padding-10">
+			<label>导航位置，0头部，1中部，2底部，默认为0：</label>
+			<input type="text" class="width-50" name="navLocation" datatype="*"  nullmsg="请输入导航位置，0头部，1中部，2底部，默认为0！"/>
+		</div>
+		<div class="center padding-10">
+			<label>是否以新窗口打开，0为否，1为是，默认为0：</label>
+			<input type="text" class="width-50" name="navNewOpen" datatype="*"  nullmsg="请输入是否以新窗口打开，0为否，1为是，默认为0！"/>
+		</div>
+		<div class="center padding-10">
+			<label>排序：</label>
+			<input type="text" class="width-50" name="navSort" datatype="*"  nullmsg="请输入排序！"/>
+		</div>
+		<div class="center padding-10">
+			<label>类别ID，对应着nav_type中的内容，默认为0：</label>
+			<input type="text" class="width-50" name="itemId" datatype="*"  nullmsg="请输入类别ID，对应着nav_type中的内容，默认为0！"/>
+		</div>
+		<div class="center padding-10">
+			<label>isDel：</label>
+			<input type="text" class="width-50" name="isDel" datatype="*"  nullmsg="请输入isDel！"/>
+		</div>
+		<div class="center padding-10">
+			<label>创建时间：</label>
+			<input type="text" class="width-50" name="createTime" datatype="*"  nullmsg="请输入创建时间！"/>
+		</div>
+		<div class="center padding-10">
+			<label>修改时间：</label>
+			<input type="text" class="width-50" name="updateTime" datatype="*"  nullmsg="请输入修改时间！"/>
+		</div>
+
+				<!-- <div class="center padding-10" >
+					<label style="vertical-align: top;">描述：</label>
+					<textarea type="text" class="width-50" name="description"></textarea>
+				</div> -->
+				<div class="margin-t15">
+					<span class="btn btn-info btn-block bigger-120" id="navigation-save-btn">保 存</span>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+<script type="text/javascript">
+//日期框
+$('.date-picker').datepicker();
+</script>
+
+<#save isHide="yes" subBtnId="navigation-save-btn" formId="navigation-save-form" />
