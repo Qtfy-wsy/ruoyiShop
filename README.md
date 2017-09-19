@@ -1,5 +1,5 @@
 # payshop
-qq 1439226817
+qq 2123957932
 
 ### https://gitee.com/jmdhappy/xxpay-master 支付
 
