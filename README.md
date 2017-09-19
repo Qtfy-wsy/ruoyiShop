@@ -1,6 +1,7 @@
 # payshop
 qq 1439226817
 
+### https://gitee.com/jmdhappy/xxpay-master 支付
 
 
 - 采用ssm 通用mapper bootstreap beetl模板 妹子ui 商城
@@ -68,7 +69,7 @@ qq 1439226817
 http://git.oschina.net/catshen/cat
 ### 分布式版本
 
-http://git.oschina.net/catshen/zscat_sw
+http://git.oschina.net/JiaGou-XiaoGe/shop-dubbox
 
 
 
