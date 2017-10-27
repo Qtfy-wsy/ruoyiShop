@@ -1,6 +1,6 @@
 # payshop
 ### qq 2123957932
-shop-dubbox-vip群  621692258
+qq群  203747031
 
 
 ### 支付聚合 https://gitee.com/catshen/xxpay-master
