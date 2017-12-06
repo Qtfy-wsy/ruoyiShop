@@ -5,16 +5,14 @@ qq群  203747031
 
 ### 支付聚合 https://gitee.com/catshen/xxpay-master
 
+http://j2shop.tunnel.qydev.com/street/index
+http://j2shop.tunnel.qydev.com/login
 
+http://j2shop.tunnel.qydev.com/disShop/index
+http://j2shop.tunnel.qydev.com/web/index
 
-- 演示地址
-- 前端 http://shop.tunnel.qydev.com/front
-- 
-- h5  http://shop.tunnel.qydev.com/wap1
-- 
-- 后台 http://shop.tunnel.qydev.com/index  admin admin
-- 前端 2  http://shop.tunnel.qydev.com/web1
-- 前端 3  http://shop.tunnel.qydev.com/youhong
+http://j2shop.tunnel.qydev.com/web/cms/index
+http://j2shop.tunnel.qydev.com/blog/index
 
 
 - 采用ssm 通用mapper bootstreap beetl模板 妹子ui 商城
