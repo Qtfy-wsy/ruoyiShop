@@ -1,6 +1,5 @@
 # payshop
-### qq 2123957932
-qq群  203747031
+### qq 951449465
 
 
 ### 支付聚合 https://gitee.com/catshen/xxpay-master
