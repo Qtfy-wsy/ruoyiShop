@@ -1,98 +1,81 @@
-# payshop
-### qq 951449465
+## 平台简介
+
+* 前端采用Vue、Element UI。
+* 后端采用Spring Boot、Spring Security、Redis & Jwt。
+* 权限认证使用Jwt，支持多终端认证系统。
+* 支持加载动态权限菜单，多方式轻松权限控制。
+* 高效率开发，使用代码生成器可以一键生成前后端代码。
+* 提供了一个Oracle版本[RuoYi-Vue-Oracle](https://github.com/yangzongzhuan/RuoYi-Vue-Oracle)，保持同步更新。
+* 感谢[Vue-Element-Admin](https://github.com/PanJiaChen/vue-element-admin)，[eladmin-web](https://gitee.com/elunez/eladmin-web?_from=gitee_search)。
+* 不分离版本，请移步[RuoYi](https://gitee.com/y_project/RuoYi)，微服务版本，请移步[RuoYi-Cloud](https://gitee.com/y_project/RuoYi-Cloud)
+* 阿里云优惠券：[点我进入](https://www.aliyun.com/minisite/goods?userCode=brki8iof&share_source=copy_link)，腾讯云优惠券：[点我领取](https://cloud.tencent.com/redirect.php?redirect=1025&cps_key=198c8df2ed259157187173bc7f4f32fd&from=console)&nbsp;&nbsp;
+
+## 内置功能
+
+1.  用户管理：用户是系统操作者，该功能主要完成系统用户配置。
+2.  部门管理：配置系统组织机构（公司、部门、小组），树结构展现支持数据权限。
+3.  岗位管理：配置系统用户所属担任职务。
+4.  菜单管理：配置系统菜单，操作权限，按钮权限标识等。
+5.  角色管理：角色菜单权限分配、设置角色按机构进行数据范围权限划分。
+6.  字典管理：对系统中经常使用的一些较为固定的数据进行维护。
+7.  参数管理：对系统动态配置常用参数。
+8.  通知公告：系统通知公告信息发布维护。
+9.  操作日志：系统正常操作日志记录和查询；系统异常信息日志记录和查询。
+10. 登录日志：系统登录日志记录查询包含登录异常。
+11. 在线用户：当前系统中活跃用户状态监控。
+12. 定时任务：在线（添加、修改、删除)任务调度包含执行结果日志。
+13. 代码生成：前后端代码的生成（java、html、xml、sql）支持CRUD下载 。
+14. 系统接口：根据业务代码自动生成相关的api接口文档。
+15. 服务监控：监视当前系统CPU、内存、磁盘、堆栈等相关信息。
+16. 在线构建器：拖动表单元素生成相应的HTML代码。
+17. 连接池监视：监视当前系统数据库连接池状态，可进行分析SQL找出系统性能瓶颈。
+
+## 在线体验
+
+- admin/admin123  
+- 陆陆续续收到一些打赏，为了更好的体验已用于演示服务器升级。谢谢各位小伙伴。
+
+演示地址：http://vue.ruoyi.vip  
+文档地址：http://doc.ruoyi.vip
+
+## 演示图
+
+<table>
+    <tr>
+        <td><img src="https://oscimg.oschina.net/oscnet/cd1f90be5f2684f4560c9519c0f2a232ee8.jpg"/></td>
+        <td><img src="https://oscimg.oschina.net/oscnet/1cbcf0e6f257c7d3a063c0e3f2ff989e4b3.jpg"/></td>
+    </tr>
+    <tr>
+        <td><img src="https://oscimg.oschina.net/oscnet/707825ad3f29de74a8d6d02fbd73ad631ea.jpg"/></td>
+        <td><img src="https://oscimg.oschina.net/oscnet/46be40cc6f01aa300eed53a19b5012bf484.jpg"/></td>
+    </tr>
+    <tr>
+        <td><img src="https://oscimg.oschina.net/oscnet/4284796d4cea240d181b8f2201813dda710.jpg"/></td>
+        <td><img src="https://oscimg.oschina.net/oscnet/3ecfac87a049f7fe36abbcaafb2c40d36cf.jpg"/></td>
+    </tr>
+	<tr>
+        <td><img src="https://oscimg.oschina.net/oscnet/71c2d48905221a09a728df4aff4160b8607.jpg"/></td>
+        <td><img src="https://oscimg.oschina.net/oscnet/c14c1ee9a64a6a9c2c22f67d43198767dbe.jpg"/></td>
+    </tr>	 
+    <tr>
+        <td><img src="https://oscimg.oschina.net/oscnet/5e8c387724954459291aafd5eb52b456f53.jpg"/></td>
+        <td><img src="https://oscimg.oschina.net/oscnet/644e78da53c2e92a95dfda4f76e6d117c4b.jpg"/></td>
+    </tr>
+	<tr>
+        <td><img src="https://oscimg.oschina.net/oscnet/fdea1d8bb8625c27bf964176a2c8ebc6945.jpg"/></td>
+        <td><img src="https://oscimg.oschina.net/oscnet/509d2708cfd762b6e6339364cac1cc1970c.jpg"/></td>
+    </tr>
+	<tr>
+        <td><img src="https://oscimg.oschina.net/oscnet/up-f1fd681cc9d295db74e85ad6d2fe4389454.png"/></td>
+        <td><img src="https://oscimg.oschina.net/oscnet/up-c195234bbcd30be6927f037a6755e6ab69c.png"/></td>
+    </tr>
+    <tr>
+        <td><img src="https://oscimg.oschina.net/oscnet/b6115bc8c31de52951982e509930b20684a.jpg"/></td>
+        <td><img src="https://oscimg.oschina.net/oscnet/up-6d73c2140ce694e3de4c05035fdc1868d4c.png"/></td>
+    </tr>
+</table>
 
 
-### 支付聚合 https://gitee.com/catshen/xxpay-master
+## 若依前后端分离交流群
 
-http://j2shop.tunnel.qydev.com/street/index
-http://j2shop.tunnel.qydev.com/login
-
-http://j2shop.tunnel.qydev.com/disShop/index
-http://j2shop.tunnel.qydev.com/web/index
-
-http://j2shop.tunnel.qydev.com/web/cms/index
-http://j2shop.tunnel.qydev.com/blog/index
-
-
-- 采用ssm 通用mapper bootstreap beetl模板 妹子ui 商城
-- resources.properties 文件中有数据库设置和支付宝 和微信的设置
-- pc首页 http://localhost:8080/zsShop
-- 后台管理  http://localhost:8080/zsShop/login   admin  admin
--  首页2  http://localhost:8080/zsShop/web1
--  wap http://localhost:8080/zsShop/wap1
--  首页3 http://localhost:8080/zsShop/youhong
- 
- 20170426
- 添加luence搜索
-- 1、后端
-- 核心框架：Spring Framework 4.0
-
--    mq通信框架  kafka  redis mongodb
-- - 安全框架：Apache Shiro 1.2
-   
-- 视图框架：Spring MVC 4.0
-- 服务端验证：Hibernate Validator 5.1
-- 任务调度：Spring Task 4.0
-- 持久层框架：MyBatis 3.2
-- 数据库连接池：Alibaba Druid 1.0
-- 缓存框架：Ehcache 2.6、Redis
-- Luence搜索引擎
-- 日志管理：SLF4J 1.7、Log4j2   logback
-- 工具类：Apache Commons、Jackson 2.2、Xstream 1.4、Dozer 5.3、POI 3.9
-- 2、前端
-- JS框架：jQuery 1.9。
-- CSS框架：bootstrap ace admin框架界面。
-- 客户端验证：JQuery Validation Plugin 1.11。
-- 富文本：CKEcitor
-- 文件管理：CKFinder
-- 百度 web upload 图片上传插件手机端框架：Jingle
-- 数据表格：jqGrid
-- 对话框：jQuery jBox
-- 下拉选择框：jQuery Select2
-- 树结构控件：jQuery zTree
-- 日期控件： My97DatePicker
-
-已完成功能
-
-
-- 后台  用户管理   角色管理  菜单管理 组织管理 日志管理
-- 监控  jvm监控 ehcache监控  durid数据库监控
-- 商城  商品管理  首页菜单管理 楼层管理  商品类别  订单管理  文章管理
-- 商城前台  主页菜单 楼层 文章 商品展示，商品详情展示 ，购物 添加商品到购物车，结算 微信支付，支付宝支付。
-
-技术要点  
-
-
-- 登录用户的浏览记录存redis ，hash存储 一周过期
-- log4j2 通过配置直接将数据存入logstash ，然后通过elk展示分析
-
-待做功能
-
-
-- 用户登录或者注册送积分存入kafka，然后一个单独的项目消费kafka数据 ，将数据持久化到数据库
-- 日志数据存入mongodb
-
-
-
-### 使用技术和后台同 
- 
-http://git.oschina.net/catshen/cat
-### 分布式版本
-
-http://git.oschina.net/JiaGou-XiaoGe/shop-dubbox
-
-
-
-商品管理
-![输入图片说明](http://git.oschina.net/uploads/images/2017/0412/101314_811d498c_134431.png "在这里输入图片标题")
-楼层管理
-![输入图片说明](http://git.oschina.net/uploads/images/2017/0412/101322_82a87832_134431.png "在这里输入图片标题")
-
-
-![输入图片说明](http://git.oschina.net/uploads/images/2017/0412/101514_9c2830ca_134431.png "在这里输入图片标题")
-![输入图片说明](http://git.oschina.net/uploads/images/2017/0412/101530_73ba9328_134431.png "在这里输入图片标题")
-
-###  请作者喝杯咖啡
-
-![输入图片说明](https://git.oschina.net/uploads/images/2017/0829/203712_6694b4c1_134431.jpeg "weixin.jpg")
-![输入图片说明](https://git.oschina.net/uploads/images/2017/0829/203723_5567bd56_134431.jpeg "alipay.jpg")
+QQ群： [![加入QQ群](https://img.shields.io/badge/已满-937441-blue.svg)](https://jq.qq.com/?_wv=1027&k=5bVB1og) [![加入QQ群](https://img.shields.io/badge/已满-887144332-blue.svg)](https://jq.qq.com/?_wv=1027&k=5eiA4DH) [![加入QQ群](https://img.shields.io/badge/已满-180251782-blue.svg)](https://jq.qq.com/?_wv=1027&k=5AxMKlC) [![加入QQ群](https://img.shields.io/badge/104180207-blue.svg)](https://jq.qq.com/?_wv=1027&k=51G72yr) 点击按钮入群。
