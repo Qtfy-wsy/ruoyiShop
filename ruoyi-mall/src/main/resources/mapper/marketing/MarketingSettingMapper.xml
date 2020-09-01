@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.marketing.mapper.MarketingSettingMapper">
+    <resultMap id="marketingSetting" type="com.ruoyi.marketing.domain.MarketingSetting">
+        <result column="id" property="id"/>
+        <result column="pc_panic_pic" property="pcPanicPic"/>
+        <result column="mobile_panic_pic" property="mobilePanicPic"/>
+        <result column="pc_presale_pic" property="pcPreSalePic"/>
+        <result column="mobile_presale_pic" property="mobilePreSalePic"/>
+        <result column="pc_try_pic" property="pcTryPic"/>
+        <result column="mobile_try_pic" property="mobileTryPic"/>
+        <result column="pc_point_pic" property="pcPointPic"/>
+        <result column="mobile_point_pic" property="mobilePointPic"/>
+        <result column="pc_red_envelope_pic" property="pcRedEnvelopePic"/>
+        <result column="mobile_group_pic" property="mobileGroupPic"/>
+        <result column="pc_crowdfunding_pic" property="pcCrowdfundingPic"/>
+        <result column="mobile_crowdfunding_pic" property="mobileCrowdfundingPic"/>
+        <result column="try_rule" property="tryRule"/>
+        <result column="pre_sale_rule" property="preSaleRule"/>
+        <result column="crowdfunding_rule" property="crowdfundingRule"/>
+    </resultMap>
+    <select id="queryMarketingSetting" resultMap="marketingSetting">
+        select * from sms_marketing_setting limit 0,1;
+    </select>
+    <update id="updateMarketingSetting" parameterType="com.ruoyi.marketing.domain.MarketingSetting">
+        update sms_marketing_setting
+        <set>
+            <trim suffixOverrides=",">
+                <if test="pcPanicPic!=null and pcPanicPic !=''">
+                    pc_panic_pic=#{pcPanicPic},
+                </if>
+                <if test="mobilePanicPic!=null and mobilePanicPic !=''">
+                    mobile_panic_pic=#{mobilePanicPic},
+                </if>
+                <if test="pcPreSalePic!=null and pcPreSalePic !=''">
+                    pc_presale_pic=#{pcPreSalePic},
+                </if>
+                <if test="mobilePreSalePic!=null and mobilePreSalePic !=''">
+                    mobile_presale_pic=#{mobilePreSalePic},
+                </if>
+                <if test="pcTryPic!=null and pcTryPic !=''">
+                    pc_try_pic=#{pcTryPic},
+                </if>
+                <if test="mobileTryPic!=null and mobileTryPic !=''">
+                    mobile_try_pic=#{mobileTryPic},
+                </if>
+                <if test="pcPointPic!=null and pcPointPic !=''">
+                    pc_point_pic=#{pcPointPic},
+                </if>
+                <if test="mobilePointPic!=null and mobilePointPic !=''">
+                    mobile_point_pic=#{mobilePointPic},
+                </if>
+                <if test="pcRedEnvelopePic!=null and pcRedEnvelopePic !=''">
+                    pc_red_envelope_pic=#{pcRedEnvelopePic},
+                </if>
+                <if test="mobileGroupPic!=null and mobileGroupPic !=''">
+                    mobile_group_pic=#{mobileGroupPic},
+                </if>
+                <if test="pcCrowdfundingPic!=null and pcCrowdfundingPic !=''">
+                    pc_crowdfunding_pic=#{pcCrowdfundingPic},
+                </if>
+                <if test="mobileCrowdfundingPic!=null and mobileCrowdfundingPic !=''">
+                    mobile_crowdfunding_pic=#{mobileCrowdfundingPic},
+                </if>
+                <if test="tryRule!=null and tryRule !=''">
+                    try_rule=#{tryRule},
+                </if>
+                <if test="preSaleRule!=null and preSaleRule !=''">
+                    pre_sale_rule=#{preSaleRule},
+                </if>
+                <if test="crowdfundingRule!=null and crowdfundingRule !=''">
+                    crowdfunding_rule=#{crowdfundingRule},
+                </if>
+                id=#{id}
+            </trim>
+        </set>
+        where id=#{id}
+    </update>
+    <insert id="addMarketingSetting" parameterType="com.ruoyi.marketing.domain.MarketingSetting">
+        INSERT INTO sms_marketing_setting
+        <trim suffixOverrides="," prefix="(" suffix=")">
+            <if test="pcPanicPic!=null and pcPanicPic !=''">
+                pc_panic_pic,
+            </if>
+            <if test="mobilePanicPic!=null and mobilePanicPic !=''">
+                mobile_panic_pic,
+            </if>
+            <if test="pcPreSalePic!=null and pcPreSalePic !=''">
+                pc_presale_pic,
+            </if>
+            <if test="mobilePreSalePic!=null and mobilePreSalePic !=''">
+                mobile_presale_pic,
+            </if>
+            <if test="pcTryPic!=null and pcTryPic !=''">
+                pc_try_pic,
+            </if>
+            <if test="mobileTryPic!=null and mobileTryPic !=''">
+                mobile_try_pic,
+            </if>
+            <if test="pcPointPic!=null and pcPointPic !=''">
+                pc_point_pic,
+            </if>
+            <if test="mobilePointPic!=null and mobilePointPic !=''">
+                mobile_point_pic,
+            </if>
+            <if test="pcRedEnvelopePic!=null and pcRedEnvelopePic !=''">
+                pc_red_envelope_pic,
+            </if>
+            <if test="mobileGroupPic!=null and mobileGroupPic !=''">
+                mobile_group_pic,
+            </if>
+            <if test="pcCrowdfundingPic!=null and pcCrowdfundingPic !=''">
+                pc_crowdfunding_pic,
+            </if>
+            <if test="mobileCrowdfundingPic!=null and mobileCrowdfundingPic !=''">
+                mobile_crowdfunding_pic,
+            </if>
+            <if test="tryRule!=null and tryRule !=''">
+                try_rule,
+            </if>
+            <if test="preSaleRule!=null and preSaleRule !=''">
+                pre_sale_rule,
+            </if>
+            <if test="crowdfundingRule!=null and crowdfundingRule !=''">
+                crowdfunding_rule,
+            </if>
+            id
+        </trim>
+        <trim prefix="values(" suffix=")" suffixOverrides=",">
+            <if test="pcPanicPic!=null and pcPanicPic !=''">
+                #{pcPanicPic},
+            </if>
+            <if test="mobilePanicPic!=null and mobilePanicPic !=''">
+                #{mobilePanicPic},
+            </if>
+            <if test="pcPreSalePic!=null and pcPreSalePic !=''">
+                #{pcPreSalePic},
+            </if>
+            <if test="mobilePreSalePic!=null and mobilePreSalePic !=''">
+                #{mobilePreSalePic},
+            </if>
+            <if test="pcTryPic!=null and pcTryPic !=''">
+                #{pcTryPic},
+            </if>
+            <if test="mobileTryPic!=null and mobileTryPic !=''">
+                #{mobileTryPic},
+            </if>
+            <if test="pcPointPic!=null and pcPointPic !=''">
+                #{pcPointPic},
+            </if>
+            <if test="mobilePointPic!=null and mobilePointPic !=''">
+                #{mobilePointPic},
+            </if>
+            <if test="pcRedEnvelopePic!=null and pcRedEnvelopePic !=''">
+                #{pcRedEnvelopePic},
+            </if>
+            <if test="mobileGroupPic!=null and mobileGroupPic !=''">
+                #{mobileGroupPic},
+            </if>
+            <if test="pcCrowdfundingPic!=null and pcCrowdfundingPic !=''">
+                #{pcCrowdfundingPic},
+            </if>
+            <if test="mobileCrowdfundingPic!=null and mobileCrowdfundingPic !=''">
+                #{mobileCrowdfundingPic},
+            </if>
+            <if test="tryRule!=null and tryRule !=''">
+                #{tryRule},
+            </if>
+            <if test="preSaleRule!=null and preSaleRule !=''">
+                #{preSaleRule},
+            </if>
+            <if test="crowdfundingRule!=null and crowdfundingRule !=''">
+                #{crowdfundingRule},
+            </if>
+            1
+        </trim>
+    </insert>
+</mapper>

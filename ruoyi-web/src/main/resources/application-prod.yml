@@ -1,0 +1,72 @@
+#配置数据源
+spring:
+  datasource:
+    druid:
+      master:
+        type: com.alibaba.druid.pool.DruidDataSource
+        driverClassName: com.mysql.jdbc.Driver
+        url: jdbc:mysql://172.22.20.7:3306/wsfmall_prod?serverTimezone=Asia/Shanghai&characterEncoding=utf8&useSSL=false&zeroDateTimeBehavior=convertToNull
+        username: wsfmall_prod
+        password: 1TOYK2mEL4NfmIQSuTAZ-
+        # 初始化连接大小
+        initial-size: 5
+        # 最小空闲连接数
+        min-idle: 5
+        max-active: 20
+        max-wait: 30000
+        # 可关闭的空闲连接间隔时间
+        time-between-eviction-runs-millis: 60000
+        # 配置连接在池中的最小生存时间
+        min-evictable-idle-time-millis: 300000
+        validation-query: select '1' from dual
+        test-while-idle: true
+        test-on-borrow: false
+        test-on-return: false
+        # 打开PSCache，并且指定每个连接上PSCache的大小
+        pool-prepared-statements: true
+        max-open-prepared-statements: 20
+        max-pool-prepared-statement-per-connection-size: 20
+      slave1:
+        type: com.alibaba.druid.pool.DruidDataSource
+        driverClassName: com.mysql.jdbc.Driver
+        url: jdbc:mysql://172.22.20.5:3306/wsfmall_prod?serverTimezone=Asia/Shanghai&characterEncoding=utf8&useSSL=false&zeroDateTimeBehavior=convertToNull
+        username: wsfmall_prod
+        password: 1TOYK2mEL4NfmIQSuTAZ-
+        # 初始化连接大小
+        initial-size: 5
+        # 最小空闲连接数
+        min-idle: 5
+        max-active: 20
+        max-wait: 30000
+        # 可关闭的空闲连接间隔时间
+        time-between-eviction-runs-millis: 60000
+        # 配置连接在池中的最小生存时间
+        min-evictable-idle-time-millis: 300000
+        validation-query: select '1' from dual
+        test-while-idle: true
+        test-on-borrow: false
+        test-on-return: false
+        # 打开PSCache，并且指定每个连接上PSCache的大小
+        pool-prepared-statements: true
+        max-open-prepared-statements: 20
+        max-pool-prepared-statement-per-connection-size: 20
+  redis:
+    cluster:
+      nodes: 172.22.38.11:6379,172.22.38.12:6379,172.22.38.11:6380,172.22.38.12:6380
+    timeout: 1000
+    lettuce:
+      pool:
+        max-active: 8
+        max-idle: 8
+        min-idle: 2
+        max-wait: 300
+    password: sfakjfiju99jjf87LJSDDU8
+  data:
+    elasticsearch:
+      cluster-name: elasticsearch
+      cluster-nodes: 172.22.40.11:9300,172.22.40.12:9300,172.22.40.13:9300
+  messages:
+    basename: messages/messages
+  servlet:
+    multipart:
+      max-file-size: 15MB

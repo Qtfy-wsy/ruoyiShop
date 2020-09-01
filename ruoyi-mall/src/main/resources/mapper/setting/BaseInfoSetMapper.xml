@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.setting.mapper.BaseInfoSetMapper">
+    <resultMap id="BaseResult" type="com.ruoyi.setting.bean.BaseInfoSet">
+        <result column="id" property="id"/>
+        <result column="phone" property="phone"/>
+        <result column="logo" property="logo"/>
+        <result column="site_url" property="siteUrl"/>
+        <result column="site_name" property="siteName"/>
+        <result column="label_log" property="labelLog"/>
+        <result column="admin_logo" property="adminLogo"/>
+        <result column="captcha_open" property="captchaOpen"/>
+        <result column="site_login" property="siteLoginPic"/>
+        <result column="store_login" property="storeLoginPic"/>
+        <result column="site_register" property="siteRegisterPic"/>
+        <result column="store_register" property="storeRegisterPic"/>
+        <result column="copyright_info" property="copyrightInfo"/>
+        <result column="admin_index_logo" property="adminIndexLogo"/>
+        <result column="store_open_protocol" property="storeOpenProtocol"/>
+        <result column="register_protocol" property="siteRegisterProtocol"/>
+        <result column="store_register_protocol" property="storeRegisterProtocol"/>
+        <result column="store_spu_audit" property="storeSpuAudit"/>
+        <result column="member_price_status" property="memberPriceStatus"/>
+        <result column="crowdfunding_protocol" property="crowdFundingProtocol"/>
+        <result column="h5_call_back_domain" property="h5CallBackDomain"/>
+        <result column="pc_call_back_domain" property="pcCallBackDomain"/>
+
+    </resultMap>
+    <sql id="columnList">
+        id,phone,logo,site_url,site_name,label_log,admin_logo,captcha_open,site_login,store_login,site_register,store_register,copyright_info,admin_index_logo,
+        store_open_protocol,register_protocol,store_register_protocol,store_spu_audit,member_price_status,crowdfunding_protocol,h5_call_back_domain,pc_call_back_domain
+    </sql>
+    <select id="queryBaseInfoSet" resultMap="BaseResult">
+        SELECT
+        <include refid="columnList"/>
+        FROM ls_system_setting
+    </select>
+
+    <update id="editBaseInfoSetA" parameterType="com.ruoyi.setting.bean.BaseInfoSet">
+        UPDATE ls_system_setting SET
+        phone=#{phone},logo=#{logo},site_url=#{siteUrl},site_name=#{siteName},label_log=#{labelLog},admin_logo=#{adminLogo},
+        site_login=#{siteLoginPic},store_login=#{storeLoginPic},site_register=#{siteRegisterPic},store_register=#{storeRegisterPic},
+        copyright_info=#{copyrightInfo},admin_index_logo=#{adminIndexLogo},store_open_protocol=#{storeOpenProtocol},register_protocol=#{siteRegisterProtocol},
+        store_register_protocol=#{storeRegisterProtocol},crowdfunding_protocol=#{crowdFundingProtocol},
+        h5_call_back_domain=#{h5CallBackDomain},pc_call_back_domain=#{pcCallBackDomain}
+    </update>
+    <update id="editBaseInfoSetB" parameterType="com.ruoyi.setting.bean.BaseInfoSet">
+        UPDATE ls_system_setting SET captcha_open = #{captchaOpen}
+    </update>
+    <update id="setAuditSwitch" parameterType="java.lang.String">
+        UPDATE ls_system_setting SET store_spu_audit = #{storeSpuAudit}
+    </update>
+    <update id="setMemberPriceStatus" parameterType="java.lang.String">
+        UPDATE ls_system_setting SET member_price_status = #{memberPriceStatus}
+    </update>
+</mapper>

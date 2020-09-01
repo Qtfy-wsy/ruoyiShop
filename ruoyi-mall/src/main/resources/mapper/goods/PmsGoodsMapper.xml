@@ -1,0 +1,972 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.goods.mapper.PmsGoodsMapper">
+
+    <resultMap type="PmsGoods" id="PmsGoodsResult">
+        <result property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="subtitle" column="subtitle"/>
+        <result property="price" column="price"/>
+        <result property="pcDesc" column="pc_desc"/>
+        <result property="mobileDesc" column="mobile_desc"/>
+        <result property="seoTitle" column="seo_title"/>
+        <result property="seoKeywords" column="seo_keywords"/>
+        <result property="seoDesc" column="seo_desc"/>
+        <result property="storeId" column="store_id"/>
+        <result property="storeName" column="store_name"/>
+        <result property="firstCateId" column="first_cate_id"/>
+        <result property="secondCateId" column="second_cate_id"/>
+        <result property="thirdCateId" column="third_cate_id"/>
+        <result property="typeId" column="type_id"/>
+        <result property="brandId" column="brand_id"/>
+        <result property="storeFcateId" column="store_fcate_id"/>
+        <result property="storeScateId" column="store_scate_id"/>
+        <result property="storeTcateId" column="store_tcate_id"/>
+        <result property="url" column="url"/>
+        <result property="delFlag" column="del_flag"/>
+        <result property="createName" column="create_name"/>
+        <result property="modifyName" column="modify_name"/>
+        <result property="delName" column="del_name"/>
+        <result property="createTime" column="create_time"/>
+        <result property="modifyTime" column="modify_time"/>
+        <result property="delTime" column="del_time"/>
+        <result property="commissionRate" column="commission_rate"/>
+        <result property="sCommissionRate" column="s_commission_rate"/>
+        <result property="status" column="status"/>
+        <result property="shelvesStatus" column="shelves_status"/>
+        <result property="isVirtual" column="is_virtual"/>
+        <result property="video" column="video"/>
+        <result property="videoPic" column="video_pic"/>
+        <result property="logisticsTemplateId" column="logistics_template_id"/>
+    </resultMap>
+
+    <resultMap id="spu" type="com.ruoyi.goods.domain.PmsGoods">
+        <result column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="subtitle" property="subtitle"/>
+        <result column="price" property="price"/>
+        <result column="pc_desc" property="pcDesc"/>
+        <result column="mobile_desc" property="mobileDesc"/>
+        <result column="seo_title" property="seoTitle"/>
+        <result column="seo_keywords" property="seoKeywords"/>
+        <result column="seo_desc" property="seoDesc"/>
+        <result column="store_id" property="storeId"/>
+        <result property="storeName" column="store_name"/>
+        <result column="first_cate_id" property="firstCateId"/>
+        <result column="second_cate_id" property="secondCateId"/>
+        <result column="third_cate_id" property="thirdCateId"/>
+        <result column="store_fcate_id" property="storeFcateId"/>
+        <result column="store_scate_id" property="storeScateId"/>
+        <result column="store_tcate_id" property="storeTcateId"/>
+        <result column="type_id" property="typeId"/>
+        <result column="brand_id" property="brandId"/>
+        <result column="url" property="url"/>
+        <result column="store_name" property="storeName"/>
+        <result column="del_flag" property="delFlag"/>
+        <result column="create_name" property="createName"/>
+        <result column="modify_name" property="modifyName"/>
+        <result column="del_name" property="delName"/>
+        <result column="create_time " property="createTime"/>
+        <result column="modify_time" property="modifyTime"/>
+        <result column="del_time" property="delTime"/>
+        <result column="commission_rate" property="commissionRate"/>
+        <result column="s_commission_rate" property="sCommissionRate"/>
+        <result column="status" property="status"/>
+        <result column="shelves_status" property="shelvesStatus"/>
+        <result column="is_virtual" property="isVirtual"/>
+        <result column="video" property="video"/>
+        <result column="video_pic" property="videoPic"/>
+        <result column="logistics_template_id" property="logisticsTemplateId"/>
+    </resultMap>
+    <resultMap id="storeSpu" type="com.ruoyi.goods.domain.StoreSpu">
+        <result column="id" property="spuId"/>
+        <result column="name" property="name"/>
+        <result column="url" property="url"/>
+    </resultMap>
+
+    <insert id="addSpu" parameterType="com.ruoyi.goods.domain.PmsGoods" useGeneratedKeys="true" keyProperty="id">
+        insert into pms_goods
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+
+            <if test="storeName != null">
+                store_name,
+            </if>
+            <if test="name != null">
+                name,
+            </if>
+            <if test="subtitle != null">
+                subtitle,
+            </if>
+            <if test="price != null">
+                price,
+            </if>
+            <if test="pcDesc != null">
+                pc_desc,
+            </if>
+            <if test="mobileDesc != null">
+                mobile_desc,
+            </if>
+            <if test="seoTitle != null">
+                seo_title,
+            </if>
+            <if test="seoKeywords != null">
+                seo_keywords,
+            </if>
+            <if test="seoDesc != null">
+                seo_desc,
+            </if>
+            <if test="storeId != null">
+                store_id,
+            </if>
+            <if test="firstCateId != null">
+                first_cate_id,
+            </if>
+            <if test="secondCateId != null">
+                second_cate_id,
+            </if>
+            <if test="thirdCateId != null">
+                third_cate_id,
+            </if>
+
+            <if test="storeFcateId != null">
+                store_fcate_id,
+            </if>
+            <if test="storeScateId != null">
+                store_scate_id,
+            </if>
+            <if test="storeTcateId != null">
+                store_tcate_id,
+            </if>
+
+            <if test="typeId != null">
+                type_id,
+            </if>
+            <if test="brandId != null">
+                brand_id,
+            </if>
+            <if test="url != null">
+                url,
+            </if>
+            <if test="delFlag != null">
+                del_flag,
+            </if>
+            <if test="createName != null">
+                create_name,
+            </if>
+            <if test="modifyName != null">
+                modify_name,
+            </if>
+            <if test="delName != null">
+                del_name,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="modifyTime != null">
+                modify_time,
+            </if>
+            <if test="delTime != null">
+                del_time,
+            </if>
+            <if test="status != null">
+                status,
+            </if>
+            <if test="shelvesStatus != null">
+                shelves_status,
+            </if>
+            <if test="isVirtual != null">
+                is_virtual,
+            </if>
+            <if test="video != null">
+                video,
+            </if>
+            <if test="videoPic != null">
+                video_pic,
+            </if>
+            <if test="logisticsTemplateId != null">
+                logistics_template_id,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="storeName != null">
+                #{storeName},
+            </if>
+            <if test="name != null">
+                #{name},
+            </if>
+            <if test="subtitle != null">
+                #{subtitle},
+            </if>
+            <if test="price != null">
+                #{price},
+            </if>
+            <if test="pcDesc != null">
+                #{pcDesc},
+            </if>
+            <if test="mobileDesc != null">
+                #{mobileDesc},
+            </if>
+            <if test="seoTitle != null">
+                #{seoTitle},
+            </if>
+            <if test="seoKeywords != null">
+                #{seoKeywords},
+            </if>
+            <if test="seoDesc != null">
+                #{seoDesc},
+            </if>
+            <if test="storeId != null">
+                #{storeId},
+            </if>
+            <if test="firstCateId != null">
+                #{firstCateId},
+            </if>
+            <if test="secondCateId != null">
+                #{secondCateId},
+            </if>
+            <if test="thirdCateId != null">
+                #{thirdCateId},
+            </if>
+            <if test="storeFcateId != null">
+                #{storeFcateId},
+            </if>
+            <if test="storeScateId != null">
+                #{storeScateId},
+            </if>
+            <if test="storeTcateId != null">
+                #{storeTcateId},
+            </if>
+            <if test="typeId != null">
+                #{typeId},
+            </if>
+            <if test="brandId != null">
+                #{brandId},
+            </if>
+            <if test="url != null">
+                #{url},
+            </if>
+            <if test="delFlag != null">
+                #{delFlag},
+            </if>
+            <if test="createName != null">
+                #{createName},
+            </if>
+            <if test="modifyName != null">
+                #{modifyName},
+            </if>
+            <if test="delName != null">
+                #{delName},
+            </if>
+            <if test="createTime != null">
+                now(),
+            </if>
+            <if test="modifyTime != null">
+                #{modifyTime},
+            </if>
+            <if test="delTime != null">
+                #{delTime},
+            </if>
+            <if test="status != null">
+                #{status},
+            </if>
+            <if test="shelvesStatus != null">
+                #{shelvesStatus},
+            </if>
+            <if test="isVirtual != null">
+                #{isVirtual},
+            </if>
+            <if test="video != null">
+                #{video},
+            </if>
+            <if test="videoPic != null">
+                #{videoPic},
+            </if>
+            <if test="logisticsTemplateId != null">
+                #{logisticsTemplateId},
+            </if>
+        </trim>
+    </insert>
+
+
+    <select id="querySpu" parameterType="java.util.Map" resultMap="spu">
+        select * from pms_goods where id = #{id}
+        <if test="storeId != null and storeId != -1 ">
+            AND store_id = #{storeId}
+        </if>
+    </select>
+
+
+    <select id="querySpus" parameterType="java.util.Map" resultMap="spu">
+        select * from pms_goods
+        where  store_id = #{storeId}
+        <if test="name != null and name != '' ">
+            AND name like CONCAT(CONCAT('%', #{name}),'%')
+        </if>
+        <if test="id != null and id != '' ">
+            AND id = #{id}
+        </if>
+        <if test="brandId != null and brandId != 0 ">
+            AND brand_id = #{brandId}
+        </if>
+        <if test="firstCateId != null and firstCateId !=0">
+            AND first_cate_id = #{firstCateId}
+        </if>
+        <if test="secondCateId != null and secondCateId!=0">
+            AND second_cate_id = #{secondCateId}
+        </if>
+        <if test="thirdCateId != null  and  thirdCateId!=0">
+            AND third_cate_id =#{thirdCateId}
+        </if>
+        <if test="storeFcateId != null and storeFcateId !=0">
+            AND store_fcate_id = #{storeFcateId}
+        </if>
+        <if test="storeScateId != null and storeScateId!=0">
+            AND store_scate_id = #{storeScateId}
+        </if>
+        <if test="storeTcateId != null  and  storeTcateId!=0">
+            AND store_tcate_id =#{storeTcateId}
+        </if>
+        <if test="shelvesStatus != null  and  shelvesStatus!='-1'">
+            AND shelves_status =#{shelvesStatus}
+        </if>
+        <if test="maxPrice != null  and  maxPrice!='-1'">
+            AND  #{maxPrice} >=price
+        </if>
+        <if test="minPrice != null  and  minPrice!='-1'">
+            AND  price>= #{minPrice}
+        </if>
+        <if test="status != null  and  status!='-1'">
+            AND status =#{status}
+        </if>
+        <if test="isVirtual != null  and  isVirtual!=-1">
+            AND is_virtual =#{isVirtual}
+        </if>
+        <if test="typeIds != null and typeIds.size > 0 ">
+            AND  type_id in
+            <trim prefix="(" suffix=")">
+                <foreach collection="typeIds" index="index" item="id" separator=",">
+                    #{id}
+                </foreach>
+            </trim>
+        </if>
+        <if test="brandIds != null and brandIds.size > 0 ">
+            AND    brand_id in
+            <trim prefix="(" suffix=")">
+                <foreach collection="brandIds" index="index" item="id" separator=",">
+                    #{id}
+                </foreach>
+            </trim>
+        </if>
+        <if test="orderBys != null  and  orderBys==1 ">
+          order by create_time desc
+        </if>
+        <if test="orderBys != null  and  orderBys==2">
+            order by price desc
+        </if>
+        <if test="orderBys != null  and  orderBys==3">
+            order by price asc
+        </if>
+        limit #{startRowNum},#{pageSize}
+    </select>
+
+    <select id="querySpuCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+        select count(1) from pms_goods
+        where  store_id = #{storeId}
+        <if test="name != null and name != '' ">
+            AND name like CONCAT(CONCAT('%', #{name}),'%')
+        </if>
+        <if test="id != null and id != '' ">
+            AND id = #{id}
+        </if>
+        <if test="brandId != null and brandId != 0 ">
+            AND brand_id = #{brandId}
+        </if>
+        <if test="firstCateId != null and firstCateId !=0">
+            AND first_cate_id = #{firstCateId}
+        </if>
+        <if test="secondCateId != null and secondCateId!=0">
+            AND second_cate_id = #{secondCateId}
+        </if>
+        <if test="thirdCateId != null  and  thirdCateId!=0">
+            AND third_cate_id =#{thirdCateId}
+        </if>
+        <if test="storeFcateId != null and storeFcateId !=0">
+            AND store_fcate_id = #{storeFcateId}
+        </if>
+        <if test="storeScateId != null and storeScateId!=0">
+            AND store_scate_id = #{storeScateId}
+        </if>
+        <if test="storeTcateId != null  and  storeTcateId!=0">
+            AND store_tcate_id =#{storeTcateId}
+        </if>
+        <if test="shelvesStatus != null  and  shelvesStatus!='-1'">
+            AND shelves_status =#{shelvesStatus}
+        </if>
+
+        <if test="status != null  and  status!='-1'">
+            AND status =#{status}
+        </if>
+        <if test="isVirtual != null  and  isVirtual!=-1">
+            AND is_virtual =#{isVirtual}
+        </if>
+        <if test="maxPrice != null  and  maxPrice!='-1'">
+            AND  #{maxPrice} >=price
+        </if>
+        <if test="minPrice != null  and  minPrice!='-1'">
+            AND  price>= #{minPrice}
+        </if>
+        <if test="status != null  and  status!='-1'">
+            AND status =#{status}
+        </if>
+        <if test="isVirtual != null  and  isVirtual!=-1">
+            AND is_virtual =#{isVirtual}
+        </if>
+        <if test="typeIds != null and typeIds.size > 0 ">
+            AND  type_id in
+            <trim prefix="(" suffix=")">
+                <foreach collection="typeIds" index="index" item="id" separator=",">
+                    #{id}
+                </foreach>
+            </trim>
+        </if>
+        <if test="brandIds != null and brandIds.size > 0 ">
+            AND   brand_id in
+            <trim prefix="(" suffix=")">
+                <foreach collection="brandIds" index="index" item="id" separator=",">
+                    #{id}
+                </foreach>
+            </trim>
+        </if>
+        <if test="orderBys != null  and  orderBys=='1'">
+            order by create_time desc
+        </if>
+        <if test="orderBys != null  and  orderBys=='2'">
+            order by price desc
+        </if>
+        <if test="orderBys != null  and  orderBys==3">
+            order by price asc
+        </if>
+    </select>
+
+    <update id="deleteSpu" parameterType="com.ruoyi.goods.domain.PmsGoods">
+        update pms_goods
+        <set>
+            <if test="delFlag != null">
+                del_flag = #{delFlag},
+            </if>
+            <if test="delName != null">
+                del_name = #{delName},
+            </if>
+            <if test="delTime != null">
+                del_time = #{delTime}
+            </if>
+        </set>
+        where id = #{id} and store_id = #{storeId}
+    </update>
+
+    <update id="updateSpu" parameterType="com.ruoyi.goods.domain.PmsGoods">
+        update pms_goods
+        <set>
+            <if test="name != null">
+                name = #{name},
+            </if>
+            <if test="subtitle != null">
+                subtitle = #{subtitle},
+            </if>
+            <if test="price != null">
+                price = #{price},
+            </if>
+            <if test="pcDesc != null">
+                pc_desc = #{pcDesc},
+            </if>
+            <if test="mobileDesc != null">
+                mobile_desc = #{mobileDesc},
+            </if>
+            <if test="seoTitle != null">
+                seo_title = #{seoTitle},
+            </if>
+            <if test="seoKeywords != null">
+                seo_keywords = #{seoKeywords},
+            </if>
+            <if test="seoDesc != null">
+                seo_desc = #{seoDesc},
+            </if>
+            <if test="brandId != null">
+                brand_id = #{brandId},
+            </if>
+            <if test="url != null">
+                url = #{url},
+            </if>
+            <if test="status != null">
+                status = #{status},
+            </if>
+            <if test="shelvesStatus != null">
+                shelves_status = #{shelvesStatus},
+            </if>
+            <if test="video != null">
+                video = #{video},
+            </if>
+            <if test="videoPic != null">
+                video_pic = #{videoPic},
+            </if>
+            <if test="logisticsTemplateId != null">
+                logistics_template_id = #{logisticsTemplateId},
+            </if>
+            modify_time = now()
+        </set>
+        where id = #{id} and store_id = #{storeId}
+    </update>
+
+
+    <select id="queryAllStoreSpusCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+        select count(1) from pms_goods join t_store_info on pms_goods.store_id = t_store_info.id where
+         1=1
+        <if test="storeName != null and storeName != '' ">
+            AND t_store_info.store_name = #{storeName}
+        </if>
+
+        <if test="name != null and name != '' ">
+            AND pms_goods.name like CONCAT(CONCAT('%', #{name}),'%')
+        </if>
+        <if test="id != null and id != '' ">
+            AND pms_goods.id = #{id}
+        </if>
+
+        <if test="firstCateId != null and firstCateId !=0">
+            AND pms_goods.first_cate_id = #{firstCateId}
+        </if>
+        <if test="secondCateId != null and secondCateId!=0">
+            AND pms_goods.second_cate_id = #{secondCateId}
+        </if>
+        <if test="thirdCateId != null  and  thirdCateId!=0">
+            AND pms_goods.third_cate_id =#{thirdCateId}
+        </if>
+
+        <if test="status != null  and  status!='-1'">
+            AND pms_goods.status =#{status}
+        </if>
+
+        <if test="shelvesStatus != null  and  shelvesStatus!='-1'">
+            AND pms_goods.shelves_status =#{shelvesStatus}
+        </if>
+        <if test="isVirtual != null  and  isVirtual!=-1">
+            AND pms_goods.is_virtual =#{isVirtual}
+        </if>
+    </select>
+
+
+    <select id="queryAllStoreSpus" parameterType="java.util.Map" resultMap="spu">
+        select pms_goods.*, t_store_info.store_name from pms_goods join t_store_info on pms_goods.store_id =
+        t_store_info.id
+        where 1=1
+
+        <if test="storeName != null and storeName != '' ">
+            AND t_store_info.store_name = #{storeName}
+        </if>
+
+        <if test="name != null and name != '' ">
+            AND pms_goods.name like CONCAT(CONCAT('%', #{name}),'%')
+        </if>
+        <if test="id != null and id != '' ">
+            AND pms_goods.id = #{id}
+        </if>
+
+        <if test="firstCateId != null and firstCateId !=0">
+            AND pms_goods.first_cate_id = #{firstCateId}
+        </if>
+        <if test="secondCateId != null and secondCateId!=0">
+            AND pms_goods.second_cate_id = #{secondCateId}
+        </if>
+        <if test="thirdCateId != null  and  thirdCateId!=0">
+            AND pms_goods.third_cate_id =#{thirdCateId}
+        </if>
+        <if test="status != null  and  status!='-1'">
+            AND pms_goods.status =#{status}
+        </if>
+        <if test="shelvesStatus != null  and  shelvesStatus!='-1'">
+            AND pms_goods.shelves_status =#{shelvesStatus}
+        </if>
+        <if test="isVirtual != null  and  isVirtual!=-1">
+            AND pms_goods.is_virtual =#{isVirtual}
+        </if>
+        order by create_time desc
+        limit #{startRowNum},#{pageSize}
+    </select>
+
+    <select id="querySpuByThirdCateId" parameterType="java.lang.Long" resultType="java.lang.Integer">
+        SELECT count(1) FROM pms_goods WHERE del_flag='0' AND third_cate_id=#{ThirdCateId}
+    </select>
+
+
+    <select id="querySpuCountForEs" resultType="java.lang.Integer">
+        select count(1) from pms_goods  where del_flag = '0'
+    </select>
+
+
+    <select id="querySpuForEs" parameterType="java.util.Map" resultMap="spu">
+        select id from pms_goods  where del_flag = '0'   limit #{start},#{size}
+    </select>
+
+    <update id="updateCommission" parameterType="com.ruoyi.goods.domain.PmsGoods">
+        update pms_goods
+        <set>
+            <if test="commissionRate != null">
+                commission_rate = #{commissionRate},
+            </if>
+            <if test="sCommissionRate != null">
+                s_commission_rate = #{sCommissionRate},
+            </if>
+            modify_time = now()
+        </set>
+        where id = #{id} and store_id = #{storeId}
+    </update>
+
+    <update id="auditPass" parameterType="java.lang.Long">
+        update pms_goods set status ='0' where id = #{spuId}
+    </update>
+
+    <update id="auditRefuse" parameterType="java.lang.Long">
+        update pms_goods set status ='1' where id = #{spuId}
+    </update>
+
+
+    <update id="updateShelvesStatus" parameterType="java.util.Map">
+        update pms_goods set shelves_status = #{status}
+        where
+        <if test="storeId!=-1">
+            store_id = #{storeId} and
+        </if>
+        id in
+        <foreach collection="spuIds" item="item" index="index" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </update>
+
+    <update id="updateSpuAuditStatus" parameterType="java.util.Map">
+        update pms_goods set status = #{status} where store_id = #{storeId} and id in
+        <foreach collection="spuIds" item="item" index="index" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </update>
+    <update id="updateShelvesStatusByStoreIds" parameterType="java.util.Map">
+        update pms_goods set shelves_status = #{status}
+        where store_id in
+        <foreach collection="storeIds" item="item" index="index" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+
+    </update>
+    <select id="querySpuCountByTypeId" parameterType="java.lang.Long" resultType="java.lang.Integer">
+        select COUNT(1) from pms_goods where type_id=#{typeId}
+    </select>
+    <select id="querySeoBySpuId" parameterType="java.lang.Long" resultMap="spu">
+        select seo_title,seo_keywords,seo_desc from pms_goods where id=#{spuId};
+    </select>
+
+
+    <select id="queryStoreSpuList" parameterType="java.util.Map" resultMap="storeSpu">
+        select id,name,url from pms_goods
+        where  store_id = 0 and is_virtual='0'
+        <if test="name != null and name != '' ">
+            AND name like CONCAT(CONCAT('%', #{name}),'%')
+        </if>
+        order by create_time desc
+        limit #{startRowNum},#{pageSize}
+    </select>
+
+    <select id="queryStoreSpuListCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+        select count(1) from pms_goods
+        where  store_id = 0 and is_virtual='0'
+        <if test="name != null and name != '' ">
+            AND name like CONCAT(CONCAT('%', #{name}),'%')
+        </if>
+    </select>
+
+    <select id="queryStoreOnSaleSpuList" parameterType="java.util.Map" resultMap="storeSpu">
+        select ls.id,ls.url,ls.name from pms_goods ls
+        join t_store_sku lss on ls.id=lss.spu_id
+        where lss.store_id=#{storeId} and ls.shelves_status='1'
+        <if test="name != null and name != '' ">
+            AND ls.name like CONCAT(CONCAT('%', #{name}),'%')
+        </if>
+        GROUP BY lss.spu_id
+        limit #{startRowNum},#{pageSize}
+    </select>
+
+    <select id="queryStoreOnSaleSpuListCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+        select count(1) from (select count(1) from pms_goods ls
+        join t_store_sku lss on ls.id=lss.spu_id
+        where lss.store_id=#{storeId} and ls.shelves_status='1'
+        <if test="name != null and name != '' ">
+            AND ls.name like CONCAT(CONCAT('%', #{name}),'%')
+        </if>
+        GROUP BY lss.spu_id) a
+    </select>
+
+    <select id="queryAllSpusWithoutStoreCategory" parameterType="java.util.Map" resultMap="spu">
+        select * from pms_goods
+        where  store_id = #{storeId} and store_tcate_id = 0
+        <if test="name != null and name != '' ">
+            AND name like CONCAT(CONCAT('%', #{name}),'%')
+        </if>
+        <if test="id != null and id != '' ">
+            AND id = #{id}
+        </if>
+        order by create_time desc
+        limit #{startRowNum},#{pageSize}
+    </select>
+
+    <select id="queryAllSpusWithoutStoreCategoryCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+        select count(1) from pms_goods
+        where  store_id = #{storeId} and store_tcate_id = 0
+        <if test="name != null and name != '' ">
+            AND name like CONCAT(CONCAT('%', #{name}),'%')
+        </if>
+        <if test="id != null and id != '' ">
+            AND id = #{id}
+        </if>
+    </select>
+
+    <select id="queryAllSpusByStoreCategory" parameterType="java.util.Map" resultMap="spu">
+        select * from pms_goods
+        where  store_id = #{storeId} and store_tcate_id = #{storeTcateId}
+        <if test="name != null and name != '' ">
+            AND name like CONCAT(CONCAT('%', #{name}),'%')
+        </if>
+        <if test="id != null and id != '' ">
+            AND id = #{id}
+        </if>
+        order by create_time desc
+        limit #{startRowNum},#{pageSize}
+    </select>
+
+    <select id="queryAllSpusByStoreCategoryCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+        select count(1) from pms_goods
+        where  store_id = #{storeId} and store_tcate_id = #{storeTcateId}
+        <if test="name != null and name != '' ">
+            AND name like CONCAT(CONCAT('%', #{name}),'%')
+        </if>
+        <if test="id != null and id != '' ">
+            AND id = #{id}
+        </if>
+    </select>
+
+    <select id="queryAllSpuIdByStoreCategory" parameterType="java.util.Map" resultMap="spu">
+        select id from pms_goods
+        where  store_id = #{storeId} and store_tcate_id = #{storeTcateId}
+    </select>
+
+    <update id="updateSpuWithStoreCategory" parameterType="java.util.Map">
+        update pms_goods
+        <set>
+            <if test="storeFcateId != null">
+                store_fcate_id = #{storeFcateId},
+            </if>
+            <if test="storeScateId != null">
+                store_scate_id = #{storeScateId},
+            </if>
+            <if test="storeTcateId != null">
+                store_tcate_id = #{storeTcateId}
+            </if>
+        </set>
+        where  store_id = #{storeId} and
+        id in
+        <foreach collection="ids" item="id" index="index" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </update>
+
+    <update id="cancelSpuWithStoreCategory" parameterType="java.util.Map">
+        update pms_goods set store_fcate_id = 0,store_scate_id = 0,store_tcate_id = 0
+        where  store_id = #{storeId} and
+        id in
+        <foreach collection="ids" item="id" index="index" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </update>
+
+    <update id="cancelSpuWithStoreCategoryByStoreTcateId" parameterType="java.util.Map">
+        update pms_goods set store_fcate_id = 0,store_scate_id = 0,store_tcate_id = 0
+        where  store_id = #{storeId} and store_tcate_id = #{storeTcateId}
+    </update>
+
+    <select id="querySpuByIdsForExport" parameterType="java.util.Map" resultMap="spu">
+        SELECT * from pms_goods where id in
+        <foreach collection="ids" open="(" close=")" separator="," item="id" index="index">
+            #{id}
+        </foreach>
+        <if test="storeId!=-1">
+            and store_id=#{storeId}
+        </if>
+
+        order by create_time desc
+    </select>
+
+    <select id="queryAllSpuForExport" parameterType="java.lang.Long" resultMap="spu">
+        select * from pms_goods where
+        <if test="storeId!=-1">
+            store_id=#{storeId}
+        </if>
+        <if test="storeId==-1">
+            store_id !=0
+        </if>
+
+        order by create_time desc
+    </select>
+
+    <update id="updateSpuLogisticsTemplateId" parameterType="java.util.Map">
+        update pms_goods set logistics_template_id = #{defaultLogisticsTemplateId}
+        where  store_id = #{storeId} and logistics_template_id = #{logisticsTemplateId}
+    </update>
+    <sql id="selectPmsGoodsVo">
+        select id, name, subtitle, price, pc_desc, mobile_desc, seo_title, seo_keywords, seo_desc, store_id, first_cate_id, second_cate_id, third_cate_id, type_id, brand_id, store_fcate_id, store_scate_id, store_tcate_id, url, del_flag, create_name, modify_name, del_name, create_time, modify_time, del_time, commission_rate, s_commission_rate, status, shelves_status, is_virtual, video, video_pic, logistics_template_id from pms_goods
+    </sql>
+
+    <select id="selectPmsGoodsList" parameterType="PmsGoods" resultMap="PmsGoodsResult">
+        <include refid="selectPmsGoodsVo"/>
+        <where>
+            <if test="name != null  and name != ''">and name like concat('%', #{name}, '%')</if>
+            <if test="storeFcateId != null ">and store_fcate_id = #{storeFcateId}</if>
+            <if test="storeScateId != null ">and store_scate_id = #{storeScateId}</if>
+            <if test="storeTcateId != null ">and store_tcate_id = #{storeTcateId}</if>
+            <if test="commissionRate != null ">and commission_rate = #{commissionRate}</if>
+            <if test="sCommissionRate != null ">and s_commission_rate = #{sCommissionRate}</if>
+            <if test="status != null  and status != ''">and status = #{status}</if>
+            <if test="storeId != null ">  and store_id = #{storeId} </if>
+            <if test="isVirtual != null  and isVirtual != ''">and is_virtual = #{isVirtual}</if>
+        </where>
+    </select>
+
+    <select id="selectPmsGoodsById" parameterType="Long" resultMap="PmsGoodsResult">
+        <include refid="selectPmsGoodsVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertPmsGoods" parameterType="PmsGoods" useGeneratedKeys="true" keyProperty="id">
+        insert into pms_goods
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="name != null and name != ''">name,</if>
+            <if test="subtitle != null">subtitle,</if>
+            <if test="price != null">price,</if>
+            <if test="pcDesc != null">pc_desc,</if>
+            <if test="mobileDesc != null">mobile_desc,</if>
+            <if test="seoTitle != null">seo_title,</if>
+            <if test="seoKeywords != null">seo_keywords,</if>
+            <if test="seoDesc != null">seo_desc,</if>
+            <if test="storeId != null">store_id,</if>
+            <if test="firstCateId != null">first_cate_id,</if>
+            <if test="secondCateId != null">second_cate_id,</if>
+            <if test="thirdCateId != null">third_cate_id,</if>
+            <if test="typeId != null">type_id,</if>
+            <if test="brandId != null">brand_id,</if>
+            <if test="storeFcateId != null">store_fcate_id,</if>
+            <if test="storeScateId != null">store_scate_id,</if>
+            <if test="storeTcateId != null">store_tcate_id,</if>
+            <if test="url != null">url,</if>
+            <if test="delFlag != null and delFlag != ''">del_flag,</if>
+            <if test="createName != null">create_name,</if>
+            <if test="modifyName != null">modify_name,</if>
+            <if test="delName != null">del_name,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="modifyTime != null">modify_time,</if>
+            <if test="delTime != null">del_time,</if>
+            <if test="commissionRate != null">commission_rate,</if>
+            <if test="sCommissionRate != null">s_commission_rate,</if>
+            <if test="status != null">status,</if>
+            <if test="shelvesStatus != null">shelves_status,</if>
+            <if test="isVirtual != null">is_virtual,</if>
+            <if test="video != null">video,</if>
+            <if test="videoPic != null">video_pic,</if>
+            <if test="logisticsTemplateId != null">logistics_template_id,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="name != null and name != ''">#{name},</if>
+            <if test="subtitle != null">#{subtitle},</if>
+            <if test="price != null">#{price},</if>
+            <if test="pcDesc != null">#{pcDesc},</if>
+            <if test="mobileDesc != null">#{mobileDesc},</if>
+            <if test="seoTitle != null">#{seoTitle},</if>
+            <if test="seoKeywords != null">#{seoKeywords},</if>
+            <if test="seoDesc != null">#{seoDesc},</if>
+            <if test="storeId != null">#{storeId},</if>
+            <if test="firstCateId != null">#{firstCateId},</if>
+            <if test="secondCateId != null">#{secondCateId},</if>
+            <if test="thirdCateId != null">#{thirdCateId},</if>
+            <if test="typeId != null">#{typeId},</if>
+            <if test="brandId != null">#{brandId},</if>
+            <if test="storeFcateId != null">#{storeFcateId},</if>
+            <if test="storeScateId != null">#{storeScateId},</if>
+            <if test="storeTcateId != null">#{storeTcateId},</if>
+            <if test="url != null">#{url},</if>
+            <if test="delFlag != null and delFlag != ''">#{delFlag},</if>
+            <if test="createName != null">#{createName},</if>
+            <if test="modifyName != null">#{modifyName},</if>
+            <if test="delName != null">#{delName},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="modifyTime != null">#{modifyTime},</if>
+            <if test="delTime != null">#{delTime},</if>
+            <if test="commissionRate != null">#{commissionRate},</if>
+            <if test="sCommissionRate != null">#{sCommissionRate},</if>
+            <if test="status != null">#{status},</if>
+            <if test="shelvesStatus != null">#{shelvesStatus},</if>
+            <if test="isVirtual != null">#{isVirtual},</if>
+            <if test="video != null">#{video},</if>
+            <if test="videoPic != null">#{videoPic},</if>
+            <if test="logisticsTemplateId != null">#{logisticsTemplateId},</if>
+        </trim>
+    </insert>
+
+    <update id="updatePmsGoods" parameterType="PmsGoods">
+        update pms_goods
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="name != null and name != ''">name = #{name},</if>
+            <if test="subtitle != null">subtitle = #{subtitle},</if>
+            <if test="price != null">price = #{price},</if>
+            <if test="pcDesc != null">pc_desc = #{pcDesc},</if>
+            <if test="mobileDesc != null">mobile_desc = #{mobileDesc},</if>
+            <if test="seoTitle != null">seo_title = #{seoTitle},</if>
+            <if test="seoKeywords != null">seo_keywords = #{seoKeywords},</if>
+            <if test="seoDesc != null">seo_desc = #{seoDesc},</if>
+            <if test="storeId != null">store_id = #{storeId},</if>
+            <if test="firstCateId != null">first_cate_id = #{firstCateId},</if>
+            <if test="secondCateId != null">second_cate_id = #{secondCateId},</if>
+            <if test="thirdCateId != null">third_cate_id = #{thirdCateId},</if>
+            <if test="typeId != null">type_id = #{typeId},</if>
+            <if test="brandId != null">brand_id = #{brandId},</if>
+            <if test="storeFcateId != null">store_fcate_id = #{storeFcateId},</if>
+            <if test="storeScateId != null">store_scate_id = #{storeScateId},</if>
+            <if test="storeTcateId != null">store_tcate_id = #{storeTcateId},</if>
+            <if test="url != null">url = #{url},</if>
+            <if test="delFlag != null and delFlag != ''">del_flag = #{delFlag},</if>
+            <if test="createName != null">create_name = #{createName},</if>
+            <if test="modifyName != null">modify_name = #{modifyName},</if>
+            <if test="delName != null">del_name = #{delName},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="modifyTime != null">modify_time = #{modifyTime},</if>
+            <if test="delTime != null">del_time = #{delTime},</if>
+            <if test="commissionRate != null">commission_rate = #{commissionRate},</if>
+            <if test="sCommissionRate != null">s_commission_rate = #{sCommissionRate},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="shelvesStatus != null">shelves_status = #{shelvesStatus},</if>
+            <if test="isVirtual != null">is_virtual = #{isVirtual},</if>
+            <if test="video != null">video = #{video},</if>
+            <if test="videoPic != null">video_pic = #{videoPic},</if>
+            <if test="logisticsTemplateId != null">logistics_template_id = #{logisticsTemplateId},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deletePmsGoodsById" parameterType="Long">
+        delete from pms_goods where id = #{id}
+    </delete>
+
+    <delete id="deletePmsGoodsByIds" parameterType="String">
+        delete from pms_goods where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

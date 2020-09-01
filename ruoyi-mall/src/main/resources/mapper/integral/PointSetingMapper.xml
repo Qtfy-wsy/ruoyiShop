@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.integral.mapper.PointSetingMapper">
+
+    <resultMap id="pointSeting" type="com.ruoyi.integral.domain.PointSeting">
+        <result column="id" property="id"/>
+        <result column="is_open" property="isOpen"/>
+        <result column="email_point" property="emailPoint"/>
+        <result column="comment_point" property="commentPoint"/>
+        <result column="use_point" property="usePoint"/>
+        <result column="offset_money" property="offsetMoney"/>
+        <result column="modify_time" property="modifyTime"/>
+    </resultMap>
+
+    <select id="queryPointSeting" resultMap="pointSeting">
+        select * from sms_point_setting
+    </select>
+
+    <update id="updatePointSeting" parameterType="com.ruoyi.integral.domain.PointSeting">
+        update sms_point_setting set is_open = #{isOpen},email_point=#{emailPoint},comment_point=#{commentPoint},
+        use_point = #{usePoint},offset_money = #{offsetMoney},modify_time = now() where id = #{id}
+    </update>
+</mapper>

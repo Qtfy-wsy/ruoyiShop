@@ -1,0 +1,30 @@
+module.exports.loadStock = function (num, stock, limitStock) {
+  // 没有库存
+  if (stock === 0) {
+    return '无货';
+  } else if (num > stock) {
+    return '库存不足';
+  } else if (stock <= 10) {
+    // 存在限购
+    if (limitStock !== -2) {
+      return '限购' + limitStock + '件';
+    } else {
+      return '仅剩' + stock + '件';
+    }
+  } else {
+    // 存在限购商品
+    if (limitStock !== -2) {
+      return '限购' + limitStock + '件';
+    } else {
+      return '';
+    }
+  }
+};
+
+module.exports.getDecimalsPart = function (price) {
+  if (price === null || isNaN(price)) {
+    return '';
+  } else {
+    return '.' + (price.toFixed(2) + '').split('.')[1];
+  }
+};

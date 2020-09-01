@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.store.mapper.TStoreShoppingCartMapper">
+
+    <resultMap type="TStoreShoppingCart" id="TStoreShoppingCartResult">
+        <result property="id" column="id"/>
+        <result property="customerId" column="customer_id"/>
+        <result property="skuId" column="sku_id"/>
+        <result property="storeId" column="store_id"/>
+        <result property="delFlag" column="del_flag"/>
+        <result property="num" column="num"/>
+        <result property="createTime" column="create_time"/>
+        <result property="spuId" column="spu_id"/>
+    </resultMap>
+
+    <sql id="selectTStoreShoppingCartVo">
+        select id, customer_id, spu_id,sku_id, store_id, del_flag, num, create_time from t_store_shopping_cart
+    </sql>
+
+    <select id="selectTStoreShoppingCartList" parameterType="TStoreShoppingCart" resultMap="TStoreShoppingCartResult">
+        <include refid="selectTStoreShoppingCartVo"/>
+        <where>
+            <if test="customerId != null ">and customer_id = #{customerId}</if>
+            <if test="skuId != null  and skuId != ''">and sku_id = #{skuId}</if>
+            <if test="storeId != null ">and store_id = #{storeId}</if>
+            <if test="num != null ">and num = #{num}</if>
+        </where>
+    </select>
+
+    <select id="selectTStoreShoppingCartById" parameterType="Long" resultMap="TStoreShoppingCartResult">
+        <include refid="selectTStoreShoppingCartVo"/>
+        where id = #{id}
+    </select>
+    <insert id="addShoppingCart" parameterType="TStoreShoppingCart">
+        insert into t_store_shopping_cart
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="customerId != null">
+                customer_id,
+            </if>
+            <if test="skuId != null">
+                sku_id,
+            </if>
+            <if test="storeId != null">
+                store_id,
+            </if>
+            <if test="num != null">
+                num,
+            </if>
+            <if test="delFlag != null">
+                del_flag,
+            </if>
+            <if test="createTime != null">
+                create_time
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="customerId != null">
+                #{customerId},
+            </if>
+            <if test="skuId != null">
+                #{skuId},
+            </if>
+            <if test="storeId != null">
+                #{storeId},
+            </if>
+            <if test="num != null">
+                #{num},
+            </if>
+            <if test="delFlag != null">
+                #{delFlag},
+            </if>
+            <if test="createTime != null">
+                #{createTime}
+            </if>
+        </trim>
+        ON DUPLICATE KEY UPDATE `num`=`num`+1;
+    </insert>
+
+    <select id="queryCustomerSkuCount" parameterType="java.util.Map" resultMap="TStoreShoppingCartResult">
+                select * from t_store_shopping_cart where     customer_id=#{customerId} and sku_id=#{skuId} and store_id = #{storeId}
+    </select>
+
+    <update id="updateShoppingCartNum" parameterType="java.util.Map">
+           update t_store_shopping_cart
+        set num  = num + #{num}
+       where  customer_id=#{customerId} and sku_id=#{skuId} and store_id = #{storeId}
+    </update>
+
+    <select id="queryByCustomerId" parameterType="java.lang.Long" resultMap="TStoreShoppingCartResult">
+        select * from t_store_shopping_cart where    customer_id=#{customerId}
+    </select>
+
+    <select id="queryStoreShoppingCartCount" parameterType="java.lang.Long" resultType="java.lang.Integer">
+              SELECT ifNull(sum(s.num),0) from t_store_shopping_cart s  join pms_sku sku on s.sku_id = sku.id where   sku.shelves_status = '1' and sku.status='0' and customer_id=#{customerId}
+    </select>
+
+    <update id="directUpdateShoppingCartNum" parameterType="java.util.Map">
+             update t_store_shopping_cart set num  = #{num}  where  customer_id=#{customerId} and id=#{id}
+     </update>
+
+    <delete id="deleteStoreShoppingCart" parameterType="java.util.Map">
+        DELETE FROM t_store_shopping_cart
+        where id in
+        <foreach item="id" collection="ids" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+        and customer_id=#{customerId}
+    </delete>
+
+
+    <select id="queryByIds" parameterType="java.util.List" resultMap="TStoreShoppingCartResult">
+        select * from t_store_shopping_cart where  customer_id=#{customerId} and id in
+        <foreach item="id" collection="ids" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </select>
+    <insert id="insertTStoreShoppingCart" parameterType="TStoreShoppingCart" useGeneratedKeys="true" keyProperty="id">
+        insert into t_store_shopping_cart
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="customerId != null">customer_id,</if>
+            <if test="skuId != null">sku_id,</if>
+            <if test="storeId != null">store_id,</if>
+            <if test="delFlag != null">del_flag,</if>
+            <if test="num != null">num,</if>
+            <if test="createTime != null">create_time,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="customerId != null">#{customerId},</if>
+            <if test="skuId != null">#{skuId},</if>
+            <if test="storeId != null">#{storeId},</if>
+            <if test="delFlag != null">#{delFlag},</if>
+            <if test="num != null">#{num},</if>
+            <if test="createTime != null">#{createTime},</if>
+        </trim>
+    </insert>
+
+    <update id="updateTStoreShoppingCart" parameterType="TStoreShoppingCart">
+        update t_store_shopping_cart
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="customerId != null">customer_id = #{customerId},</if>
+            <if test="skuId != null">sku_id = #{skuId},</if>
+            <if test="storeId != null">store_id = #{storeId},</if>
+            <if test="delFlag != null">del_flag = #{delFlag},</if>
+            <if test="num != null">num = #{num},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteTStoreShoppingCartById" parameterType="Long">
+        delete from t_store_shopping_cart where id = #{id}
+    </delete>
+
+    <delete id="deleteTStoreShoppingCartByIds" parameterType="String">
+        delete from t_store_shopping_cart where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.integral.mapper.PointSignRuleMapper">
+
+    <resultMap id="pointSignRule" type="com.ruoyi.integral.domain.PointSignRule">
+        <result column="id" property="id"/>
+        <result column="status" property="status"/>
+        <result column="rule" property="rule"/>
+        <result column="title" property="title"/>
+    </resultMap>
+
+
+    <select id="queryPointSignRule" resultMap="pointSignRule" parameterType="java.lang.Boolean">
+        select * from sms_point_sign_rule where 1=1
+        limit 0,1
+    </select>
+    <update id="updatePointSignRule" parameterType="com.ruoyi.integral.domain.PointSignRule">
+        UPDATE sms_point_sign_rule
+        <set>
+            <trim suffixOverrides=",">
+                <if test="status !=null">
+                    status=#{status},
+                </if>
+                <if test="rule !=null">
+                    rule=#{rule},
+                </if>
+                <if test="title !=null">
+                    title=#{title}
+                </if>
+            </trim>
+        </set>
+        where id=#{id}
+    </update>
+
+    <insert id="addPointSignRule" parameterType="com.ruoyi.integral.domain.PointSignRule">
+        insert into sms_point_sign_rule
+        <trim suffixOverrides="," prefix="(" suffix=")">
+            <if test="status !=null">
+                status,
+            </if>
+            <if test="rule !=null">
+                rule,
+            </if>
+            <if test="title !=null">
+                title,
+            </if>
+            id
+        </trim>
+        <trim suffixOverrides="," prefix="values(" suffix=")">
+            <if test="status !=null">
+                #{status},
+            </if>
+            <if test="rule !=null">
+                #{rule},
+            </if>
+            <if test="title !=null">
+                #{title},
+            </if>
+            1
+        </trim>
+    </insert>
+</mapper>

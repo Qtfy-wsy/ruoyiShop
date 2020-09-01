@@ -1,0 +1,345 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.goods.mapper.PmsCategoryMapper">
+
+    <resultMap type="PmsCategory" id="PmsCategoryResult">
+        <result property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="parentId" column="parent_id"/>
+        <result property="typeId" column="type_id"/>
+        <result property="grade" column="grade"/>
+        <result property="rate" column="rate"/>
+        <result property="sort" column="sort"/>
+        <result property="delFlag" column="del_flag"/>
+        <result property="createName" column="create_name"/>
+        <result property="modifyName" column="modify_name"/>
+        <result property="delName" column="del_name"/>
+        <result property="createTime" column="create_time"/>
+        <result property="modifyTime" column="modify_time"/>
+        <result property="delTime" column="del_time"/>
+    </resultMap>
+
+    <sql id="selectPmsCategoryVo">
+        select id, name, parent_id, type_id, grade, rate, sort, del_flag, create_name, modify_name, del_name, create_time, modify_time, del_time from pms_category
+    </sql>
+
+    <select id="selectPmsCategoryList" parameterType="PmsCategory" resultMap="PmsCategoryResult">
+        <include refid="selectPmsCategoryVo"/>
+        <where>
+            <if test="name != null  and name != ''">and name like concat('%', #{name}, '%')</if>
+            <if test="parentId != null ">and parent_id = #{parentId}</if>
+            <if test="typeId != null ">and type_id = #{typeId}</if>
+            <if test="grade != null  and grade != ''">and grade = #{grade}</if>
+            <if test="rate != null ">and rate = #{rate}</if>
+            <if test="sort != null ">and sort = #{sort}</if>
+            <if test="storeId != null ">  and store_id = #{storeId} </if>
+            <if test="createName != null  and createName != ''">and create_name like concat('%', #{createName}, '%')
+            </if>
+            <if test="modifyName != null  and modifyName != ''">and modify_name like concat('%', #{modifyName}, '%')
+            </if>
+            <if test="delName != null  and delName != ''">and del_name like concat('%', #{delName}, '%')</if>
+            <if test="modifyTime != null ">and modify_time = #{modifyTime}</if>
+            <if test="delTime != null ">and del_time = #{delTime}</if>
+        </where>
+    </select>
+
+    <select id="selectPmsCategoryById" parameterType="Long" resultMap="PmsCategoryResult">
+        <include refid="selectPmsCategoryVo"/>
+        where id = #{id}
+    </select>
+
+    <select id="querySpuCategoryByParentId" parameterType="java.util.Map" resultMap="PmsCategoryResult">
+        SELECT id,`name`,parent_id,grade,sort FROM pms_category WHERE parent_id = #{parentId}
+
+        ORDER BY sort
+    </select>
+    <insert id="insertPmsCategory" parameterType="PmsCategory" useGeneratedKeys="true" keyProperty="id">
+        insert into pms_category
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="name != null and name != ''">name,</if>
+            <if test="parentId != null">parent_id,</if>
+            <if test="typeId != null">type_id,</if>
+            <if test="grade != null and grade != ''">grade,</if>
+            <if test="rate != null">rate,</if>
+            <if test="sort != null">sort,</if>
+            <if test="delFlag != null and delFlag != ''">del_flag,</if>
+            <if test="createName != null">create_name,</if>
+            <if test="modifyName != null">modify_name,</if>
+            <if test="delName != null">del_name,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="modifyTime != null">modify_time,</if>
+            <if test="delTime != null">del_time,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="name != null and name != ''">#{name},</if>
+            <if test="parentId != null">#{parentId},</if>
+            <if test="typeId != null">#{typeId},</if>
+            <if test="grade != null and grade != ''">#{grade},</if>
+            <if test="rate != null">#{rate},</if>
+            <if test="sort != null">#{sort},</if>
+            <if test="delFlag != null and delFlag != ''">#{delFlag},</if>
+            <if test="createName != null">#{createName},</if>
+            <if test="modifyName != null">#{modifyName},</if>
+            <if test="delName != null">#{delName},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="modifyTime != null">#{modifyTime},</if>
+            <if test="delTime != null">#{delTime},</if>
+        </trim>
+    </insert>
+
+    <update id="updatePmsCategory" parameterType="PmsCategory">
+        update pms_category
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="name != null and name != ''">name = #{name},</if>
+            <if test="parentId != null">parent_id = #{parentId},</if>
+            <if test="typeId != null">type_id = #{typeId},</if>
+            <if test="grade != null and grade != ''">grade = #{grade},</if>
+            <if test="rate != null">rate = #{rate},</if>
+            <if test="sort != null">sort = #{sort},</if>
+            <if test="delFlag != null and delFlag != ''">del_flag = #{delFlag},</if>
+            <if test="createName != null">create_name = #{createName},</if>
+            <if test="modifyName != null">modify_name = #{modifyName},</if>
+            <if test="delName != null">del_name = #{delName},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="modifyTime != null">modify_time = #{modifyTime},</if>
+            <if test="delTime != null">del_time = #{delTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deletePmsCategoryById" parameterType="Long">
+        delete from pms_category where id = #{id}
+    </delete>
+
+    <delete id="deletePmsCategoryByIds" parameterType="String">
+        delete from pms_category where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <resultMap id="cateSpec" type="com.ruoyi.goods.domain.PmsCategorySpec">
+        <result column="id" property="id"/>
+        <result column="cate_id" property="cateId"/>
+        <result column="spec_id" property="specId"/>
+        <result column="del_flag" property="delFlag"/>
+    </resultMap>
+
+    <insert id="addCategory" parameterType="com.ruoyi.goods.domain.PmsCategory" useGeneratedKeys="true"
+            keyProperty="id">
+        insert into pms_category
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="name != null">
+                name,
+            </if>
+            <if test="parentId != null">
+                parent_id,
+            </if>
+            <if test="typeId != null">
+                type_id,
+            </if>
+            <if test="grade != null">
+                grade,
+            </if>
+            <if test="rate != null">
+                rate,
+            </if>
+            <if test="sort != null">
+                sort,
+            </if>
+            <if test="delFlag != null">
+                del_flag,
+            </if>
+            <if test="createName != null">
+                create_name,
+            </if>
+            <if test="modifyName != null">
+                modify_name,
+            </if>
+            <if test="delName != null">
+                del_name,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="modifyTime != null">
+                modify_time,
+            </if>
+            <if test="delTime != null">
+                del_time
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="name != null">
+                #{name},
+            </if>
+            <if test="parentId != null">
+                #{parentId},
+            </if>
+            <if test="typeId != null">
+                #{typeId},
+            </if>
+            <if test="grade != null">
+                #{grade},
+            </if>
+            <if test="rate != null">
+                #{rate},
+            </if>
+            <if test="sort != null">
+                #{sort},
+            </if>
+            <if test="delFlag != null">
+                #{delFlag},
+            </if>
+            <if test="createName != null">
+                #{createName},
+            </if>
+            <if test="modifyName != null">
+                #{modifyName},
+            </if>
+            <if test="delName != null">
+                #{delName},
+            </if>
+            <if test="createTime != null">
+                #{createTime},
+            </if>
+            <if test="modifyTime != null">
+                #{modifyTime},
+            </if>
+            <if test="delTime != null">
+                #{delTime}
+            </if>
+        </trim>
+    </insert>
+
+    <select id="queryCategoryById" parameterType="java.lang.Long" resultMap="PmsCategoryResult">
+        select * from pms_category where id = #{id}
+    </select>
+
+    <select id="queryCategoryByParentId" parameterType="java.lang.Long" resultMap="PmsCategoryResult">
+        select * from pms_category where parent_id = #{parentId} order by sort asc
+    </select>
+
+
+    <update id="deleteCategory" parameterType="com.ruoyi.goods.domain.PmsCategory">
+        update pms_category
+        <set>
+            <if test="delFlag != null">
+                del_flag = #{delFlag},
+            </if>
+            <if test="delName != null">
+                del_name = #{delName},
+            </if>
+            <if test="delTime != null">
+                del_time = #{delTime}
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+
+    <update id="updateCategory" parameterType="com.ruoyi.goods.domain.PmsCategory">
+        update pms_category
+        <set>
+            <if test="name != null">
+                name = #{name},
+            </if>
+            <if test="parentId != null">
+                parent_id = #{parentId},
+            </if>
+            <if test="typeId != null">
+                type_id = #{typeId},
+            </if>
+            <if test="rate != null">
+                rate = #{rate},
+            </if>
+            <if test="sort != null">
+                sort = #{sort},
+            </if>
+            <if test="modifyName != null">
+                modify_name = #{modifyName},
+            </if>
+            <if test="modifyTime != null">
+                modify_time = #{modifyTime}
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <update id="updateCategoryExceptTypeId" parameterType="com.ruoyi.goods.domain.PmsCategory">
+        update pms_category
+        <set>
+            <if test="name != null">
+                name = #{name},
+            </if>
+            <if test="parentId != null">
+                parent_id = #{parentId},
+            </if>
+            <if test="rate != null">
+                rate = #{rate},
+            </if>
+            <if test="sort != null">
+                sort = #{sort},
+            </if>
+            <if test="modifyName != null">
+                modify_name = #{modifyName},
+            </if>
+            <if test="modifyTime != null">
+                modify_time = #{modifyTime}
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <select id="queryAllFirstAndSecondCategory" resultMap="PmsCategoryResult">
+        SELECT * FROM pms_category WHERE grade!='3'
+    </select>
+    <select id="queryThreeCategoryByStoreId" parameterType="java.lang.Long" resultMap="PmsCategoryResult">
+        SELECT pms_category.* FROM pms_category JOIN t_store_signed_category ON t_store_signed_category.cate_id=pms_category.id
+        WHERE t_store_signed_category.store_id=#{storeId} AND pms_category.del_flag='0' and t_store_signed_category.state = 1
+    </select>
+    <select id="queryTwoCategoryByStoreId" parameterType="java.lang.Long" resultMap="PmsCategoryResult">
+        SELECT * FROM pms_category WHERE id IN (SELECT parent_id FROM pms_category
+        WHERE del_flag='0'
+        AND id IN (SELECT cate_id FROM t_store_signed_category WHERE store_id=#{storeId} and state = 1))
+    </select>
+    <select id="queryAllCategory" resultMap="PmsCategoryResult">
+        SELECT * FROM pms_category WHERE del_flag='0'
+    </select>
+    <select id="queryThirdCategory" resultMap="PmsCategoryResult">
+        SELECT * FROM pms_category WHERE del_flag='0' AND grade='3'
+    </select>
+    <select id="queryThirdCategoryByTypeId" resultMap="PmsCategoryResult">
+        SELECT id FROM pms_category WHERE del_flag='0' AND grade='3' AND type_id=#{TypeId}
+    </select>
+    <select id="queryCategoriesByIds" parameterType="java.util.List" resultMap="PmsCategoryResult">
+        SELECT * FROM pms_category WHERE del_flag='0' AND id in
+        <foreach collection="list" open="(" close=")" separator="," index="index" item="id">
+            #{id}
+        </foreach>
+    </select>
+
+    <insert id="addCateAndSpec" parameterType="java.util.List">
+        insert into pms_category_spec
+        (cate_id, spec_id, del_flag)
+        values
+        <foreach collection="list" item="cateSpec" index="index" separator=",">
+            (
+            #{cateSpec.cateId},
+            #{cateSpec.specId},
+            #{cateSpec.delFlag}
+            )
+        </foreach>
+    </insert>
+
+
+    <select id="queryCateSpecByCateId" parameterType="java.lang.Long" resultMap="cateSpec">
+        select * from pms_category_spec where  cate_id = #{cateId}
+    </select>
+
+    <delete id="deleteCateSpecsByCateIdPhysical" parameterType="java.lang.Long">
+        delete from pms_category_spec where cate_id = #{cateId}
+    </delete>
+</mapper>

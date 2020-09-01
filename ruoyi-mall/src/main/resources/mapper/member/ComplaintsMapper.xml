@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.member.mapper.ComplaintsMapper">
+
+    <resultMap id="complaints" type="com.ruoyi.member.domain.Complaints">
+        <result column="id" property="id"/>
+        <result column="customer_id" property="customerId"/>
+        <result column="complaints_desc" property="complaintsDesc"/>
+        <result column="status" property="status"/>
+        <result column="complaints_replay" property="complaintsReplay"/>
+        <result column="create_time" property="createTime"/>
+        <result column="operator" property="operator"/>
+        <result column="type" property="type"/>
+        <result column="pics" property="pics"/>
+        <result column="mobile" property="mobile"/>
+    </resultMap>
+
+    <insert id="addComplaints" parameterType="com.ruoyi.member.domain.Complaints">
+        insert into t_complaints
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="customerId != null">
+                customer_id,
+            </if>
+            <if test="complaintsDesc != null">
+                complaints_desc,
+            </if>
+            <if test="type != null">
+                type,
+            </if>
+            <if test="pics != null">
+                pics,
+            </if>
+            <if test="mobile != null">
+                mobile,
+            </if>
+            create_time
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="customerId != null">
+                #{customerId},
+            </if>
+            <if test="complaintsDesc != null">
+                #{complaintsDesc},
+            </if>
+            <if test="type != null">
+                #{type},
+            </if>
+            <if test="pics != null">
+                #{pics},
+            </if>
+            <if test="mobile != null">
+                #{mobile},
+            </if>
+            now()
+        </trim>
+    </insert>
+
+    <update id="updateComplaintsReplay" parameterType="com.ruoyi.member.domain.Complaints">
+        update t_complaints set complaints_replay = #{complaintsReplay},status = '1',operator = #{operator} where id = #{id}
+    </update>
+
+    <select id="queryComplaints" parameterType="java.util.Map" resultMap="complaints">
+        select * from t_complaints
+        where
+        <trim  prefixOverrides="and">
+            <if test="customerId !=null and customerId !=-1">
+                customer_id=#{customerId}
+            </if>
+            <if test="status !=null and status!=-1">
+                and status=#{status}
+            </if>
+        </trim>
+        order by create_time desc
+        limit #{startRowNum},#{pageSize}
+    </select>
+
+    <select id="queryComplaintsCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+        select count(1) from t_complaints
+        where
+        <trim  prefixOverrides="and">
+            <if test="customerId !=null and customerId !=-1">
+                customer_id=#{customerId}
+            </if>
+            <if test="status !=null and status!=-1">
+                and status=#{status}
+            </if>
+        </trim>
+    </select>
+    <select id="queryComplaintsById" parameterType="java.lang.Integer" resultMap="complaints">
+        select * from t_complaints
+        where id= #{id}
+    </select>
+
+
+</mapper>

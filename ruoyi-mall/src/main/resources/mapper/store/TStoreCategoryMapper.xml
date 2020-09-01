@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.store.mapper.TStoreCategoryMapper">
+
+    <resultMap type="TStoreCategory" id="TStoreCategoryResult">
+        <result property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="parentId" column="parent_id"/>
+        <result property="grade" column="grade"/>
+        <result property="sort" column="sort"/>
+        <result property="storeId" column="store_id"/>
+        <result property="delFlag" column="del_flag"/>
+        <result property="createTime" column="create_time"/>
+        <result property="modifyTime" column="modify_time"/>
+        <result property="delTime" column="del_time"/>
+    </resultMap>
+
+    <sql id="selectTStoreCategoryVo">
+        select id, name, parent_id, grade, sort, store_id, del_flag, create_time, modify_time, del_time from t_store_category
+    </sql>
+    <select id="querySpuCategoryByParentId" parameterType="java.util.Map" resultMap="TStoreCategoryResult">
+        SELECT id,`name`,parent_id,grade,sort FROM t_store_category WHERE parent_id = #{parentId}
+        <if test="storeId !=null and storeId !=-1">
+            AND store_id = #{storeId}
+        </if>
+        AND del_flag = '0' ORDER BY sort
+    </select>
+    <select id="queryAllSpuCategory" parameterType="java.lang.Long" resultMap="TStoreCategoryResult">
+        SELECT * FROM t_store_category WHERE  store_id = #{storeId} AND del_flag = '0' ORDER BY sort
+    </select>
+    <insert id="addSpuCategory" parameterType="TStoreCategory">
+        INSERT INTO t_store_category
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test='name != null and !"".equals(name)'>
+                `name`,
+            </if>
+            <if test='parentId != null'>
+                parent_id,
+            </if>
+            <if test='grade != null'>
+                grade,
+            </if>
+            <if test='sort != null'>
+                sort,
+            </if>
+            <if test='storeId != null'>
+                store_id,
+            </if>
+            <if test='delFlag != null'>
+                del_flag,
+            </if>
+            create_time
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test='name != null and !"".equals(name)'>
+                #{name},
+            </if>
+            <if test='parentId != null'>
+                #{parentId},
+            </if>
+            <if test='grade != null'>
+                #{grade},
+            </if>
+            <if test='sort != null'>
+                #{sort},
+            </if>
+            <if test='storeId != null'>
+                #{storeId},
+            </if>
+            <if test='delFlag != null'>
+                #{delFlag},
+            </if>
+            NOW()
+        </trim>
+    </insert>
+
+    <select id="querySpuCategoryById" parameterType="java.util.Map" resultMap="TStoreCategoryResult">
+        SELECT id,`name`,parent_id,grade,sort,store_id FROM t_store_category WHERE id = #{id}
+        <if test="storeId !=null and storeId !=-1">
+            AND store_id = #{storeId}
+        </if>
+        AND del_flag = '0'
+    </select>
+
+    <update id="updateSpuCategory" parameterType="TStoreCategory">
+        UPDATE t_store_category SET `name` = #{name}, sort = #{sort}, parent_id = #{parentId},modify_time = NOW() WHERE id = #{id} AND store_id = #{storeId}
+    </update>
+
+    <update id="deleteSpuCategory" parameterType="java.util.Map">
+        UPDATE t_store_category SET del_flag = '1', del_time = NOW() WHERE id = #{id} AND store_id = #{storeId}
+    </update>
+
+    <select id="selectTStoreCategoryList" parameterType="TStoreCategory" resultMap="TStoreCategoryResult">
+        <include refid="selectTStoreCategoryVo"/>
+        <where>
+            <if test="name != null  and name != ''">and name like concat('%', #{name}, '%')</if>
+            <if test="parentId != null ">and parent_id = #{parentId}</if>
+            <if test="grade != null ">and grade = #{grade}</if>
+            <if test="sort != null ">and sort = #{sort}</if>
+            <if test="storeId != null ">and store_id = #{storeId}</if>
+            <if test="modifyTime != null ">and modify_time = #{modifyTime}</if>
+            <if test="delTime != null ">and del_time = #{delTime}</if>
+        </where>
+    </select>
+
+    <select id="selectTStoreCategoryById" parameterType="Long" resultMap="TStoreCategoryResult">
+        <include refid="selectTStoreCategoryVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertTStoreCategory" parameterType="TStoreCategory" useGeneratedKeys="true" keyProperty="id">
+        insert into t_store_category
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="name != null and name != ''">name,</if>
+            <if test="parentId != null">parent_id,</if>
+            <if test="grade != null">grade,</if>
+            <if test="sort != null">sort,</if>
+            <if test="storeId != null">store_id,</if>
+            <if test="delFlag != null">del_flag,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="modifyTime != null">modify_time,</if>
+            <if test="delTime != null">del_time,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="name != null and name != ''">#{name},</if>
+            <if test="parentId != null">#{parentId},</if>
+            <if test="grade != null">#{grade},</if>
+            <if test="sort != null">#{sort},</if>
+            <if test="storeId != null">#{storeId},</if>
+            <if test="delFlag != null">#{delFlag},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="modifyTime != null">#{modifyTime},</if>
+            <if test="delTime != null">#{delTime},</if>
+        </trim>
+    </insert>
+
+    <update id="updateTStoreCategory" parameterType="TStoreCategory">
+        update t_store_category
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="name != null and name != ''">name = #{name},</if>
+            <if test="parentId != null">parent_id = #{parentId},</if>
+            <if test="grade != null">grade = #{grade},</if>
+            <if test="sort != null">sort = #{sort},</if>
+            <if test="storeId != null">store_id = #{storeId},</if>
+            <if test="delFlag != null">del_flag = #{delFlag},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="modifyTime != null">modify_time = #{modifyTime},</if>
+            <if test="delTime != null">del_time = #{delTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteTStoreCategoryById" parameterType="Long">
+        delete from t_store_category where id = #{id}
+    </delete>
+
+    <delete id="deleteTStoreCategoryByIds" parameterType="String">
+        delete from t_store_category where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

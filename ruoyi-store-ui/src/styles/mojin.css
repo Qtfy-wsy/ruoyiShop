@@ -1,0 +1,19 @@
+.spuSpecsTitle { border-bottom: solid 1px #eee; padding-bottom: 15px; margin-bottom: 15px }
+.spuSpecsTitle:last-child { border: 0; padding: 0; margin: 0 }
+.specsListItem { margin-top: 10px; margin-right: 30px; display: inline-block }
+.specsListItem:nth-child(3n) { margin-right: 0 }
+.pageUploader { width: 100%; height: 178px; display: flex; align-items: center; justify-content: center }
+.pageAvatar { max-width: 100%; max-height: 178px; vertical-align: middle }
+.pageUploader .avatar-uploader-icon { width: 178px; height: 178px; line-height: 178px }
+.avatar-uploader { width: 100px; height: 100px }
+.avatar-uploader .el-upload { border: 1px dashed #d9d9d9; border-radius: 6px; cursor: pointer; position: relative; overflow: hidden }
+.avatar-uploader .el-upload:hover { border-color: #409EFF }
+.avatar-uploader-icon { font-size: 28px; color: #8c939d; width: 100px; height: 100px; line-height: 100px; text-align: center }
+.avatar { max-height: 100px; display: block }
+ specsCheckboxGroup .el-checkbox:nth-child(3n) { margin-right: 0 }
+.specsUploader { display: inline-block; vertical-align: top }
+.specsUploader,.specsUploader .avatar,.specsUploader .avatar-uploader-icon { width: 38px; height: 38px; line-height: 38px; font-size: 12px }
+.detailsTable { border: 1px solid #EBEEF5; line-height: 24px; font-size: 13px; color: #333 }
+.detailsTable .el-row { border-bottom: 1px solid #EBEEF5 }
+.detailsTable .el-row [class*=el-col-] { padding: 7px 10px }
+.detailsTable .el-row:last-child { border: 0 }

@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.member.mapper.ComplaintOrderMapper">
+
+    <resultMap id="complaintOrder" type="com.ruoyi.member.domain.ComplaintOrder">
+        <result column="id" property="id"/>
+        <result column="customer_id" property="customerId"/>
+        <result column="order_code" property="orderCode"/>
+        <result column="complaints_type" property="complaintsType"/>
+        <result column="complaints_desc" property="complaintsDesc"/>
+        <result column="status" property="status"/>
+        <result column="complaints_replay" property="complaintsReply"/>
+        <result column="create_time" property="createTime"/>
+        <result column="operator" property="operator"/>
+    </resultMap>
+
+
+    <select id="queryComplaintOrder" parameterType="java.util.Map" resultMap="complaintOrder">
+        select * from t_complaints_order
+        where
+        <trim  prefixOverrides="and">
+            <if test="customerId !=null and customerId !=-1">
+              customer_id=#{customerId}
+            </if>
+            <if test="status !=null and status!=-1">
+               and status=#{status}
+            </if>
+            <if test="orderCode !=null and orderCode !='' ">
+              and order_code=#{orderCode}
+            </if>
+            <if test="complaintsType !=null and complaintsType !=-1">
+              and  complaints_type=#{complaintsType}
+            </if>
+        </trim>
+        order by create_time desc
+        limit #{startRowNum},#{pageSize}
+    </select>
+
+    <select id="queryComplaintOrderCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+        select count(1) from t_complaints_order
+        where
+        <trim  prefixOverrides="and">
+            <if test="customerId !=null and customerId !=-1">
+                customer_id=#{customerId}
+            </if>
+            <if test="status !=null and status!=-1">
+                and status=#{status}
+            </if>
+            <if test="orderCode !=null and orderCode !=''">
+                and order_code=#{orderCode}
+            </if>
+            <if test="complaintsType !=null and complaintsType !=-1">
+                and  complaints_type=#{complaintsType}
+            </if>
+        </trim>
+    </select>
+    <update id="replyComplaintOrder" parameterType="com.ruoyi.member.domain.ComplaintOrder">
+        UPDATE t_complaints_order SET complaints_replay=#{complaintsReply},operator=#{operator},status='1' WHERE id=#{id}
+    </update>
+
+    <insert id="addComplaintOrder" parameterType="com.ruoyi.member.domain.ComplaintOrder">
+        insert into t_complaints_order
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="customerId != null">
+                customer_id,
+            </if>
+            <if test="orderCode != null">
+                order_code,
+            </if>
+            <if test="complaintsType != null">
+                complaints_type,
+            </if>
+            <if test="complaintsDesc != null">
+                complaints_desc,
+            </if>
+            status,create_time
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="customerId != null">
+                #{customerId},
+            </if>
+            <if test="orderCode != null">
+                #{orderCode},
+            </if>
+            <if test="complaintsType != null">
+                #{complaintsType},
+            </if>
+            <if test="complaintsDesc != null">
+                #{complaintsDesc},
+            </if>
+            '0',now()
+        </trim>
+    </insert>
+
+</mapper>

@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.store.mapper.TStoreCustomizeBrandMapper">
+
+    <resultMap type="TStoreCustomizeBrand" id="TStoreCustomizeBrandResult">
+        <result property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="url" column="url"/>
+        <result property="certificatUrl" column="certificat_url"/>
+        <result property="storeId" column="store_id"/>
+        <result property="brandId" column="brand_id"/>
+        <result property="status" column="status"/>
+        <result property="reason" column="reason"/>
+        <result property="delFlag" column="del_flag"/>
+        <result property="createTime" column="create_time"/>
+    </resultMap>
+
+    <sql id="selectTStoreCustomizeBrandVo">
+        select id, name, url, certificat_url, store_id, brand_id, status, reason, del_flag, create_time from t_store_customize_brand
+    </sql>
+
+    <select id="selectTStoreCustomizeBrandList" parameterType="TStoreCustomizeBrand"
+            resultMap="TStoreCustomizeBrandResult">
+        <include refid="selectTStoreCustomizeBrandVo"/>
+        <where>
+            <if test="name != null  and name != ''">and name like concat('%', #{name}, '%')</if>
+            <if test="url != null  and url != ''">and url = #{url}</if>
+            <if test="certificatUrl != null  and certificatUrl != ''">and certificat_url = #{certificatUrl}</if>
+            <if test="storeId != null  and storeId != ''">and store_id = #{storeId}</if>
+            <if test="brandId != null ">and brand_id = #{brandId}</if>
+            <if test="status != null  and status != ''">and status = #{status}</if>
+            <if test="reason != null  and reason != ''">and reason = #{reason}</if>
+        </where>
+    </select>
+
+    <select id="selectTStoreCustomizeBrandById" parameterType="Long" resultMap="TStoreCustomizeBrandResult">
+        <include refid="selectTStoreCustomizeBrandVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertTStoreCustomizeBrand" parameterType="TStoreCustomizeBrand" useGeneratedKeys="true"
+            keyProperty="id">
+        insert into t_store_customize_brand
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="name != null">name,</if>
+            <if test="url != null">url,</if>
+            <if test="certificatUrl != null">certificat_url,</if>
+            <if test="storeId != null">store_id,</if>
+            <if test="brandId != null">brand_id,</if>
+            <if test="status != null">status,</if>
+            <if test="reason != null">reason,</if>
+            <if test="delFlag != null">del_flag,</if>
+            <if test="createTime != null">create_time,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="name != null">#{name},</if>
+            <if test="url != null">#{url},</if>
+            <if test="certificatUrl != null">#{certificatUrl},</if>
+            <if test="storeId != null">#{storeId},</if>
+            <if test="brandId != null">#{brandId},</if>
+            <if test="status != null">#{status},</if>
+            <if test="reason != null">#{reason},</if>
+            <if test="delFlag != null">#{delFlag},</if>
+            <if test="createTime != null">#{createTime},</if>
+        </trim>
+    </insert>
+
+    <update id="updateTStoreCustomizeBrand" parameterType="TStoreCustomizeBrand">
+        update t_store_customize_brand
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="name != null">name = #{name},</if>
+            <if test="url != null">url = #{url},</if>
+            <if test="certificatUrl != null">certificat_url = #{certificatUrl},</if>
+            <if test="storeId != null">store_id = #{storeId},</if>
+            <if test="brandId != null">brand_id = #{brandId},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="reason != null">reason = #{reason},</if>
+            <if test="delFlag != null">del_flag = #{delFlag},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteTStoreCustomizeBrandById" parameterType="Long">
+        delete from t_store_customize_brand where id = #{id}
+    </delete>
+
+    <delete id="deleteTStoreCustomizeBrandByIds" parameterType="String">
+        delete from t_store_customize_brand where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

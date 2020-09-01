@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.cms.mapper.ArticleListMapper">
+    <resultMap id="BaseResult" type="com.ruoyi.cms.bean.ArticleList">
+        <result column="id" property="id"/>
+        <result column="title" property="title"/>
+        <result column="author" property="author"/>
+        <result column="column_id" property="columnId"/>
+        <result column="name" property="columnName"/>
+        <result column="sort" property="sort"/>
+        <result column="is_release" property="isRelease"/>
+        <result column="seo_keywords" property="seoKeywords"/>
+        <result column="seo_desc" property="seoDesc"/>
+        <result column="desc" property="desc"/>
+        <result column="del_flag" property="delFlag"/>
+        <result column="create_time" property="createTime"/>
+        <result column="modify_time" property="modifyTime"/>
+        <result column="del_time" property="delTime"/>
+    </resultMap>
+    <select id="queryArticleListCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+        SELECT count(1) FROM (SELECT la.title,la.del_flag,lac.`name`,la.column_id,la.is_release FROM cms_article AS la JOIN cms_article_column AS lac ON la.column_id=lac.id) AS article_column WHERE article_column.del_flag='0'
+        <if test="title != null">
+            AND article_column.title LIKE CONCAT(CONCAT('%', #{title}),'%')
+        </if>
+        <if test="columnId != null and columnId != -1">
+            AND article_column.column_id =#{columnId}
+        </if>
+        <if test="releaseState != null and releaseState != -1">
+            AND article_column.is_release ='0'
+        </if>
+    </select>
+    <select id="queryArticleList" parameterType="java.util.Map" resultMap="BaseResult">
+        SELECT la.id,la.title,la.author,la.column_id,la.sort,la.is_release,la.seo_keywords,la.seo_desc,la.`desc`,la.del_flag,la.create_time,la.modify_time,la.del_time,lac.`name`
+        FROM cms_article AS la JOIN cms_article_column AS lac ON la.column_id=lac.id WHERE la.del_flag='0'
+        <if test="title != null">
+            AND la.title LIKE CONCAT(CONCAT('%', #{title}),'%')
+        </if>
+        <if test="columnId != null and columnId != -1">
+            AND la.column_id =#{columnId}
+        </if>
+        <if test="releaseState != null and releaseState != -1">
+            AND la.is_release ='0'
+        </if>
+        ORDER BY la.create_time desc
+        limit #{startRowNum},#{pageSize}
+    </select>
+    <insert id="addArticle" parameterType="com.ruoyi.cms.bean.ArticleList">
+        INSERT INTO cms_article(title,author,column_id,sort,is_release,seo_keywords,seo_desc,`desc`,create_time,del_flag) VALUES
+        (#{title},#{author},#{columnId},#{sort},#{isRelease},#{seoKeywords},#{seoDesc},#{desc},now(),'0')
+    </insert>
+    <update id="deleteArticle" parameterType="java.util.List">
+        UPDATE cms_article SET del_flag='1',del_time=now() WHERE id IN
+        <foreach collection="array" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </update>
+    <update id="editArticle" parameterType="com.ruoyi.cms.bean.ArticleList">
+        UPDATE cms_article SET title=#{title},author=#{author},column_id=#{columnId},sort=#{sort},is_release=#{isRelease},seo_keywords=#{seoKeywords},seo_desc=#{seoDesc},`desc`=#{desc},modify_time=now()
+        WHERE id=#{id} AND del_flag='0'
+    </update>
+    <select id="queryArticleById" parameterType="java.lang.Long" resultMap="BaseResult">
+        SELECT la.title,la.author,la.column_id,lac.name,la.sort,la.is_release,la.seo_keywords,la.seo_desc,la.`desc`,la.del_flag,la.modify_time FROM cms_article AS la JOIN cms_article_column AS lac ON la.column_id=lac.id
+        WHERE la.id=#{id} AND la.del_flag ='0'
+    </select>
+    <select id="queryArticleByCateId" parameterType="java.lang.Long" resultMap="BaseResult">
+        SELECT *  FROM cms_article
+        WHERE column_id=#{id} AND del_flag ='0'
+    </select>
+</mapper>

@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.member.mapper.UmsBrowseRecordMapper">
+
+    <resultMap type="UmsBrowseRecord" id="UmsBrowseRecordResult">
+        <result property="id" column="id"/>
+        <result property="customerId" column="customer_id"/>
+        <result property="skuId" column="sku_id"/>
+        <result property="delFlag" column="del_flag"/>
+        <result property="createTime" column="create_time"/>
+        <result column="name" property="sku.name"/>
+        <result column="price" property="sku.price"/>
+        <result column="url" property="sku.url"/>
+        <result column="spu_id" property="sku.spuId"/>
+        <result column="type_id" property="skuTypeId"/>
+        <result column="is_batch_sku" property="sku.isBatchSku"/>
+    </resultMap>
+
+    <sql id="selectUmsBrowseRecordVo">
+        select id, customer_id, sku_id, del_flag, create_time from ums_browse_record
+    </sql>
+
+    <select id="selectUmsBrowseRecordList" parameterType="UmsBrowseRecord" resultMap="UmsBrowseRecordResult">
+        <include refid="selectUmsBrowseRecordVo"/>
+        <where>
+            <if test="customerId != null ">and customer_id = #{customerId}</if>
+            <if test="skuId != null  and skuId != ''">and sku_id = #{skuId}</if>
+        </where>
+    </select>
+
+    <select id="selectUmsBrowseRecordById" parameterType="Long" resultMap="UmsBrowseRecordResult">
+        <include refid="selectUmsBrowseRecordVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertUmsBrowseRecord" parameterType="UmsBrowseRecord" useGeneratedKeys="true" keyProperty="id">
+        insert into ums_browse_record
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="customerId != null">customer_id,</if>
+            <if test="skuId != null and skuId != ''">sku_id,</if>
+            <if test="delFlag != null">del_flag,</if>
+            <if test="createTime != null">create_time,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="customerId != null">#{customerId},</if>
+            <if test="skuId != null and skuId != ''">#{skuId},</if>
+            <if test="delFlag != null">#{delFlag},</if>
+            <if test="createTime != null">#{createTime},</if>
+        </trim>
+    </insert>
+
+    <update id="updateUmsBrowseRecord" parameterType="UmsBrowseRecord">
+        update ums_browse_record
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="customerId != null">customer_id = #{customerId},</if>
+            <if test="skuId != null and skuId != ''">sku_id = #{skuId},</if>
+            <if test="delFlag != null">del_flag = #{delFlag},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteUmsBrowseRecordById" parameterType="Long">
+        delete from ums_browse_record where id = #{id}
+    </delete>
+    <select id="queryBrowseRecord" parameterType="java.lang.Long" resultMap="UmsBrowseRecordResult">
+        SELECT r.id AS id, r.customer_id AS customer_id, r.sku_id AS sku_id, r.create_time AS create_time,
+        s.name AS name, s.price AS price, s.url AS url,s.is_batch_sku as is_batch_sku
+        FROM ums_browse_record r JOIN pms_sku s ON r.sku_id = s.id
+        WHERE r.customer_id = #{customerId} AND  DATE_SUB(CURDATE(), INTERVAL
+        30 DAY) &lt;= r.create_time
+        ORDER BY r.create_time DESC
+    </select>
+
+    <select id="queryBrowseRecordCount" parameterType="java.lang.Long" resultType="java.lang.Integer">
+        SELECT COUNT(1)
+        FROM ums_browse_record r JOIN pms_sku s ON r.sku_id = s.id
+        WHERE r.customer_id = #{customerId} AND  DATE_SUB(CURDATE(), INTERVAL 30 DAY) &lt;= r.create_time
+    </select>
+
+    <delete id="deleteBrowseRecordByDay" parameterType="java.util.Map">
+        delete from ums_browse_record WHERE create_time LIKE CONCAT(#{createTime}, '%') AND customer_id = #{customerId}
+    </delete>
+
+    <delete id="deleteBrowseRecordById" parameterType="java.lang.Long">
+        delete from ums_browse_record WHERE id = #{id}
+    </delete>
+
+    <select id="queryByCustomerIdAndSkuId" parameterType="UmsBrowseRecord"
+            resultType="java.lang.Integer">
+        select count(1) from ums_browse_record where customer_id = #{customerId} and sku_id = #{skuId}
+    </select>
+
+    <insert id="addBrowseRecord" parameterType="UmsBrowseRecord">
+        insert into ums_browse_record
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="customerId != null">
+                customer_id,
+            </if>
+            <if test="skuId != null">
+                sku_id,
+            </if>
+            del_flag,create_time
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="customerId != null">
+                #{customerId},
+            </if>
+            <if test="skuId != null">
+                #{skuId},
+            </if>
+            '0',now()
+        </trim>
+    </insert>
+
+
+    <select id="queryBrowseRecords" parameterType="java.util.Map" resultMap="UmsBrowseRecordResult">
+        SELECT r.id AS id, r.customer_id AS customer_id, r.sku_id AS sku_id, r.create_time AS create_time,
+        s.name AS name, s.price AS price, s.url AS url, s.spu_id as spu_id,s.is_batch_sku as is_batch_sku
+        FROM ums_browse_record r JOIN pms_sku s ON r.sku_id = s.id
+        WHERE r.customer_id = #{customerId} AND  r.del_flag = '0'
+        order by create_time desc
+        limit #{startRowNum},#{pageSize}
+    </select>
+
+    <select id="queryBrowseRecordsCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+        SELECT count(1)
+        FROM ums_browse_record r JOIN pms_sku s ON r.sku_id = s.id
+        WHERE r.customer_id = #{customerId} AND  r.del_flag = '0'
+    </select>
+
+    <delete id="deleteByCustomerId" parameterType="java.lang.Long">
+         delete from ums_browse_record WHERE customer_id = #{customerId}
+    </delete>
+
+    <select id="queryBrowseSkuType" resultMap="UmsBrowseRecordResult" parameterType="java.lang.Long">
+        select ums_browse_record.*,pms_goods.type_id from ums_browse_record join pms_sku on ums_browse_record.sku_id = pms_sku.id join pms_goods on pms_goods.id = pms_sku.spu_id where
+         ums_browse_record.customer_id = #{customerId} order by ums_browse_record.create_time desc limit 10
+    </select>
+    <delete id="deleteUmsBrowseRecordByIds" parameterType="String">
+        delete from ums_browse_record where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

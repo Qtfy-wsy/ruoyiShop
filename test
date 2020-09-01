@@ -1,0 +1,161 @@
+select CONCAT('SELECT * FROM ',table_name,'; -- ',table_comment) tableName ,table_comment from information_schema.tables
+           where table_schema = (select database()) 	;
+
+SELECT * FROM sys_menu where visible=1 ;
+-- 添加按钮
+INSERT INTO `mallplusbak`.`sys_menu`( `menu_name`, `parent_id`, `order_num`, `path`, `component`, `is_frame`, `menu_type`, `visible`, `status`, `perms`, `icon`, `create_by`, `create_time`, `update_by`, `update_time`, `remark`) VALUES ( '商品审核', 2211, 1, 'goodAudit', 'store/goodsaudit/goodsauditlist/spuauditdetail', 1, 'C', '1', '0', 'goodAudit', 'server', 'admin', '2018-03-01 00:00:00', 'ry', '2018-03-01 00:00:00', '');
+http://119.23.47.134/
+nohup java -Xms128m -Xmx256m -jar /app/amllplus/mojin/ruoyi-web.jar >mojin.log 2>&1 &
+nohup java -Xms128m -Xmx256m -jar /app/amllplus/mojin/ruoyi-admin.jar >mojinadmin.log 2>&1 &
+
+nohup java -Xms128m -Xmx256m -jar /app/amllplus/mojin/mojin-store.jar >mm.log 2>&1 &
+
+
+
+-- 会员等级用的会员等级表中的id字段。会员表没有存会员等级字段 及时算的
+
+-- 试用促销
+SELECT * FROM ls_marketing where type=9;
+SELECT
+lmt.*
+FROM
+ls_marketing_try lmt
+JOIN ls_marketing lm ON lm.id = lmt.marketing_id
+WHERE
+lmt.has_audit = '0'
+AND lm.del_flag = '0'
+AND lm.endtime < now( );-- type 0元试用类型 1 付邮试用 2 返卷试用
+
+SELECT* FROM ls_marketing ;
+-- has_audit 是否有过审核，0 没有过 1 审核过 默认0
+SELECT * FROM ls_marketing_try;-- 状态 0 试用申请中 1 申请通过 2 申请拒绝 3下单成功4 已完成（已提交试用报告）
+SELECT * FROM ls_trysku_apply;
+-- 活动结束后 可以展示 立即购买 然后跟普通订单一样购买
+
+-- 拼团
+SELECT * FROM ls_marketing where type=10; -- 营销类型 1 直降 2满赠 3抢购 4满减 5 满折 6 包邮 7 定金预售 8 全款预售 9 试用 10拼团 11众筹
+SELECT * FROM ls_sku_marketing;
+SELECT * FROM ls_sku where id=159436822555230;
+SELECT * FROM ls_marketing_group;
+
+select id,order_code,`status`,presale_status,evaluation_status,group_id,group_num,group_head,group_status,auto_handle_status,order_type,price from ls_order
+where customer_id in (4,14,15)
+
+-- concessional_rate 总的优惠价（包含订单使用的优惠卷 积分 红包 ,满减满折的价格）
+-- group_id 团长 自动生成 成员一样的
+-- status 1:待付款 （用户刚下单）2:代发货 （用户付完款 等待商城发货）3:代收货 （商城已经发货 等待用户确认收货）4:已完成 （用户已经确认收货 订单结束）5:取消订单 （用户未付款前取消订单）6:退款通过 （用户已经付款但是商城还未发货，用户发出退款申请，商城同意退款）7:退货通过 （用户已经确认收货后用户发出退货申请，商城同意所有退货申请 ，一个订单可能有多个单品）
+-- presaleStatus 预售订单状态 普通订单 该状态没作用 0 第一阶段未支付 1 第一阶段已支付第二阶段未支付 2 第二阶段已支付 默认0
+-- evaluationStatus 评价状态 0 未评价 1 已评价 默认为0 未评价
+-- groupHead 是否团长 0 是 1 否
+-- auto_handle_status 拼团订单定时任务处理状态 1 已处理
+-- groupStatus 拼团状态 0未成团 1已成团 默认0 -1 团还未组件成功
+-- orderType 订单类型 0 普通订单 1 定金预售订单 2全款预售订单 3 拼团订单 4 众筹全款 5 众筹1元 6 众筹无回报 7 虚拟商品订单默认0 8 社区团购 普通订单
+-- 判断会员是否在指定的团中
+select id,order_code,`status`,presale_status,evaluation_status,group_id,group_num,group_head,group_status,auto_handle_status,order_type,price from ls_order
+where customer_id=4;
+
+
+-- 查询已经开团24小时以上的（未成团或未支付）的未处理拼团订单
+select * from ls_order where order_type='3' and group_status !='1' and auto_handle_status !='1' and open_group_time &lt; DATE_SUB(now(),INTERVAL 1 day);
+
+select lo.*,lc.username customer_name ,lc.image customer_pic from ls_order lo join ls_customer lc on
+lo.customer_id=lc.id and lc.del_flag = '0'
+where lo.order_type='3' and group_head='1'
+<if test="groupId !=null">
+and lo.group_id=#{groupId}
+</if>
+<if test="status !=null">
+and lo.group_status != '-1'
+</if>
+order by lo.create_time desc;
+
+-- 查询创建时间24小时以上的未支付的未处理拼团订单
+select * from ls_order where order_type='3' and group_status='-1' and auto_handle_status !='1' and group_head='0' and status='1' and create_time &lt; DATE_SUB(now(),INTERVAL 1 day);
+
+-- 预售促销
+SELECT* FROM ls_marketing where type in (7,8);
+
+SELECT * FROM ls_marketing_presale;
+-- 超过一天没有支付尾款 自动取消
+select * from ls_order where presale_time < DATE_SUB(now(),INTERVAL 1 day) and status='1' and order_type='1';
+-- 有个支付尾款时间
+select id,order_code,`status`,presale_status,evaluation_status,group_id,group_num,group_head,group_status,auto_handle_status,order_type,price,original_price,presale_price from ls_order
+where customer_id=4;
+
+-- 分销
+-- 1 普通用户 2 商家店铺用户 3 店铺员工
+SELECT id, self_recommend_code,commission,mobile,recommended,s_recommended,consumption_amount from ls_customer where id in (4,14,15);
+
+SELECT * FROM ls_spu where commission_rate>0; -- 分销商品
+
+SELECT * FROM ls_order where recommended>0 ; -- 分销订单
+SELECT * FROM ls_order_sku where commission_rate>0 ;
+
+select * from ls_pre_deposit_record where customer_id = 14 and status = '1' order by id desc ;
+-- 账单进出类型 0 进 1 出
+-- 账单记录类型 1 确认收货 2 退款订单 3 退货订单佣金 4 订单关闭（只支付定金） 5 推广订单提成 6 退货订单
+select * from ls_billing_records; -- 账单记录表
+
+-- 在退换货那边可以填写退货物流信息
+-- type 1 退款 2 退货
+-- back_type 返回方式 1 快递返回 目前只有快递返回 （退货的时候用户给商城寄送商品）
+-- status 退款／退货状态 1:退款申请 （用户发送退款请求）2:退款成功（商家同意退款）3:退款拒绝 （商家拒绝退款）4:退货申请 （用户发起退货请求）5:退货拒绝 （商家拒绝退货）6:退货审核通过等待用户填写物流（商家审核通过，等待用户寄回商品）7: 待收货 （用户已经寄回商品，等待商家收货确认）8：退货完成（商家收货并且同意退款给用户）9:退货失败（商家不同意退款）
+select * from ls_back_order ; -- 退单表
+
+-- 状态 0 申请 1 审核通过 2 拒绝 3 已打款
+select * from ls_withdraw; -- 提现记录表
+
+-- 类型 0 收入 1 支出
+select * from ls_commission_records; -- 佣金记录表
+
+-- 申请提现
+
+//添加提现记录
+withdrawRecordMapper.addWithdrawRecord(withdrawRecord);
+//更改用户表中的佣金
+customerService.updateCustomerCommission(withdrawRecord.getCustomerId(), withdrawRecord.getMoney().negate());
+//添加佣金变更记录
+commissionRecordService.addCommissionRecord(CommissionRecord.buildForExpend(withdrawRecord.getCustomerId(), withdrawRecord.getMoney(), CommissionRecord.WITHDRAW_REMARK));
+
+-- 拒绝提现
+//添加佣金记录
+commissionRecordService.addCommissionRecord(CommissionRecord.buildForWithdrawFail(withdrawRecord.getCustomerId(), withdrawRecord.getMoney()));
+//更新佣金
+customerService.updateCustomerCommission(withdrawRecord.getCustomerId(), withdrawRecord.getMoney());
+withdrawRecordMapper.updateWithdrawRecordStatus(params);
+
+-- 发放提现金额
+// 支付宝提现
+WithdrawResponse withdrawResponse = AliPayUtils.withdraw(aliPaySetting, withdrawRequest);
+// 如果成功则修改状态
+if (withdrawResponse.isSuccess()) {
+logger.debug("withdraw success....");
+updateWithdrawRecordStatus(id, "3");
+}
+
+
+-- 积分 没有退货退款
+
+-- type 积分类型 1 收入 2支出
+-- source_type 积分纪录来源类型1 订单使用2 订单取消3 操作员修改4 签到5 积分商城使用6 邮箱验证 7 评论
+SELECT * FROM ls_customer_point; -- 会员积分详情表
+SELECT * FROM ls_point_cate; -- 积分商城分类表
+-- status 0 待发货，1 已发货，待用户收货 2 用户已收货，订单完成
+SELECT * FROM ls_point_order; -- 积分商城订单
+SELECT * FROM ls_point_setting; -- 积分设置表
+SELECT * FROM ls_point_sign_rule; -- 积分签到规则
+SELECT * FROM ls_point_sku; -- 积分商品表
+
+
+
+-- 秒杀 需要先创建整点的秒杀活动 然后添加此时间之后的秒杀商品，然后加入此活动
+select * from ls_seckill_scene where datediff(seckill_time, now())=0 and del_flag = '0' order by scene ;
+
+SELECT count(1) from ls_seckill_scene_panicbuy where seckill_scene_id = #{seckillSceneId} and del_flag = '0' ;
+
+-- 红包开始前 店铺参加红包，过了参加时间 不能参与
+select * from ls_red_envelope
+
+
+直降 预售 满赠 滿減 滿折
+@tap="addCart('buy', true,item.groupId)"

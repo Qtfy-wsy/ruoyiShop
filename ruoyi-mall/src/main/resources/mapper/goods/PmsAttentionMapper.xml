@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.goods.mapper.PmsAttentionMapper">
+
+    <resultMap type="PmsAttention" id="PmsAttentionResult">
+        <result property="id" column="id"/>
+        <result property="customerId" column="customer_id"/>
+        <result property="spuId" column="spu_id"/>
+        <result property="skuId" column="sku_id"/>
+        <result property="delFlag" column="del_flag"/>
+        <result property="createTime" column="create_time"/>
+        <result property="delTime" column="del_time"/>
+    </resultMap>
+
+    <sql id="selectPmsAttentionVo">
+        select id, customer_id, spu_id, sku_id, del_flag, create_time, del_time from pms_attention
+    </sql>
+    <resultMap id="attention" type="PmsAttention">
+        <result column="id" property="id"/>
+        <result column="customer_id" property="customerId"/>
+        <result column="spu_id" property="spuId"/>
+        <result column="sku_id" property="skuId"/>
+        <result column="del_flag" property="delFlag"/>
+        <result column="create_time" property="createTime"/>
+        <result column="sku_no" property="sku.skuNo"/>
+        <result column="name" property="sku.name"/>
+        <result column="price" property="sku.price"/>
+        <result column="url" property="sku.url"/>
+        <result column="is_batch_sku" property="sku.isBatchSku"/>
+    </resultMap>
+    <select id="queryAttentions" parameterType="java.util.Map" resultMap="attention">
+        select pms_attention.*,pms_sku.sku_no, pms_sku.name ,pms_sku.price,pms_sku.is_batch_sku,  pms_sku.url from pms_attention join pms_sku on pms_attention.sku_id = pms_sku.id
+        where pms_attention.customer_id = #{customerId}
+        order by pms_attention.create_time desc
+        limit #{startRowNum},#{pageSize}
+    </select>
+
+    <select id="queryAttentionCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+        select count(1) from pms_attention join pms_sku on pms_attention.sku_id = pms_sku.id
+        where pms_attention.customer_id = #{customerId}
+    </select>
+    <update id="cancelAttention" parameterType="PmsAttention">
+        delete from pms_attention  WHERE customer_id=#{customerId} AND sku_id=#{skuId}
+    </update>
+
+    <insert id="addAttention" parameterType="PmsAttention">
+        insert into pms_attention
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="customerId != null">
+                customer_id,
+            </if>
+            <if test="spuId != null">
+                spu_id,
+            </if>
+            <if test="skuId != null">
+                sku_id,
+            </if>
+            del_flag,create_time
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="customerId != null">
+                #{customerId},
+            </if>
+            <if test="spuId != null">
+                #{spuId},
+            </if>
+            <if test="skuId != null">
+                #{skuId},
+            </if>
+            '0',now()
+        </trim>
+    </insert>
+
+    <select id="queryCustomerAttenion" parameterType="java.util.Map" resultType="java.lang.Integer">
+        select count(1) from pms_attention WHERE customer_id=#{customerId} AND sku_id=#{skuId}
+    </select>
+    <select id="selectPmsAttentionList" parameterType="PmsAttention" resultMap="PmsAttentionResult">
+        <include refid="selectPmsAttentionVo"/>
+        <where>
+            <if test="storeId != null ">  and store_id = #{storeId} </if>
+        </where>
+    </select>
+
+    <select id="selectPmsAttentionById" parameterType="Long" resultMap="PmsAttentionResult">
+        <include refid="selectPmsAttentionVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertPmsAttention" parameterType="PmsAttention" useGeneratedKeys="true" keyProperty="id">
+        insert into pms_attention
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="customerId != null">customer_id,</if>
+            <if test="spuId != null">spu_id,</if>
+            <if test="skuId != null and skuId != ''">sku_id,</if>
+            <if test="delFlag != null">del_flag,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="delTime != null">del_time,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="customerId != null">#{customerId},</if>
+            <if test="spuId != null">#{spuId},</if>
+            <if test="skuId != null and skuId != ''">#{skuId},</if>
+            <if test="delFlag != null">#{delFlag},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="delTime != null">#{delTime},</if>
+        </trim>
+    </insert>
+
+    <update id="updatePmsAttention" parameterType="PmsAttention">
+        update pms_attention
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="customerId != null">customer_id = #{customerId},</if>
+            <if test="spuId != null">spu_id = #{spuId},</if>
+            <if test="skuId != null and skuId != ''">sku_id = #{skuId},</if>
+            <if test="delFlag != null">del_flag = #{delFlag},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="delTime != null">del_time = #{delTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deletePmsAttentionById" parameterType="Long">
+        delete from pms_attention where id = #{id}
+    </delete>
+
+    <delete id="deletePmsAttentionByIds" parameterType="String">
+        delete from pms_attention where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

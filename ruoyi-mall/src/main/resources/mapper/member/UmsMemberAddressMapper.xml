@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.member.mapper.UmsMemberAddressMapper">
+
+    <resultMap type="UmsMemberAddress" id="UmsMemberAddressResult">
+        <result property="id" column="id"/>
+        <result property="customerId" column="customer_id"/>
+        <result property="name" column="name"/>
+        <result property="mobile" column="mobile"/>
+        <result property="phone" column="phone"/>
+        <result property="zipCode" column="zip_code"/>
+        <result property="address" column="address"/>
+        <result property="detailAddress" column="detail_address"/>
+        <result property="provinceId" column="province_id"/>
+        <result property="cityId" column="city_id"/>
+        <result property="countryId" column="country_id"/>
+        <result property="isDefault" column="is_default"/>
+        <result property="delFlag" column="del_flag"/>
+        <result property="createTime" column="create_time"/>
+        <result property="delTime" column="del_time"/>
+        <result property="updateTime" column="update_time"/>
+    </resultMap>
+
+    <sql id="selectUmsMemberAddressVo">
+        select id, customer_id, name, mobile, phone, zip_code, address, detail_address, province_id, city_id, country_id, is_default, del_flag, create_time, del_time, update_time from ums_member_address
+    </sql>
+
+    <select id="selectUmsMemberAddressList" parameterType="UmsMemberAddress" resultMap="UmsMemberAddressResult">
+        <include refid="selectUmsMemberAddressVo"/>
+        <where>
+            <if test="customerId != null ">and customer_id = #{customerId}</if>
+            <if test="name != null  and name != ''">and name like concat('%', #{name}, '%')</if>
+            <if test="mobile != null  and mobile != ''">and mobile like concat('%', #{mobile}, '%')</if>
+            <if test="isDefault != null  and isDefault != ''">and is_default = #{isDefault}</if>
+        </where>
+    </select>
+    <select id="queryCustomerDefaultAddressByCustomerId" parameterType="java.lang.Long"
+            resultMap="UmsMemberAddressResult">
+        select * from ums_member_address where customer_id=#{customerId}  and is_default = '1'
+    </select>
+    <select id="queryCustomerAddressById" parameterType="java.util.Map" resultMap="UmsMemberAddressResult">
+        select * from ums_member_address where id=#{addressId} and customer_id=#{customerId}
+    </select>
+    <select id="queryCustomerAllAddressByCustomerId" parameterType="java.lang.Long" resultMap="UmsMemberAddressResult">
+        select * from ums_member_address where customer_id=#{customerId} order by is_default desc,create_time
+    </select>
+    <select id="queryCustomerDefaultChosenAddress" parameterType="java.lang.Long" resultMap="UmsMemberAddressResult">
+        select * from ums_member_address where customer_id=#{customerId} order by is_default desc,create_time limit 1
+    </select>
+    <update id="deleteCustomerAddressById" parameterType="java.util.Map">
+        UPDATE  ums_member_address set del_flag ='1',del_time=now() where id=#{addressId} and customer_id=#{customerId} and is_default ='0'
+    </update>
+    <update id="clearDefaultAddressByCustomerId" parameterType="java.lang.Long">
+        UPDATE  ums_member_address set is_default ='0' where customer_id=#{customerId}
+    </update>
+    <update id="setDefaultAddressById" parameterType="java.util.Map">
+        UPDATE  ums_member_address set is_default ='1' where id=#{addressId}  and customer_id=#{customerId}
+    </update>
+    <insert id="addCustomerAddress" parameterType="UmsMemberAddress" useGeneratedKeys="true" keyProperty="id">
+        INSERT into ums_member_address
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="customerId !=null">
+                customer_id,
+            </if>
+            <if test="name !=null">
+                name,
+            </if>
+            <if test="mobile !=null">
+                mobile,
+            </if>
+            <if test="phone !=null">
+                phone,
+            </if>
+            <if test="zipCode !=null">
+                zip_code,
+            </if>
+            <if test="address !=null">
+                address,
+            </if>
+            <if test="detailAddress !=null">
+                detail_address,
+            </if>
+            <if test="provinceId !=null">
+                province_id,
+            </if>
+            <if test="cityId !=null">
+                city_id,
+            </if>
+            <if test="countryId !=null">
+                country_id,
+            </if>
+            <if test="isDefault !=null">
+                is_default,
+            </if>
+            create_time,del_flag
+        </trim>
+        <trim prefix="VALUES(" suffix=")" suffixOverrides=",">
+            <if test="customerId !=null">
+                #{customerId},
+            </if>
+            <if test="name !=null">
+                #{name},
+            </if>
+            <if test="mobile !=null">
+                #{mobile},
+            </if>
+            <if test="phone !=null">
+                #{phone},
+            </if>
+            <if test="zipCode !=null">
+                #{zipCode},
+            </if>
+            <if test="address !=null">
+                #{address},
+            </if>
+            <if test="detailAddress !=null">
+                #{detailAddress},
+            </if>
+            <if test="provinceId !=null">
+                #{provinceId},
+            </if>
+            <if test="cityId !=null">
+                #{cityId},
+            </if>
+            <if test="countryId !=null">
+                #{countryId},
+            </if>
+            <if test="isDefault !=null">
+                #{isDefault},
+            </if>
+            now(),'0'
+        </trim>
+    </insert>
+    <update id="updateCustomerAddress" parameterType="UmsMemberAddress">
+        UPDATE ums_member_address
+        <set>
+            <if test="name !=null">
+                name=#{name},
+            </if>
+            <if test="mobile !=null">
+                mobile=#{mobile},
+            </if>
+            <if test="phone !=null">
+                phone=#{phone},
+            </if>
+            <if test="zipCode !=null">
+                zip_code=#{zipCode},
+            </if>
+            <if test="address !=null">
+                address=#{address},
+            </if>
+            <if test="detailAddress !=null">
+                detail_address=#{detailAddress},
+            </if>
+            <if test="provinceId !=null">
+                province_id=#{provinceId},
+            </if>
+            <if test="cityId !=null">
+                city_id=#{cityId},
+            </if>
+            <if test="countryId !=null">
+                country_id=#{countryId},
+            </if>
+            <if test="isDefault !=null">
+                is_default=#{isDefault},
+            </if>
+            update_time=now()
+        </set>
+        where id=#{id} and customer_id=#{customerId}
+    </update>
+    <select id="selectUmsMemberAddressById" parameterType="Long" resultMap="UmsMemberAddressResult">
+        <include refid="selectUmsMemberAddressVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertUmsMemberAddress" parameterType="UmsMemberAddress" useGeneratedKeys="true" keyProperty="id">
+        insert into ums_member_address
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="customerId != null">customer_id,</if>
+            <if test="name != null">name,</if>
+            <if test="mobile != null">mobile,</if>
+            <if test="phone != null">phone,</if>
+            <if test="zipCode != null">zip_code,</if>
+            <if test="address != null">address,</if>
+            <if test="detailAddress != null">detail_address,</if>
+            <if test="provinceId != null">province_id,</if>
+            <if test="cityId != null">city_id,</if>
+            <if test="countryId != null">country_id,</if>
+            <if test="isDefault != null">is_default,</if>
+            <if test="delFlag != null">del_flag,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="delTime != null">del_time,</if>
+            <if test="updateTime != null">update_time,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="customerId != null">#{customerId},</if>
+            <if test="name != null">#{name},</if>
+            <if test="mobile != null">#{mobile},</if>
+            <if test="phone != null">#{phone},</if>
+            <if test="zipCode != null">#{zipCode},</if>
+            <if test="address != null">#{address},</if>
+            <if test="detailAddress != null">#{detailAddress},</if>
+            <if test="provinceId != null">#{provinceId},</if>
+            <if test="cityId != null">#{cityId},</if>
+            <if test="countryId != null">#{countryId},</if>
+            <if test="isDefault != null">#{isDefault},</if>
+            <if test="delFlag != null">#{delFlag},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="delTime != null">#{delTime},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+        </trim>
+    </insert>
+
+    <update id="updateUmsMemberAddress" parameterType="UmsMemberAddress">
+        update ums_member_address
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="customerId != null">customer_id = #{customerId},</if>
+            <if test="name != null">name = #{name},</if>
+            <if test="mobile != null">mobile = #{mobile},</if>
+            <if test="phone != null">phone = #{phone},</if>
+            <if test="zipCode != null">zip_code = #{zipCode},</if>
+            <if test="address != null">address = #{address},</if>
+            <if test="detailAddress != null">detail_address = #{detailAddress},</if>
+            <if test="provinceId != null">province_id = #{provinceId},</if>
+            <if test="cityId != null">city_id = #{cityId},</if>
+            <if test="countryId != null">country_id = #{countryId},</if>
+            <if test="isDefault != null">is_default = #{isDefault},</if>
+            <if test="delFlag != null">del_flag = #{delFlag},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="delTime != null">del_time = #{delTime},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteUmsMemberAddressById" parameterType="Long">
+        delete from ums_member_address where id = #{id}
+    </delete>
+
+    <delete id="deleteUmsMemberAddressByIds" parameterType="String">
+        delete from ums_member_address where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

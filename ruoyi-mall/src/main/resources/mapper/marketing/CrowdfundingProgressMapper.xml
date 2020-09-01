@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.marketing.mapper.CrowdfundingProgressMapper">
+
+    <resultMap id="crowdfundingProgress" type="com.ruoyi.marketing.domain.CrowdfundingProgress">
+        <result column="id" property="id"/>
+        <result column="marketing_id" property="marketingId"/>
+        <result column="desc" property="desc"/>
+        <result column="time" property="time"/>
+        <result column="pic_url" property="picUrl"/>
+    </resultMap>
+
+    <select id="queryCrowdfundingProgressByMarketingId" parameterType="java.lang.Long" resultMap="crowdfundingProgress">
+        select * from sms_crowdfunding_progress where marketing_id = #{marketingId} order by `time` desc
+    </select>
+
+    <select id="queryCrowdfundingProgressById" parameterType="java.lang.Long" resultMap="crowdfundingProgress">
+        select * from sms_crowdfunding_progress where id = #{id}
+    </select>
+
+    <insert id="addCrowdfundingProgress" parameterType="com.ruoyi.marketing.domain.CrowdfundingProgress"
+            useGeneratedKeys="true"
+            keyProperty="id">
+        insert into sms_crowdfunding_progress
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="marketingId != null and marketingId != ''">
+                marketing_id,
+            </if>
+            <if test="desc != null and desc != ''">
+                `desc`,
+            </if>
+            <if test="time != null">
+                `time`,
+            </if>
+            <if test="picUrl != null and picUrl != ''">
+                pic_url,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="marketingId != null and marketingId != ''">
+                #{marketingId},
+            </if>
+            <if test="desc != null and desc != ''">
+                #{desc},
+            </if>
+            <if test="time != null">
+                #{time},
+            </if>
+            <if test="picUrl != null and picUrl != ''">
+                #{picUrl},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateCrowdfundingProgress" parameterType="com.ruoyi.marketing.domain.CrowdfundingProgress">
+        update sms_crowdfunding_progress
+        <set>
+            <trim suffixOverrides=",">
+                <if test="desc!=null and desc !=''">
+                    `desc`=#{desc},
+                </if>
+                <if test="time!=null">
+                    `time`=#{time},
+                </if>
+                <if test="picUrl!=null and picUrl !=''">
+                    pic_url=#{picUrl},
+                </if>
+            </trim>
+        </set>
+        where id=#{id}
+    </update>
+
+    <delete id="deleteCrowdfundingProgress" parameterType="java.lang.Long">
+        delete from sms_crowdfunding_progress where id=#{id}
+    </delete>
+
+</mapper>

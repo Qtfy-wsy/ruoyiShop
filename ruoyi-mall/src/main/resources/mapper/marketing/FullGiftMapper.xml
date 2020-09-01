@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.marketing.mapper.FullGiftMapper">
+
+    <resultMap id="fullGift" type="com.ruoyi.marketing.domain.FullGift">
+        <result column="id" property="id"/>
+        <result column="marketing_id" property="marketingId"/>
+        <result column="full_price" property="fullPrice"/>
+        <result column="sku_infos" property="skuInfos"/>
+    </resultMap>
+    <select id="queryByMarketingId" parameterType="java.lang.Long" resultMap="fullGift">
+        select * from sms_marketing_full_gift where marketing_id = #{marketingId}
+    </select>
+    <insert id="addFullGifts" parameterType="com.ruoyi.marketing.domain.FullGift">
+        INSERT INTO sms_marketing_full_gift
+        (marketing_id,full_price,sku_infos) values
+        <foreach collection="list" item="fullGift" index="index" separator=",">
+            (
+            #{fullGift.marketingId},
+            #{fullGift.fullPrice},
+            #{fullGift.skuInfos}
+            )
+        </foreach>
+    </insert>
+    <delete id="deleteByMarketingId" parameterType="java.lang.Long">
+        DELETE FROM sms_marketing_full_gift where marketing_id=#{marketingId}
+    </delete>
+</mapper>

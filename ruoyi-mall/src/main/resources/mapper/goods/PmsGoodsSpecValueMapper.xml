@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.goods.mapper.PmsGoodsSpecValueMapper">
+
+    <resultMap type="PmsGoodsSpecValue" id="PmsGoodsSpecValueResult">
+        <result property="id" column="id"/>
+        <result property="spuId" column="spu_id"/>
+        <result property="specId" column="spec_id"/>
+        <result property="specValueId" column="spec_value_id"/>
+        <result property="url" column="url"/>
+        <result property="valueRemark" column="value_remark"/>
+        <result property="delFlag" column="del_flag"/>
+    </resultMap>
+
+    <sql id="selectPmsGoodsSpecValueVo">
+        select id, spu_id, spec_id, spec_value_id, url, value_remark, del_flag from pms_goods_spec_value
+    </sql>
+
+    <select id="selectPmsGoodsSpecValueList" parameterType="PmsGoodsSpecValue" resultMap="PmsGoodsSpecValueResult">
+        <include refid="selectPmsGoodsSpecValueVo"/>
+        <where>
+            <if test="spuId != null ">and spu_id = #{spuId}</if>
+            <if test="specId != null ">and spec_id = #{specId}</if>
+            <if test="specValueId != null  and specValueId != ''">and spec_value_id = #{specValueId}</if>
+            <if test="url != null  and url != ''">and url = #{url}</if>
+            <if test="valueRemark != null  and valueRemark != ''">and value_remark = #{valueRemark}</if>
+        </where>
+    </select>
+
+    <select id="selectPmsGoodsSpecValueById" parameterType="Long" resultMap="PmsGoodsSpecValueResult">
+        <include refid="selectPmsGoodsSpecValueVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertPmsGoodsSpecValue" parameterType="PmsGoodsSpecValue" useGeneratedKeys="true" keyProperty="id">
+        insert into pms_goods_spec_value
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="spuId != null">spu_id,</if>
+            <if test="specId != null">spec_id,</if>
+            <if test="specValueId != null and specValueId != ''">spec_value_id,</if>
+            <if test="url != null">url,</if>
+            <if test="valueRemark != null and valueRemark != ''">value_remark,</if>
+            <if test="delFlag != null and delFlag != ''">del_flag,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="spuId != null">#{spuId},</if>
+            <if test="specId != null">#{specId},</if>
+            <if test="specValueId != null and specValueId != ''">#{specValueId},</if>
+            <if test="url != null">#{url},</if>
+            <if test="valueRemark != null and valueRemark != ''">#{valueRemark},</if>
+            <if test="delFlag != null and delFlag != ''">#{delFlag},</if>
+        </trim>
+    </insert>
+
+    <update id="updatePmsGoodsSpecValue" parameterType="PmsGoodsSpecValue">
+        update pms_goods_spec_value
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="spuId != null">spu_id = #{spuId},</if>
+            <if test="specId != null">spec_id = #{specId},</if>
+            <if test="specValueId != null and specValueId != ''">spec_value_id = #{specValueId},</if>
+            <if test="url != null">url = #{url},</if>
+            <if test="valueRemark != null and valueRemark != ''">value_remark = #{valueRemark},</if>
+            <if test="delFlag != null and delFlag != ''">del_flag = #{delFlag},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deletePmsGoodsSpecValueById" parameterType="Long">
+        delete from pms_goods_spec_value where id = #{id}
+    </delete>
+
+    <delete id="deletePmsGoodsSpecValueByIds" parameterType="String">
+        delete from pms_goods_spec_value where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    <insert id="addSpuSpecValues" parameterType="java.util.List">
+        insert into pms_goods_spec_value
+        (spu_id, spec_id,spec_value_id,url,value_remark,del_flag)
+        values
+        <foreach collection="list" item="spuSpecValue" index="index" separator=",">
+            (
+            #{spuSpecValue.spuId},
+            #{spuSpecValue.specId},
+            #{spuSpecValue.specValueId},
+            #{spuSpecValue.url},
+            #{spuSpecValue.valueRemark},
+            '0'
+            )
+        </foreach>
+    </insert>
+
+
+    <select id="queryBySpuId" parameterType="java.lang.Long" resultMap="PmsGoodsSpecValueResult">
+        select * from pms_goods_spec_value where spu_id = #{spuId}
+    </select>
+
+    <update id="deleteBySpuId" parameterType="java.lang.Long">
+        update pms_goods_spec_value set del_flag = '1' where spu_id = #{spuId}
+    </update>
+
+    <delete id="deleteBySpuIdPhysical" parameterType="java.lang.Long">
+        delete from pms_goods_spec_value where spu_id = #{spuId}
+    </delete>
+
+    <select id="queryCountBySpecId" parameterType="java.lang.Long" resultType="java.lang.Integer">
+        select count(1) from pms_goods_spec_value where spec_id = #{specId}
+    </select>
+
+
+    <select id="queryCountBySpecValueId" parameterType="java.lang.String" resultType="java.lang.Integer">
+      select count(1) from pms_goods_spec_value where spec_value_id = #{specValueId}
+    </select>
+</mapper>

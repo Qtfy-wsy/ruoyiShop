@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.marketing.mapper.SeckillScenePanicbuyMapper">
+
+    <resultMap id="seckillScenePanicbuy" type="com.ruoyi.marketing.domain.SeckillScenePanicbuy">
+        <result column="id" property="id"/>
+        <result column="seckill_scene_id" property="seckillSceneId"/>
+        <result column="panicbuy_id" property="panicbuyId"/>
+        <result column="marketing_id" property="marketingId"/>
+        <result column="sort" property="sort"/>
+        <result column="seckill_time" property="seckillTime"/>
+        <result column="is_show" property="isShow"/>
+        <result column="del_flag" property="delFlag"/>
+        <result column="discount" property="discount"/>
+        <result column="limit_num" property="limitNum"/>
+        <result column="skuId" property="skuId"/>
+        <result column="store_id" property="storeId"/>
+    </resultMap>
+
+    <insert id="addSeckillScenePanicbuys" parameterType="java.util.List">
+        insert into sms_seckill_scene_panicbuy
+        (seckill_scene_id,panicbuy_id,marketing_id, sort, seckill_time, is_show,del_flag)
+        values
+        <foreach collection="list" item="item" index="index" separator=",">
+            (
+            #{item.seckillSceneId},
+            #{item.panicbuyId},
+            #{item.marketingId},
+            #{item.sort},
+            #{item.seckillTime},
+            #{item.isShow},
+            #{item.delFlag}
+            )
+        </foreach>
+    </insert>
+
+    <update id="deleteSeckillScenePanicbuys" parameterType="java.util.Map">
+        update sms_seckill_scene_panicbuy set del_flag = '1' where datediff(seckill_time, #{seckillTime})=0
+        <if test="ids != null">
+            and seckill_scene_id not in
+            <foreach collection="ids" index="index" item="item" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+    </update>
+
+    <select id="querySeckillScenePanicbuyCount" parameterType="java.lang.Long" resultType="java.lang.Integer">
+        SELECT count(1) from sms_seckill_scene_panicbuy where seckill_scene_id = #{seckillSceneId}
+    </select>
+
+    <update id="deleteSeckillScenePanicbuysByPanicBuyIds" parameterType="java.util.Map">
+        update sms_seckill_scene_panicbuy set del_flag = '1' where
+        panicbuy_id in
+        <foreach collection="panicBuyIds" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </update>
+
+    <select id="querySeckillScenePanicbuyList" parameterType="java.util.Map" resultMap="seckillScenePanicbuy">
+        select lssp.*,lmp.discount, lmp.limit_num,lmp.skuId,lmp.store_id from sms_seckill_scene_panicbuy lssp
+        join sms_marketing_panicbuy lmp on lmp.id = lssp.panicbuy_id
+        where lssp. lssp.seckill_scene_id = #{seckillSceneId}
+        <if test="storeId != null and storeId != 0">
+            and lmp.store_id = #{storeId}
+        </if>
+        order by lssp.sort
+        limit #{startRowNum},#{pageSize}
+    </select>
+
+    <select id="querySeckillScenePanicbuyListCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+        select count(1) from sms_seckill_scene_panicbuy lssp
+        join sms_marketing_panicbuy lmp on lmp.id = lssp.panicbuy_id
+        where lssp. lssp.seckill_scene_id = #{seckillSceneId}
+        <if test="storeId != null and storeId != 0">
+            and lmp.store_id = #{storeId}
+        </if>
+    </select>
+
+    <select id="querySeckillScenePanicbuyForPlatformCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+      select count(1) from sms_seckill_scene_panicbuy p where  is_show = '1' and seckill_time = #{seckillTime}
+    </select>
+
+    <select id="querySeckillScenePanicbuyForPlatform" parameterType="java.util.Map" resultMap="seckillScenePanicbuy">
+      select p.panicbuy_id from sms_seckill_scene_panicbuy p where  is_show = '1' and seckill_time = #{seckillTime}
+            order by sort limit #{startRowNum},#{pageSize}
+    </select>
+
+    <update id="updateSeckillScenePanicbuy" parameterType="java.util.Map">
+        update sms_seckill_scene_panicbuy
+        <set>
+            <if test="isShow != null and isShow != ''">
+                is_show = #{isShow},
+            </if>
+            <if test="sort != null">
+                sort = #{sort},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <update id="deleteSeckillScenePanicbuysByMarketingIds" parameterType="java.util.Map">
+        update sms_seckill_scene_panicbuy set del_flag = '1' where
+        marketing_id in
+        <foreach collection="marketingIds" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </update>
+
+</mapper>

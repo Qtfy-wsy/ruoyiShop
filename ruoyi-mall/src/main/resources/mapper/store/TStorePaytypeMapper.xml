@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.store.mapper.TStorePaytypeMapper">
+
+    <resultMap type="TStorePaytype" id="TStorePaytypeResult">
+        <result property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="createTime" column="create_time"/>
+    </resultMap>
+
+    <sql id="selectTStorePaytypeVo">
+        select id, name, create_time from t_store_paytype
+    </sql>
+
+    <select id="selectTStorePaytypeList" parameterType="TStorePaytype" resultMap="TStorePaytypeResult">
+        <include refid="selectTStorePaytypeVo"/>
+        <where>
+            <if test="name != null  and name != ''">and name like concat('%', #{name}, '%')</if>
+        </where>
+    </select>
+
+    <select id="selectTStorePaytypeById" parameterType="Long" resultMap="TStorePaytypeResult">
+        <include refid="selectTStorePaytypeVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertTStorePaytype" parameterType="TStorePaytype" useGeneratedKeys="true" keyProperty="id">
+        insert into t_store_paytype
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="name != null">name,</if>
+            <if test="createTime != null">create_time,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="name != null">#{name},</if>
+            <if test="createTime != null">#{createTime},</if>
+        </trim>
+    </insert>
+
+    <update id="updateTStorePaytype" parameterType="TStorePaytype">
+        update t_store_paytype
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="name != null">name = #{name},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteTStorePaytypeById" parameterType="Long">
+        delete from t_store_paytype where id = #{id}
+    </delete>
+
+    <delete id="deleteTStorePaytypeByIds" parameterType="String">
+        delete from t_store_paytype where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

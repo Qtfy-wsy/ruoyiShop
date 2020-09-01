@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.cms.mapper.HelpListMapper">
+
+    <resultMap id="helpListResult" type="com.ruoyi.cms.bean.HelpList">
+        <result column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="sort" property="sort"/>
+        <result column="help_cate_id" property="helpCateId"/>
+        <result column="is_show" property="isShow"/>
+        <result column="desc" property="desc"/>
+        <result column="del_flag" property="delFlag"/>
+        <result column="crete_time" property="creteTime"/>
+        <result column="modify_time" property="modifyTime"/>
+        <result column="del_time" property="delTime"/>
+        <result column="cname" property="cateName"/>
+    </resultMap>
+
+    <select id="queryHelpList" parameterType="java.util.Map" resultMap="helpListResult">
+        SELECT
+        h.id,h.`name`,h.sort,h.help_cate_id,h.is_show,h.`desc`,h.del_flag,h.crete_time,h.modify_time,h.del_time,hc.name as cname
+        FROM cms_help_cate hc JOIN cms_help h
+        ON hc.id = h.help_cate_id
+        WHERE h.del_flag = '0'
+        <if test="name != null and !''.equals(name)">
+            AND h.`name` LIKE CONCAT(CONCAT('%',#{name}),'%')
+        </if>
+        ORDER BY sort
+        limit #{startRowNum},#{pageSize}
+    </select>
+
+    <select id="queryHelpListCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+        SELECT COUNT(1) FROM
+	    (SELECT h.del_flag,h.`name`,h.sort FROM cms_help h JOIN cms_help_cate hc ON h.help_cate_id = hc.id) a
+        WHERE a.del_flag = '0'
+        <if test="name != null and !''.equals(name)">
+            AND a.name LIKE CONCAT(CONCAT('%',#{name}),'%')
+        </if>
+    </select>
+
+    <insert id="addHelp" parameterType="com.ruoyi.cms.bean.HelpList">
+        INSERT INTO cms_help (help_cate_id,`name`,sort,is_show,`desc`,crete_time) VALUES (#{helpCateId},#{name},#{sort},#{isShow},#{desc},NOW());
+    </insert>
+
+    <update id="deleteHelp" parameterType="java.lang.Long">
+        UPDATE cms_help
+        SET del_flag = '1',del_time = now()
+        WHERE id = #{id}
+    </update>
+
+    <update id="batchDeleteHelp" parameterType="int">
+        UPDATE cms_help
+        SET del_flag = '1',del_time = now()
+        WHERE id IN
+        <foreach collection="array" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </update>
+
+    <select id="queryHelpById" parameterType="java.lang.Long" resultMap="helpListResult">
+        SELECT lh.id,lh.`name`,lh.sort,lh.help_cate_id,lh.is_show,lh.`desc`,lhc.name as cname
+        FROM cms_help lh left join cms_help_cate lhc on lh.help_cate_id=lhc.id
+        WHERE lh.id = #{id} AND lh.del_flag = '0'
+    </select>
+
+    <update id="updateHelp" parameterType="com.ruoyi.cms.bean.HelpList">
+        UPDATE cms_help
+        SET `name` = #{name},sort = #{sort},help_cate_id = #{helpCateId},is_show = #{isShow},`desc` = #{desc},modify_time = now()
+        WHERE id = #{id}
+    </update>
+
+    <select id="queryHelp" resultMap="helpListResult">
+        SELECT id,`name`,sort FROM cms_help WHERE del_flag = '0' ORDER BY sort
+    </select>
+
+    <select id="queryHelpByCateId" parameterType="java.lang.Long" resultMap="helpListResult">
+        SELECT id,`name`,sort, `desc` FROM cms_help WHERE help_cate_id = #{id} AND is_show = '0' AND del_flag = '0' ORDER BY sort
+    </select>
+</mapper>

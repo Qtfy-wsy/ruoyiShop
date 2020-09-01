@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.order.mapper.OmsLogisticsTemplateMapper">
+
+    <resultMap type="OmsLogisticsTemplate" id="OmsLogisticsTemplateResult">
+        <result property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="isDefault" column="is_default"/>
+        <result property="freightBear" column="freight_bear"/>
+        <result property="pricintMethod" column="pricint_method"/>
+        <result property="storeId" column="store_id"/>
+        <result property="delFlag" column="del_flag"/>
+        <result property="createTime" column="create_time"/>
+        <result property="modifyTime" column="modify_time"/>
+        <result property="delTime" column="del_time"/>
+    </resultMap>
+
+    <sql id="selectOmsLogisticsTemplateVo">
+        select id, name, is_default, freight_bear, pricint_method, store_id, del_flag, create_time, modify_time, del_time from oms_logistics_template
+    </sql>
+
+    <select id="selectOmsLogisticsTemplateList" parameterType="OmsLogisticsTemplate"
+            resultMap="OmsLogisticsTemplateResult">
+        <include refid="selectOmsLogisticsTemplateVo"/>
+        <where>
+            <if test="name != null  and name != ''">and name like concat('%', #{name}, '%')</if>
+            <if test="freightBear != null  and freightBear != ''">and freight_bear = #{freightBear}</if>
+            <if test="storeId != null ">  and store_id = #{storeId} </if>
+            <if test="pricintMethod != null  and pricintMethod != ''">and pricint_method = #{pricintMethod}</if>
+        </where>
+    </select>
+
+    <select id="selectOmsLogisticsTemplateById" parameterType="Long" resultMap="OmsLogisticsTemplateResult">
+        <include refid="selectOmsLogisticsTemplateVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertOmsLogisticsTemplate" parameterType="OmsLogisticsTemplate" useGeneratedKeys="true"
+            keyProperty="id">
+        insert into oms_logistics_template
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="name != null and name != ''">name,</if>
+            <if test="isDefault != null and isDefault != ''">is_default,</if>
+            <if test="freightBear != null and freightBear != ''">freight_bear,</if>
+            <if test="pricintMethod != null and pricintMethod != ''">pricint_method,</if>
+            <if test="storeId != null">store_id,</if>
+            <if test="delFlag != null">del_flag,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="modifyTime != null">modify_time,</if>
+            <if test="delTime != null">del_time,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="name != null and name != ''">#{name},</if>
+            <if test="isDefault != null and isDefault != ''">#{isDefault},</if>
+            <if test="freightBear != null and freightBear != ''">#{freightBear},</if>
+            <if test="pricintMethod != null and pricintMethod != ''">#{pricintMethod},</if>
+            <if test="storeId != null">#{storeId},</if>
+            <if test="delFlag != null">#{delFlag},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="modifyTime != null">#{modifyTime},</if>
+            <if test="delTime != null">#{delTime},</if>
+        </trim>
+    </insert>
+
+    <update id="updateOmsLogisticsTemplate" parameterType="OmsLogisticsTemplate">
+        update oms_logistics_template
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="name != null and name != ''">name = #{name},</if>
+            <if test="isDefault != null and isDefault != ''">is_default = #{isDefault},</if>
+            <if test="freightBear != null and freightBear != ''">freight_bear = #{freightBear},</if>
+            <if test="pricintMethod != null and pricintMethod != ''">pricint_method = #{pricintMethod},</if>
+            <if test="storeId != null">store_id = #{storeId},</if>
+            <if test="delFlag != null">del_flag = #{delFlag},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="modifyTime != null">modify_time = #{modifyTime},</if>
+            <if test="delTime != null">del_time = #{delTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteOmsLogisticsTemplateById" parameterType="Long">
+        delete from oms_logistics_template where id = #{id}
+    </delete>
+
+    <delete id="deleteOmsLogisticsTemplateByIds" parameterType="String">
+        delete from oms_logistics_template where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    <select id="queryAllTemplates" parameterType="java.lang.Long" resultMap="OmsLogisticsTemplateResult">
+        select * from oms_logistics_template where del_flag ='0'and  store_id = #{storeId}
+        order by is_default , id desc
+  </select>
+
+    <update id="setLogisticsTemplateUnDefault" parameterType="java.lang.Long">
+        update oms_logistics_template set is_default = '1' where store_id = #{storeId}
+    </update>
+
+    <update id="deleteLogisticsTemplate" parameterType="java.util.Map">
+        update oms_logistics_template set del_flag = '1' , del_time = now() where  store_id = #{storeId} and id = #{id}
+    </update>
+
+    <update id="updateLogisticsTemplate" parameterType="com.ruoyi.order.domain.OmsLogisticsTemplate">
+          update oms_logistics_template set name = #{name},freight_bear=#{freightBear},pricint_method=#{pricintMethod} where id=#{id}
+    </update>
+
+    <update id="setDefaultLogisticsTemplate" parameterType="java.util.Map">
+        update oms_logistics_template set is_default = '0' where  id = #{id}
+    </update>
+
+    <select id="queryLogisticsTemplate" parameterType="java.util.Map" resultMap="OmsLogisticsTemplateResult">
+        select * from oms_logistics_template where id = #{id}
+        <if test="storeId != null and storeId != -1">
+            and store_id = #{storeId}
+        </if>
+    </select>
+
+    <select id="queryDefaultLogisticsTemplate" parameterType="java.lang.Long" resultMap="OmsLogisticsTemplateResult">
+        select * from oms_logistics_template where store_id = #{storeId} and is_default = '0'
+    </select>
+
+    <insert id="addLogisticsTemplate" parameterType="com.ruoyi.order.domain.OmsLogisticsTemplate"
+            useGeneratedKeys="true" keyProperty="id">
+        insert into oms_logistics_template
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="name != null">
+                name,
+            </if>
+            <if test="isDefault != null">
+                is_default,
+            </if>
+            <if test="freightBear != null">
+                freight_bear,
+            </if>
+            <if test="pricintMethod != null">
+                pricint_method,
+            </if>
+            store_id,
+            del_flag,
+            create_time
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="name != null">
+                #{name},
+            </if>
+            <if test="isDefault != null">
+                #{isDefault},
+            </if>
+            <if test="freightBear != null">
+                #{freightBear},
+            </if>
+            <if test="pricintMethod != null">
+                #{pricintMethod},
+            </if>
+            #{storeId},
+            '0',
+            now()
+        </trim>
+    </insert>
+
+    <select id="queryLogisticsTemplateById" parameterType="java.lang.Long" resultMap="OmsLogisticsTemplateResult">
+        select *  from oms_logistics_template where   id =#{id}
+    </select>
+
+    <select id="queryLogisticsTemplateByName" parameterType="java.util.Map" resultMap="OmsLogisticsTemplateResult">
+        select *  from oms_logistics_template where   name = #{name} and store_id = #{storeId}
+    </select>
+</mapper>

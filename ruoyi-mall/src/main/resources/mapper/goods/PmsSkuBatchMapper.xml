@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.goods.mapper.PmsSkuBatchMapper">
+
+    <resultMap type="PmsSkuBatch" id="PmsSkuBatchResult">
+        <result property="id" column="id"/>
+        <result property="spuId" column="spu_id"/>
+        <result property="skuId" column="sku_id"/>
+        <result property="batchNum" column="batch_num"/>
+        <result property="batchPrice" column="batch_price"/>
+        <result property="delFlag" column="del_flag"/>
+    </resultMap>
+
+    <sql id="selectPmsSkuBatchVo">
+        select id, spu_id, sku_id, batch_num, batch_price, del_flag from pms_sku_batch
+    </sql>
+
+    <select id="selectPmsSkuBatchList" parameterType="PmsSkuBatch" resultMap="PmsSkuBatchResult">
+        <include refid="selectPmsSkuBatchVo"/>
+        <where>
+            <if test="spuId != null ">and spu_id = #{spuId}</if>
+            <if test="skuId != null ">and sku_id = #{skuId}</if>
+            <if test="batchNum != null ">and batch_num = #{batchNum}</if>
+            <if test="batchPrice != null ">and batch_price = #{batchPrice}</if>
+        </where>
+    </select>
+
+    <select id="selectPmsSkuBatchById" parameterType="Long" resultMap="PmsSkuBatchResult">
+        <include refid="selectPmsSkuBatchVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertPmsSkuBatch" parameterType="PmsSkuBatch" useGeneratedKeys="true" keyProperty="id">
+        insert into pms_sku_batch
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="spuId != null">spu_id,</if>
+            <if test="skuId != null">sku_id,</if>
+            <if test="batchNum != null">batch_num,</if>
+            <if test="batchPrice != null">batch_price,</if>
+            <if test="delFlag != null">del_flag,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="spuId != null">#{spuId},</if>
+            <if test="skuId != null">#{skuId},</if>
+            <if test="batchNum != null">#{batchNum},</if>
+            <if test="batchPrice != null">#{batchPrice},</if>
+            <if test="delFlag != null">#{delFlag},</if>
+        </trim>
+    </insert>
+
+    <update id="updatePmsSkuBatch" parameterType="PmsSkuBatch">
+        update pms_sku_batch
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="spuId != null">spu_id = #{spuId},</if>
+            <if test="skuId != null">sku_id = #{skuId},</if>
+            <if test="batchNum != null">batch_num = #{batchNum},</if>
+            <if test="batchPrice != null">batch_price = #{batchPrice},</if>
+            <if test="delFlag != null">del_flag = #{delFlag},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deletePmsSkuBatchById" parameterType="Long">
+        delete from pms_sku_batch where id = #{id}
+    </delete>
+
+    <delete id="deletePmsSkuBatchByIds" parameterType="String">
+        delete from pms_sku_batch where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    <insert id="addSkuBatch" parameterType="java.util.List">
+        INSERT INTO pms_sku_batch (spu_id,sku_id,batch_num,batch_price,del_flag) VALUES
+        <foreach collection="list" index="index" item="item" separator=",">
+            (
+            #{item.spuId},#{item.skuId},#{item.batchNum},#{item.batchPrice},'0'
+            )
+        </foreach>
+    </insert>
+
+    <delete id="deleteSkuBatchBySpuIdPhysical" parameterType="java.lang.Long">
+        delete from pms_sku_batch where spu_id=#{spuId}
+    </delete>
+
+    <update id="deleteSkuBatchBySpuId" parameterType="java.lang.Long">
+        update pms_sku_batch set del_flag='1' where spu_id=#{spuId}
+    </update>
+    <select id="querySkuBatchBySkuId" parameterType="java.lang.String" resultMap="PmsSkuBatchResult">
+        select * from pms_sku_batch where sku_id=#{skuId};
+    </select>
+
+    <select id="querySkuBatchCountBySkuIds" parameterType="java.util.List" resultType="java.lang.Integer">
+        select count(1) from (select count(1) from pms_sku_batch where
+        sku_id IN
+        <foreach collection="list" separator="," open="(" close=")" item="skuId" index="index">
+            #{skuId}
+        </foreach>
+
+        GROUP BY sku_id) a
+    </select>
+</mapper>

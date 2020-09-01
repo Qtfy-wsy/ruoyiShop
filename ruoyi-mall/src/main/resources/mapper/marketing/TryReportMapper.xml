@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.marketing.mapper.TryReportMapper">
+
+    <resultMap id="tryReport" type="com.ruoyi.marketing.domain.TryReport">
+        <result column="id" property="id"/>
+        <result column="try_apply_id" property="tryApplyId"/>
+        <result column="satisfaction" property="satisfaction"/>
+        <result column="advice" property="advice"/>
+        <result column="feel" property="feel"/>
+        <result column="pics" property="pics"/>
+        <result column="status" property="status"/>
+        <result column="submit_time" property="submitTime"/>
+        <result column="customer_name" property="customerName"/>
+        <result column="customer_pic" property="customerPic"/>
+    </resultMap>
+
+
+    <select id="queryTryReportByTryApplyId" parameterType="java.lang.Long" resultMap="tryReport">
+        select * from sms_try_report where try_apply_id = #{tryApplyId}
+    </select>
+
+    <insert id="addTryReport" parameterType="com.ruoyi.marketing.domain.TryReport">
+        insert into sms_try_report
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="tryApplyId != null">
+                try_apply_id,
+            </if>
+            <if test="satisfaction != null">
+                satisfaction,
+            </if>
+            <if test="advice != null">
+                advice,
+            </if>
+            <if test="feel != null">
+                feel,
+            </if>
+            <if test="pics != null">
+                pics,
+            </if>
+            status,submit_time
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="tryApplyId != null">
+                #{tryApplyId},
+            </if>
+            <if test="satisfaction != null">
+                #{satisfaction},
+            </if>
+            <if test="advice != null">
+                #{advice},
+            </if>
+            <if test="feel != null">
+                #{feel},
+            </if>
+            <if test="pics != null">
+                #{pics},
+            </if>
+            '1',now()
+        </trim>
+    </insert>
+
+    <select id="queryTryReportList" parameterType="java.util.Map" resultMap="tryReport">
+        select ltr.* ,lc.username customer_name ,lc.image customer_pic from sms_try_report ltr JOIN sms_trysku_apply lta on ltr.try_apply_id=lta.id  JOIN
+        ums_member lc on lta.customer_id=lc.id where lta.try_id=#{tryId}
+         limit #{startRowNum},#{pageSize}
+    </select>
+    <select id="queryTryReportListCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+          select count(1) from sms_try_report ltr JOIN sms_trysku_apply lta on ltr.try_apply_id=lta.id  JOIN
+        ums_member lc on lta.customer_id=lc.id where lta.try_id=#{tryId}
+    </select>
+</mapper>

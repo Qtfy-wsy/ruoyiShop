@@ -1,0 +1,510 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.store.mapper.TStoreOrderMapper">
+
+    <resultMap type="TStoreOrder" id="TStoreOrderResult">
+        <result property="id" column="id"/>
+        <result property="orderCode" column="order_code"/>
+        <result property="masterOrderCode" column="master_order_code"/>
+        <result property="customerId" column="customer_id"/>
+        <result property="originalPrice" column="original_price"/>
+        <result property="price" column="price"/>
+        <result property="status" column="status"/>
+        <result property="storeId" column="store_id"/>
+        <result property="evaluationStatus" column="evaluation_status"/>
+        <result property="redEnvelopePrice" column="red_envelope_price"/>
+        <result property="redEnvelopeCode" column="red_envelope_code"/>
+        <result property="writeOffCode" column="write_off_code"/>
+        <result property="source" column="source"/>
+        <result property="createTime" column="create_time"/>
+        <result property="payTime" column="pay_time"/>
+        <result property="cancelTime" column="cancel_time"/>
+        <result property="cancelReason" column="cancel_reason"/>
+        <result property="pickUpTime" column="pick_up_time"/>
+        <result property="realPickUpTime" column="real_pick_up_time"/>
+        <result property="payType" column="pay_type"/>
+        <result property="predepositPay" column="predeposit_pay"/>
+    </resultMap>
+
+    <sql id="selectTStoreOrderVo">
+        select id, order_code, master_order_code, customer_id, original_price, price, status, store_id, evaluation_status, red_envelope_price, red_envelope_code, write_off_code, source, create_time, pay_time, cancel_time, cancel_reason, pick_up_time, real_pick_up_time, pay_type, predeposit_pay from t_store_order
+    </sql>
+    <resultMap id="storeOrder" type="TStoreOrder">
+        <result column="id" property="id"/>
+        <result column="order_code" property="orderCode"/>
+        <result column="master_order_code" property="masterOrderCode"/>
+        <result column="customer_id" property="customerId"/>
+        <result column="original_price" property="originalPrice"/>
+        <result column="price" property="price"/>
+        <result column="customer_name" property="customerName"/>
+        <result column="status" property="status"/>
+        <result column="store_id" property="storeId"/>
+        <result column="store_name" property="storeName"/>
+        <result column="evaluation_status" property="evaluationStatus"/>
+        <result column="red_envelope_code" property="redEnvelopeCode"/>
+        <result column="red_envelope_price" property="redEnvelopePrice"/>
+        <result column="write_off_code" property="writeOffCode"/>
+        <result column="source" property="source"/>
+        <result column="create_time" property="createTime"/>
+        <result column="pay_time" property="payTime"/>
+        <result column="cancel_time" property="cancelTime"/>
+        <result column="cancel_reason" property="cancelReason"/>
+        <result column="pick_up_time" property="pickUpTime"/>
+        <result column="real_pick_up_time" property="realPickUpTime"/>
+        <result column="pay_type" property="payType"/>
+        <result column="predeposit_pay" property="predepositPay"/>
+        <result column="new_store_order_time" property="newStoreOrderTime"/>
+        <result column="store_sales_amount" property="storeSalesAmount"/>
+    </resultMap>
+
+    <resultMap id="storeSaleAmount" type="com.ruoyi.order.vo.StoreSaleAmount">
+        <result column="store_id" property="storeId"/>
+        <result column="sales_volume" property="salesVolume"/>
+        <result column="sales_amount" property="salesAmount"/>
+        <result column="new_order_time" property="newOrderTime"/>
+    </resultMap>
+
+    <insert id="saveStoreOrder" parameterType="TStoreOrder" useGeneratedKeys="true"
+            keyProperty="id">
+        insert into t_store_order
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="orderCode != null">
+                order_code,
+            </if>
+            <if test="masterOrderCode != null">
+                master_order_code,
+            </if>
+            <if test="customerId != null">
+                customer_id,
+            </if>
+            <if test="originalPrice != null">
+                original_price,
+            </if>
+            <if test="price != null">
+                price,
+            </if>
+            <if test="status != null">
+                status,
+            </if>
+            <if test="storeId != null">
+                store_id,
+            </if>
+            <if test="evaluationStatus != null">
+                evaluation_status,
+            </if>
+            <if test="redEnvelopePrice != null">
+                red_envelope_price,
+            </if>
+            <if test="redEnvelopeCode != null">
+                red_envelope_code,
+            </if>
+            <if test="writeOffCode != null">
+                write_off_code,
+            </if>
+            <if test="source != null">
+                source,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="payTime != null">
+                pay_time,
+            </if>
+            <if test="cancelTime != null">
+                cancel_time,
+            </if>
+            <if test="cancelReason != null">
+                cancel_reason,
+            </if>
+            <if test="pickUpTime != null">
+                pick_up_time,
+            </if>
+            <if test="realPickUpTime != null">
+                real_pick_up_time,
+            </if>
+            <if test="payType != null">
+                pay_type,
+            </if>
+            <if test="predepositPay != null">
+                predeposit_pay
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="orderCode != null">
+                #{orderCode},
+            </if>
+            <if test="masterOrderCode != null">
+                #{masterOrderCode},
+            </if>
+            <if test="customerId != null">
+                #{customerId},
+            </if>
+            <if test="originalPrice != null">
+                #{originalPrice},
+            </if>
+            <if test="price != null">
+                #{price},
+            </if>
+            <if test="status != null">
+                #{status},
+            </if>
+            <if test="storeId != null">
+                #{storeId},
+            </if>
+            <if test="evaluationStatus != null">
+                #{evaluationStatus},
+            </if>
+            <if test="redEnvelopePrice != null">
+                #{redEnvelopePrice},
+            </if>
+            <if test="redEnvelopeCode != null">
+                #{redEnvelopeCode},
+            </if>
+            <if test="writeOffCode != null">
+                #{writeOffCode},
+            </if>
+            <if test="source != null">
+                #{source},
+            </if>
+            <if test="createTime != null">
+                #{createTime},
+            </if>
+            <if test="payTime != null">
+                #{payTime},
+            </if>
+            <if test="cancelTime != null">
+                #{cancelTime},
+            </if>
+            <if test="cancelReason != null">
+                #{cancelReason},
+            </if>
+            <if test="pickUpTime != null">
+                #{pickUpTime},
+            </if>
+            <if test="realPickUpTime != null">
+                #{realPickUpTime},
+            </if>
+            <if test="payType != null">
+                #{payType},
+            </if>
+            <if test="predepositPay != null">
+                #{predepositPay}
+            </if>
+        </trim>
+    </insert>
+
+    <select id="queryStoreOrderList" parameterType="java.util.Map" resultMap="storeOrder">
+        SELECT lso.*, lc.username customer_name ,lsi.store_name store_name FROM t_store_order lso
+        JOIN ums_member lc ON lso.customer_id=lc.id join t_store_info lsi ON lso.store_id=lsi.id
+        WHERE lc.del_flag='0'
+        <if test="orderCode != null and orderCode != '' ">
+            AND lso.order_code = #{orderCode}
+        </if>
+        <if test="customerName != null and customerName != ''">
+            AND lc.username like CONCAT(CONCAT('%', #{customerName}),'%')
+        </if>
+        <if test="storeName != null and storeName != ''">
+            AND lsi.store_name like CONCAT(CONCAT('%', #{storeName}),'%')
+        </if>
+        <if test='status != null and status != -1'>
+            AND lso.status = #{status}
+        </if>
+        <if test="storeId != null and storeId != -1 and storeId != 0">
+            AND lso.store_id=#{storeId}
+        </if>
+        <if test="source !=null">
+            AND lso.source=#{source}
+        </if>
+        <if test="source ==null">
+            AND lso.source in('1','2','3')
+        </if>
+        ORDER BY lso.create_time DESC
+        limit #{startRowNum},#{pageSize}
+    </select>
+    <select id="queryStoreOrderListCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+        SELECT COUNT(1) FROM t_store_order lso
+        JOIN ums_member lc ON lso.customer_id=lc.id join t_store_info lsi ON lso.store_id=lsi.id
+        WHERE lc.del_flag='0'
+        <if test="orderCode != null and orderCode != '' ">
+            AND lso.order_code = #{orderCode}
+        </if>
+        <if test="customerName != null and customerName != ''">
+            AND lc.username like CONCAT(CONCAT('%', #{customerName}),'%')
+        </if>
+        <if test="storeName != null and storeName != ''">
+            AND lsi.store_name like CONCAT(CONCAT('%', #{storeName}),'%')
+        </if>
+        <if test='status != null and status != -1'>
+            AND lso.status = #{status}
+        </if>
+        <if test="storeId != null and storeId != -1 and storeId != 0">
+            AND lso.store_id=#{storeId}
+        </if>
+        <if test="source !=null">
+            AND lso.source=#{source}
+        </if>
+        <if test="source ==null">
+            AND lso.source in('1','2','3')
+        </if>
+    </select>
+    <select id="queryStoreOrderListForSite" parameterType="java.util.Map" resultMap="storeOrder">
+        SELECT lso.*, lc.store_name store_name FROM t_store_order lso
+        LEFT JOIN t_store_info lc ON lso.store_id=lc.id
+        WHERE 1=1
+        <if test="orderCode != null and orderCode != '' ">
+            AND lso.order_code = #{orderCode}
+        </if>
+        <if test='status != null and status != -1'>
+            AND lso.status = #{status}
+        </if>
+        <if test="customerId != null and customerId !=-1">
+            AND lso.customer_id=#{customerId}
+        </if>
+        <if test="evaluationStatus != null">
+            AND lso.evaluation_status=#{evaluationStatus}
+        </if>
+        <if test='timeType=="1"'>
+            AND DATE_SUB(CURDATE(), INTERVAL 1 MONTH) &lt;= date(lso.create_time)
+        </if>
+
+        <if test='timeType=="2"'>
+            AND DATE_SUB(CURDATE(), INTERVAL 1 MONTH) &gt; date(lso.create_time)
+        </if>
+
+        ORDER BY lso.create_time DESC
+        limit #{startRowNum},#{pageSize}
+    </select>
+    <select id="queryStoreOrderListCountForSite" parameterType="java.util.Map" resultType="java.lang.Integer">
+        SELECT COUNT(1) FROM t_store_order lso
+        LEFT JOIN t_store_info lc ON lso.store_id=lc.id
+        WHERE 1=1
+        <if test="orderCode != null and orderCode != '' ">
+            AND lso.order_code = #{orderCode}
+        </if>
+        <if test='status != null and status != -1'>
+            AND lso.status = #{status}
+        </if>
+        <if test="customerId != null and customerId !=-1">
+            AND lso.customer_id=#{customerId}
+        </if>
+        <if test="evaluationStatus != null">
+            AND lso.evaluation_status=#{evaluationStatus}
+        </if>
+        <if test='timeType=="1"'>
+            AND DATE_SUB(CURDATE(), INTERVAL 1 MONTH) &lt;= date(lso.create_time)
+        </if>
+
+        <if test='timeType=="2"'>
+            AND DATE_SUB(CURDATE(), INTERVAL 1 MONTH) &gt; date(lso.create_time)
+        </if>
+
+    </select>
+    <select id="queryStoreOrderByOrderIdAndWriteOffCode" resultMap="storeOrder">
+     select lso.*, lsi.store_name store_name FROM t_store_order lso
+     JOIN t_store_info  lsi on lso.store_id =lsi.id
+     where lso.id=#{orderId} and lso.write_off_code=#{writeOffCode} and lso.store_id=#{storeId};
+    </select>
+    <update id="pickUpGoods" parameterType="java.lang.Long">
+        update t_store_order set status='3',real_pick_up_time=now() where status='2' and store_id=#{storeId} and id=#{orderId}
+    </update>
+    <update id="cancelStoreOrder" parameterType="java.lang.Long">
+        update t_store_order set status='4',cancel_reason=#{cancelReason},cancel_time=now() where status='1'
+        <if test="storeId!=-1">
+            and store_id=#{storeId}
+        </if>
+        <if test="customerId!=-1">
+            and customer_id=#{customerId}
+        </if>
+        and id=#{orderId} ;
+    </update>
+    <select id="queryByOrderId" resultMap="storeOrder">
+        select t_store_order.* ,t_store_info.store_name store_name from t_store_order
+        left JOIN t_store_info on t_store_order.store_id=t_store_info.id
+        where t_store_order.id=#{orderId}
+        <if test="storeId!=-1 and storeId != 0 ">
+            and t_store_order.store_id=#{storeId}
+        </if>
+        <if test="customerId!=-1">
+            and t_store_order.customer_id=#{customerId}
+        </if>
+    </select>
+
+    <select id="queryToPayStoreOrder" parameterType="java.util.Map" resultMap="storeOrder">
+             select * from t_store_order where (order_code = #{orderCode} or master_order_code = #{orderCode}) and status = '1' and customer_id = #{customerId}
+    </select>
+
+    <update id="confirmOrderPayed" parameterType="java.util.Map">
+        update t_store_order set status = '2' ,pay_time=now(),predeposit_pay =
+        #{isPredepositPay}
+        where order_code=#{orderCode} and status = '1'
+        <if test="customerId !=null and customerId != -1">
+            and customer_id = #{customerId}
+        </if>
+    </update>
+
+    <select id="queryOrderByOrderCode" parameterType="java.util.Map" resultMap="storeOrder">
+        select * from t_store_order where (order_code = #{orderCode} or master_order_code = #{orderCode})
+        <if test="customerId !=null and customerId !=-1">
+            and customer_id = #{customerId}
+        </if>
+    </select>
+
+    <select id="toPayOrderCount" parameterType="java.lang.Long" resultType="java.lang.Integer">
+        select count(1) from t_store_order where customer_id = #{customerId} and status = '1'
+    </select>
+
+
+    <select id="toPickUpOrderCount" parameterType="java.lang.Long" resultType="java.lang.Integer">
+        select count(1) from t_store_order where customer_id = #{customerId} and status = '2'
+    </select>
+
+
+    <select id="toEvaluateOrderCount" parameterType="java.lang.Long" resultType="java.lang.Integer">
+        select count(1) from t_store_order where customer_id = #{customerId} and status = '3' and  evaluation_status = '0'
+    </select>
+
+    <select id="queryStoreSaleAmountToday" parameterType="java.lang.Long" resultType="java.math.BigDecimal">
+        select sum(price) from t_store_order where status in ('3')
+        and DATE(real_pick_up_time) = DATE(now()) and store_id = #{storeId}
+    </select>
+
+    <select id="queryStoreSaleCountToday" parameterType="java.lang.Long" resultType="java.lang.Integer">
+        select count(1) from t_store_order where status in ('3')
+        and DATE(real_pick_up_time) = DATE(now()) and store_id = #{storeId}
+    </select>
+
+    <select id="queryStoreSaleAmountThisWeek" parameterType="java.lang.Long" resultType="java.math.BigDecimal">
+        select sum(price) from t_store_order where status in ('3') and
+        YEARWEEK(date_format(real_pick_up_time,'%Y-%m-%d')- INTERVAL 1 DAY) = YEARWEEK(now()- INTERVAL 1 DAY)
+        and store_id = #{storeId}
+    </select>
+
+    <select id="queryStoreSaleAmountThisWeekGroupByDay" parameterType="java.lang.Long" resultMap="storeSaleAmount">
+        select DATE(real_pick_up_time) new_order_time,sum(price) sales_amount from t_store_order where status in ('3') and
+        YEARWEEK(date_format(real_pick_up_time,'%Y-%m-%d')- INTERVAL 1 DAY) = YEARWEEK(now()- INTERVAL 1 DAY)
+        and store_id = #{storeId}
+        group by DATE(real_pick_up_time)
+    </select>
+    <select id="selectTStoreOrderList" parameterType="TStoreOrder" resultMap="TStoreOrderResult">
+        <include refid="selectTStoreOrderVo"/>
+        <where>
+            <if test="orderCode != null  and orderCode != ''">and order_code = #{orderCode}</if>
+            <if test="masterOrderCode != null  and masterOrderCode != ''">and master_order_code = #{masterOrderCode}
+            </if>
+            <if test="customerId != null ">and customer_id = #{customerId}</if>
+            <if test="originalPrice != null ">and original_price = #{originalPrice}</if>
+            <if test="price != null ">and price = #{price}</if>
+            <if test="status != null  and status != ''">and status = #{status}</if>
+            <if test="storeId != null ">and store_id = #{storeId}</if>
+            <if test="evaluationStatus != null  and evaluationStatus != ''">and evaluation_status =
+                #{evaluationStatus}
+            </if>
+            <if test="redEnvelopePrice != null ">and red_envelope_price = #{redEnvelopePrice}</if>
+            <if test="redEnvelopeCode != null  and redEnvelopeCode != ''">and red_envelope_code = #{redEnvelopeCode}
+            </if>
+            <if test="writeOffCode != null  and writeOffCode != ''">and write_off_code = #{writeOffCode}</if>
+            <if test="source != null  and source != ''">and source = #{source}</if>
+            <if test="payTime != null ">and pay_time = #{payTime}</if>
+            <if test="cancelTime != null ">and cancel_time = #{cancelTime}</if>
+            <if test="cancelReason != null  and cancelReason != ''">and cancel_reason = #{cancelReason}</if>
+            <if test="pickUpTime != null  and pickUpTime != ''">and pick_up_time = #{pickUpTime}</if>
+            <if test="realPickUpTime != null ">and real_pick_up_time = #{realPickUpTime}</if>
+            <if test="payType != null  and payType != ''">and pay_type = #{payType}</if>
+            <if test="predepositPay != null  and predepositPay != ''">and predeposit_pay = #{predepositPay}</if>
+        </where>
+    </select>
+
+    <select id="selectTStoreOrderById" parameterType="Long" resultMap="TStoreOrderResult">
+        <include refid="selectTStoreOrderVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertTStoreOrder" parameterType="TStoreOrder" useGeneratedKeys="true" keyProperty="id">
+        insert into t_store_order
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="orderCode != null">order_code,</if>
+            <if test="masterOrderCode != null">master_order_code,</if>
+            <if test="customerId != null">customer_id,</if>
+            <if test="originalPrice != null">original_price,</if>
+            <if test="price != null">price,</if>
+            <if test="status != null">status,</if>
+            <if test="storeId != null">store_id,</if>
+            <if test="evaluationStatus != null">evaluation_status,</if>
+            <if test="redEnvelopePrice != null">red_envelope_price,</if>
+            <if test="redEnvelopeCode != null">red_envelope_code,</if>
+            <if test="writeOffCode != null">write_off_code,</if>
+            <if test="source != null">source,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="payTime != null">pay_time,</if>
+            <if test="cancelTime != null">cancel_time,</if>
+            <if test="cancelReason != null">cancel_reason,</if>
+            <if test="pickUpTime != null">pick_up_time,</if>
+            <if test="realPickUpTime != null">real_pick_up_time,</if>
+            <if test="payType != null">pay_type,</if>
+            <if test="predepositPay != null">predeposit_pay,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="orderCode != null">#{orderCode},</if>
+            <if test="masterOrderCode != null">#{masterOrderCode},</if>
+            <if test="customerId != null">#{customerId},</if>
+            <if test="originalPrice != null">#{originalPrice},</if>
+            <if test="price != null">#{price},</if>
+            <if test="status != null">#{status},</if>
+            <if test="storeId != null">#{storeId},</if>
+            <if test="evaluationStatus != null">#{evaluationStatus},</if>
+            <if test="redEnvelopePrice != null">#{redEnvelopePrice},</if>
+            <if test="redEnvelopeCode != null">#{redEnvelopeCode},</if>
+            <if test="writeOffCode != null">#{writeOffCode},</if>
+            <if test="source != null">#{source},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="payTime != null">#{payTime},</if>
+            <if test="cancelTime != null">#{cancelTime},</if>
+            <if test="cancelReason != null">#{cancelReason},</if>
+            <if test="pickUpTime != null">#{pickUpTime},</if>
+            <if test="realPickUpTime != null">#{realPickUpTime},</if>
+            <if test="payType != null">#{payType},</if>
+            <if test="predepositPay != null">#{predepositPay},</if>
+        </trim>
+    </insert>
+
+    <update id="updateTStoreOrder" parameterType="TStoreOrder">
+        update t_store_order
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="orderCode != null">order_code = #{orderCode},</if>
+            <if test="masterOrderCode != null">master_order_code = #{masterOrderCode},</if>
+            <if test="customerId != null">customer_id = #{customerId},</if>
+            <if test="originalPrice != null">original_price = #{originalPrice},</if>
+            <if test="price != null">price = #{price},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="storeId != null">store_id = #{storeId},</if>
+            <if test="evaluationStatus != null">evaluation_status = #{evaluationStatus},</if>
+            <if test="redEnvelopePrice != null">red_envelope_price = #{redEnvelopePrice},</if>
+            <if test="redEnvelopeCode != null">red_envelope_code = #{redEnvelopeCode},</if>
+            <if test="writeOffCode != null">write_off_code = #{writeOffCode},</if>
+            <if test="source != null">source = #{source},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="payTime != null">pay_time = #{payTime},</if>
+            <if test="cancelTime != null">cancel_time = #{cancelTime},</if>
+            <if test="cancelReason != null">cancel_reason = #{cancelReason},</if>
+            <if test="pickUpTime != null">pick_up_time = #{pickUpTime},</if>
+            <if test="realPickUpTime != null">real_pick_up_time = #{realPickUpTime},</if>
+            <if test="payType != null">pay_type = #{payType},</if>
+            <if test="predepositPay != null">predeposit_pay = #{predepositPay},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteTStoreOrderById" parameterType="Long">
+        delete from t_store_order where id = #{id}
+    </delete>
+
+    <delete id="deleteTStoreOrderByIds" parameterType="String">
+        delete from t_store_order where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

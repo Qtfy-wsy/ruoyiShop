@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.marketing.mapper.MarketingCateMapper">
+
+    <resultMap id="marketingcate" type="com.ruoyi.marketing.domain.MarketingCate">
+        <result column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="type" property="type"/>
+        <result column="sort" property="sort"/>
+        <result column="store_id" property="storeId"/>
+        <result column="create_time" property="createTime"/>
+        <result column="modify_time" property="modifyTime"/>
+    </resultMap>
+
+    <delete id="deleteMarketingCate" parameterType="java.util.Map">
+        delete from sms_marketing_cate where id = #{id}
+        <if test='storeId!=-1'>
+            AND store_id = #{storeId}
+        </if>
+    </delete>
+
+    <update id="updateMarketingCate" parameterType="com.ruoyi.marketing.domain.MarketingCate">
+        update sms_marketing_cate set name = #{name} , sort = #{sort}, modify_time = now() where id = #{id}
+        <if test='storeId!=-1'>
+            AND store_id = #{storeId}
+        </if>
+    </update>
+
+    <insert id="addMarketingCate" parameterType="com.ruoyi.marketing.domain.MarketingCate" useGeneratedKeys="true"
+            keyProperty="id">
+        insert into sms_marketing_cate
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="name != null">
+                name,
+            </if>
+            <if test="type != null">
+                type,
+            </if>
+            <if test="sort != null">
+                sort,
+            </if>
+            <if test="storeId != null and storeId != -1">
+                store_id,
+            </if>
+            create_time
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="name != null">
+                #{name},
+            </if>
+            <if test="type != null">
+                #{type},
+            </if>
+            <if test="sort != null">
+                #{sort},
+            </if>
+            <if test="storeId != null and storeId != -1">
+                #{storeId},
+            </if>
+            now()
+        </trim>
+    </insert>
+
+    <select id="queryMarketingCateById" parameterType="java.util.Map" resultMap="marketingcate">
+        select * from sms_marketing_cate where id = #{id}
+        <if test='storeId!=-1'>
+            AND store_id = #{storeId}
+        </if>
+    </select>
+
+    <select id="queryMarketingCates" parameterType="java.util.Map" resultMap="marketingcate">
+        select * from sms_marketing_cate
+        where 1=1
+        <if test="name != null and name != '' ">
+            AND name like CONCAT(CONCAT('%', #{name}),'%')
+        </if>
+
+        <if test='type != null and type != "" and  type!= "0"'>
+            AND type = #{type}
+        </if>
+        <if test='type=="0"'>
+            AND type in ('1','2','3','4','5')
+        </if>
+        <if test='storeId!=-1'>
+            AND store_id = #{storeId}
+        </if>
+        order by create_time desc
+        limit #{startRowNum},#{pageSize}
+    </select>
+
+    <select id="queryMarketingCateCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+        select count(1) from sms_marketing_cate
+        where 1=1
+        <if test="name != null and name != '' ">
+            AND name like CONCAT(CONCAT('%', #{name}),'%')
+        </if>
+
+        <if test='type != null and type != "" and  type!= "0"'>
+            AND type = #{type}
+        </if>
+        <if test='type=="0"'>
+            AND type in ('1','2','3','4','5')
+        </if>
+        <if test='storeId!=-1'>
+            AND store_id = #{storeId}
+        </if>
+
+    </select>
+
+    <select id="queryMarketingCatesByType" parameterType="java.lang.String" resultMap="marketingcate">
+        select * from sms_marketing_cate
+        where 1=1
+        <if test='type != null and type != "" and  type!= "0"'>
+            AND type = #{type}
+        </if>
+        <if test='type=="0"'>
+            AND type in ('1','2','3','4','5')
+        </if>
+        order by sort
+    </select>
+
+    <select id="queryMarketingCatesByTypeAndStoreId" parameterType="java.util.Map" resultMap="marketingcate">
+        select * from sms_marketing_cate
+        where 1=1
+        <if test='type != null and type != "" and  type!= "0"'>
+            AND type = #{type}
+        </if>
+        <if test='type=="0"'>
+            AND type in ('1','2','3','4','5')
+        </if>
+        <if test='storeId!=-1'>
+            AND store_id = #{storeId}
+        </if>
+        order by sort
+    </select>
+
+</mapper>

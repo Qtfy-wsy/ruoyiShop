@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.marketing.mapper.TryMarketingShowMapper">
+
+    <resultMap id="tryMarketingShow" type="com.ruoyi.marketing.domain.TryMarketingShow">
+        <result column="id" property="id"/>
+        <result column="try_id" property="tryId"/>
+        <result column="store_id" property="storeId"/>
+        <result column="sort" property="sort"/>
+        <result column="cate_id" property="cateId"/>
+        <result column="del_flag" property="delFlag"/>
+        <result column="store_name" property="storeName"/>
+        <result column="skuid" property="skuId"/>
+        <result column="old_store_id" property="oldStoreId"/>
+        <result column="starttime" property="startTime"/>
+        <result column="endtime" property="endTime"/>
+    </resultMap>
+    <resultMap id="tryMarketingSku" type="com.ruoyi.marketing.domain.MarketingsSku">
+        <result property="id" column="id"/>
+        <result property="spuId" column="spu_id"/>
+        <result property="skuNo" column="sku_no"/>
+        <result property="name" column="name"/>
+        <result property="subtitle" column="subtitle"/>
+        <result property="stock" column="stock"/>
+        <result property="warningStock" column="warning_stock"/>
+        <result property="price" column="price"/>
+        <result property="weight" column="weight"/>
+        <result property="storeId" column="store_id"/>
+        <result property="shelvesStatus" column="shelves_status"/>
+        <result property="url" column="url"/>
+        <result property="status" column="status"/>
+        <result property="type" column="type"/>
+        <result property="commissionRate" column="commission_rate"/>
+        <result property="marketingPrice" column="marketingPrice"/>
+        <result property="isVirtual" column="is_virtual"/>
+        <result property="marketingType" column="marketingType"/>
+        <result property="marketingName" column="marketingName"/>
+    </resultMap>
+    <insert id="addTryMarketingShows" parameterType="java.util.List">
+        insert into sms_marketing_try_show
+        (try_id, store_id, del_flag)
+        values
+        <foreach collection="list" item="item" index="index" separator=",">
+            (
+            #{item.tryId},
+            #{item.storeId},
+            '0'
+            )
+        </foreach>
+    </insert>
+
+    <update id="deleteTryMarketingShows" parameterType="java.util.Map">
+        update sms_marketing_try_show set del_flag = '1' where id in
+        <foreach collection="ids" index="index" item="id" open="(" close=")" separator=",">
+            #{id}
+        </foreach>
+        and store_id = #{storeId}
+    </update>
+
+    <update id="updateTryMarketingShow" parameterType="java.util.Map">
+        update sms_marketing_try_show
+        <set>
+            <if test="cateId != null">
+                cate_id = #{cateId},
+            </if>
+            <if test="sort != null">
+                sort = #{sort},
+            </if>
+        </set>
+        where id = #{id} and store_id = #{storeId}
+    </update>
+
+    <select id="queryTryMarketingShowCountByTryId" parameterType="java.util.Map" resultType="java.lang.Integer">
+        select count(1) from sms_marketing_try_show where try_id = #{tryId} and store_id = #{storeId}
+    </select>
+
+    <select id="queryTryMarketingShowList" parameterType="java.util.Map" resultMap="tryMarketingShow">
+        select lmts.*,lm.store_id old_store_id,lmt.skuid,lm.starttime,lm.endtime from sms_marketing_try_show lmts
+        join sms_marketing_try lmt on lmt.id = lmts.try_id
+        join sms_marketing lm on lm.id = lmt.marketing_id
+        join pms_sku ls on ls.id = lmt.skuid
+        where lmts. lm. ls. lmts.store_id = #{storeId}
+        <if test="name != null and name != ''">
+            and ls.name like CONCAT(CONCAT('%', #{name}),'%')
+        </if>
+        <if test="skuNo != null and skuNo != ''">
+            and ls.sku_no = #{skuNo}
+        </if>
+        order by lmts.id desc
+        limit #{startRowNum},#{pageSize}
+    </select>
+
+    <select id="queryTryMarketingShowListCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+        select count(1) from sms_marketing_try_show lmts
+        join sms_marketing_try lmt on lmt.id = lmts.try_id
+        join sms_marketing lm on lm.id = lmt.marketing_id
+        join pms_sku ls on ls.id = lmt.skuid
+        where lmts. lm. ls. lmts.store_id = #{storeId}
+        <if test="name != null and name != ''">
+            and ls.name like CONCAT(CONCAT('%', #{name}),'%')
+        </if>
+        <if test="skuNo != null and skuNo != ''">
+            and ls.sku_no = #{skuNo}
+        </if>
+    </select>
+
+    <select id="queryTryMarketingShowListForStore" parameterType="java.util.Map" resultMap="tryMarketingShow">
+        select lmts.*,lm.store_id old_store_id,lmt.skuid,lm.starttime,lm.endtime from sms_marketing_try_show lmts
+        join sms_marketing_try lmt on lmt.id = lmts.try_id
+        join sms_marketing lm on lm.id = lmt.marketing_id
+        join pms_sku ls on ls.id = lmt.skuid
+        where lmts. lm. ls.del_flag = '0'
+        and lmts.store_id = 0 and lm.store_id = #{storeId}
+        <if test="name != null and name != ''">
+            and ls.name like CONCAT(CONCAT('%', #{name}),'%')
+        </if>
+        <if test="skuNo != null and skuNo != ''">
+            and ls.sku_no = #{skuNo}
+        </if>
+        order by lmts.id desc
+        limit #{startRowNum},#{pageSize}
+    </select>
+
+    <select id="queryTryMarketingShowListCountForStore" parameterType="java.util.Map" resultType="java.lang.Integer">
+        select count(1) from sms_marketing_try_show lmts
+        join sms_marketing_try lmt on lmt.id = lmts.try_id
+        join sms_marketing lm on lm.id = lmt.marketing_id
+        join pms_sku ls on ls.id = lmt.skuid
+        where lmts. lm. ls.del_flag = '0'
+        and lmts.store_id = 0 and lm.store_id = #{storeId}
+        <if test="name != null and name != ''">
+            and ls.name like CONCAT(CONCAT('%', #{name}),'%')
+        </if>
+        <if test="skuNo != null and skuNo != ''">
+            and ls.sku_no = #{skuNo}
+        </if>
+    </select>
+
+    <update id="deleteTryCate" parameterType="java.util.Map">
+        update sms_marketing_try_show set cate_id = -1 where cate_id = #{cateId} and store_id = #{storeId}
+    </update>
+
+    <select id="queryTrysForSite" parameterType="java.util.Map" resultMap="tryMarketingSku">
+        select lm.name marketingName,lm.type marketingType,lm.cate_id ,ls.price marketingPrice,sku.* from
+        sms_marketing lm  join pms_sku_marketing ls on ls.marketing_id = lm.id join pms_sku sku on ls.skuid=sku.id where now() >= lm.starttime
+        and lm.endtime > now() and lm.type=#{type} and
+        lm.store_id = #{storeId}
+        <if test="cateId != 0">
+            and lm.cate_id = #{cateId}
+        </if>
+        <if test="name != null and name != ''">
+            and sku.name like CONCAT(CONCAT('%', #{name}),'%')
+        </if>
+        limit #{startRowNum},#{pageSize}
+    </select>
+
+    <select id="queryTrysCountForSite" parameterType="java.util.Map" resultType="java.lang.Integer">
+        select count(1) from
+        sms_marketing lm  join pms_sku_marketing ls on ls.marketing_id = lm.id join pms_sku sku on ls.skuid=sku.id where now() >= lm.starttime
+        and lm.endtime > now() and lm.type=#{type} and
+        lm.store_id = #{storeId}
+        <if test="cateId != 0">
+            and lm.cate_id = #{cateId}
+        </if>
+    </select>
+
+    <update id="deleteTrysByMarketingIds" parameterType="java.util.Map">
+        update sms_marketing_try_show lmts
+        join sms_marketing_try lmt on lmt.id = lmts.try_id
+        set lmts.del_flag = '1'
+        where lmt.marketing_id in
+        <foreach collection="marketingIds" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </update>
+
+    <update id="deleteEndTrys" parameterType="java.util.Map">
+        update sms_marketing_try_show lmts
+        join sms_marketing_try lmt on lmt.id = lmts.try_id
+        join sms_marketing lm on lm.id = lmt.marketing_id
+        set lmts.del_flag = '1'
+        where lmts. now() &gt;= lm.endtime
+    </update>
+
+</mapper>

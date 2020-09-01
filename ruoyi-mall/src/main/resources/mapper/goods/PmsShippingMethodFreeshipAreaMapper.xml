@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.goods.mapper.PmsShippingMethodFreeshipAreaMapper">
+
+    <resultMap type="PmsShippingMethodFreeshipArea" id="PmsShippingMethodFreeshipAreaResult">
+        <result property="id" column="id"/>
+        <result property="shippingMethodFreeshipId" column="shipping_method_freeship_id"/>
+        <result property="templateId" column="template_id"/>
+        <result property="cityId" column="city_id"/>
+    </resultMap>
+
+    <sql id="selectPmsShippingMethodFreeshipAreaVo">
+        select id, shipping_method_freeship_id, template_id, city_id from pms_shipping_method_freeship_area
+    </sql>
+    <insert id="addShippingMethodFreeShipAreas" parameterType="java.util.List">
+        insert into pms_shipping_method_freeship_area
+        (shipping_method_freeship_id,template_id, city_id)
+        values
+        <foreach collection="list" item="shippingMethodFreeShipArea" index="index" separator=",">
+            (
+            #{shippingMethodFreeShipArea.shippingMethodFreeshipId},
+            #{shippingMethodFreeShipArea.templateId},
+            #{shippingMethodFreeShipArea.cityId}
+            )
+        </foreach>
+    </insert>
+
+
+    <select id="queryByMethodId" parameterType="java.lang.Long" resultMap="PmsShippingMethodFreeshipAreaResult">
+        select * from pms_shipping_method_freeship_area where shipping_method_freeship_id = #{methodId}
+    </select>
+
+
+    <delete id="deleteByTemplateId" parameterType="java.lang.Long">
+        delete from pms_shipping_method_freeship_area where template_id = #{id}
+    </delete>
+    <select id="selectPmsShippingMethodFreeshipAreaList" parameterType="PmsShippingMethodFreeshipArea"
+            resultMap="PmsShippingMethodFreeshipAreaResult">
+        <include refid="selectPmsShippingMethodFreeshipAreaVo"/>
+        <where>
+            <if test="shippingMethodFreeshipId != null ">and shipping_method_freeship_id = #{shippingMethodFreeshipId}
+            </if>
+            <if test="templateId != null ">and template_id = #{templateId}</if>
+            <if test="cityId != null ">and city_id = #{cityId}</if>
+        </where>
+    </select>
+
+    <select id="selectPmsShippingMethodFreeshipAreaById" parameterType="Long"
+            resultMap="PmsShippingMethodFreeshipAreaResult">
+        <include refid="selectPmsShippingMethodFreeshipAreaVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertPmsShippingMethodFreeshipArea" parameterType="PmsShippingMethodFreeshipArea"
+            useGeneratedKeys="true" keyProperty="id">
+        insert into pms_shipping_method_freeship_area
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="shippingMethodFreeshipId != null">shipping_method_freeship_id,</if>
+            <if test="templateId != null">template_id,</if>
+            <if test="cityId != null">city_id,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="shippingMethodFreeshipId != null">#{shippingMethodFreeshipId},</if>
+            <if test="templateId != null">#{templateId},</if>
+            <if test="cityId != null">#{cityId},</if>
+        </trim>
+    </insert>
+
+    <update id="updatePmsShippingMethodFreeshipArea" parameterType="PmsShippingMethodFreeshipArea">
+        update pms_shipping_method_freeship_area
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="shippingMethodFreeshipId != null">shipping_method_freeship_id = #{shippingMethodFreeshipId},</if>
+            <if test="templateId != null">template_id = #{templateId},</if>
+            <if test="cityId != null">city_id = #{cityId},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deletePmsShippingMethodFreeshipAreaById" parameterType="Long">
+        delete from pms_shipping_method_freeship_area where id = #{id}
+    </delete>
+
+    <delete id="deletePmsShippingMethodFreeshipAreaByIds" parameterType="String">
+        delete from pms_shipping_method_freeship_area where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

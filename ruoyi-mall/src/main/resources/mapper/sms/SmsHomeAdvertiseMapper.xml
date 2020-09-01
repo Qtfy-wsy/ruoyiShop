@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.sms.mapper.SmsHomeAdvertiseMapper">
+
+    <resultMap type="SmsHomeAdvertise" id="SmsHomeAdvertiseResult">
+        <result property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="type" column="type"/>
+        <result property="pic" column="pic"/>
+        <result property="startTime" column="start_time"/>
+        <result property="endTime" column="end_time"/>
+        <result property="status" column="status"/>
+        <result property="clickCount" column="click_count"/>
+        <result property="orderCount" column="order_count"/>
+        <result property="url" column="url"/>
+        <result property="note" column="note"/>
+        <result property="sort" column="sort"/>
+        <result property="storeId" column="store_id"/>
+    </resultMap>
+
+    <sql id="selectSmsHomeAdvertiseVo">
+        select id, name, type, pic, start_time, end_time, status, click_count, order_count, url, note, sort, store_id from sms_home_advertise
+    </sql>
+
+    <select id="selectSmsHomeAdvertiseList" parameterType="SmsHomeAdvertise" resultMap="SmsHomeAdvertiseResult">
+        <include refid="selectSmsHomeAdvertiseVo"/>
+        <where>
+            <if test="name != null  and name != ''">
+                and name like concat('%', #{name}, '%')
+            </if>
+            <if test="type != null ">
+                and type = #{type}
+            </if>
+            <if test="startTime != null ">
+                and start_time &gt;= #{startTime}
+            </if>
+            <if test="endTime != null ">
+                and end_time &lt;= #{endTime}
+            </if>
+            <if test="status != null ">
+                and status = #{status}
+            </if>
+            <if test="orderCount != null ">
+                and order_count = #{orderCount}
+            </if>
+            <if test="storeId != null ">
+                and store_id = #{storeId}
+            </if>
+        </where>
+        order by sort asc
+    </select>
+
+    <select id="selectSmsHomeAdvertiseById" parameterType="Long" resultMap="SmsHomeAdvertiseResult">
+        <include refid="selectSmsHomeAdvertiseVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertSmsHomeAdvertise" parameterType="SmsHomeAdvertise" useGeneratedKeys="true"
+            keyProperty="id">
+        insert into sms_home_advertise
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="name != null">name,
+            </if>
+            <if test="type != null">type,
+            </if>
+            <if test="pic != null">pic,
+            </if>
+            <if test="startTime != null">start_time,
+            </if>
+            <if test="endTime != null">end_time,
+            </if>
+            <if test="status != null">status,
+            </if>
+            <if test="clickCount != null">click_count,
+            </if>
+            <if test="orderCount != null">order_count,
+            </if>
+            <if test="url != null">url,
+            </if>
+            <if test="note != null">note,
+            </if>
+            <if test="sort != null">sort,
+            </if>
+            <if test="storeId != null">store_id,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="name != null">#{name},
+            </if>
+            <if test="type != null">#{type},
+            </if>
+            <if test="pic != null">#{pic},
+            </if>
+            <if test="startTime != null">#{startTime},
+            </if>
+            <if test="endTime != null">#{endTime},
+            </if>
+            <if test="status != null">#{status},
+            </if>
+            <if test="clickCount != null">#{clickCount},
+            </if>
+            <if test="orderCount != null">#{orderCount},
+            </if>
+            <if test="url != null">#{url},
+            </if>
+            <if test="note != null">#{note},
+            </if>
+            <if test="sort != null">#{sort},
+            </if>
+            <if test="storeId != null">#{storeId},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateSmsHomeAdvertise" parameterType="SmsHomeAdvertise">
+        update sms_home_advertise
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="name != null">name =
+                #{name},
+            </if>
+            <if test="type != null">type =
+                #{type},
+            </if>
+            <if test="pic != null">pic =
+                #{pic},
+            </if>
+            <if test="startTime != null">start_time =
+                #{startTime},
+            </if>
+            <if test="endTime != null">end_time =
+                #{endTime},
+            </if>
+            <if test="status != null">status =
+                #{status},
+            </if>
+            <if test="clickCount != null">click_count =
+                #{clickCount},
+            </if>
+            <if test="orderCount != null">order_count =
+                #{orderCount},
+            </if>
+            <if test="url != null">url =
+                #{url},
+            </if>
+            <if test="note != null">note =
+                #{note},
+            </if>
+            <if test="sort != null">sort =
+                #{sort},
+            </if>
+            <if test="storeId != null">store_id =
+                #{storeId},
+            </if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteSmsHomeAdvertiseById" parameterType="Long">
+        delete from sms_home_advertise where id = #{id}
+    </delete>
+
+    <delete id="deleteSmsHomeAdvertiseByIds" parameterType="String">
+        delete from sms_home_advertise where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

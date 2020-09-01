@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.setting.mapper.LsSystemSeoMapper">
+
+    <resultMap type="LsSystemSeo" id="LsSystemSeoResult">
+        <result property="id" column="id"/>
+        <result property="title" column="title"/>
+        <result property="keyWord" column="key_word"/>
+        <result property="seoDesc" column="seo_desc"/>
+        <result property="isOpen" column="is_open"/>
+    </resultMap>
+
+    <sql id="selectLsSystemSeoVo">
+        select id, title, key_word, seo_desc, is_open from ls_system_seo
+    </sql>
+
+    <select id="selectLsSystemSeoList" parameterType="LsSystemSeo" resultMap="LsSystemSeoResult">
+        <include refid="selectLsSystemSeoVo"/>
+        <where>
+            <if test="title != null  and title != ''">and title = #{title}</if>
+            <if test="keyWord != null  and keyWord != ''">and key_word = #{keyWord}</if>
+            <if test="seoDesc != null  and seoDesc != ''">and seo_desc = #{seoDesc}</if>
+            <if test="isOpen != null  and isOpen != ''">and is_open = #{isOpen}</if>
+        </where>
+    </select>
+
+    <select id="selectLsSystemSeoById" parameterType="Long" resultMap="LsSystemSeoResult">
+        <include refid="selectLsSystemSeoVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertLsSystemSeo" parameterType="LsSystemSeo" useGeneratedKeys="true" keyProperty="id">
+        insert into ls_system_seo
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="title != null">title,</if>
+            <if test="keyWord != null">key_word,</if>
+            <if test="seoDesc != null">seo_desc,</if>
+            <if test="isOpen != null">is_open,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="title != null">#{title},</if>
+            <if test="keyWord != null">#{keyWord},</if>
+            <if test="seoDesc != null">#{seoDesc},</if>
+            <if test="isOpen != null">#{isOpen},</if>
+        </trim>
+    </insert>
+
+    <update id="updateLsSystemSeo" parameterType="LsSystemSeo">
+        update ls_system_seo
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="title != null">title = #{title},</if>
+            <if test="keyWord != null">key_word = #{keyWord},</if>
+            <if test="seoDesc != null">seo_desc = #{seoDesc},</if>
+            <if test="isOpen != null">is_open = #{isOpen},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteLsSystemSeoById" parameterType="Long">
+        delete from ls_system_seo where id = #{id}
+    </delete>
+
+    <delete id="deleteLsSystemSeoByIds" parameterType="String">
+        delete from ls_system_seo where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

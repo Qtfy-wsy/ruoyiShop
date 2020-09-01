@@ -1,0 +1,425 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.order.mapper.OmsBackOrderMapper">
+
+    <resultMap type="OmsBackOrder" id="OmsBackOrderResult">
+        <result property="id" column="id"/>
+        <result property="backCode" column="back_code"/>
+        <result property="orderId" column="order_id"/>
+        <result property="orderCode" column="order_code"/>
+        <result property="storeId" column="store_id"/>
+        <result property="customerId" column="customer_id"/>
+        <result property="skuidNums" column="skuId_nums"/>
+        <result property="type" column="type"/>
+        <result property="reason" column="reason"/>
+        <result property="desc" column="desc"/>
+        <result property="credential" column="credential"/>
+        <result property="backType" column="back_type"/>
+        <result property="backPrice" column="back_price"/>
+        <result property="realBackPrice" column="real_back_price"/>
+        <result property="pics" column="pics"/>
+        <result property="status" column="status"/>
+        <result property="predepositPay" column="predeposit_pay"/>
+        <result property="logisCompanyName" column="logis_company_name"/>
+        <result property="waybillCode" column="waybill_code"/>
+        <result property="createTime" column="create_time"/>
+    </resultMap>
+
+    <sql id="selectOmsBackOrderVo">
+        select id, back_code, order_id, order_code, store_id, customer_id, skuId_nums, type, reason, 'desc', credential, back_type, back_price, real_back_price, pics, status, predeposit_pay, logis_company_name, waybill_code, create_time from oms_back_order
+    </sql>
+
+    <select id="selectOmsBackOrderList" parameterType="OmsBackOrder" resultMap="OmsBackOrderResult">
+        <include refid="selectOmsBackOrderVo"/>
+        <where>
+            <if test="backCode != null  and backCode != ''">and back_code = #{backCode}</if>
+            <if test="orderCode != null  and orderCode != ''">and order_code = #{orderCode}</if>
+            <if test="type != null  and type != ''">and type = #{type}</if>
+            <if test="storeId != null ">  and store_id = #{storeId} </if>
+            <if test="status != null  and status != ''">and status = #{status}</if>
+            <if test="logisCompanyName != null  and logisCompanyName != ''">and logis_company_name like concat('%',
+                #{logisCompanyName}, '%')
+            </if>
+            <if test="waybillCode != null  and waybillCode != ''">and waybill_code = #{waybillCode}</if>
+        </where>
+    </select>
+
+    <select id="selectOmsBackOrderById" parameterType="Long" resultMap="OmsBackOrderResult">
+        <include refid="selectOmsBackOrderVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertOmsBackOrder" parameterType="OmsBackOrder" useGeneratedKeys="true" keyProperty="id">
+        insert into oms_back_order
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="backCode != null and backCode != ''">back_code,</if>
+            <if test="orderId != null">order_id,</if>
+            <if test="orderCode != null and orderCode != ''">order_code,</if>
+            <if test="storeId != null">store_id,</if>
+            <if test="customerId != null">customer_id,</if>
+            <if test="skuidNums != null">skuId_nums,</if>
+            <if test="type != null and type != ''">type,</if>
+            <if test="reason != null">reason,</if>
+            <if test="desc != null">desc,</if>
+            <if test="credential != null">credential,</if>
+            <if test="backType != null">back_type,</if>
+            <if test="backPrice != null">back_price,</if>
+            <if test="realBackPrice != null">real_back_price,</if>
+            <if test="pics != null">pics,</if>
+            <if test="status != null and status != ''">status,</if>
+            <if test="predepositPay != null">predeposit_pay,</if>
+            <if test="logisCompanyName != null">logis_company_name,</if>
+            <if test="waybillCode != null">waybill_code,</if>
+            <if test="createTime != null">create_time,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="backCode != null and backCode != ''">#{backCode},</if>
+            <if test="orderId != null">#{orderId},</if>
+            <if test="orderCode != null and orderCode != ''">#{orderCode},</if>
+            <if test="storeId != null">#{storeId},</if>
+            <if test="customerId != null">#{customerId},</if>
+            <if test="skuidNums != null">#{skuidNums},</if>
+            <if test="type != null and type != ''">#{type},</if>
+            <if test="reason != null">#{reason},</if>
+            <if test="desc != null">#{desc},</if>
+            <if test="credential != null">#{credential},</if>
+            <if test="backType != null">#{backType},</if>
+            <if test="backPrice != null">#{backPrice},</if>
+            <if test="realBackPrice != null">#{realBackPrice},</if>
+            <if test="pics != null">#{pics},</if>
+            <if test="status != null and status != ''">#{status},</if>
+            <if test="predepositPay != null">#{predepositPay},</if>
+            <if test="logisCompanyName != null">#{logisCompanyName},</if>
+            <if test="waybillCode != null">#{waybillCode},</if>
+            <if test="createTime != null">#{createTime},</if>
+        </trim>
+    </insert>
+
+    <update id="updateOmsBackOrder" parameterType="OmsBackOrder">
+        update oms_back_order
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="backCode != null and backCode != ''">back_code = #{backCode},</if>
+            <if test="orderId != null">order_id = #{orderId},</if>
+            <if test="orderCode != null and orderCode != ''">order_code = #{orderCode},</if>
+            <if test="storeId != null">store_id = #{storeId},</if>
+            <if test="customerId != null">customer_id = #{customerId},</if>
+            <if test="skuidNums != null">skuId_nums = #{skuidNums},</if>
+            <if test="type != null and type != ''">type = #{type},</if>
+            <if test="reason != null">reason = #{reason},</if>
+            <if test="desc != null">desc = #{desc},</if>
+            <if test="credential != null">credential = #{credential},</if>
+            <if test="backType != null">back_type = #{backType},</if>
+            <if test="backPrice != null">back_price = #{backPrice},</if>
+            <if test="realBackPrice != null">real_back_price = #{realBackPrice},</if>
+            <if test="pics != null">pics = #{pics},</if>
+            <if test="status != null and status != ''">status = #{status},</if>
+            <if test="predepositPay != null">predeposit_pay = #{predepositPay},</if>
+            <if test="logisCompanyName != null">logis_company_name = #{logisCompanyName},</if>
+            <if test="waybillCode != null">waybill_code = #{waybillCode},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteOmsBackOrderById" parameterType="Long">
+        delete from oms_back_order where id = #{id}
+    </delete>
+
+    <delete id="deleteOmsBackOrderByIds" parameterType="String">
+        delete from oms_back_order where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <insert id="addBackOrder" parameterType="com.ruoyi.order.domain.OmsBackOrder" useGeneratedKeys="true"
+            keyProperty="id">
+        insert into oms_back_order
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="backCode != null">
+                back_code,
+            </if>
+            <if test="orderId != null">
+                order_id,
+            </if>
+            <if test="orderCode != null">
+                order_code,
+            </if>
+            <if test="storeId != null">
+                store_id,
+            </if>
+            <if test="customerId != null">
+                customer_id,
+            </if>
+            <if test="skuIdAndNums != null">
+                skuId_nums,
+            </if>
+            <if test="type != null">
+                `type`,
+            </if>
+            <if test="reason != null">
+                reason,
+            </if>
+            <if test="desc != null">
+                `desc`,
+            </if>
+            <if test="credential != null">
+                credential,
+            </if>
+            <if test="backType != null">
+                back_type,
+            </if>
+            <if test="backPrice != null">
+                back_price,
+            </if>
+            <if test="realBackPrice != null">
+                real_back_price,
+            </if>
+            <if test="pics != null">
+                pics,
+            </if>
+            <if test="predepositPay != null">
+                predeposit_pay,
+            </if>
+            <if test="status != null">
+                status,
+            </if>
+            create_time
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="backCode != null">
+                #{backCode},
+            </if>
+            <if test="orderId != null">
+                #{orderId},
+            </if>
+            <if test="orderCode != null">
+                #{orderCode},
+            </if>
+            <if test="storeId != null">
+                #{storeId},
+            </if>
+            <if test="customerId != null">
+                #{customerId},
+            </if>
+            <if test="skuIdAndNums != null">
+                #{skuIdAndNums},
+            </if>
+            <if test="type != null">
+                #{type},
+            </if>
+            <if test="reason != null">
+                #{reason},
+            </if>
+            <if test="desc != null">
+                #{desc},
+            </if>
+            <if test="credential != null">
+                #{credential},
+            </if>
+            <if test="backType != null">
+                #{backType},
+            </if>
+            <if test="backPrice != null">
+                #{backPrice},
+            </if>
+            <if test="realBackPrice != null">
+                #{realBackPrice},
+            </if>
+            <if test="pics != null">
+                #{pics},
+            </if>
+            <if test="predepositPay != null">
+                #{predepositPay},
+            </if>
+            <if test="status != null">
+                #{status},
+            </if>
+            now()
+        </trim>
+    </insert>
+
+    <select id="queryBackOrders" parameterType="java.util.Map" resultMap="OmsBackOrderResult">
+        select * from oms_back_order where store_id = #{storeId}
+
+        <if test="backCode != null and backCode != '' ">
+            AND back_code = #{backCode}
+        </if>
+
+        <if test="orderCode != null and orderCode != '' ">
+            AND order_code = #{orderCode}
+        </if>
+
+        <if test='status != null and status != ""'>
+            AND status = #{status}
+        </if>
+
+        <if test='processStatus =="0"'>
+            AND status in ('1','4','6','7')
+        </if>
+
+        <if test='processStatus =="1"'>
+            AND status in ('2','3','5','8','9')
+        </if>
+
+        order by create_time desc
+        limit #{startRowNum},#{pageSize}
+    </select>
+
+    <select id="queryBackOrderCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+        select count(1) from oms_back_order where store_id = #{storeId}
+
+        <if test="backCode != null and backCode != '' ">
+            AND back_code = #{backCode}
+        </if>
+
+        <if test="orderCode != null and orderCode != '' ">
+            AND order_code = #{orderCode}
+        </if>
+
+        <if test='status != null and status != ""'>
+            AND status = #{status}
+        </if>
+
+        <if test='processStatus =="0"'>
+            AND status in ('1','4','6','7')
+        </if>
+
+        <if test='processStatus =="1"'>
+            AND status in ('2','3','5','8','9')
+        </if>
+    </select>
+
+    <select id="queryBackOrderById" parameterType="java.util.Map" resultMap="OmsBackOrderResult">
+        select * from oms_back_order where id =#{id}
+        <if test='storeId != null and storeId != -1'>
+            and store_id = #{storeId}
+        </if>
+        <if test='customerId != null and customerId != -1'>
+            and customer_id = #{customerId}
+        </if>
+    </select>
+
+    <update id="agreeToRefund" parameterType="java.util.Map">
+        update oms_back_order set status = '2'  where  id =#{id} and store_id = #{storeId} and status = '1'
+    </update>
+
+    <update id="refuseRefund" parameterType="java.util.Map">
+        update oms_back_order set status = '3' where  id =#{id} and store_id = #{storeId} and status = '1'
+    </update>
+
+    <update id="agreeToReturn" parameterType="java.util.Map">
+        update oms_back_order set status = '6' where  id =#{id} and store_id = #{storeId} and status = '4'
+    </update>
+
+    <update id="refuseRrturn" parameterType="java.util.Map">
+        update oms_back_order set status = '5' where  id =#{id} and store_id = #{storeId} and status = '4'
+    </update>
+
+    <update id="confirmReturn" parameterType="java.util.Map">
+        update oms_back_order set status = '8', real_back_price = #{money} where id =#{id} and store_id = #{storeId} and
+        status = '7' and #{money} &lt;= back_price
+    </update>
+
+    <update id="refuseToReceive" parameterType="java.util.Map">
+        update oms_back_order set status = '9' where  id =#{id} and store_id = #{storeId} and status = '7'
+    </update>
+
+
+    <select id="queryStoreBackOrders" parameterType="java.util.Map" resultMap="OmsBackOrderResult">
+        select oms_back_order.*,t_store_info.store_name from oms_back_order join t_store_info on oms_back_order.store_id
+        = t_store_info.id where t_store_info.del_flag = '0'
+
+        <if test="backCode != null and backCode != '' ">
+            AND oms_back_order.back_code = #{backCode}
+        </if>
+
+        <if test="storeName != null and storeName != '' ">
+            AND t_store_info.store_name = #{storeName}
+        </if>
+
+        <if test="orderCode != null and orderCode != '' ">
+            AND oms_back_order.order_code = #{orderCode}
+        </if>
+
+        <if test='status != null and status != ""'>
+            AND oms_back_order.status = #{status}
+        </if>
+
+        order by oms_back_order.create_time desc
+        limit #{startRowNum},#{pageSize}
+    </select>
+
+    <select id="queryStoreBackOrdersCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+        select count(1) from oms_back_order join t_store_info on oms_back_order.store_id = t_store_info.id where
+        t_store_info.del_flag = '0'
+
+        <if test="backCode != null and backCode != '' ">
+            AND oms_back_order.back_code = #{backCode}
+        </if>
+
+        <if test="storeName != null and storeName != '' ">
+            AND t_store_info.store_name = #{storeName}
+        </if>
+
+        <if test="orderCode != null and orderCode != '' ">
+            AND oms_back_order.order_code = #{orderCode}
+        </if>
+
+        <if test='status != null and status != ""'>
+            AND oms_back_order.status = #{status}
+        </if>
+    </select>
+
+    <select id="queryByOrderId" parameterType="java.util.Map" resultMap="OmsBackOrderResult">
+        select * from oms_back_order where order_id = #{orderId}
+        <if test='customerId != null and customerId != -1'>
+            and customer_id = #{customerId}
+        </if>
+    </select>
+
+
+    <select id="queryBackForSiteOrders" parameterType="java.util.Map" resultMap="OmsBackOrderResult">
+        select * from oms_back_order where customer_id = #{customerId}
+        <if test="backCode != null and backCode != '' ">
+            AND oms_back_order.back_code = #{backCode}
+        </if>
+
+        <if test='timeType=="1"'>
+            AND DATE_SUB(CURDATE(), INTERVAL 1 MONTH) &lt;= date(oms_back_order.create_time)
+        </if>
+
+        <if test='timeType=="2"'>
+            AND DATE_SUB(CURDATE(), INTERVAL 1 MONTH) &gt; date(oms_back_order.create_time)
+        </if>
+
+        order by create_time desc
+        limit #{startRowNum},#{pageSize}
+    </select>
+
+    <select id="queryBackOrderForSiteCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+        select count(1) from oms_back_order where customer_id = #{customerId}
+        <if test="backCode != null and backCode != '' ">
+            AND oms_back_order.back_code = #{backCode}
+        </if>
+
+        <if test='timeType=="1"'>
+            AND DATE_SUB(CURDATE(), INTERVAL 1 MONTH) &lt;= date(oms_back_order.create_time)
+        </if>
+
+        <if test='timeType=="2"'>
+            AND DATE_SUB(CURDATE(), INTERVAL 1 MONTH) &gt; date(oms_back_order.create_time)
+        </if>
+    </select>
+
+
+    <update id="fillTheLogistics" parameterType="java.util.Map">
+        update oms_back_order set status = '7', logis_company_name = #{logisCompanyName} ,waybill_code = #{waybillCode} where  id =#{backOrderId} and customer_id = #{customerId} and status = '6'
+    </update>
+
+    <select id="queryInProcessBackOrder" parameterType="java.lang.Long" resultType="java.lang.Integer">
+        select count(1) from oms_back_order where status in ('1','4','6','7') and customer_id=#{customerId}
+    </select>
+</mapper>

@@ -1,0 +1,416 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.order.mapper.GroupOrderMapper">
+
+    <resultMap id="groupOrder" type="com.ruoyi.order.vo.GroupOrder">
+        <result column="id" property="id"/>
+        <result column="order_code" property="orderCode"/>
+        <result column="master_order_code" property="masterOrderCode"/>
+        <result column="customer_id" property="customerId"/>
+        <result column="customer_name" property="customerName"/>
+        <result column="customer_pic" property="customerPic"/>
+        <result column="price" property="price"/>
+        <result column="status" property="status"/>
+        <result column="source" property="source"/>
+        <result column="store_id" property="storeId"/>
+        <result column="store_name" property="storeName"/>
+        <result column="evaluation_status" property="evaluationStatus"/>
+        <result column="create_time" property="createTime"/>
+        <result column="pay_time" property="payTime"/>
+        <result column="group_head" property="groupHead"/>
+        <result column="group_id" property="groupId"/>
+        <result column="group_marketing_id" property="groupMarketingId"/>
+        <result column="group_sku_id" property="groupSkuId"/>
+        <result column="group_status" property="groupStatus"/>
+        <result column="group_num" property="groupNum"/>
+        <result column="open_group_time" property="openGroupTime"/>
+        <result column="auto_handle_status" property="autoHandleStatus"/>
+    </resultMap>
+
+    <select id="queryGroupHeadOrders" parameterType="java.util.Map" resultMap="groupOrder">
+        select lo.*,lc.username customer_name ,lc.image customer_pic from oms_order lo join ums_member lc on
+        lo.customer_id=lc.id
+        where lo.order_type='3' and group_head='0' and lc.del_flag = '0'
+        <if test="groupStatus !=null">
+            and lo.group_status=#{groupStatus}
+        </if>
+        <if test="storeId != null and  storeId !=-1">
+            and lo.store_id=#{storeId}
+        </if>
+        <if test="skuId !=null">
+            and lo.group_sku_id=#{skuId}
+        </if>
+        <if test="marketingId !=null">
+            and lo.group_marketing_id=#{marketingId}
+        </if>
+        <if test="customerId !=null and customerId!=-1">
+            and customer_id=#{customerId}
+        </if>
+        <if test="filterPayTime==1">
+            and lo.pay_time &gt; DATE_SUB(now(),INTERVAL 1 day)
+        </if>
+        <if test="filterPayTime==-1">
+            and lo.pay_time &lt; DATE_SUB(now(),INTERVAL 1 day)
+        </if>
+        <if test="startTime!=''and startTime!=null">
+            AND lo.create_time &gt;=#{startTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="endTime!=''and endTime!=null">
+            AND lo.create_time &lt;=#{endTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="customerName != null and customerName != ''">
+            AND lc.username like CONCAT(CONCAT('%', #{customerName}),'%')
+        </if>
+        <if test="groupId != null and groupId != '' ">
+            AND lo.group_id = #{groupId}
+        </if>
+        and lo.group_status !='-1'
+        order by lo.pay_time desc
+        limit #{startRowNum},#{pageSize}
+    </select>
+    <select id="queryGroupHeadOrdersCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+        select count(1) from oms_order lo join ums_member lc on
+        lo.customer_id=lc.id
+        where lo.order_type='3' and group_head='0' and lc.del_flag = '0'
+        <if test="groupStatus !=null">
+            and lo.group_status=#{groupStatus}
+        </if>
+        <if test="storeId != null and  storeId !=-1">
+            and lo.store_id=#{storeId}
+        </if>
+        <if test="skuId !=null">
+            and lo.group_sku_id=#{skuId}
+        </if>
+        <if test="marketingId !=null">
+            and lo.group_marketing_id=#{marketingId}
+        </if>
+        <if test="customerId !=null and customerId!=-1">
+            and customer_id=#{customerId}
+        </if>
+        <if test="filterPayTime==1">
+            and lo.pay_time >DATE_SUB(now(),INTERVAL 1 day)
+        </if>
+        <if test="filterPayTime==-1">
+            and lo.pay_time &lt; DATE_SUB(now(),INTERVAL 1 day)
+        </if>
+        <if test="startTime!=''and startTime!=null">
+            AND lo.create_time &gt;=#{startTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="endTime!=''and endTime!=null">
+            AND lo.create_time &lt;=#{endTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="customerName != null and customerName != ''">
+            AND lc.username like CONCAT(CONCAT('%', #{customerName}),'%')
+        </if>
+        <if test="groupId != null and groupId != '' ">
+            AND lo.group_id = #{groupId}
+        </if>
+        and lo.group_status !='-1'
+    </select>
+
+    <select id="queryStoreGroupHeadOrders" parameterType="java.util.Map" resultMap="groupOrder">
+        select lo.*,lc.username customer_name ,lc.image customer_pic,lsi.store_name store_name from oms_order lo join
+        ums_member lc on
+        lo.customer_id=lc.id join t_store_info lsi on lo.store_id = lsi.id
+        where lo.order_type='3' and group_head='0' and lc. lsi.del_flag='0'
+        <if test="groupStatus !=null">
+            and lo.group_status=#{groupStatus}
+        </if>
+        <if test="storeId != null and  storeId !=-1">
+            and lo.store_id=#{storeId}
+        </if>
+        <if test="skuId !=null">
+            and lo.group_sku_id=#{skuId}
+        </if>
+        <if test="marketingId !=null">
+            and lo.group_marketing_id=#{marketingId}
+        </if>
+        <if test="customerId !=null and customerId!=-1">
+            and customer_id=#{customerId}
+        </if>
+        <if test="filterPayTime==1">
+            and lo.pay_time &gt; DATE_SUB(now(),INTERVAL 1 day)
+        </if>
+        <if test="filterPayTime==-1">
+            and lo.pay_time &lt; DATE_SUB(now(),INTERVAL 1 day)
+        </if>
+        <if test="startTime!=''and startTime!=null">
+            AND lo.create_time &gt;=#{startTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="endTime!=''and endTime!=null">
+            AND lo.create_time &lt;=#{endTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="customerName != null and customerName != ''">
+            AND lc.username like CONCAT(CONCAT('%', #{customerName}),'%')
+        </if>
+        <if test="storeName != null and storeName != ''">
+            AND lsi.store_name like CONCAT(CONCAT('%', #{storeName}),'%')
+        </if>
+        <if test="groupId != null and groupId != '' ">
+            AND lo.group_id = #{groupId}
+        </if>
+        and lo.group_status !='-1'
+        and lo.store_id !=0
+        order by lo.pay_time desc
+        limit #{startRowNum},#{pageSize}
+    </select>
+    <select id="queryStoreGroupHeadOrdersCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+        select count(1) from oms_order lo join ums_member lc on
+        lo.customer_id=lc.id join t_store_info lsi on lo.store_id = lsi.id
+        where lo.order_type='3' and group_head='0' and lc. lsi.del_flag='0'
+        <if test="groupStatus !=null">
+            and lo.group_status=#{groupStatus}
+        </if>
+        <if test="storeId != null and  storeId !=-1">
+            and lo.store_id=#{storeId}
+        </if>
+        <if test="skuId !=null">
+            and lo.group_sku_id=#{skuId}
+        </if>
+        <if test="marketingId !=null">
+            and lo.group_marketing_id=#{marketingId}
+        </if>
+        <if test="customerId !=null and customerId!=-1">
+            and customer_id=#{customerId}
+        </if>
+        <if test="filterPayTime==1">
+            and lo.pay_time >DATE_SUB(now(),INTERVAL 1 day)
+        </if>
+        <if test="filterPayTime==-1">
+            and lo.pay_time &lt; DATE_SUB(now(),INTERVAL 1 day)
+        </if>
+        <if test="startTime!=''and startTime!=null">
+            AND lo.create_time &gt;=#{startTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="endTime!=''and endTime!=null">
+            AND lo.create_time &lt;=#{endTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="customerName != null and customerName != ''">
+            AND lc.username like CONCAT(CONCAT('%', #{customerName}),'%')
+        </if>
+        <if test="storeName != null and storeName != ''">
+            AND lsi.store_name like CONCAT(CONCAT('%', #{storeName}),'%')
+        </if>
+        <if test="groupId != null and groupId != '' ">
+            AND lo.group_id = #{groupId}
+        </if>
+        and lo.store_id !=0
+        and lo.group_status !='-1'
+    </select>
+    <select id="queryGroupMemberOrders" parameterType="java.util.Map" resultMap="groupOrder">
+        select lo.*,lc.username customer_name ,lc.image customer_pic from oms_order lo join ums_member lc on
+        lo.customer_id=lc.id and lc.del_flag = '0'
+        where lo.order_type='3' and group_head='1'
+        <if test="groupId !=null">
+            and lo.group_id=#{groupId}
+        </if>
+        <if test="status !=null">
+            and lo.group_status != '-1'
+        </if>
+        order by lo.create_time desc
+    </select>
+
+    <select id="queryGroupHeadByGroupId" parameterType="java.lang.String" resultMap="groupOrder">
+        select  * from oms_order where group_id = #{groupId} and group_head = '0' and group_status != '-1'
+    </select>
+
+    <select id="queryByGroupIdAndCustomerId" parameterType="java.util.Map" resultMap="groupOrder">
+        select  * from oms_order where group_id = #{groupId} and group_status  != '-1' and customer_id = #{customerId}
+    </select>
+
+    <select id="queryGroupNum" parameterType="java.lang.String" resultType="java.lang.Integer">
+        SELECT count(1) from oms_order  where group_id = #{groupId} and group_status = '0'
+    </select>
+
+    <update id="updateGroupStatus" parameterType="java.util.Map">
+        update oms_order set group_status = #{status}
+        <if test="isUpdateTime ==0">
+            , open_group_time = now()
+        </if>
+        where id = #{orderId}
+    </update>
+
+    <update id="updateGroupSuccess" parameterType="java.lang.String">
+        update oms_order set group_status = '1' where group_id = #{groupId} and group_status = '0'
+    </update>
+
+    <update id="calcOrderByGroupId" parameterType="java.lang.String">
+         update oms_order set status = '5' , cancel_reson = '0' where  group_id = #{groupId}  and group_status = '-1'
+    </update>
+
+
+    <update id="calcOrderByGroupIdAndCustomerId" parameterType="java.util.Map">
+          update oms_order set status = '5' , cancel_reson = '0' where  group_id = #{groupId}  and group_status = '-1' and  customer_id = #{customerId}
+    </update>
+
+    <select id="queryNotPayGroupOrders" parameterType="java.util.Map" resultMap="groupOrder">
+        select lo.*,lc.username customer_name ,lc.image customer_pic from oms_order lo join ums_member lc on
+        lo.customer_id=lc.id
+        where lo.order_type='3'
+        <if test="storeId != null and  storeId !=-1">
+            and lo.store_id=#{storeId}
+        </if>
+        <if test="startTime!=''and startTime!=null">
+            AND lo.create_time &gt;=#{startTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="endTime!=''and endTime!=null">
+            AND lo.create_time &lt;=#{endTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="customerName != null and customerName != ''">
+            AND lc.username like CONCAT(CONCAT('%', #{customerName}),'%')
+        </if>
+        <if test="groupId != null and groupId != '' ">
+            AND lo.group_id = #{groupId}
+        </if>
+        and lo.status='1'
+        order by lo.create_time desc
+        limit #{startRowNum},#{pageSize}
+    </select>
+    <select id="queryNotPayGroupOrdersCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+        select count(1) from oms_order lo join ums_member lc on
+        lo.customer_id=lc.id
+        where lo.order_type='3'
+        <if test="storeId != null and  storeId !=-1">
+            and lo.store_id=#{storeId}
+        </if>
+        <if test="startTime!=''and startTime!=null">
+            AND lo.create_time &gt;=#{startTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="endTime!=''and endTime!=null">
+            AND lo.create_time &lt;=#{endTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="customerName != null and customerName != ''">
+            AND lc.username like CONCAT(CONCAT('%', #{customerName}),'%')
+        </if>
+        <if test="groupId != null and groupId != '' ">
+            AND lo.group_id = #{groupId}
+        </if>
+        and lo.status='1'
+        order by lo.create_time desc
+    </select>
+    <select id="queryStoreNotPayGroupOrders" parameterType="java.util.Map" resultMap="groupOrder">
+        select lo.*,lc.username customer_name ,lc.image customer_pic,lsi.store_name store_name from oms_order lo join
+        ums_member lc on
+        lo.customer_id=lc.id join t_store_info lsi on lo.store_id = lsi.id
+        where lo.order_type='3' and lc. lsi.del_flag='0'
+        <if test="storeId != null and  storeId !=-1">
+            and lo.store_id=#{storeId}
+        </if>
+        <if test="startTime!=''and startTime!=null">
+            AND lo.create_time &gt;=#{startTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="endTime!=''and endTime!=null">
+            AND lo.create_time &lt;=#{endTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="customerName != null and customerName != ''">
+            AND lc.username like CONCAT(CONCAT('%', #{customerName}),'%')
+        </if>
+        <if test="storeName != null and storeName != ''">
+            AND lsi.store_name like CONCAT(CONCAT('%', #{storeName}),'%')
+        </if>
+        <if test="groupId != null and groupId != '' ">
+            AND lo.group_id = #{groupId}
+        </if>
+        and lo.status='1'
+        and lo.store_id !=0
+        order by lo.create_time desc
+        limit #{startRowNum},#{pageSize}
+    </select>
+    <select id="queryStoreNotPayGroupOrdersCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+        select count(1) from oms_order lo join ums_member lc on
+        lo.customer_id=lc.id join t_store_info lsi on lo.store_id = lsi.id
+        where lo.order_type='3' and lc. lsi.del_flag='0'
+        <if test="storeId != null and  storeId !=-1">
+            and lo.store_id=#{storeId}
+        </if>
+        <if test="startTime!=''and startTime!=null">
+            AND lo.create_time &gt;=#{startTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="endTime!=''and endTime!=null">
+            AND lo.create_time &lt;=#{endTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="customerName != null and customerName != ''">
+            AND lc.username like CONCAT(CONCAT('%', #{customerName}),'%')
+        </if>
+        <if test="storeName != null and storeName != ''">
+            AND lsi.store_name like CONCAT(CONCAT('%', #{storeName}),'%')
+        </if>
+        <if test="groupId != null and groupId != '' ">
+            AND lo.group_id = #{groupId}
+        </if>
+        and lo.status='1'
+        and lo.store_id !=0
+        order by lo.create_time desc
+    </select>
+
+    <select id="queryOpenGroupOrderForCancel" resultMap="groupOrder">
+       select * from oms_order where order_type='3' and group_status !='1' and auto_handle_status !='1'  and open_group_time &lt; DATE_SUB(now(),INTERVAL 1 day)
+    </select>
+    <select id="queryNotOpenGroupOrderForCancel" resultMap="groupOrder">
+       select * from oms_order where order_type='3' and group_status='-1' and auto_handle_status !='1' and group_head='0' and status='1' and  create_time &lt; DATE_SUB(now(),INTERVAL 1 day)
+    </select>
+    <update id="updateAutoHandleStatus" parameterType="java.lang.Long">
+        update oms_order set auto_handle_status = '1' where id = #{orderId} and auto_handle_status = '0'
+    </update>
+
+    <select id="queryGroupHeadOrdersByIds" parameterType="java.util.Map" resultMap="groupOrder">
+        select lo.*,lsi.store_name store_name from oms_order lo
+        LEFT JOIN t_store_info lsi on lo.store_id=lsi.id
+        where lo.order_type='3' and lo.group_head='0'
+        <if test="status !=null and status !=-2">
+            and lo.group_status=#{status}
+        </if>
+        <if test="status==-2">
+            and lo.group_status='0'
+        </if>
+        <if test="storeId != null and  storeId !=-1">
+            and lo.store_id=#{storeId}
+        </if>
+        <if test="storeId ==-1">
+            and lo.store_id !=0
+        </if>
+        <if test="status !=null">
+            <if test="status ==0">
+                and lo.pay_time &gt; DATE_SUB(now(),INTERVAL 1 day)
+            </if>
+            <if test="status==-2">
+                and lo.pay_time &lt; DATE_SUB(now(),INTERVAL 1 day)
+            </if>
+        </if>
+        and lo.group_status !='-1'
+        and lo.id IN
+        <foreach collection="ids" open="(" close=")" separator="," index="index" item="id">
+            #{id}
+        </foreach>
+        order by lo.pay_time desc
+    </select>
+
+    <select id="queryAllGroupHeadOrder" parameterType="java.util.Map" resultMap="groupOrder">
+        select lo.*,lsi.store_name store_name from oms_order lo
+        LEFT JOIN t_store_info lsi on lo.store_id=lsi.id
+        where lo.order_type='3' and lo.group_head='0'
+        <if test="status !=null and status !=-2">
+            and lo.group_status=#{status}
+        </if>
+        <if test="status==-2">
+            and lo.group_status='0'
+        </if>
+        <if test="storeId != null and  storeId !=-1">
+            and lo.store_id=#{storeId}
+        </if>
+        <if test="storeId ==-1">
+            and lo.store_id !=0
+        </if>
+        <if test="status !=null">
+            <if test="status ==0">
+                and lo.pay_time &gt; DATE_SUB(now(),INTERVAL 1 day)
+            </if>
+            <if test="status==-2">
+                and lo.pay_time &lt; DATE_SUB(now(),INTERVAL 1 day)
+            </if>
+        </if>
+
+        and lo.group_status !='-1'
+        order by lo.pay_time desc
+    </select>
+</mapper>

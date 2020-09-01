@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.goods.mapper.PmsBrandApplyMapper">
+
+    <resultMap type="PmsBrandApply" id="PmsBrandApplyResult">
+        <result property="id" column="id"/>
+        <result property="storeId" column="store_id"/>
+        <result property="brandId" column="brand_id"/>
+        <result property="status" column="status"/>
+        <result property="reason" column="reason"/>
+        <result property="createTime" column="create_time"/>
+    </resultMap>
+
+    <sql id="selectPmsBrandApplyVo">
+        select id, store_id, brand_id, status, reason, create_time from pms_brand_apply
+    </sql>
+
+    <select id="selectPmsBrandApplyList" parameterType="PmsBrandApply" resultMap="PmsBrandApplyResult">
+        <include refid="selectPmsBrandApplyVo"/>
+        <where>
+            <if test="status != null  and status != ''">and status = #{status}</if>
+        </where>
+    </select>
+
+    <select id="selectPmsBrandApplyById" parameterType="Long" resultMap="PmsBrandApplyResult">
+        <include refid="selectPmsBrandApplyVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertPmsBrandApply" parameterType="PmsBrandApply" useGeneratedKeys="true" keyProperty="id">
+        insert into pms_brand_apply
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="storeId != null">store_id,</if>
+            <if test="brandId != null">brand_id,</if>
+            <if test="status != null and status != ''">status,</if>
+            <if test="reason != null">reason,</if>
+            <if test="createTime != null">create_time,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="storeId != null">#{storeId},</if>
+            <if test="brandId != null">#{brandId},</if>
+            <if test="status != null and status != ''">#{status},</if>
+            <if test="reason != null">#{reason},</if>
+            <if test="createTime != null">#{createTime},</if>
+        </trim>
+    </insert>
+
+    <update id="updatePmsBrandApply" parameterType="PmsBrandApply">
+        update pms_brand_apply
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="storeId != null">store_id = #{storeId},</if>
+            <if test="brandId != null">brand_id = #{brandId},</if>
+            <if test="status != null and status != ''">status = #{status},</if>
+            <if test="reason != null">reason = #{reason},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deletePmsBrandApplyById" parameterType="Long">
+        delete from pms_brand_apply where id = #{id}
+    </delete>
+
+    <delete id="deletePmsBrandApplyByIds" parameterType="String">
+        delete from pms_brand_apply where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <resultMap id="brandApply" type="com.ruoyi.goods.domain.PmsBrandApply">
+        <result column="id" property="id"/>
+        <result column="store_id" property="storeId"/>
+        <result column="brand_id" property="brandId"/>
+        <result column="status" property="status"/>
+        <result column="reason" property="reason"/>
+        <result column="create_time" property="createTime"/>
+        <result column="brand_id" property="brand.id"/>
+        <result column="name" property="brand.name"/>
+        <result column="nickName" property="brand.nickName"/>
+        <result column="url" property="brand.url"/>
+        <result column="storeName" property="storeName"/>
+    </resultMap>
+
+    <select id="queryAllPassBrand" resultMap="brandApply" parameterType="java.lang.Long">
+          select pms_brand_apply.*,pms_brand.name from pms_brand_apply join
+          pms_brand on pms_brand_apply.brand_id = pms_brand.id  where pms_brand.del_flag = '0'
+          and pms_brand_apply.status = '1' and pms_brand_apply.store_id = #{storeId}
+    </select>
+    <select id="queryStoreBrandByStoreIdAndBrandId" parameterType="java.util.Map" resultMap="brandApply">
+        SELECT * FROM pms_brand_apply WHERE store_id=#{storeId} AND brand_id IN
+        <foreach collection="idArrays" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+        AND status!='2'
+    </select>
+    <insert id="addStoreBrand" parameterType="com.ruoyi.goods.domain.PmsBrandApply">
+        INSERT INTO pms_brand_apply (store_id,brand_id,status,create_time) VALUES
+        <foreach collection="list" index="index" item="item" separator=",">
+            (
+            #{item.storeId},#{item.brandId},'0',now()
+            )
+        </foreach>
+    </insert>
+    <delete id="deleteStoreBrand" parameterType="java.lang.Long">
+        DELETE FROM pms_brand_apply WHERE store_id=#{storeId}
+    </delete>
+
+    <delete id="deleteStoreBrandByStoreIdAndBrandId" parameterType="java.util.Map">
+        DELETE FROM pms_brand_apply WHERE store_id=#{storeId} AND brand_id IN
+        <foreach collection="idArrays" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </delete>
+
+    <select id="queryBrandToBeAudit" parameterType="java.util.Map" resultMap="brandApply">
+        SELECT lb.name,lba.id AS id,lb.url AS url,lb.certificat_url,lba.store_id,
+        lba.brand_id,lba.status,lb.nick_name AS nickName,lba.reason, lba.create_time,
+        lsi.store_name AS storeName
+        FROM pms_brand_apply AS lba JOIN t_store_info AS lsi ON lba.store_id = lsi.id JOIN pms_brand AS lb ON
+        lb.id = lba.brand_id WHERE lsi.`status` = '2' AND lba.`status` = '0'
+        <if test='brandName != null and !"".equals(brandName)'>
+            AND lb.name LIKE CONCAT(CONCAT('%',#{brandName}),'%')
+        </if>
+        <if test='storeName != null and !"".equals(storeName)'>
+            AND lsi.store_Name LIKE CONCAT(CONCAT('%',#{storeName}),'%')
+        </if>
+        ORDER BY lb.create_time DESC
+        limit #{startRowNum},#{pageSize}
+    </select>
+
+    <select id="queryBrandToBeAuditCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+        SELECT COUNT(1)
+        FROM pms_brand_apply AS lba JOIN t_store_info AS lsi ON lba.store_id = lsi.id JOIN pms_brand AS lb ON
+        lb.id = lba.brand_id WHERE lsi.`status` = '2' AND lba.`status` = '0'
+        <if test='brandName != null and !"".equals(brandName)'>
+            AND lb.name LIKE CONCAT(CONCAT('%',#{brandName}),'%')
+        </if>
+        <if test='storeName != null and !"".equals(storeName)'>
+            AND lsi.store_Name LIKE CONCAT(CONCAT('%',#{storeName}),'%')
+        </if>
+    </select>
+
+    <update id="passBrandAudit" parameterType="java.lang.Long">
+        UPDATE pms_brand_apply SET status = '1' WHERE id = #{id}
+    </update>
+
+    <update id="batchPassBrandAudit" parameterType="java.lang.Long">
+        UPDATE pms_brand_apply SET status = '1' WHERE id IN
+        <foreach collection="array" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </update>
+
+    <update id="refuseBrandAudit" parameterType="com.ruoyi.goods.domain.PmsBrandApply">
+        UPDATE pms_brand_apply SET status = '2', reason = #{reason} WHERE id = #{id}
+    </update>
+
+    <update id="batchRefuseBrandAudit" parameterType="java.util.Map">
+        UPDATE pms_brand_apply SET status = '2', reason = #{reason} WHERE id IN
+        <foreach collection="ids" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </update>
+
+    <update id="passBrandAuditByStoreId" parameterType="java.lang.Long">
+        UPDATE pms_brand_apply SET `status` = '1' WHERE id IN (
+            SELECT a.id FROM (SELECT id
+            FROM pms_brand_apply
+            WHERE status = '0' AND store_id = #{storeId})a
+        )
+    </update>
+</mapper>

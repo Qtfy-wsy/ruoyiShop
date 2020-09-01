@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.order.mapper.OmsBackOrderLogMapper">
+
+    <resultMap type="OmsBackOrderLog" id="OmsBackOrderLogResult">
+        <result property="id" column="id"/>
+        <result property="backOrderId" column="back_order_id"/>
+        <result property="operationType" column="operation_type"/>
+        <result property="message" column="message"/>
+        <result property="status" column="status"/>
+        <result property="createTime" column="create_time"/>
+    </resultMap>
+
+    <sql id="selectOmsBackOrderLogVo">
+        select id, back_order_id, operation_type, message, status, create_time from oms_back_order_log
+    </sql>
+
+    <select id="selectOmsBackOrderLogList" parameterType="OmsBackOrderLog" resultMap="OmsBackOrderLogResult">
+        <include refid="selectOmsBackOrderLogVo"/>
+        <where>
+            <if test="backOrderId != null ">and back_order_id = #{backOrderId}</if>
+
+            <if test="operationType != null  and operationType != ''">and operation_type = #{operationType}</if>
+            <if test="status != null  and status != ''">and status = #{status}</if>
+        </where>
+    </select>
+    <select id="queryByBackOrderId" parameterType="java.lang.Long" resultMap="OmsBackOrderLogResult">
+        select * from oms_back_order_log where back_order_id=#{bacKOrderId} order by create_time desc
+    </select>
+    <select id="selectOmsBackOrderLogById" parameterType="Long" resultMap="OmsBackOrderLogResult">
+        <include refid="selectOmsBackOrderLogVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertOmsBackOrderLog" parameterType="OmsBackOrderLog" useGeneratedKeys="true" keyProperty="id">
+        insert into oms_back_order_log
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="backOrderId != null">back_order_id,</if>
+            <if test="operationType != null and operationType != ''">operation_type,</if>
+            <if test="message != null">message,</if>
+            <if test="status != null and status != ''">status,</if>
+            <if test="createTime != null">create_time,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="backOrderId != null">#{backOrderId},</if>
+            <if test="operationType != null and operationType != ''">#{operationType},</if>
+            <if test="message != null">#{message},</if>
+            <if test="status != null and status != ''">#{status},</if>
+            <if test="createTime != null">#{createTime},</if>
+        </trim>
+    </insert>
+
+    <update id="updateOmsBackOrderLog" parameterType="OmsBackOrderLog">
+        update oms_back_order_log
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="backOrderId != null">back_order_id = #{backOrderId},</if>
+            <if test="operationType != null and operationType != ''">operation_type = #{operationType},</if>
+            <if test="message != null">message = #{message},</if>
+            <if test="status != null and status != ''">status = #{status},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteOmsBackOrderLogById" parameterType="Long">
+        delete from oms_back_order_log where id = #{id}
+    </delete>
+
+    <delete id="deleteOmsBackOrderLogByIds" parameterType="String">
+        delete from oms_back_order_log where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

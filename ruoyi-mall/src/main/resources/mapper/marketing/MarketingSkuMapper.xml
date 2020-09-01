@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.marketing.mapper.MarketingSkuMapper">
+
+    <resultMap id="marketingSku" type="com.ruoyi.marketing.domain.MarketingSku">
+        <result column="id" property="id"/>
+        <result column="skuid" property="skuId"/>
+        <result column="marketing_id" property="marketingId"/>
+        <result column="price" property="price"/>
+    </resultMap>
+
+
+    <insert id="addMarketingSkus" parameterType="com.ruoyi.marketing.domain.MarketingSku">
+        insert into pms_sku_marketing
+        (skuid,marketing_id,price)
+        values
+        <foreach collection="list" item="marketingSku" index="index" separator=",">
+            (
+            #{marketingSku.skuId},
+            #{marketingSku.marketingId},
+            #{marketingSku.price}
+            )
+        </foreach>
+    </insert>
+
+    <select id="queryMarketingSkusByMarketingId" parameterType="java.lang.Long" resultMap="marketingSku">
+        select * from pms_sku_marketing where marketing_id = #{marketingId}
+    </select>
+
+    <delete id="deleteByMarketingId" parameterType="java.lang.Long">
+        delete from  pms_sku_marketing where marketing_id = #{marketingId}
+    </delete>
+
+    <select id="queryCrowdFundingSkuByIdAndSkuId" parameterType="java.util.Map" resultMap="marketingSku">
+        select * from pms_sku_marketing where skuid = #{skuId} and marketing_id = #{marketingId}
+    </select>
+</mapper>

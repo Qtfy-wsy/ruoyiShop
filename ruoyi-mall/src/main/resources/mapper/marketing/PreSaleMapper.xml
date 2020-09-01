@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.marketing.mapper.PreSaleMapper">
+
+    <resultMap id="preSale" type="com.ruoyi.marketing.domain.PreSale">
+        <result column="id" property="id"/>
+        <result column="marketing_id" property="marketingId"/>
+        <result column="type" property="type"/>
+        <result column="deposit_pre" property="depositPre"/>
+        <result column="skuid" property="skuId"/>
+        <result column="store_id" property="storeId"/>
+    </resultMap>
+
+    <update id="updatePreSale" parameterType="com.ruoyi.marketing.domain.PreSale">
+        update sms_marketing_presale set deposit_pre = #{depositPre} where id = #{id}
+    </update>
+
+    <select id="queryPreSale" parameterType="java.lang.Long" resultMap="preSale">
+        select * from sms_marketing_presale where marketing_id = #{marketingId}
+        <if test="skuId != null">
+            and skuid = #{skuId}
+        </if>
+    </select>
+
+    <insert id="addPreSale" parameterType="com.ruoyi.marketing.domain.PreSale">
+        insert into sms_marketing_presale
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="marketingId != null">
+                marketing_id,
+            </if>
+            <if test="type != null">
+                `type`,
+            </if>
+            <if test="depositPre != null">
+                deposit_pre,
+            </if>
+            <if test="skuId != null">
+                skuid,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="marketingId != null">
+                #{marketingId},
+            </if>
+            <if test="type != null">
+                #{type},
+            </if>
+            <if test="depositPre != null">
+                #{depositPre},
+            </if>
+            <if test="skuId != null">
+                #{skuId},
+            </if>
+        </trim>
+    </insert>
+
+    <delete id="deletePreSaleByIds" parameterType="java.util.Map">
+        delete from sms_marketing_presale where marketing_id = #{marketingId}
+        and id in
+        <foreach collection="preSaleIdList" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </delete>
+
+    <select id="queryPreSaleList" parameterType="java.util.Map" resultMap="preSale">
+        select lmp.*,lm.store_id from sms_marketing_presale lmp
+        join sms_marketing lm on lm.id = lmp.marketing_id
+        join pms_sku ls on ls.id = lmp.skuid
+        where lm. ls. now() &gt;= lm.starttime and now() &lt; lm.endtime
+        and (select count(1) as num from sms_marketing_presale_show lmps where lmps.presale_id = lmp.id and
+        lmps.store_id = #{storeId} and lmps.del_flag = '0') = 0
+        <if test="storeId != null and storeId != 0">
+            and lm.store_id = #{storeId}
+        </if>
+        <if test="name != null and name != ''">
+            and ls.name like CONCAT(CONCAT('%', #{name}),'%')
+        </if>
+        <if test="skuNo != null and skuNo != ''">
+            and ls.sku_no = #{skuNo}
+        </if>
+        order by lmp.id desc
+        limit #{startRowNum},#{pageSize}
+    </select>
+
+    <select id="queryPreSaleListCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+        select count(1) from sms_marketing_presale lmp
+        join sms_marketing lm on lm.id = lmp.marketing_id
+        join pms_sku ls on ls.id = lmp.skuid
+        where lm. ls. now() &gt;= lm.starttime and now() &lt; lm.endtime
+        and (select count(1) as num from sms_marketing_presale_show lmps where lmps.presale_id = lmp.id and
+        lmps.store_id = #{storeId} and lmps.del_flag = '0') = 0
+        <if test="storeId != null and storeId != 0">
+            and lm.store_id = #{storeId}
+        </if>
+        <if test="name != null and name != ''">
+            and ls.name like CONCAT(CONCAT('%', #{name}),'%')
+        </if>
+        <if test="skuNo != null and skuNo != ''">
+            and ls.sku_no = #{skuNo}
+        </if>
+    </select>
+
+    <select id="queryPreSaleById" parameterType="java.util.Map" resultMap="preSale">
+        select lmp.* from sms_marketing_presale lmp
+        join sms_marketing lm on lm.id = lmp.marketing_id
+        where lm. lmp.id = #{id}
+        <if test="storeId != null and storeId != -1">
+            and lm.store_id = #{storeId}
+        </if>
+    </select>
+
+</mapper>

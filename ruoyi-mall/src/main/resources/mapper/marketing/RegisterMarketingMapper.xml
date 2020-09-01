@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.marketing.mapper.RegisterMarketingMapper">
+
+    <resultMap id="registerMarketingResult" type="com.ruoyi.marketing.domain.RegisterMarketing">
+        <result column="id" property="id"/>
+        <result column="is_use" property="isUse"/>
+        <result column="coupon_id" property="couponId"/>
+        <result column="point_num" property="pointNum"/>
+        <result column="starttime" property="startTime"/>
+        <result column="endtime" property="endTime"/>
+    </resultMap>
+
+    <select id="queryRegisterMarketing" resultMap="registerMarketingResult">
+        SELECT id,is_use,coupon_id,point_num,starttime,endtime FROM sms_register_marketing
+    </select>
+
+    <update id="updateRegisterMarketing" parameterType="com.ruoyi.marketing.domain.RegisterMarketing">
+        UPDATE sms_register_marketing
+        SET is_use = #{isUse},starttime = #{startTime},endtime = #{endTime},coupon_id = #{couponId},point_num = #{pointNum}
+        WHERE id = #{id}
+    </update>
+
+    <update id="batchDeleteCoupon" parameterType="java.util.List">
+        UPDATE sms_register_marketing
+        SET coupon_id = null
+        WHERE coupon_id IN
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </update>
+</mapper>

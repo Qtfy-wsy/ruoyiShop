@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.goods.mapper.PmsCommentReplayMapper">
+
+    <resultMap type="PmsCommentReplay" id="PmsCommentReplayResult">
+        <result property="id" column="id"/>
+        <result property="commentId" column="comment_id"/>
+        <result property="reply" column="reply"/>
+        <result property="isShow" column="is_show"/>
+        <result property="storeId" column="store_id"/>
+        <result property="createTime" column="create_time"/>
+    </resultMap>
+
+    <sql id="selectPmsCommentReplayVo">
+        select id, comment_id, reply, is_show, store_id, create_time from pms_comment_replay
+    </sql>
+    <select id="queryCommentReply" parameterType="java.util.Map" resultMap="PmsCommentReplayResult">
+        select * from pms_comment_replay where comment_id=#{id}
+        <if test="storeId != null and storeId != -1 ">
+            AND store_id = #{storeId}
+        </if>
+        <if test="isShow != null and isShow != -1 ">
+            AND is_show = '0'
+        </if>
+        order by create_time desc
+    </select>
+
+    <update id="updateIsShow" parameterType="java.util.Map">
+        update pms_comment_replay set is_show = #{isShow}
+        where id =#{id}
+        <if test="storeId != null and storeId != -1 ">
+            AND store_id = #{storeId}
+        </if>
+    </update>
+    <select id="selectPmsCommentReplayList" parameterType="PmsCommentReplay" resultMap="PmsCommentReplayResult">
+        <include refid="selectPmsCommentReplayVo"/>
+        <where>
+        </where>
+    </select>
+
+    <select id="selectPmsCommentReplayById" parameterType="Long" resultMap="PmsCommentReplayResult">
+        <include refid="selectPmsCommentReplayVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertPmsCommentReplay" parameterType="PmsCommentReplay" useGeneratedKeys="true" keyProperty="id">
+        insert into pms_comment_replay
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="commentId != null">comment_id,</if>
+            <if test="reply != null">reply,</if>
+            <if test="isShow != null">is_show,</if>
+            <if test="storeId != null">store_id,</if>
+            <if test="createTime != null">create_time,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="commentId != null">#{commentId},</if>
+            <if test="reply != null">#{reply},</if>
+            <if test="isShow != null">#{isShow},</if>
+            <if test="storeId != null">#{storeId},</if>
+            <if test="createTime != null">#{createTime},</if>
+        </trim>
+    </insert>
+
+    <update id="updatePmsCommentReplay" parameterType="PmsCommentReplay">
+        update pms_comment_replay
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="commentId != null">comment_id = #{commentId},</if>
+            <if test="reply != null">reply = #{reply},</if>
+            <if test="isShow != null">is_show = #{isShow},</if>
+            <if test="storeId != null">store_id = #{storeId},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deletePmsCommentReplayById" parameterType="Long">
+        delete from pms_comment_replay where id = #{id}
+    </delete>
+
+    <delete id="deletePmsCommentReplayByIds" parameterType="String">
+        delete from pms_comment_replay where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

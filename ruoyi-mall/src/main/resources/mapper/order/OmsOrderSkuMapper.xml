@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.order.mapper.OmsOrderSkuMapper">
+
+    <resultMap type="OmsOrderSku" id="OmsOrderSkuResult">
+        <result property="id" column="id"/>
+        <result property="orderId" column="order_id"/>
+        <result property="skuId" column="sku_id"/>
+        <result property="spuId" column="spu_id"/>
+        <result property="num" column="num"/>
+        <result property="price" column="price"/>
+        <result property="skuPrice" column="sku_price"/>
+        <result property="skuName" column="sku_name"/>
+        <result property="skuNo" column="sku_no"/>
+        <result property="skuImage" column="sku_image"/>
+        <result property="skuSpecs" column="sku_specs"/>
+        <result property="priceDetail" column="price_detail"/>
+        <result property="commissionRate" column="commission_rate"/>
+        <result property="sCommissionRate" column="s_commission_rate"/>
+        <result property="cateRate" column="cate_rate"/>
+        <result property="oldPrice" column="old_price"/>
+        <result property="supplyPrice" column="supply_price"/>
+    </resultMap>
+
+    <sql id="selectOmsOrderSkuVo">
+        select id, order_id, sku_id,spu_id, num, price, sku_price, sku_name, sku_no, sku_image, sku_specs, price_detail, commission_rate, s_commission_rate, cate_rate, old_price, supply_price from oms_order_sku
+    </sql>
+    <resultMap id="skuSaleAmount" type="com.ruoyi.order.vo.SkuSaleAmount">
+        <result column="sku_id" property="skuId"/>
+        <result column="store_id" property="storeId"/>
+        <result column="sales_volume" property="salesVolume"/>
+        <result column="sales_amount" property="salesAmount"/>
+    </resultMap>
+    <select id="querySkuSaleVolume" parameterType="java.util.Map" resultMap="skuSaleAmount">
+        SELECT los.sku_id , sum(los.num) sales_volume,lo.store_id FROM oms_order_sku los RIGHT JOIN oms_order lo on
+        los.order_id=lo.id
+        WHERE lo.status in ('4','6','7')
+        <if test="startTime !=null and startTime !=''">
+            and DATE_FORMAT(lo.receiving_time,'%Y-%m-%d') &gt;= #{startTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="endTime !=null and endTime !=''">
+            and DATE_FORMAT(lo.receiving_time,'%Y-%m-%d') &lt;= #{endTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="storeId !=null and storeId!=-1">
+            and lo.store_id = #{storeId}
+        </if>
+        GROUP BY los.sku_id
+        ORDER BY sales_volume desc
+        limit #{startRowNum},#{pageSize}
+    </select>
+    <select id="querySkuSaleCountByTime" parameterType="java.util.Map" resultType="java.lang.Integer">
+        SELECT count(1) from (SELECT count(1) FROM oms_order_sku los RIGHT JOIN oms_order lo on los.order_id=lo.id
+        WHERE lo.status in ('4','6','7')
+        <if test="startTime !=null and startTime !=''">
+            and DATE_FORMAT(lo.receiving_time,'%Y-%m-%d') &gt;= #{startTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="endTime !=null and endTime !=''">
+            and DATE_FORMAT(lo.receiving_time,'%Y-%m-%d') &lt;= #{endTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="storeId !=null and storeId!=-1">
+            and lo.store_id = #{storeId}
+        </if>
+        GROUP BY los.sku_id) a
+    </select>
+
+    <select id="querySkuSaleAmount" parameterType="java.util.Map" resultMap="skuSaleAmount">
+        SELECT los.sku_id , sum(los.price) sales_amount,lo.store_id FROM oms_order_sku los RIGHT JOIN oms_order lo on
+        los.order_id=lo.id
+        WHERE lo.status in ('4','6','7')
+        <if test="startTime !=null and startTime !=''">
+            and DATE_FORMAT(lo.receiving_time,'%Y-%m-%d') &gt;= #{startTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="endTime !=null and endTime !=''">
+            and DATE_FORMAT(lo.receiving_time,'%Y-%m-%d') &lt;= #{endTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="storeId !=null and storeId!=-1">
+            and lo.store_id = #{storeId}
+        </if>
+        GROUP BY los.sku_id
+        ORDER BY sales_amount desc
+        limit #{startRowNum},#{pageSize}
+    </select>
+    <select id="queryByOrderId" parameterType="java.lang.Long" resultMap="OmsOrderSkuResult">
+        select * from oms_order_sku where order_id=#{orderId}
+    </select>
+
+
+    <select id="queryByOrderIdAndSkuId" parameterType="java.util.Map" resultMap="OmsOrderSkuResult">
+        select * from oms_order_sku where  order_id=#{orderId} and sku_id = #{skuId}
+    </select>
+
+    <select id="queryByOrderIdForCommunityBuy" parameterType="java.lang.Long"
+            resultType="com.ruoyi.order.domain.OmsOrderSku">
+        select
+            sku_id as skuId,
+            num
+        from
+            oms_order_sku
+        where
+            order_id=#{orderId}
+    </select>
+
+    <select id="queryRecommentSkus" parameterType="java.lang.Integer" resultMap="OmsOrderSkuResult">
+      select los.id,los.sku_id,IFNULL(sum(los.num),0) num from oms_order_sku los join oms_order lo on
+      lo.id=los.order_id where  lo.`status` in ('4','6','7')
+       GROUP BY los.sku_id ORDER BY num desc limit 0,#{pageSize};
+    </select>
+
+    <select id="queryRecommentSkusThirtyDays" parameterType="java.lang.Long" resultMap="OmsOrderSkuResult">
+       select los.id,los.sku_id,IFNULL(sum(los.num),0) num from oms_order_sku los join oms_order lo on
+       lo.id=los.order_id where  lo.`status` in ('4','6','7') and lo.store_id = #{storeId}
+       and date(lo.receiving_time) >= DATE_SUB(CURDATE(), INTERVAL 30 DAY)
+       GROUP BY los.sku_id ORDER BY num desc limit 0,24;
+    </select>
+
+    <select id="querySkuSaleCount" resultType="java.lang.Integer" parameterType="java.lang.String">
+        select IFNULL(sum(los.num),0) num from oms_order_sku los
+        join oms_order lo on  los.order_id =lo.id
+         where lo.`status` in ('4','6','7')
+        and los.sku_id=#{skuId}  GROUP BY los.sku_id
+    </select>
+    <insert id="saveOrderSkus" parameterType="java.util.List">
+        insert into oms_order_sku
+        (order_id,spu_id,
+        sku_id,num,price,sku_price,sku_name,sku_no,sku_image,sku_specs,price_detail,commission_rate,s_commission_rate,cate_rate,old_price,supply_price)
+        values
+        <foreach collection="list" item="sku" index="index" separator=",">
+            (
+            #{sku.orderId}, #{sku.spuId},
+            #{sku.skuId},
+            #{sku.num},
+            #{sku.price},
+            #{sku.skuPrice},
+            #{sku.skuName},
+            #{sku.skuNo},
+            #{sku.skuImage},
+            #{sku.skuSpecs},
+            #{sku.priceDetail},
+            #{sku.commissionRate},
+            #{sku.sCommissionRate},
+            #{sku.cateRate},
+            #{sku.oldPrice},
+            #{sku.supplyPrice}
+            )
+        </foreach>
+    </insert>
+
+    <update id="updateOrderSkuPrice" parameterType="OmsOrderSku">
+        update oms_order_sku set price = #{price} , price_detail=#{priceDetail} where id = #{id}
+    </update>
+    <select id="selectOmsOrderSkuList" parameterType="OmsOrderSku" resultMap="OmsOrderSkuResult">
+        <include refid="selectOmsOrderSkuVo"/>
+        <where>
+            <if test="orderId != null ">and order_id = #{orderId}</if>
+            <if test="skuId != null  and skuId != ''">and sku_id = #{skuId}</if>
+            <if test="num != null ">and num = #{num}</if>
+            <if test="price != null ">and price = #{price}</if>
+            <if test="skuPrice != null ">and sku_price = #{skuPrice}</if>
+            <if test="skuName != null  and skuName != ''">and sku_name like concat('%', #{skuName}, '%')</if>
+            <if test="skuNo != null  and skuNo != ''">and sku_no = #{skuNo}</if>
+            <if test="skuImage != null  and skuImage != ''">and sku_image = #{skuImage}</if>
+            <if test="skuSpecs != null  and skuSpecs != ''">and sku_specs = #{skuSpecs}</if>
+            <if test="priceDetail != null  and priceDetail != ''">and price_detail = #{priceDetail}</if>
+            <if test="commissionRate != null ">and commission_rate = #{commissionRate}</if>
+            <if test="sCommissionRate != null ">and s_commission_rate = #{sCommissionRate}</if>
+            <if test="cateRate != null ">and cate_rate = #{cateRate}</if>
+            <if test="oldPrice != null ">and old_price = #{oldPrice}</if>
+            <if test="supplyPrice != null ">and supply_price = #{supplyPrice}</if>
+        </where>
+    </select>
+
+    <select id="selectOmsOrderSkuById" parameterType="Long" resultMap="OmsOrderSkuResult">
+        <include refid="selectOmsOrderSkuVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertOmsOrderSku" parameterType="OmsOrderSku" useGeneratedKeys="true" keyProperty="id">
+        insert into oms_order_sku
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="orderId != null">order_id,</if>
+            <if test="spuId != null and spuId != ''">spu_id,</if>
+            <if test="skuId != null and skuId != ''">sku_id,</if>
+            <if test="num != null">num,</if>
+            <if test="price != null">price,</if>
+            <if test="skuPrice != null">sku_price,</if>
+            <if test="skuName != null">sku_name,</if>
+            <if test="skuNo != null">sku_no,</if>
+            <if test="skuImage != null">sku_image,</if>
+            <if test="skuSpecs != null">sku_specs,</if>
+            <if test="priceDetail != null">price_detail,</if>
+            <if test="commissionRate != null">commission_rate,</if>
+            <if test="sCommissionRate != null">s_commission_rate,</if>
+            <if test="cateRate != null">cate_rate,</if>
+            <if test="oldPrice != null">old_price,</if>
+            <if test="supplyPrice != null">supply_price,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="orderId != null">#{orderId},</if>
+            <if test="spuId != null and spuId != ''">#{spuId},</if>
+            <if test="skuId != null and skuId != ''">#{skuId},</if>
+            <if test="num != null">#{num},</if>
+            <if test="price != null">#{price},</if>
+            <if test="skuPrice != null">#{skuPrice},</if>
+            <if test="skuName != null">#{skuName},</if>
+            <if test="skuNo != null">#{skuNo},</if>
+            <if test="skuImage != null">#{skuImage},</if>
+            <if test="skuSpecs != null">#{skuSpecs},</if>
+            <if test="priceDetail != null">#{priceDetail},</if>
+            <if test="commissionRate != null">#{commissionRate},</if>
+            <if test="sCommissionRate != null">#{sCommissionRate},</if>
+            <if test="cateRate != null">#{cateRate},</if>
+            <if test="oldPrice != null">#{oldPrice},</if>
+            <if test="supplyPrice != null">#{supplyPrice},</if>
+        </trim>
+    </insert>
+
+    <update id="updateOmsOrderSku" parameterType="OmsOrderSku">
+        update oms_order_sku
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="orderId != null">order_id = #{orderId},</if>
+            <if test="skuId != null and skuId != ''">sku_id = #{skuId},</if>
+            <if test="num != null">num = #{num},</if>
+            <if test="price != null">price = #{price},</if>
+            <if test="skuPrice != null">sku_price = #{skuPrice},</if>
+            <if test="skuName != null">sku_name = #{skuName},</if>
+            <if test="skuNo != null">sku_no = #{skuNo},</if>
+            <if test="skuImage != null">sku_image = #{skuImage},</if>
+            <if test="skuSpecs != null">sku_specs = #{skuSpecs},</if>
+            <if test="priceDetail != null">price_detail = #{priceDetail},</if>
+            <if test="commissionRate != null">commission_rate = #{commissionRate},</if>
+            <if test="sCommissionRate != null">s_commission_rate = #{sCommissionRate},</if>
+            <if test="cateRate != null">cate_rate = #{cateRate},</if>
+            <if test="oldPrice != null">old_price = #{oldPrice},</if>
+            <if test="supplyPrice != null">supply_price = #{supplyPrice},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteOmsOrderSkuById" parameterType="Long">
+        delete from oms_order_sku where id = #{id}
+    </delete>
+
+    <delete id="deleteOmsOrderSkuByIds" parameterType="String">
+        delete from oms_order_sku where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

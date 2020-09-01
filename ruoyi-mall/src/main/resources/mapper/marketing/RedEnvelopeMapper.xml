@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.marketing.mapper.RedEnvelopeMapper">
+    <resultMap id="redEnvelope" type="com.ruoyi.marketing.domain.RedEnvelope">
+        <result column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="num" property="num"/>
+        <result column="limit_num" property="limitNum"/>
+        <result column="desc" property="desc"/>
+        <result column="signuptime" property="signupTime"/>
+        <result column="starttime" property="startTime"/>
+        <result column="endtime" property="endTime"/>
+        <result column="del_flag" property="delFlag"/>
+        <result column="full_price" property="fullPrice"/>
+        <result column="price" property="price"/>
+    </resultMap>
+    <insert id="addRedEnvelope" parameterType="com.ruoyi.marketing.domain.RedEnvelope" useGeneratedKeys="true"
+            keyProperty="id">
+        insert into sms_red_envelope(`name`,num,limit_num,`desc`,signuptime,starttime,endtime,del_flag,full_price,price) values
+        (#{name},#{num},#{limitNum},#{desc},#{signupTime},#{startTime},#{endTime},'0',#{fullPrice},#{price})
+    </insert>
+    <select id="queryRedEnvelopeCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+        select count(1) from sms_red_envelope where del_flag='0'
+        <if test="name != null and name!=''">
+            AND `name` LIKE CONCAT(CONCAT('%', #{name}),'%')
+        </if>
+    </select>
+    <select id="queryRedEnvelopes" parameterType="java.util.Map" resultMap="redEnvelope">
+        select * from sms_red_envelope where del_flag='0'
+        <if test="name != null and name!=''">
+            AND `name` LIKE CONCAT(CONCAT('%', #{name}),'%')
+        </if>
+        order by id desc
+        limit #{startRowNum},#{pageSize}
+    </select>
+    <select id="queryRedEnvelopeById" parameterType="java.lang.Long" resultMap="redEnvelope">
+        select * from sms_red_envelope where del_flag='0' and id=#{id}
+    </select>
+    <update id="deleteRedEnvelope" parameterType="java.util.Arrays">
+        update sms_red_envelope set del_flag='1' where id in
+        <foreach collection="array" index="index" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </update>
+    <select id="queryRedEnvelopeForPc" parameterType="java.util.Map" resultMap="redEnvelope">
+        select  * from sms_red_envelope
+        WHERE del_flag='0' and endtime  &gt; now()  and status = '0'
+        order by id desc
+        limit #{startRowNum},#{pageSize}
+    </select>
+    <select id="queryRedEnvelopeForPcCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+        select count(1) from sms_red_envelope
+        WHERE del_flag='0' and endtime  &gt; now()  and status = '0'
+    </select>
+    <select id="queryRedEnvelopeByIdForReceive" parameterType="java.lang.Long" resultMap="redEnvelope">
+        SELECT *
+        FROM sms_red_envelope WHERE del_flag='0'  AND id=#{redEnvelopeId}
+    </select>
+
+    <update id="updateRedEnvelopeAllReceived" parameterType="java.lang.Long">
+        update sms_red_envelope set status = '1' where id = #{id}
+    </update>
+</mapper>

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.member.mapper.WeChatCustomerLinkMapper">
+
+    <resultMap id="wechatCustomerLink" type="com.ruoyi.member.domain.WeChatCustomerLink">
+        <result column="id" property="id"/>
+        <result column="customer_id" property="customerId"/>
+        <result column="wx_union_id" property="unionId"/>
+        <result column="wx_open_id" property="openId"/>
+        <result column="wx_applet_open_id" property="appletOpenId"/>
+    </resultMap>
+
+
+    <select id="queryWeChatCustomerLinkByOpenId" parameterType="java.lang.String" resultMap="wechatCustomerLink">
+     select * from ls_wx_customer_link where wx_open_id=#{openId}
+    </select>
+    <select id="queryWeChatCustomerLinkByUnionId" parameterType="java.lang.String" resultMap="wechatCustomerLink">
+        select * from ls_wx_customer_link where wx_union_id=#{unionId}
+    </select>
+    <select id="queryWeChatCustomerLinkByCustomerId" parameterType="java.lang.Long" resultMap="wechatCustomerLink">
+        select * from ls_wx_customer_link where customer_id=#{customerId}
+    </select>
+    <insert id="addWeChatCustomerLink" parameterType="com.ruoyi.member.domain.WeChatCustomerLink">
+        INSERT into ls_wx_customer_link
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="customerId !=null">
+                customer_id,
+            </if>
+            <if test="unionId !=null and unionId !=''">
+                wx_union_id,
+            </if>
+            <if test="openId !=null and  openId !=''">
+                wx_open_id,
+            </if>
+            <if test="appletOpenId !=null and  appletOpenId !=''">
+                wx_applet_open_id,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="customerId !=null">
+                #{customerId},
+            </if>
+            <if test="unionId !=null and unionId !=''">
+                #{unionId},
+            </if>
+            <if test="openId !=null and  openId !=''">
+                #{openId},
+            </if>
+            <if test="appletOpenId !=null and  appletOpenId !=''">
+                #{appletOpenId},
+            </if>
+        </trim>
+    </insert>
+    <delete id="deleteWeChatCustomerLink" parameterType="java.lang.Long">
+     DELETE from ls_wx_customer_link where customer_id=#{customerId}
+    </delete>
+
+    <update id="updateWeChatCustomerLink" parameterType="com.ruoyi.member.domain.WeChatCustomerLink">
+        update ls_wx_customer_link
+        <set>
+            <trim suffixOverrides=",">
+                <if test="openId !=null and  openId !=''">
+                    wx_open_id=#{openId},
+                </if>
+                <if test="appletOpenId !=null and  appletOpenId !=''">
+                    wx_applet_open_id=#{appletOpenId},
+                </if>
+            </trim>
+        </set>
+        where id=#{id};
+    </update>
+</mapper>

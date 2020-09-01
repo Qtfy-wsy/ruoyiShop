@@ -1,0 +1,265 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.goods.mapper.PmsCommentMapper">
+
+    <resultMap type="PmsComment" id="PmsCommentResult">
+        <result property="id" column="id"/>
+        <result property="customerId" column="customer_id"/>
+        <result property="spuId" column="spu_id"/>
+        <result property="skuId" column="sku_id"/>
+        <result property="storeId" column="store_id"/>
+        <result property="orderId" column="order_id"/>
+        <result property="isAnonymous" column="is_anonymous"/>
+        <result property="comment" column="comment"/>
+        <result property="score" column="score"/>
+        <result property="hasPic" column="has_pic"/>
+        <result property="createTime" column="create_time"/>
+        <result property="isShow" column="is_show"/>
+        <result property="delFlag" column="del_flag"/>
+    </resultMap>
+
+    <sql id="selectPmsCommentVo">
+        select id, customer_id, spu_id,sku_id, store_id, order_id, is_anonymous, comment, score, has_pic, create_time, is_show, del_flag from pms_comment
+    </sql>
+
+    <select id="selectPmsCommentList" parameterType="PmsComment" resultMap="PmsCommentResult">
+        <include refid="selectPmsCommentVo"/>
+        <where>
+            <if test="customerId != null ">and customer_id = #{customerId}</if>
+            <if test="spuId != null  and skuId != ''">and spu_id = #{spuId}</if>
+            <if test="storeId != null ">  and store_id = #{storeId} </if>
+            <if test="skuId != null  and skuId != ''">and sku_id = #{skuId}</if>
+            <if test="score != null ">and score = #{score}</if>
+        </where>
+    </select>
+    <resultMap id="commentPic" type="com.ruoyi.goods.domain.PmsCommentPicture">
+        <result column="id" property="id"/>
+        <result column="comment_id" property="commentId"/>
+        <result column="url" property="url"/>
+    </resultMap>
+
+    <select id="queryCommentById" parameterType="java.util.Map" resultMap="PmsCommentResult">
+        select pms_comment.*,ums_member.username ,pms_goods.name as skuname,pms_goods.url as skuurl,lsi.store_name from
+        pms_comment join ums_member on pms_comment.customer_id =
+        ums_member.id join pms_goods on pms_goods.id = pms_comment.spu_id left join t_store_info lsi on
+        lsi.id=pms_comment.store_id
+        where pms_comment.id = #{id} and pms_comment.del_flag = '0'
+
+        <if test="storeId != null and storeId != -1 ">
+            AND pms_comment.store_id = #{storeId}
+        </if>
+        <if test="customerId != null and customerId != -1 ">
+            AND pms_comment.customer_id = #{customerId}
+        </if>
+        <if test="spuId != null  and spuId != ''">and spu_id = #{spuId}</if>
+        <if test="isShow != null and isShow != -1 ">
+            AND pms_comment.is_show = '0'
+        </if>
+    </select>
+
+    <select id="queryCommentPicsByCommentId" parameterType="java.lang.Long" resultMap="commentPic">
+        select * from pms_comment_picture where comment_id = #{commentId}
+    </select>
+
+    <select id="queryComments" resultMap="PmsCommentResult" parameterType="java.util.Map">
+        select pms_comment.*,ums_member.username ,pms_goods.name as skuname ,pms_goods.url as skuurl,lsi.store_name from
+        pms_comment join ums_member on pms_comment.customer_id =
+        ums_member.id join pms_goods on pms_goods.id = pms_comment.spu_id left join t_store_info lsi on
+        lsi.id=pms_comment.store_id
+        where  1=1
+        <if test="storeId != null and storeId != -1 ">
+            AND pms_comment.store_id = #{storeId}
+        </if>
+        <if test="customerId != null and customerId != -1 ">
+            AND pms_comment.customer_id = #{customerId}
+        </if>
+        <if test="spuId != null  and spuId != ''">and spu_id = #{spuId}</if>
+        <if test="isShow != null and isShow != -1 ">
+            AND pms_comment.is_show = '0'
+        </if>
+        <if test="customerName!=null and customerName!=''">
+            AND ums_member.username LIKE CONCAT(CONCAT('%', #{customerName},'%'))
+        </if>
+        <if test="skuName!=''and skuName!=null">
+            AND pms_goods.name LIKE CONCAT(CONCAT('%', #{skuName},'%'))
+        </if>
+        <if test="storeName!=''and storeName!=null">
+            AND lsi.store_name LIKE CONCAT(CONCAT('%', #{storeName},'%'))
+        </if>
+        order by pms_comment.create_time desc limit #{startRowNum},#{pageSize}
+    </select>
+
+
+    <select id="queryCommentCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+        select count(1) from pms_comment join ums_member on pms_comment.customer_id = ums_member.id join pms_goods on
+        pms_goods.id = pms_comment.sku_id
+        left join t_store_info lsi on lsi.id=pms_comment.store_id
+        where 1=1
+        <if test="storeId != null and storeId != -1 ">
+            AND pms_comment.store_id = #{storeId}
+        </if>
+        <if test="customerId != null and customerId != -1 ">
+            AND pms_comment.customer_id = #{customerId}
+        </if>
+        <if test="spuId != null  and skuId != ''">and spu_id = #{spuId}</if>
+        <if test="isShow != null and isShow != -1 ">
+            AND pms_comment.is_show = '0'
+        </if>
+        <if test="customerName!=null and customerName!=''">
+            AND ums_member.username LIKE CONCAT(CONCAT('%', #{customerName},'%'))
+        </if>
+        <if test="skuName!=''and skuName!=null">
+            AND pms_goods.name LIKE CONCAT(CONCAT('%', #{skuName},'%'))
+        </if>
+        <if test="storeName!=''and storeName!=null">
+            AND lsi.store_name LIKE CONCAT(CONCAT('%', #{storeName},'%'))
+        </if>
+    </select>
+
+    <update id="deleteComments" parameterType="java.util.Map">
+        update pms_comment set del_flag = '1'
+        where id in
+        <foreach item="id" collection="list" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+        <if test="storeId != null and storeId != -1 ">
+            AND pms_comment.store_id = #{storeId}
+        </if>
+        <if test="customerId != null and customerId != -1 ">
+            AND pms_comment.customer_id = #{customerId}
+        </if>
+    </update>
+    <select id="queryCommentCountBySkuId" resultType="java.lang.Integer">
+        SELECT COUNT(1) FROM pms_comment WHERE sku_id=#{skuId}  and pms_comment.is_show='0'
+    </select>
+
+    <select id="queryGoodCommentCountBySkuId" resultType="java.lang.Integer" parameterType="java.lang.String">
+           SELECT COUNT(1) FROM pms_comment WHERE sku_id=#{skuId}  AND (score = '4' or score='5') and pms_comment.is_show='0'
+    </select>
+
+    <update id="updateCommentIsShow" parameterType="java.util.Map">
+        update pms_comment set is_show=#{isShow} where id=#{id}
+        <if test="storeId != null and storeId != -1 ">
+            AND store_id = #{storeId}
+        </if>
+    </update>
+
+    <insert id="addComment" parameterType="com.ruoyi.goods.domain.PmsComment" useGeneratedKeys="true" keyProperty="id">
+        insert into pms_comment (spu_id,customer_id,sku_id,store_id,order_id,is_anonymous,comment,score,has_pic,create_time,is_show,del_flag) VALUES
+        (#{spuId},#{customerId},#{skuId},#{storeId},#{orderId},#{isAnonymous},#{comment},#{score},#{hasPic},now(),'0','0')
+    </insert>
+
+    <insert id="addCommentPics" parameterType="java.util.List">
+        insert into pms_comment_picture
+        (comment_id, url)
+        values
+        <foreach collection="list" item="pic" index="index" separator=",">
+            (
+            #{pic.commentId}, #{pic.url}
+            )
+        </foreach>
+    </insert>
+
+    <select id="queryByOrderIdAndCustomerId" parameterType="java.util.Map" resultMap="PmsCommentResult">
+        select * from pms_comment where customer_id = #{customerId} and order_id = #{orderId}
+    </select>
+
+    <select id="querySkuCommentCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+        SELECT COUNT(1) FROM pms_comment WHERE spu_id=#{spuId}  and is_show = '0'
+        <if test='type == "1"'>
+            AND (score='5')
+        </if>
+        <if test='type == "2"'>
+            AND (score='2' or score='3' or score='4' )
+        </if>
+        <if test='type == "3"'>
+            AND (score='1')
+        </if>
+    </select>
+
+    <select id="querySkuComments" resultMap="PmsCommentResult" parameterType="java.util.Map">
+        select pms_comment.*,ums_member.username,ums_member.image from pms_comment join ums_member on
+        pms_comment.customer_id =
+        ums_member.id
+        where   pms_comment.spu_id = #{spuId} and
+        pms_comment.is_show = '0'
+        <if test='type == "1"'>
+            AND (score='5')
+        </if>
+        <if test='type == "2"'>
+            AND (score='2' or score='3' or score='4' )
+        </if>
+        <if test='type == "3"'>
+            AND (score='1')
+        </if>
+        order by pms_comment.create_time desc limit #{startRowNum},#{pageSize}
+    </select>
+    <select id="selectPmsCommentById" parameterType="Long" resultMap="PmsCommentResult">
+        <include refid="selectPmsCommentVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertPmsComment" parameterType="PmsComment" useGeneratedKeys="true" keyProperty="id">
+        insert into pms_comment
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="spuId != null">spu_id,</if>
+            <if test="customerId != null">customer_id,</if>
+            <if test="skuId != null">sku_id,</if>
+            <if test="storeId != null">store_id,</if>
+            <if test="orderId != null">order_id,</if>
+            <if test="isAnonymous != null">is_anonymous,</if>
+            <if test="comment != null">comment,</if>
+            <if test="score != null">score,</if>
+            <if test="hasPic != null">has_pic,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="isShow != null">is_show,</if>
+            <if test="delFlag != null">del_flag,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="spuId != null">#{spuId},</if>
+            <if test="customerId != null">#{customerId},</if>
+            <if test="skuId != null">#{skuId},</if>
+            <if test="storeId != null">#{storeId},</if>
+            <if test="orderId != null">#{orderId},</if>
+            <if test="isAnonymous != null">#{isAnonymous},</if>
+            <if test="comment != null">#{comment},</if>
+            <if test="score != null">#{score},</if>
+            <if test="hasPic != null">#{hasPic},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="isShow != null">#{isShow},</if>
+            <if test="delFlag != null">#{delFlag},</if>
+        </trim>
+    </insert>
+
+    <update id="updatePmsComment" parameterType="PmsComment">
+        update pms_comment
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="customerId != null">customer_id = #{customerId},</if>
+            <if test="skuId != null">sku_id = #{skuId},</if>
+            <if test="storeId != null">store_id = #{storeId},</if>
+            <if test="orderId != null">order_id = #{orderId},</if>
+            <if test="isAnonymous != null">is_anonymous = #{isAnonymous},</if>
+            <if test="comment != null">comment = #{comment},</if>
+            <if test="score != null">score = #{score},</if>
+            <if test="hasPic != null">has_pic = #{hasPic},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="isShow != null">is_show = #{isShow},</if>
+            <if test="delFlag != null">del_flag = #{delFlag},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deletePmsCommentById" parameterType="Long">
+        delete from pms_comment where id = #{id}
+    </delete>
+
+    <delete id="deletePmsCommentByIds" parameterType="String">
+        delete from pms_comment where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

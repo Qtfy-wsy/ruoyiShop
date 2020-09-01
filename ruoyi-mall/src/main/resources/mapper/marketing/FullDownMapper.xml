@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.marketing.mapper.FullDownMapper">
+
+    <resultMap id="fullDown" type="com.ruoyi.marketing.domain.FullDown">
+        <result column="id" property="id"/>
+        <result column="marketing_id" property="marketingId"/>
+        <result column="full_price" property="fullPrice"/>
+        <result column="price" property="price"/>
+    </resultMap>
+
+
+    <insert id="addFullDowns" parameterType="com.ruoyi.marketing.domain.FullDown">
+        insert into sms_marketing_full_down
+        (marketing_id,full_price,price)
+        values
+        <foreach collection="list" item="fullDown" index="index" separator=",">
+            (
+            #{fullDown.marketingId},
+            #{fullDown.fullPrice},
+            #{fullDown.price}
+            )
+        </foreach>
+    </insert>
+
+    <select id="queryByMarketingId" parameterType="java.lang.Long" resultMap="fullDown">
+        select * from sms_marketing_full_down where marketing_id = #{marketingId} order by full_price
+    </select>
+
+    <delete id="deleteByMarketingId" parameterType="java.lang.Long">
+        delete from  sms_marketing_full_down where marketing_id = #{marketingId}
+    </delete>
+</mapper>

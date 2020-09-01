@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.store.mapper.TStoreOrderAttrMapper">
+
+    <resultMap type="TStoreOrderAttr" id="TStoreOrderAttrResult">
+        <result property="id" column="id"/>
+        <result property="orderId" column="order_id"/>
+        <result property="invoiceType" column="invoice_type"/>
+        <result property="invoiceTitle" column="invoice_title"/>
+        <result property="invoiceContent" column="invoice_content"/>
+        <result property="invoiceTaxid" column="invoice_taxid"/>
+        <result property="remark" column="remark"/>
+        <result property="invoiceTitleType" column="invoice_title_type"/>
+        <result property="invoiceCompanyName" column="invoice_company_name"/>
+        <result property="invoiceRegisterAddress" column="invoice_register_address"/>
+        <result property="invoiceRegisterMobile" column="invoice_register_mobile"/>
+        <result property="invoiceOpenBank" column="invoice_open_bank"/>
+        <result property="invoiceBankAccount" column="invoice_bank_account"/>
+    </resultMap>
+
+    <sql id="selectTStoreOrderAttrVo">
+        select id, order_id, invoice_type, invoice_title, invoice_content, invoice_taxid, remark, invoice_title_type, invoice_company_name, invoice_register_address, invoice_register_mobile, invoice_open_bank, invoice_bank_account from t_store_order_attr
+    </sql>
+
+    <select id="selectTStoreOrderAttrList" parameterType="TStoreOrderAttr" resultMap="TStoreOrderAttrResult">
+        <include refid="selectTStoreOrderAttrVo"/>
+        <where>
+            <if test="orderId != null ">and order_id = #{orderId}</if>
+            <if test="invoiceType != null  and invoiceType != ''">and invoice_type = #{invoiceType}</if>
+            <if test="invoiceTitle != null  and invoiceTitle != ''">and invoice_title = #{invoiceTitle}</if>
+            <if test="invoiceContent != null  and invoiceContent != ''">and invoice_content = #{invoiceContent}</if>
+            <if test="invoiceTaxid != null  and invoiceTaxid != ''">and invoice_taxid = #{invoiceTaxid}</if>
+            <if test="invoiceTitleType != null  and invoiceTitleType != ''">and invoice_title_type =
+                #{invoiceTitleType}
+            </if>
+            <if test="invoiceCompanyName != null  and invoiceCompanyName != ''">and invoice_company_name like
+                concat('%', #{invoiceCompanyName}, '%')
+            </if>
+            <if test="invoiceRegisterAddress != null  and invoiceRegisterAddress != ''">and invoice_register_address =
+                #{invoiceRegisterAddress}
+            </if>
+            <if test="invoiceRegisterMobile != null  and invoiceRegisterMobile != ''">and invoice_register_mobile =
+                #{invoiceRegisterMobile}
+            </if>
+            <if test="invoiceOpenBank != null  and invoiceOpenBank != ''">and invoice_open_bank = #{invoiceOpenBank}
+            </if>
+            <if test="invoiceBankAccount != null  and invoiceBankAccount != ''">and invoice_bank_account =
+                #{invoiceBankAccount}
+            </if>
+        </where>
+    </select>
+
+    <select id="selectTStoreOrderAttrById" parameterType="Long" resultMap="TStoreOrderAttrResult">
+        <include refid="selectTStoreOrderAttrVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertTStoreOrderAttr" parameterType="TStoreOrderAttr" useGeneratedKeys="true" keyProperty="id">
+        insert into t_store_order_attr
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="orderId != null">order_id,</if>
+            <if test="invoiceType != null">invoice_type,</if>
+            <if test="invoiceTitle != null">invoice_title,</if>
+            <if test="invoiceContent != null">invoice_content,</if>
+            <if test="invoiceTaxid != null">invoice_taxid,</if>
+            <if test="remark != null">remark,</if>
+            <if test="invoiceTitleType != null">invoice_title_type,</if>
+            <if test="invoiceCompanyName != null">invoice_company_name,</if>
+            <if test="invoiceRegisterAddress != null">invoice_register_address,</if>
+            <if test="invoiceRegisterMobile != null">invoice_register_mobile,</if>
+            <if test="invoiceOpenBank != null">invoice_open_bank,</if>
+            <if test="invoiceBankAccount != null">invoice_bank_account,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="orderId != null">#{orderId},</if>
+            <if test="invoiceType != null">#{invoiceType},</if>
+            <if test="invoiceTitle != null">#{invoiceTitle},</if>
+            <if test="invoiceContent != null">#{invoiceContent},</if>
+            <if test="invoiceTaxid != null">#{invoiceTaxid},</if>
+            <if test="remark != null">#{remark},</if>
+            <if test="invoiceTitleType != null">#{invoiceTitleType},</if>
+            <if test="invoiceCompanyName != null">#{invoiceCompanyName},</if>
+            <if test="invoiceRegisterAddress != null">#{invoiceRegisterAddress},</if>
+            <if test="invoiceRegisterMobile != null">#{invoiceRegisterMobile},</if>
+            <if test="invoiceOpenBank != null">#{invoiceOpenBank},</if>
+            <if test="invoiceBankAccount != null">#{invoiceBankAccount},</if>
+        </trim>
+    </insert>
+    <select id="queryByStoreOrderId" parameterType="java.lang.Long" resultMap="TStoreOrderAttrResult">
+        select * from t_store_order_attr where order_id=#{orderId}
+    </select>
+    <update id="updateTStoreOrderAttr" parameterType="TStoreOrderAttr">
+        update t_store_order_attr
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="orderId != null">order_id = #{orderId},</if>
+            <if test="invoiceType != null">invoice_type = #{invoiceType},</if>
+            <if test="invoiceTitle != null">invoice_title = #{invoiceTitle},</if>
+            <if test="invoiceContent != null">invoice_content = #{invoiceContent},</if>
+            <if test="invoiceTaxid != null">invoice_taxid = #{invoiceTaxid},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            <if test="invoiceTitleType != null">invoice_title_type = #{invoiceTitleType},</if>
+            <if test="invoiceCompanyName != null">invoice_company_name = #{invoiceCompanyName},</if>
+            <if test="invoiceRegisterAddress != null">invoice_register_address = #{invoiceRegisterAddress},</if>
+            <if test="invoiceRegisterMobile != null">invoice_register_mobile = #{invoiceRegisterMobile},</if>
+            <if test="invoiceOpenBank != null">invoice_open_bank = #{invoiceOpenBank},</if>
+            <if test="invoiceBankAccount != null">invoice_bank_account = #{invoiceBankAccount},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteTStoreOrderAttrById" parameterType="Long">
+        delete from t_store_order_attr where id = #{id}
+    </delete>
+
+    <delete id="deleteTStoreOrderAttrByIds" parameterType="String">
+        delete from t_store_order_attr where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

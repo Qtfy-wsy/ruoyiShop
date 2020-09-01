@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.marketing.mapper.FullDiscountMapper">
+
+    <resultMap id="fullDiscount" type="com.ruoyi.marketing.domain.FullDiscount">
+        <result column="id" property="id"/>
+        <result column="marketing_id" property="marketingId"/>
+        <result column="full_price" property="fullPrice"/>
+        <result column="discount" property="discount"/>
+    </resultMap>
+
+
+    <insert id="addFullDiscounts" parameterType="com.ruoyi.marketing.domain.FullDiscount">
+        insert into sms_marketing_full_discount
+        (marketing_id,full_price,discount)
+        values
+        <foreach collection="list" item="fullDiscount" index="index" separator=",">
+            (
+            #{fullDiscount.marketingId},
+            #{fullDiscount.fullPrice},
+            #{fullDiscount.discount}
+            )
+        </foreach>
+    </insert>
+
+    <select id="queryByMarketingId" parameterType="java.lang.Long" resultMap="fullDiscount">
+        select * from sms_marketing_full_discount where marketing_id = #{marketingId} order by full_price
+    </select>
+
+    <delete id="deleteByMarketingId" parameterType="java.lang.Long">
+        delete from  sms_marketing_full_discount where marketing_id = #{marketingId}
+    </delete>
+</mapper>

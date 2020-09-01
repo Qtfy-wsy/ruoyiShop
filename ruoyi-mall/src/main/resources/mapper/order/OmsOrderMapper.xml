@@ -1,0 +1,1531 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.order.mapper.OmsOrderMapper">
+
+    <resultMap type="OmsOrder" id="OmsOrderResult">
+        <result property="id" column="id"/>
+        <result property="orderCode" column="order_code"/>
+        <result property="masterOrderCode" column="master_order_code"/>
+        <result property="customerId" column="customer_id"/>
+        <result property="price" column="price"/>
+        <result property="presalePrice" column="presale_price"/>
+        <result property="originalPrice" column="original_price"/>
+        <result property="freightPrice" column="freight_price"/>
+        <result property="modifyPrice" column="modify_price"/>
+        <result property="pointPrice" column="point_price"/>
+        <result property="couponPrice" column="coupon_price"/>
+        <result property="redEnvelopePrice" column="red_envelope_price"/>
+        <result property="concessionalRate" column="concessional_rate"/>
+        <result property="status" column="status"/>
+        <result property="presaleStatus" column="presale_status"/>
+        <result property="evaluationStatus" column="evaluation_status"/>
+        <result property="redEnvelopeCode" column="red_envelope_code"/>
+        <result property="couponNo" column="coupon_no"/>
+        <result property="usePoint" column="use_point"/>
+        <result property="payType" column="pay_type"/>
+        <result property="storeId" column="store_id"/>
+        <result property="cancelReson" column="cancel_reson"/>
+        <result property="predepositPay" column="predeposit_pay"/>
+        <result property="source" column="source"/>
+        <result property="waybillCode" column="waybill_code"/>
+        <result property="orderType" column="order_type"/>
+        <result property="createTime" column="create_time"/>
+        <result property="payTime" column="pay_time"/>
+        <result property="deliveryTime" column="delivery_time"/>
+        <result property="receivingTime" column="receiving_time"/>
+        <result property="cancelTime" column="cancel_time"/>
+        <result property="modifyTime" column="modify_time"/>
+        <result property="evaluationTime" column="evaluation_time"/>
+        <result property="presaleTime" column="presale_time"/>
+        <result property="groupHead" column="group_head"/>
+        <result property="groupId" column="group_id"/>
+        <result property="groupMarketingId" column="group_marketing_id"/>
+        <result property="groupSkuId" column="group_sku_id"/>
+        <result property="groupStatus" column="group_status"/>
+        <result property="groupNum" column="group_num"/>
+        <result property="openGroupTime" column="open_group_time"/>
+        <result property="autoHandleStatus" column="auto_handle_status"/>
+        <result property="recommended" column="recommended"/>
+        <result property="sRecommended" column="s_recommended"/>
+        <result property="crowdfundingId" column="crowdfunding_id"/>
+        <result property="lotteryStatus" column="lottery_status"/>
+        <result property="writeOffCode" column="write_off_code"/>
+        <result property="communityBuyCustomerId" column="community_buy_customer_id"/>
+        <result property="communityBuyId" column="community_buy_id"/>
+        <result property="profit" column="profit"/>
+        <result property="communityName" column="community_name"/>
+        <result property="communityBuyName" column="community_buy_name"/>
+        <result property="logisticsCompany" column="logistics_company"/>
+        <result property="logisticsCode" column="logistics_code"/>
+    </resultMap>
+    <resultMap id="order" type="com.ruoyi.order.domain.OmsOrder">
+        <result column="id" property="id"/>
+        <result column="order_code" property="orderCode"/>
+        <result column="master_order_code" property="masterOrderCode"/>
+        <result column="customer_id" property="customerId"/>
+        <result column="customer_name" property="customerName"/>
+        <result column="price" property="price"/>
+        <result column="presale_price" property="presalePrice"/>
+        <result column="original_price" property="originalPrice"/>
+        <result column="freight_price" property="freightPrice"/>
+        <result column="modify_price" property="modifyPrice"/>
+        <result column="point_price" property="pointPrice"/>
+        <result column="coupon_price" property="couponPrice"/>
+        <result column="concessional_rate" property="concessionalRate"/>
+        <result column="status" property="status"/>
+        <result column="presale_status" property="presaleStatus"/>
+        <result column="coupon_no" property="couponNo"/>
+        <result column="use_point" property="usePoint"/>
+        <result column="pay_type" property="payType"/>
+        <result column="order_type" property="orderType"/>
+        <result column="store_id" property="storeId"/>
+        <result column="store_name" property="storeName"/>
+        <result column="cancel_reson" property="cancelReson"/>
+        <result column="waybill_code" property="waybillCode"/>
+        <result column="predeposit_pay" property="predepositPay"/>
+        <result column="source" property="source"/>
+        <result column="evaluation_status" property="evaluationStatus"/>
+        <result column="create_time" property="createTime"/>
+        <result column="pay_time" property="payTime"/>
+        <result column="delivery_time" property="deliveryTime"/>
+        <result column="receiving_time" property="receivingTime"/>
+        <result column="cancel_time" property="cancelTime"/>
+        <result column="modify_time" property="modifyTime"/>
+        <result column="evaluation_time" property="evaluationTime"/>
+        <result column="presale_time" property="presaleTime"/>
+        <result column="red_envelope_code" property="redEnvelopeCode"/>
+        <result column="red_envelope_price" property="redEnvelopePrice"/>
+        <result column="group_head" property="groupHead"/>
+        <result column="group_id" property="groupId"/>
+        <result column="group_marketing_id" property="groupMarketingId"/>
+        <result column="group_sku_id" property="groupSkuId"/>
+        <result column="group_status" property="groupStatus"/>
+        <result column="group_num" property="groupNum"/>
+        <result column="open_group_time" property="openGroupTime"/>
+        <result column="recommended" property="recommended"/>
+        <result column="s_recommended" property="sRecommended"/>
+        <result column="crowdfunding_id" property="crowdFundingId"/>
+        <result column="lottery_status" property="lotteryStatus"/>
+        <result column="write_off_code" property="writeOffCode"/>
+        <result column="community_buy_customer_id" property="communityBuyCustomerId"/>
+        <result column="community_buy_id" property="communityBuyId"/>
+        <result column="profit" property="profit"/>
+        <result column="community_name" property="communityName"/>
+        <result column="community_buy_name" property="communityBuyName"/>
+        <result column="community_buy_head_name" property="communityBuyHeadName"/>
+        <result column="community_buy_head_mobile" property="communityBuyHeadMobile"/>
+        <result column="logistics_company" property="logisticsCompany"/>
+        <result column="logistics_code" property="logisticsCode"/>
+    </resultMap>
+
+    <resultMap id="customerOrderAmount" type="com.ruoyi.order.vo.CustomerOrderAmount">
+        <result column="customer_id" property="customerId"/>
+        <result column="amount" property="orderAmount"/>
+    </resultMap>
+
+
+    <resultMap id="customerConsumption" type="com.ruoyi.order.vo.CustomerConsumption">
+        <result column="customer_id" property="customerId"/>
+        <result column="consumption" property="consumption"/>
+    </resultMap>
+
+    <resultMap id="storeSaleAmount" type="com.ruoyi.order.vo.StoreSaleAmount">
+        <result column="store_id" property="storeId"/>
+        <result column="sales_volume" property="salesVolume"/>
+        <result column="sales_amount" property="salesAmount"/>
+        <result column="new_order_time" property="newOrderTime"/>
+    </resultMap>
+    <select id="queryOrders" parameterType="java.util.Map" resultMap="order">
+        select oms_order.*,ums_member.username as customer_name from oms_order join ums_member on oms_order.customer_id
+        =
+        ums_member.id where ums_member.del_flag = '0'
+        and oms_order.store_id = #{storeId}
+        <if test="orderCode != null and orderCode != '' ">
+            AND oms_order.order_code = #{orderCode}
+        </if>
+
+        <if test="customerName != null and customerName != ''">
+            AND ums_member.username like CONCAT(CONCAT('%', #{customerName}),'%')
+        </if>
+
+
+        <if test="customerId != null and customerId != ''">
+            AND ums_member.id=#{customerId}
+        </if>
+
+        <if test="payType != null and payType != '' ">
+            AND oms_order.pay_type = #{payType}
+        </if>
+
+        <if test='status != null and status != "" and  status!= "5"'>
+            AND oms_order.status = #{status}
+        </if>
+
+
+        <if test='status=="5"'>
+            AND oms_order.status in ('5','6','7')
+            AND oms_order.order_type in ('0','1','2','3','7')
+        </if>
+
+        <if test="startTime!=''and startTime!=null">
+            AND oms_order.create_time &gt;=#{startTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="endTime!=''and endTime!=null">
+            AND oms_order.create_time &lt;=#{endTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="orderType!=null and orderType !=''">
+            AND oms_order.order_type=#{orderType}
+        </if>
+        <if test='status !="5"'>
+            AND oms_order.order_type in ('0','1','2','7')
+        </if>
+        <choose>
+            <when test="orderType ==1 ||orderType==2">
+                order by oms_order.pay_time desc
+            </when>
+            <otherwise>
+                order by oms_order.create_time desc
+            </otherwise>
+        </choose>
+        limit #{startRowNum},#{pageSize}
+    </select>
+
+    <select id="queryOrderCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+        select count(1) from oms_order join ums_member on oms_order.customer_id =
+        ums_member.id where ums_member.del_flag = '0'
+        and oms_order.store_id = #{storeId}
+        <if test="orderCode != null and orderCode != '' ">
+            AND oms_order.order_code = #{orderCode}
+        </if>
+
+        <if test="customerName != null and customerName != ''">
+            AND ums_member.username like CONCAT(CONCAT('%', #{customerName}),'%')
+        </if>
+        <if test="customerId != null and customerId != ''">
+            AND ums_member.id=#{customerId}
+        </if>
+
+        <if test="payType != null and payType != '' ">
+            AND oms_order.pay_type = #{payType}
+        </if>
+
+        <if test='status != null and status != "" and  status!= "5"'>
+            AND oms_order.status = #{status}
+        </if>
+
+        <if test='status=="5"'>
+            AND oms_order.status in ('5','6','7')
+            AND oms_order.order_type in ('0','1','2','3','7')
+        </if>
+
+        <if test="startTime!=''and startTime!=null">
+            AND oms_order.create_time &gt;=#{startTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="endTime!=''and endTime!=null">
+            AND oms_order.create_time &lt;=#{endTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="orderType!=null and orderType !=''">
+            AND oms_order.order_type=#{orderType}
+        </if>
+        <if test='status !="5"'>
+            AND oms_order.order_type in ('0','1','2','7')
+        </if>
+    </select>
+
+    <update id="confirmOrder" parameterType="java.util.Map">
+        update oms_order set status = '2' ,presale_status = '2', modify_time = now() , pay_time = now() where id = #{id} and store_id = #{storeId} and status = '1'
+    </update>
+
+    <update id="confirmPreSaleOrder" parameterType="java.util.Map">
+        update oms_order set presale_status = '1', presale_price = price-presale_price, modify_time = now()  where id = #{id} and store_id = #{storeId} and status = '1' and presale_status = '0'
+    </update>
+
+    <update id="cancelOrder" parameterType="java.util.Map">
+        update oms_order set status = '5' , modify_time = now(),cancel_time = now(),cancel_reson = #{reason} where id =
+        #{id} and status = '1'
+        <if test="storeId != null and storeId != -1 ">
+            AND store_id = #{storeId}
+        </if>
+    </update>
+
+    <update id="updatePreSaleOrderPayed" parameterType="java.util.Map">
+        update oms_order set presale_status = '1', presale_price = price-presale_price,modify_time = now()
+        ,pay_time=now(),predeposit_pay =
+        #{isPredepositPay}
+        where order_code=#{orderCode}
+        <if test="customerId !=null and customerId != -1">
+            and customer_id = #{customerId}
+        </if>
+        and status = '1' and presale_status = '0'
+    </update>
+
+    <update id="updateOrderPayed" parameterType="java.util.Map">
+        update oms_order set status = '2' ,presale_status = '2', modify_time = now() ,pay_time=now(),predeposit_pay =
+        #{isPredepositPay}
+        where order_code=#{orderCode}
+        <if test="customerId !=null and customerId != -1">
+            and customer_id = #{customerId}
+        </if>
+        and status = '1'
+    </update>
+
+    <update id="modifyPrice" parameterType="java.util.Map">
+        update oms_order set price = price-#{price} , modify_price = modify_price+#{price},modify_time = now() where id = #{id} and store_id = #{storeId}
+    </update>
+
+    <select id="queryTemplateId" parameterType="java.util.Map" resultType="java.lang.Long">
+      select freight_template_id from oms_order   where id = #{id} and store_id = #{storeId}
+    </select>
+
+    <update id="deliverOrder" parameterType="java.util.Map">
+        update oms_order set status = '3' ,waybill_code=#{waybillCode} , logistics_company = #{companyName}, logistics_code=#{companyCode},modify_time = now() ,delivery_time = now() where id = #{id} and store_id = #{storeId} and status = '2'
+    </update>
+
+    <update id="changeExpressNo" parameterType="java.util.Map">
+        update oms_order set waybill_code=#{waybillCode},logistics_company = #{companyName}, logistics_code=#{companyCode} ,modify_time = now() where id = #{id} and store_id = #{storeId} and status = '3'
+    </update>
+    <select id="queryOrderById" parameterType="java.util.Map" resultMap="order">
+        select * from oms_order where id = #{id}
+        <if test='storeId != null and storeId != -1'>
+            and store_id = #{storeId}
+        </if>
+        <if test='customerId != null and customerId != -1'>
+            and customer_id = #{customerId}
+        </if>
+    </select>
+
+
+    <select id="queryStoreOrders" parameterType="java.util.Map" resultMap="order">
+        select oms_order.*,ums_member.username as customer_name , t_store_info.store_name from oms_order join
+        ums_member on oms_order.customer_id =
+        ums_member.id join t_store_info on oms_order.store_id = t_store_info.id where ums_member.
+        t_store_info.del_flag = '0'
+        <if test="orderCode != null and orderCode != '' ">
+            AND oms_order.order_code = #{orderCode}
+        </if>
+
+        <if test="customerName != null and customerName != ''">
+            AND ums_member.username like CONCAT(CONCAT('%', #{customerName}),'%')
+        </if>
+
+        <if test="storeName != null and storeName != '' ">
+            AND t_store_info.store_name like CONCAT(CONCAT('%', #{storeName}),'%')
+        </if>
+
+        <if test="payType != null and payType != '' ">
+            AND oms_order.pay_type = #{payType}
+        </if>
+
+        <if test='status != null and status != "" and  status!= "5"'>
+            AND oms_order.status = #{status}
+        </if>
+
+
+        <if test='status=="5"'>
+            AND oms_order.status in ('5','6','7')
+            AND oms_order.order_type in ('0','1','2','3','7')
+        </if>
+
+        <if test="startTime!=''and startTime!=null">
+            AND oms_order.create_time &gt;=#{startTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="endTime!=''and endTime!=null">
+            AND oms_order.create_time &lt;=#{endTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="orderType!=null and orderType !=''">
+            AND oms_order.order_type=#{orderType}
+        </if>
+        <if test='status !="5"'>
+            AND oms_order.order_type in('0','1','2','7')
+        </if>
+        <choose>
+            <when test="orderType ==1 ||orderType==2">
+                order by oms_order.pay_time desc
+            </when>
+            <otherwise>
+                order by oms_order.create_time desc
+            </otherwise>
+        </choose>
+
+        limit #{startRowNum},#{pageSize}
+    </select>
+
+    <select id="queryStoreOrdersCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+        select count(1) from oms_order join ums_member on oms_order.customer_id =
+        ums_member.id join t_store_info on oms_order.store_id = t_store_info.id where ums_member.del_flag = '0'
+        and t_store_info.del_flag = '0'
+        <if test="orderCode != null and orderCode != '' ">
+            AND oms_order.order_code = #{orderCode}
+        </if>
+
+        <if test="customerName != null and customerName != ''">
+            AND ums_member.username like CONCAT(CONCAT('%', #{customerName}),'%')
+        </if>
+
+        <if test="storeName != null and storeName != '' ">
+            AND t_store_info.store_name = #{storeName}
+        </if>
+
+        <if test="payType != null and payType != '' ">
+            AND oms_order.pay_type = #{payType}
+        </if>
+
+        <if test='status != null and status != "" and  status!= "5"'>
+            AND oms_order.status = #{status}
+        </if>
+
+        <if test='status=="5"'>
+            AND oms_order.status in ('5','6','7')
+            AND oms_order.order_type in ('0','1','2','3','7')
+        </if>
+
+        <if test="startTime!=''and startTime!=null">
+            AND oms_order.create_time &gt;=#{startTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="endTime!=''and endTime!=null">
+            AND oms_order.create_time &lt;=#{endTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="orderType!=null and orderType !=''">
+            AND oms_order.order_type=#{orderType}
+        </if>
+        <if test='status !="5"'>
+            AND oms_order.order_type in ('0','1','2','7')
+        </if>
+    </select>
+
+    <insert id="saveOrder" parameterType="com.ruoyi.order.domain.OmsOrder" useGeneratedKeys="true" keyProperty="id">
+        insert into oms_order
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="orderCode != null">
+                order_code,
+            </if>
+            <if test="masterOrderCode != null">
+                master_order_code,
+            </if>
+            <if test="customerId != null">
+                customer_id,
+            </if>
+            <if test="price != null">
+                price,
+            </if>
+            <if test="presalePrice != null">
+                presale_price,
+            </if>
+            <if test="originalPrice != null">
+                original_price,
+            </if>
+            <if test="freightPrice != null">
+                freight_price,
+            </if>
+            <if test="modifyPrice != null">
+                modify_price,
+            </if>
+            <if test="pointPrice != null">
+                point_price,
+            </if>
+            <if test="couponPrice != null">
+                coupon_price,
+            </if>
+            <if test="redEnvelopePrice != null">
+                red_envelope_price,
+            </if>
+            <if test="concessionalRate != null">
+                concessional_rate,
+            </if>
+            <if test="status != null">
+                status,
+            </if>
+            <if test="presaleStatus != null">
+                presale_status,
+            </if>
+            <if test="redEnvelopeCode != null">
+                red_envelope_code,
+            </if>
+            <if test="couponNo != null">
+                coupon_no,
+            </if>
+            <if test="usePoint != null">
+                use_point,
+            </if>
+            <if test="payType != null">
+                pay_type,
+            </if>
+            <if test="orderType != null">
+                order_type,
+            </if>
+            <if test="storeId != null">
+                store_id,
+            </if>
+            <if test="source != null">
+                source,
+            </if>
+            <if test="presaleTime != null">
+                presale_time,
+            </if>
+            <if test="groupHead != null">
+                group_head,
+            </if>
+            <if test="groupId != null">
+                group_id,
+            </if>
+            <if test="groupMarketingId != null">
+                group_marketing_id,
+            </if>
+            <if test="groupSkuId != null">
+                group_sku_id,
+            </if>
+            <if test="groupNum != null">
+                group_num,
+            </if>
+            <if test="openGroupTime != null">
+                open_group_time,
+            </if>
+            <if test="recommended != null">
+                recommended,
+            </if>
+            <if test="sRecommended != null">
+                s_recommended,
+            </if>
+            <if test="crowdFundingId != null">
+                crowdfunding_id,
+            </if>
+            <if test="writeOffCode != null">
+                write_off_code,
+            </if>
+            <if test="lotteryStatus != null">
+                lottery_status,
+            </if>
+            <if test="communityBuyCustomerId != null">
+                community_buy_customer_id,
+            </if>
+            <if test="communityBuyId != null">
+                community_buy_id,
+            </if>
+            <if test="profit != null">
+                profit,
+            </if>
+            <if test="communityName != null">
+                community_name,
+            </if>
+            <if test="communityBuyName != null">
+                community_buy_name,
+            </if>
+            create_time
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="orderCode != null">
+                #{orderCode},
+            </if>
+            <if test="masterOrderCode != null">
+                #{masterOrderCode},
+            </if>
+            <if test="customerId != null">
+                #{customerId},
+            </if>
+            <if test="price != null">
+                #{price},
+            </if>
+            <if test="presalePrice != null">
+                #{presalePrice},
+            </if>
+            <if test="originalPrice != null">
+                #{originalPrice},
+            </if>
+            <if test="freightPrice != null">
+                #{freightPrice},
+            </if>
+            <if test="modifyPrice != null">
+                #{modifyPrice},
+            </if>
+            <if test="pointPrice != null">
+                #{pointPrice},
+            </if>
+            <if test="couponPrice != null">
+                #{couponPrice},
+            </if>
+            <if test="redEnvelopePrice != null">
+                #{redEnvelopePrice},
+            </if>
+            <if test="concessionalRate != null">
+                #{concessionalRate},
+            </if>
+            <if test="status != null">
+                #{status},
+            </if>
+            <if test="presaleStatus != null">
+                #{presaleStatus},
+            </if>
+            <if test="redEnvelopeCode != null">
+                #{redEnvelopeCode},
+            </if>
+            <if test="couponNo != null">
+                #{couponNo},
+            </if>
+            <if test="usePoint != null">
+                #{usePoint},
+            </if>
+            <if test="payType != null">
+                #{payType},
+            </if>
+            <if test="orderType != null">
+                #{orderType},
+            </if>
+            <if test="storeId != null">
+                #{storeId},
+            </if>
+            <if test="source != null">
+                #{source},
+            </if>
+            <if test="presaleTime != null">
+                #{presaleTime},
+            </if>
+            <if test="groupHead != null">
+                #{groupHead},
+            </if>
+            <if test="groupId != null">
+                #{groupId},
+            </if>
+            <if test="groupMarketingId != null">
+                #{groupMarketingId},
+            </if>
+            <if test="groupSkuId != null">
+                #{groupSkuId},
+            </if>
+            <if test="groupNum != null">
+                #{groupNum},
+            </if>
+            <if test="openGroupTime != null">
+                #{openGroupTime},
+            </if>
+            <if test="recommended != null">
+                #{recommended},
+            </if>
+            <if test="sRecommended != null">
+                #{sRecommended},
+            </if>
+            <if test="crowdFundingId != null">
+                #{crowdFundingId},
+            </if>
+            <if test="writeOffCode != null">
+                #{writeOffCode},
+            </if>
+            <if test="lotteryStatus != null">
+                #{lotteryStatus},
+            </if>
+            <if test="communityBuyCustomerId != null">
+                #{communityBuyCustomerId},
+            </if>
+            <if test="communityBuyId != null">
+                #{communityBuyId},
+            </if>
+            <if test="profit != null">
+                #{profit},
+            </if>
+            <if test="communityName != null">
+                #{communityName},
+            </if>
+            <if test="communityBuyName != null">
+                #{communityBuyName},
+            </if>
+            now()
+        </trim>
+    </insert>
+
+    <select id="queryToPayOrder" parameterType="java.util.Map" resultMap="order">
+        select * from oms_order where (order_code = #{orderCode} or master_order_code = #{orderCode}) and status = '1' and customer_id = #{customerId}
+    </select>
+    <select id="queryOrderByOrderCode" parameterType="java.util.Map" resultMap="order">
+        select * from oms_order where (order_code = #{orderCode} or master_order_code = #{orderCode})
+        <if test="customerId !=null and customerId !=-1">
+            and customer_id = #{customerId}
+        </if>
+
+    </select>
+    <select id="queryOrdersForSite" parameterType="java.util.Map" resultMap="order">
+        select * from oms_order where customer_id = #{customerId}
+
+        <if test='timeType=="1"'>
+            AND DATE_SUB(CURDATE(), INTERVAL 1 MONTH) &lt;= date(oms_order.create_time)
+        </if>
+
+        <if test='timeType=="2"'>
+            AND DATE_SUB(CURDATE(), INTERVAL 1 MONTH) &gt; date(oms_order.create_time)
+        </if>
+
+        <if test='orderCode != null and orderCode != ""'>
+            AND oms_order.order_code = #{orderCode}
+        </if>
+
+        <if test='status != null and status != "" and  status!= "5" and  status!= "6" and status!= "7"'>
+            AND oms_order.status = #{status}
+        </if>
+
+        <if test='status=="5"'>
+            AND oms_order.status in ('5','6','7')
+        </if>
+
+        <if test='status=="6"'>
+            AND oms_order.status = '4' and evaluation_status = '0'
+        </if>
+
+        <if test='status=="7"'>
+            AND evaluation_status = '1'
+        </if>
+
+        <if test="startTime!=''and startTime!=null">
+            AND oms_order.create_time &gt;=#{startTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="endTime!=''and endTime!=null">
+            AND oms_order.create_time &lt;=#{endTime,jdbcType=TIMESTAMP}
+        </if>
+
+        order by oms_order.create_time desc
+        limit #{startRowNum},#{pageSize}
+    </select>
+
+    <select id="queryOrderCountForSite" parameterType="java.util.Map" resultType="java.lang.Integer">
+        select count(1) from oms_order where customer_id = #{customerId}
+
+        <if test='timeType=="1"'>
+            AND DATE_SUB(CURDATE(), INTERVAL 1 MONTH) &lt;= date(oms_order.create_time)
+        </if>
+
+        <if test='timeType=="2"'>
+            AND DATE_SUB(CURDATE(), INTERVAL 1 MONTH) &gt; date(oms_order.create_time)
+        </if>
+
+        <if test='orderCode != null and orderCode != ""'>
+            AND oms_order.order_code = #{orderCode}
+        </if>
+
+        <if test='status != null and status != "" and  status!= "5" and  status!= "6" and status!= "7"'>
+            AND oms_order.status = #{status}
+        </if>
+
+        <if test='status=="5"'>
+            AND oms_order.status in ('5','6','7')
+        </if>
+
+        <if test='status=="6"'>
+            AND oms_order.status = '4' and evaluation_status = '0'
+        </if>
+
+        <if test='status=="7"'>
+            AND evaluation_status = '1'
+        </if>
+
+        <if test="startTime!=''and startTime!=null">
+            AND oms_order.create_time &gt;=#{startTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="endTime!=''and endTime!=null">
+            AND oms_order.create_time &lt;=#{endTime,jdbcType=TIMESTAMP}
+        </if>
+    </select>
+
+    <update id="confirmReceipt" parameterType="java.util.Map">
+        update oms_order set status = '4' , modify_time = now() , receiving_time = now() where id = #{orderId} and customer_id = #{customerId} and status = '3'
+    </update>
+
+    <update id="updateOrderBack" parameterType="java.util.Map">
+          update oms_order set status = #{status} where id = #{orderId}
+    </update>
+
+    <select id="toPayOrderCount" parameterType="java.lang.Long" resultType="java.lang.Integer">
+        select count(1) from oms_order where customer_id = #{customer_id} and status = '1'
+    </select>
+
+
+    <select id="toDeliverOrderCount" parameterType="java.lang.Long" resultType="java.lang.Integer">
+        select count(1) from oms_order where customer_id = #{customer_id} and status = '2'
+    </select>
+
+
+    <select id="toReceiptOrderCount" parameterType="java.lang.Long" resultType="java.lang.Integer">
+        select count(1) from oms_order where customer_id = #{customer_id} and status = '3'
+    </select>
+
+    <select id="toEvaluateOrderCount" parameterType="java.lang.Long" resultType="java.lang.Integer">
+        select count(1) from oms_order where customer_id = #{customer_id} and status = '4' and  evaluation_status = '0'
+    </select>
+
+    <select id="saleNum" parameterType="java.lang.Long" resultType="java.lang.Integer">
+      select IFNULL(sum(oms_order_sku.num),0) from oms_order join oms_order_sku on oms_order.id = oms_order_sku.order_id  where oms_order.status != '1' and oms_order.store_id = #{storeId}
+    </select>
+
+    <update id="updateOrderEvluation" parameterType="java.util.Map">
+        update oms_order set evaluation_status = '1' , evaluation_time = now()  where id = #{orderId} and customer_id = #{customerId} and evaluation_status = '0' and status ='4'
+    </update>
+    <select id="queryOrdersForConfirmReceipt" parameterType="java.lang.Integer" resultMap="order">
+        select * from oms_order where delivery_time &lt; DATE_SUB(CURDATE(),INTERVAL #{day} day) and status='3' and pay_type='0'
+    </select>
+
+    <select id="queryOrdersForCancel" resultMap="order">
+        select * from oms_order where create_time &lt; DATE_SUB(CURDATE(),INTERVAL 1 day) and status='1' and pay_type='0'
+    </select>
+    <select id="queryDepositPreSaleOrdersForCancel" resultMap="order">
+        select * from oms_order where presale_time &lt; DATE_SUB(now(),INTERVAL 1 day) and status='1' and order_type='1'
+    </select>
+
+    <select id="queryCustomerOrderAmounts" resultMap="customerOrderAmount">
+        select count(1) as amount,customer_id from oms_order where status in ('4','6','7')
+               and  <![CDATA[DATE_FORMAT(receiving_time,'%Y-%m-%d') >= #{startTime} and  DATE_FORMAT(receiving_time,'%Y-%m-%d') <= #{endTime} ]]>
+         group by customer_id  order by amount desc  limit #{startRowNum},#{pageSize}
+    </select>
+
+    <select id="queryCustomerOrderAmountsCount" resultType="java.lang.Integer">
+        select count(1) from (select customer_id from oms_order where status in ('4','6','7')
+        and  <![CDATA[DATE_FORMAT(receiving_time,'%Y-%m-%d') >= #{startTime} and  DATE_FORMAT(receiving_time,'%Y-%m-%d') <= #{endTime} ]]>
+        group by customer_id) as a
+    </select>
+
+
+    <select id="queryCustomerConsumption" resultMap="customerConsumption">
+        select sum(price)  as consumption ,customer_id from oms_order where status in  ('4','6','7')
+             and  <![CDATA[DATE_FORMAT(receiving_time,'%Y-%m-%d') >= #{startTime} and  DATE_FORMAT(receiving_time,'%Y-%m-%d') <= #{endTime} ]]>
+         group by customer_id order by consumption desc limit #{startRowNum},#{pageSize}
+    </select>
+
+    <select id="queryCustomerConsumptionCount" resultType="java.lang.Integer">
+       select count(1) from (select customer_id from oms_order where status in ('4','6','7')
+        and  <![CDATA[DATE_FORMAT(receiving_time,'%Y-%m-%d') >= #{startTime} and  DATE_FORMAT(receiving_time,'%Y-%m-%d') <= #{endTime} ]]>
+        group by customer_id) as a
+    </select>
+    <select id="queryStoreSaleVolume" parameterType="java.util.Map" resultMap="storeSaleAmount">
+        SELECT lo.store_id,sum(los.num) sales_volume from oms_order_sku los RIGHT JOIN oms_order lo
+        ON los.order_id=lo.id
+        WHERE lo.status in ('4','6','7')
+        <if test="startTime !=null and startTime !=''">
+            and DATE_FORMAT(lo.receiving_time,'%Y-%m-%d') &gt;= #{startTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="endTime !=null and endTime !=''">
+            and DATE_FORMAT(lo.receiving_time,'%Y-%m-%d') &lt;= #{endTime,jdbcType=TIMESTAMP}
+        </if>
+        GROUP BY lo.store_id
+        ORDER BY sales_volume desc
+        limit #{startRowNum},#{pageSize}
+    </select>
+    <select id="queryStoreSaleCountByTime" parameterType="java.util.Map" resultType="java.lang.Integer">
+        SELECT count(1) from (SELECT count(1) FROM oms_order
+        WHERE status in ('4','6','7')
+        <if test="startTime !=null and startTime !=''">
+            and DATE_FORMAT(receiving_time,'%Y-%m-%d') &gt;= #{startTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="endTime !=null and endTime !=''">
+            and DATE_FORMAT(receiving_time,'%Y-%m-%d') &lt;= #{endTime,jdbcType=TIMESTAMP}
+        </if>
+        GROUP BY store_id) a
+    </select>
+
+    <select id="queryStoreSaleAmount" parameterType="java.util.Map" resultMap="storeSaleAmount">
+        SELECT sum(price) sales_amount,store_id FROM oms_order
+        WHERE status in ('4','6','7')
+        <if test="startTime !=null and startTime !=''">
+            and DATE_FORMAT(receiving_time,'%Y-%m-%d') &gt;= #{startTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="endTime !=null and endTime !=''">
+            and DATE_FORMAT(receiving_time,'%Y-%m-%d') &lt;= #{endTime,jdbcType=TIMESTAMP}
+        </if>
+        GROUP BY store_id
+        ORDER BY sales_amount desc
+        limit #{startRowNum},#{pageSize}
+    </select>
+    <select id="querySpreadOrders" parameterType="java.util.Map" resultMap="order">
+        select lo.*,IFNULL(lsi.store_name,'商城自营') store_name from oms_order lo
+        left JOIN t_store_info lsi on lo.store_id =lsi.id
+        where lo.recommended !=-1
+        <if test="customerId !=null and customerId !=-1">
+            and (lo.recommended=#{customerId} or lo.s_recommended=#{customerId})
+        </if>
+        <if test="storeId !=null and storeId !=-1">
+            and lo.store_id=#{storeId}
+        </if>
+        <if test="orderCode !=null and orderCode !=''">
+            and lo.order_code=#{orderCode}
+        </if>
+        <if test="storeName !=null and storeName !=''">
+            and lsi.store_name=#{storeName}
+        </if>
+        and lo.status in('4','6','7')
+        ORDER BY lo.create_time desc
+        limit #{startRowNum},#{pageSize}
+    </select>
+    <select id="querySpreadOrdersCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+        select count(1) from oms_order lo
+        left JOIN t_store_info lsi on lo.store_id =lsi.id
+        where lo.recommended !=-1
+        <if test="customerId !=null and customerId !=-1">
+            and (lo.recommended=#{customerId} or lo.s_recommended=#{customerId})
+        </if>
+        <if test="storeId !=null and storeId !=-1">
+            and lo.store_id=#{storeId}
+        </if>
+        <if test="orderCode !=null and orderCode !=''">
+            and lo.order_code=#{orderCode}
+        </if>
+        <if test="storeName !=null and storeName !=''">
+            and lsi.store_name=#{storeName}
+        </if>
+        and lo.status in('4','6','7')
+    </select>
+    <select id="queryOrdersByIds" parameterType="java.util.Map" resultMap="order">
+        select oms_order.*,t_store_info.store_name store_name from oms_order
+        LEFT JOIN t_store_info on oms_order.store_id=t_store_info.id
+        WHERE oms_order.id IN
+        <foreach collection="ids" item="id" index="index" separator="," open="(" close=")">
+            #{id}
+        </foreach>
+        <if test="storeId!=-1">
+            and oms_order.store_id =#{storeId}
+        </if>
+        <if test='status != null and status != "" and  status!= "5" '>
+            AND oms_order.status = #{status}
+        </if>
+
+        <if test='status=="5"'>
+            AND oms_order.status in ('5','6','7')
+        </if>
+        ORDER BY oms_order.create_time desc
+    </select>
+    <select id="queryAllOrder" parameterType="java.util.Map" resultMap="order">
+        select oms_order.*,t_store_info.store_name store_name from oms_order
+        LEFT JOIN t_store_info on oms_order.store_id=t_store_info.id
+        WHERE
+        <if test="storeId !=-1">
+            oms_order.store_id=#{storeId}
+        </if>
+        <if test="storeId ==-1">
+            oms_order.store_id !=0
+        </if>
+        <if test="marketingId !=null">
+            and crowdfunding_id=#{marketingId}
+            and oms_order.order_type in ('4','5','6')
+        </if>
+        <if test="marketingId ==null">
+            and oms_order.order_type in ('0','1','2')
+        </if>
+        <if test='status != null and status != "" and  status!= "5" '>
+            AND oms_order.status = #{status}
+        </if>
+
+        <if test='status=="5"'>
+            AND oms_order.status in ('5','6','7')
+        </if>
+        ORDER BY oms_order.create_time desc
+    </select>
+
+    <select id="queryNotPayGroupOrdersByIds" parameterType="java.util.Map" resultMap="order">
+        select oms_order.*,t_store_info.store_name store_name from oms_order
+        LEFT JOIN t_store_info on oms_order.store_id=t_store_info.id
+        WHERE oms_order.id IN
+        <foreach collection="ids" item="id" index="index" separator="," open="(" close=")">
+            #{id}
+        </foreach>
+        and oms_order.order_type='3'
+        <if test="storeId != null and  storeId !=-1">
+            and oms_order.store_id=#{storeId}
+        </if>
+        and oms_order.status='1'
+        order by oms_order.create_time desc
+    </select>
+    <select id="queryAllNotPayGroupOrder" parameterType="java.util.Map" resultMap="order">
+        select oms_order.*,t_store_info.store_name store_name from oms_order
+        LEFT JOIN t_store_info on oms_order.store_id=t_store_info.id
+        WHERE
+        <if test="storeId !=-1">
+            oms_order.store_id=#{storeId}
+        </if>
+        <if test="storeId ==-1">
+            oms_order.store_id !=0
+        </if>
+        and oms_order.order_type='3'
+        and oms_order.status='1'
+        order by oms_order.create_time desc
+    </select>
+
+    <select id="querySaleAmountToday" parameterType="java.lang.Long" resultType="java.math.BigDecimal">
+        select sum(price) from oms_order where status in ('4','6','7')
+        and DATE(receiving_time) = DATE(now()) and store_id = #{storeId}
+    </select>
+
+    <select id="querySaleCountToday" parameterType="java.lang.Long" resultType="java.lang.Integer">
+        select count(1) from oms_order where status in ('4','6','7')
+        and DATE(receiving_time) = DATE(now()) and store_id = #{storeId}
+    </select>
+
+    <select id="querySaleAmountThisWeek" parameterType="java.lang.Long" resultType="java.math.BigDecimal">
+        select sum(price) from oms_order where status in ('4','6','7') and
+        YEARWEEK(date_format(receiving_time,'%Y-%m-%d')- INTERVAL 1 DAY) = YEARWEEK(now()- INTERVAL 1 DAY)
+        and store_id = #{storeId}
+    </select>
+
+    <select id="querySaleCountThisWeek" parameterType="java.lang.Long" resultType="java.lang.Integer">
+        select count(1) from oms_order where status in ('4','6','7')
+        and YEARWEEK(date_format(receiving_time,'%Y-%m-%d')- INTERVAL 1 DAY) = YEARWEEK(now()- INTERVAL 1 DAY) and store_id = #{storeId}
+    </select>
+
+    <select id="querySaleAmountThisWeekGroupByDay" parameterType="java.lang.Long" resultMap="storeSaleAmount">
+        select DATE(receiving_time) new_order_time,sum(price) sales_amount from oms_order where status in ('4','6','7') and
+        YEARWEEK(date_format(receiving_time,'%Y-%m-%d')- INTERVAL 1 DAY) = YEARWEEK(now()- INTERVAL 1 DAY)
+        and store_id = #{storeId}
+        group by DATE(receiving_time)
+    </select>
+
+    <select id="querySaleCountThisWeekGroupByDay" parameterType="java.lang.Long" resultMap="storeSaleAmount">
+        select DATE(receiving_time) new_order_time,count(1) sales_volume from oms_order where status in ('4','6','7')
+        and YEARWEEK(date_format(receiving_time,'%Y-%m-%d')- INTERVAL 1 DAY) = YEARWEEK(now()- INTERVAL 1 DAY) and store_id = #{storeId}
+        group by DATE(receiving_time)
+    </select>
+
+    <select id="queryCrowdFundingOrderCount" parameterType="java.lang.Long" resultType="java.lang.Integer">
+        select COUNT(1) from oms_order where crowdfunding_id=#{marketingId} and status in ('2','3','4','6','7')
+        <if test="storeId!=-1">
+            AND store_id=#{storeId}
+        </if>
+
+    </select>
+    <select id="queryCrowFundingCustomerCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+        select COUNT(1) from
+        (select DISTINCT customer_id from oms_order where crowdfunding_id=#{marketingId} and status in
+        ('2','3','4','6','7')
+        <if test="storeId!=-1">
+            AND store_id=#{storeId}
+        </if>
+        ) a
+    </select>
+
+    <update id="updateOrderFinished" parameterType="java.util.Map">
+        update oms_order set status = '4' ,presale_status = '2', modify_time = now()
+        ,pay_time=now(),receiving_time=now(),delivery_time=now(),predeposit_pay =
+        #{isPredepositPay}
+        where order_code=#{orderCode}
+        <if test="customerId !=null and customerId != -1">
+            and customer_id = #{customerId}
+        </if>
+        and status = '1'
+    </update>
+
+
+    <update id="confirmOrderFinished" parameterType="java.util.Map">
+        update oms_order set status = '4' ,presale_status = '2', modify_time = now() , pay_time = now(),receiving_time=now(), delivery_time=now() where id = #{id} and status = '1'
+    </update>
+
+    <select id="queryAllCrowdFundingOrderList" parameterType="java.util.Map" resultMap="order">
+        select * from oms_order where crowdfunding_id=#{marketingId}
+        <if test="storeId !=-1">
+            and store_id=#{storeId}
+        </if>
+    </select>
+    <update id="updateCrowdFundingOrderLotteryStatus" parameterType="java.lang.Long">
+        update oms_order set lottery_status='1' where id=#{orderId}
+    </update>
+
+
+    <select id="queryCrowdFundingOrders" parameterType="java.util.Map" resultMap="order">
+        select oms_order.*,ums_member.username as customer_name from oms_order join ums_member on oms_order.customer_id
+        =
+        ums_member.id where ums_member.del_flag = '0'
+        and crowdfunding_id=#{marketingId}
+        <if test=" storeId !=-1">
+            and oms_order.store_id = #{storeId}
+        </if>
+        <if test="orderCode != null and orderCode != '' ">
+            AND oms_order.order_code = #{orderCode}
+        </if>
+
+        <if test="customerName != null and customerName != ''">
+            AND ums_member.username like CONCAT(CONCAT('%', #{customerName}),'%')
+        </if>
+        <if test="customerId != null and customerId != ''">
+            AND ums_member.id=#{customerId}
+        </if>
+
+        <if test="payType != null and payType != '' ">
+            AND oms_order.pay_type = #{payType}
+        </if>
+
+        <if test='status != null and status != "" and  status!= "5"'>
+            AND oms_order.status = #{status}
+        </if>
+
+        <if test='status=="5"'>
+            AND oms_order.status in ('5','6','7')
+        </if>
+        AND oms_order.order_type in ('4','5','6')
+
+        <if test="startTime!=''and startTime!=null">
+            AND oms_order.create_time &gt;=#{startTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="endTime!=''and endTime!=null">
+            AND oms_order.create_time &lt;=#{endTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="orderType!=null and orderType !=''">
+            AND oms_order.order_type=#{orderType}
+        </if>
+        AND oms_order.order_type in ('4','5','6')
+        order by oms_order.create_time desc
+        limit #{startRowNum},#{pageSize}
+    </select>
+
+    <select id="queryCrowdFundingOrdersCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+        select count(1) from oms_order join ums_member on oms_order.customer_id =
+        ums_member.id where ums_member.del_flag = '0'
+        and crowdfunding_id=#{marketingId}
+        <if test=" storeId !=-1">
+            and oms_order.store_id = #{storeId}
+        </if>
+        <if test="orderCode != null and orderCode != '' ">
+            AND oms_order.order_code = #{orderCode}
+        </if>
+
+        <if test="customerName != null and customerName != ''">
+            AND ums_member.username like CONCAT(CONCAT('%', #{customerName}),'%')
+        </if>
+        <if test="customerId != null and customerId != ''">
+            AND ums_member.id=#{customerId}
+        </if>
+
+        <if test="payType != null and payType != '' ">
+            AND oms_order.pay_type = #{payType}
+        </if>
+
+        <if test='status != null and status != "" and  status!= "5"'>
+            AND oms_order.status = #{status}
+        </if>
+
+        <if test='status=="5"'>
+            AND oms_order.status in ('5','6','7')
+        </if>
+
+        <if test="startTime!=''and startTime!=null">
+            AND oms_order.create_time &gt;=#{startTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="endTime!=''and endTime!=null">
+            AND oms_order.create_time &lt;=#{endTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="orderType!=null and orderType !=''">
+            AND oms_order.order_type=#{orderType}
+        </if>
+        AND oms_order.order_type in ('4','5','6')
+    </select>
+
+
+    <select id="queryTodayPayedOrderNum" parameterType="java.lang.Long" resultType="java.lang.Integer">
+        select count(1) from oms_order where DATE(pay_time) = DATE(now())  and store_id=#{storeId}
+    </select>
+
+    <select id="queryToDeliveryOrderNum" parameterType="java.lang.Long" resultType="java.lang.Integer">
+        select count(1) from oms_order where store_id=#{storeId} and status = '2'   AND order_type in ('0','1','2','7')
+    </select>
+
+    <resultMap id="marketingOrderStatistics" type="com.ruoyi.order.vo.MarketingOrderStatistics">
+        <result column="order_volume" property="orderVolume"/>
+        <result column="order_amount" property="orderAmount"/>
+        <result column="sku_sales_volume" property="skuSalesVolume"/>
+    </resultMap>
+
+    <select id="queryMarketingOrderStatistics" parameterType="java.util.Map" resultMap="marketingOrderStatistics">
+        select count(1) order_volume,sum(lo.price) order_amount,sum(los.num) sku_sales_volume from oms_order_sku los
+        right join oms_order lo
+        on los.order_id=lo.id
+        where lo.store_id = #{storeId} and lo.status in ('4','6','7')
+        <if test="orderType !=null and orderType !=''">
+            and lo.order_type = #{orderType}
+        </if>
+        <if test="startTime !=null and startTime !=''">
+            and lo.receiving_time &gt;= #{startTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="endTime !=null and endTime !=''">
+            and lo.receiving_time &lt; #{endTime,jdbcType=TIMESTAMP}
+        </if>
+    </select>
+
+
+    <select id="queryCustomerCommunityOrders" parameterType="java.util.Map" resultMap="order">
+        select * from oms_order where customer_id = #{customerId} and order_type = '8'
+
+        <if test='status != null and status != "" and  status!= "5" and  status!= "6" and status!= "7"'>
+            AND oms_order.status = #{status}
+        </if>
+
+        <if test='status=="5"'>
+            AND oms_order.status in ('5','6','7')
+        </if>
+
+        order by oms_order.create_time desc
+        limit #{startRowNum},#{pageSize}
+    </select>
+
+    <select id="queryCustomerCommunityOrdersNum" parameterType="java.util.Map" resultType="java.lang.Integer">
+        select count(1) from oms_order where customer_id = #{customerId} and order_type = '8'
+
+        <if test='status != null and status != "" and  status!= "5" and  status!= "6" and status!= "7"'>
+            AND oms_order.status = #{status}
+        </if>
+
+        <if test='status=="5"'>
+            AND oms_order.status in ('5','6','7')
+        </if>
+    </select>
+
+
+    <select id="queryCommunityOrdersForCancel" resultMap="order">
+        select * from oms_order where create_time  &lt; DATE_SUB(NOW(),INTERVAL 30 MINUTE) and status='1' and pay_type='0' and order_type = '8'
+    </select>
+
+    <select id="queryHeadCommunityOrders" parameterType="java.util.Map" resultMap="order">
+        select * from oms_order where community_buy_customer_id = #{customerId} and order_type = '8'
+
+        <if test='status != null and status != "" and  status!= "5" and  status!= "6" and status!= "7"'>
+            AND oms_order.status = #{status}
+        </if>
+
+        <if test='status=="5"'>
+            AND oms_order.status in ('5','6','7')
+        </if>
+
+        order by oms_order.create_time desc
+        limit #{startRowNum},#{pageSize}
+    </select>
+
+    <select id="queryHeadCommunityOrdersCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+        select count(1) from oms_order where community_buy_customer_id = #{customerId} and order_type = '8'
+
+        <if test='status != null and status != "" and  status!= "5" and  status!= "6" and status!= "7"'>
+            AND oms_order.status = #{status}
+        </if>
+
+        <if test='status=="5"'>
+            AND oms_order.status in ('5','6','7')
+        </if>
+    </select>
+
+    <select id="queryJoinCommunityOrders" parameterType="java.util.Map" resultMap="order">
+        select * from oms_order where status in ('2','4') and order_type = '8'
+        and community_buy_customer_id = #{communityBuyCustomerId} and community_buy_id = #{communityBuyId}
+        group by customer_id
+    </select>
+
+    <select id="queryJoinCommunityOrdersCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+        select count(1) from (select * from oms_order where status in ('2','4') and order_type = '8'
+        and community_buy_customer_id = #{communityBuyCustomerId} and community_buy_id = #{communityBuyId}
+        group by customer_id) as a
+    </select>
+
+    <select id="queryCommunityOrders" parameterType="java.util.Map" resultMap="order">
+        select oms_order.*,ums_member.username as community_buy_head_name,ums_member.mobile as
+        community_buy_head_mobile
+        from oms_order join ums_member on oms_order.community_buy_customer_id = ums_member.id
+        where ums_member. oms_order.order_type = '8'
+        <if test="communityBuyHeadMobile != null and communityBuyHeadMobile != ''">
+            and ums_member.mobile = #{communityBuyHeadMobile}
+        </if>
+        <if test="communityBuyName != null and communityBuyName != ''">
+            and oms_order.community_buy_name like CONCAT(CONCAT('%', #{communityBuyName}),'%')
+        </if>
+        <if test="communityName != null and communityName != ''">
+            and oms_order.community_name like CONCAT(CONCAT('%', #{communityName}),'%')
+        </if>
+        <if test="startTime != ''and startTime != null">
+            and oms_order.create_time &gt;= #{startTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="endTime != ''and endTime != null">
+            and oms_order.create_time &lt; #{endTime,jdbcType=TIMESTAMP}
+        </if>
+        order by oms_order.create_time desc
+        limit #{startRowNum},#{pageSize}
+    </select>
+
+    <select id="queryCommunityOrderCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+        select count(1) from oms_order join ums_member on oms_order.community_buy_customer_id = ums_member.id
+        where ums_member. oms_order.order_type = '8'
+        <if test="communityBuyHeadMobile != null and communityBuyHeadMobile != ''">
+            and ums_member.mobile = #{communityBuyHeadMobile}
+        </if>
+        <if test="communityBuyName != null and communityBuyName != ''">
+            and oms_order.community_buy_name like CONCAT(CONCAT('%', #{communityBuyName}),'%')
+        </if>
+        <if test="communityName != null and communityName != ''">
+            and oms_order.community_name like CONCAT(CONCAT('%', #{communityName}),'%')
+        </if>
+        <if test="startTime != ''and startTime != null">
+            and oms_order.create_time &gt;= #{startTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="endTime != ''and endTime != null">
+            and oms_order.create_time &lt; #{endTime,jdbcType=TIMESTAMP}
+        </if>
+    </select>
+
+    <select id="queryOrdersByCommunityBuyId" parameterType="java.util.Map" resultMap="order">
+        select * from oms_order where status = #{status} and order_type = '8' and  community_buy_id = #{communityBuyId}
+    </select>
+
+    <select id="queryOrderIdsByCommunityBuyId" parameterType="java.lang.Long" resultType="java.lang.Long">
+        select
+            id
+        from
+            oms_order
+        where
+            status != '5'
+        and
+            order_type = '8'
+        and
+            community_buy_id = #{communityBuyId}
+    </select>
+
+
+    <select id="queryCommunityBuyOrders" parameterType="java.util.Map" resultMap="order">
+        select
+            id,
+            customer_id
+        from
+            oms_order
+        where
+            status = #{status}
+        and
+            order_type = '8'
+        and
+            community_buy_id =#{communityBuyId}
+        and
+            community_buy_customer_id = #{headCustomerId}
+    </select>
+
+
+    <update id="confirmCommunityOrderReceipt" parameterType="java.util.Map">
+        update oms_order set status = '4' , modify_time = now() , receiving_time = now() where id = #{orderId} and customer_id = #{customerId} and status = '2'
+    </update>
+
+    <select id="queryCommunityOrdersByIds" parameterType="java.util.Map" resultMap="order">
+        select oms_order.*,ums_member.username as community_buy_head_name,ums_member.mobile as
+        community_buy_head_mobile
+        from oms_order join ums_member on oms_order.community_buy_customer_id = ums_member.id
+        where oms_order.id in
+        <foreach collection="ids" item="id" index="index" separator="," open="(" close=")">
+            #{id}
+        </foreach>
+        and ums_member. oms_order.order_type = '8'
+        order by oms_order.create_time desc
+    </select>
+
+    <select id="queryAllCommunityOrders" parameterType="java.util.Map" resultMap="order">
+        select oms_order.*,ums_member.username as community_buy_head_name,ums_member.mobile as
+        community_buy_head_mobile
+        from oms_order join ums_member on oms_order.community_buy_customer_id = ums_member.id
+        where ums_member. oms_order.order_type = '8'
+        <if test="communityBuyHeadMobile != null and communityBuyHeadMobile != ''">
+            and ums_member.mobile = #{communityBuyHeadMobile}
+        </if>
+        order by oms_order.create_time desc
+    </select>
+
+    <sql id="selectOmsOrderVo">
+        select id, order_code, master_order_code, customer_id, price, presale_price, original_price, freight_price, modify_price, point_price, coupon_price, red_envelope_price, concessional_rate, status, presale_status, evaluation_status, red_envelope_code, coupon_no, use_point, pay_type, store_id, cancel_reson, predeposit_pay, source, waybill_code, order_type, create_time, pay_time, delivery_time, receiving_time, cancel_time, modify_time, evaluation_time, presale_time, group_head, group_id, group_marketing_id, group_sku_id, group_status, group_num, open_group_time, auto_handle_status, recommended, s_recommended, crowdfunding_id, lottery_status, write_off_code, community_buy_customer_id, community_buy_id, profit, community_name, community_buy_name, logistics_company, logistics_code from oms_order
+    </sql>
+
+    <select id="selectOmsOrderList" parameterType="OmsOrder" resultMap="OmsOrderResult">
+        <include refid="selectOmsOrderVo"/>
+        <where>
+            <if test="orderCode != null  and orderCode != ''">and order_code = #{orderCode}</if>
+            <if test="storeId != null ">  and store_id = #{storeId} </if>
+            <if test="customerId != null ">and customer_id = #{customerId}</if>
+            <if test="status != null  and status != 0">and status = #{status}</if>
+            <if test="presaleStatus != null  and presaleStatus != ''">and presale_status = #{presaleStatus}</if>
+            <if test="source != null  and source != ''">and source = #{source}</if>
+            <if test="waybillCode != null  and waybillCode != ''">and waybill_code = #{waybillCode}</if>
+            <if test="orderType != null  and orderType != ''">and order_type = #{orderType}</if>
+            <if test="logisticsCode != null  and logisticsCode != ''">and logistics_code = #{logisticsCode}</if>
+        </where>
+    </select>
+
+    <select id="selectOmsOrderById" parameterType="Long" resultMap="OmsOrderResult">
+        <include refid="selectOmsOrderVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertOmsOrder" parameterType="OmsOrder" useGeneratedKeys="true" keyProperty="id">
+        insert into oms_order
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="orderCode != null and orderCode != ''">order_code,</if>
+            <if test="masterOrderCode != null and masterOrderCode != ''">master_order_code,</if>
+            <if test="customerId != null">customer_id,</if>
+            <if test="price != null">price,</if>
+            <if test="presalePrice != null">presale_price,</if>
+            <if test="originalPrice != null">original_price,</if>
+            <if test="freightPrice != null">freight_price,</if>
+            <if test="modifyPrice != null">modify_price,</if>
+            <if test="pointPrice != null">point_price,</if>
+            <if test="couponPrice != null">coupon_price,</if>
+            <if test="redEnvelopePrice != null">red_envelope_price,</if>
+            <if test="concessionalRate != null">concessional_rate,</if>
+            <if test="status != null and status != ''">status,</if>
+            <if test="presaleStatus != null and presaleStatus != ''">presale_status,</if>
+            <if test="evaluationStatus != null">evaluation_status,</if>
+            <if test="redEnvelopeCode != null">red_envelope_code,</if>
+            <if test="couponNo != null">coupon_no,</if>
+            <if test="usePoint != null">use_point,</if>
+            <if test="payType != null and payType != ''">pay_type,</if>
+            <if test="storeId != null">store_id,</if>
+            <if test="cancelReson != null">cancel_reson,</if>
+            <if test="predepositPay != null">predeposit_pay,</if>
+            <if test="source != null">source,</if>
+            <if test="waybillCode != null">waybill_code,</if>
+            <if test="orderType != null">order_type,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="payTime != null">pay_time,</if>
+            <if test="deliveryTime != null">delivery_time,</if>
+            <if test="receivingTime != null">receiving_time,</if>
+            <if test="cancelTime != null">cancel_time,</if>
+            <if test="modifyTime != null">modify_time,</if>
+            <if test="evaluationTime != null">evaluation_time,</if>
+            <if test="presaleTime != null">presale_time,</if>
+            <if test="groupHead != null">group_head,</if>
+            <if test="groupId != null">group_id,</if>
+            <if test="groupMarketingId != null">group_marketing_id,</if>
+            <if test="groupSkuId != null">group_sku_id,</if>
+            <if test="groupStatus != null">group_status,</if>
+            <if test="groupNum != null">group_num,</if>
+            <if test="openGroupTime != null">open_group_time,</if>
+            <if test="autoHandleStatus != null">auto_handle_status,</if>
+            <if test="recommended != null">recommended,</if>
+            <if test="sRecommended != null">s_recommended,</if>
+            <if test="crowdfundingId != null">crowdfunding_id,</if>
+            <if test="lotteryStatus != null">lottery_status,</if>
+            <if test="writeOffCode != null">write_off_code,</if>
+            <if test="communityBuyCustomerId != null">community_buy_customer_id,</if>
+            <if test="communityBuyId != null">community_buy_id,</if>
+            <if test="profit != null">profit,</if>
+            <if test="communityName != null">community_name,</if>
+            <if test="communityBuyName != null">community_buy_name,</if>
+            <if test="logisticsCompany != null">logistics_company,</if>
+            <if test="logisticsCode != null">logistics_code,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="orderCode != null and orderCode != ''">#{orderCode},</if>
+            <if test="masterOrderCode != null and masterOrderCode != ''">#{masterOrderCode},</if>
+            <if test="customerId != null">#{customerId},</if>
+            <if test="price != null">#{price},</if>
+            <if test="presalePrice != null">#{presalePrice},</if>
+            <if test="originalPrice != null">#{originalPrice},</if>
+            <if test="freightPrice != null">#{freightPrice},</if>
+            <if test="modifyPrice != null">#{modifyPrice},</if>
+            <if test="pointPrice != null">#{pointPrice},</if>
+            <if test="couponPrice != null">#{couponPrice},</if>
+            <if test="redEnvelopePrice != null">#{redEnvelopePrice},</if>
+            <if test="concessionalRate != null">#{concessionalRate},</if>
+            <if test="status != null and status != ''">#{status},</if>
+            <if test="presaleStatus != null and presaleStatus != ''">#{presaleStatus},</if>
+            <if test="evaluationStatus != null">#{evaluationStatus},</if>
+            <if test="redEnvelopeCode != null">#{redEnvelopeCode},</if>
+            <if test="couponNo != null">#{couponNo},</if>
+            <if test="usePoint != null">#{usePoint},</if>
+            <if test="payType != null and payType != ''">#{payType},</if>
+            <if test="storeId != null">#{storeId},</if>
+            <if test="cancelReson != null">#{cancelReson},</if>
+            <if test="predepositPay != null">#{predepositPay},</if>
+            <if test="source != null">#{source},</if>
+            <if test="waybillCode != null">#{waybillCode},</if>
+            <if test="orderType != null">#{orderType},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="payTime != null">#{payTime},</if>
+            <if test="deliveryTime != null">#{deliveryTime},</if>
+            <if test="receivingTime != null">#{receivingTime},</if>
+            <if test="cancelTime != null">#{cancelTime},</if>
+            <if test="modifyTime != null">#{modifyTime},</if>
+            <if test="evaluationTime != null">#{evaluationTime},</if>
+            <if test="presaleTime != null">#{presaleTime},</if>
+            <if test="groupHead != null">#{groupHead},</if>
+            <if test="groupId != null">#{groupId},</if>
+            <if test="groupMarketingId != null">#{groupMarketingId},</if>
+            <if test="groupSkuId != null">#{groupSkuId},</if>
+            <if test="groupStatus != null">#{groupStatus},</if>
+            <if test="groupNum != null">#{groupNum},</if>
+            <if test="openGroupTime != null">#{openGroupTime},</if>
+            <if test="autoHandleStatus != null">#{autoHandleStatus},</if>
+            <if test="recommended != null">#{recommended},</if>
+            <if test="sRecommended != null">#{sRecommended},</if>
+            <if test="crowdfundingId != null">#{crowdfundingId},</if>
+            <if test="lotteryStatus != null">#{lotteryStatus},</if>
+            <if test="writeOffCode != null">#{writeOffCode},</if>
+            <if test="communityBuyCustomerId != null">#{communityBuyCustomerId},</if>
+            <if test="communityBuyId != null">#{communityBuyId},</if>
+            <if test="profit != null">#{profit},</if>
+            <if test="communityName != null">#{communityName},</if>
+            <if test="communityBuyName != null">#{communityBuyName},</if>
+            <if test="logisticsCompany != null">#{logisticsCompany},</if>
+            <if test="logisticsCode != null">#{logisticsCode},</if>
+        </trim>
+    </insert>
+
+    <update id="updateOmsOrder" parameterType="OmsOrder">
+        update oms_order
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="orderCode != null and orderCode != ''">order_code = #{orderCode},</if>
+            <if test="masterOrderCode != null and masterOrderCode != ''">master_order_code = #{masterOrderCode},</if>
+            <if test="customerId != null">customer_id = #{customerId},</if>
+            <if test="price != null">price = #{price},</if>
+            <if test="presalePrice != null">presale_price = #{presalePrice},</if>
+            <if test="originalPrice != null">original_price = #{originalPrice},</if>
+            <if test="freightPrice != null">freight_price = #{freightPrice},</if>
+            <if test="modifyPrice != null">modify_price = #{modifyPrice},</if>
+            <if test="pointPrice != null">point_price = #{pointPrice},</if>
+            <if test="couponPrice != null">coupon_price = #{couponPrice},</if>
+            <if test="redEnvelopePrice != null">red_envelope_price = #{redEnvelopePrice},</if>
+            <if test="concessionalRate != null">concessional_rate = #{concessionalRate},</if>
+            <if test="status != null and status != ''">status = #{status},</if>
+            <if test="presaleStatus != null and presaleStatus != ''">presale_status = #{presaleStatus},</if>
+            <if test="evaluationStatus != null">evaluation_status = #{evaluationStatus},</if>
+            <if test="redEnvelopeCode != null">red_envelope_code = #{redEnvelopeCode},</if>
+            <if test="couponNo != null">coupon_no = #{couponNo},</if>
+            <if test="usePoint != null">use_point = #{usePoint},</if>
+            <if test="payType != null and payType != ''">pay_type = #{payType},</if>
+            <if test="storeId != null">store_id = #{storeId},</if>
+            <if test="cancelReson != null">cancel_reson = #{cancelReson},</if>
+            <if test="predepositPay != null">predeposit_pay = #{predepositPay},</if>
+            <if test="source != null">source = #{source},</if>
+            <if test="waybillCode != null">waybill_code = #{waybillCode},</if>
+            <if test="orderType != null">order_type = #{orderType},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="payTime != null">pay_time = #{payTime},</if>
+            <if test="deliveryTime != null">delivery_time = #{deliveryTime},</if>
+            <if test="receivingTime != null">receiving_time = #{receivingTime},</if>
+            <if test="cancelTime != null">cancel_time = #{cancelTime},</if>
+            <if test="modifyTime != null">modify_time = #{modifyTime},</if>
+            <if test="evaluationTime != null">evaluation_time = #{evaluationTime},</if>
+            <if test="presaleTime != null">presale_time = #{presaleTime},</if>
+            <if test="groupHead != null">group_head = #{groupHead},</if>
+            <if test="groupId != null">group_id = #{groupId},</if>
+            <if test="groupMarketingId != null">group_marketing_id = #{groupMarketingId},</if>
+            <if test="groupSkuId != null">group_sku_id = #{groupSkuId},</if>
+            <if test="groupStatus != null">group_status = #{groupStatus},</if>
+            <if test="groupNum != null">group_num = #{groupNum},</if>
+            <if test="openGroupTime != null">open_group_time = #{openGroupTime},</if>
+            <if test="autoHandleStatus != null">auto_handle_status = #{autoHandleStatus},</if>
+            <if test="recommended != null">recommended = #{recommended},</if>
+            <if test="sRecommended != null">s_recommended = #{sRecommended},</if>
+            <if test="crowdfundingId != null">crowdfunding_id = #{crowdfundingId},</if>
+            <if test="lotteryStatus != null">lottery_status = #{lotteryStatus},</if>
+            <if test="writeOffCode != null">write_off_code = #{writeOffCode},</if>
+            <if test="communityBuyCustomerId != null">community_buy_customer_id = #{communityBuyCustomerId},</if>
+            <if test="communityBuyId != null">community_buy_id = #{communityBuyId},</if>
+            <if test="profit != null">profit = #{profit},</if>
+            <if test="communityName != null">community_name = #{communityName},</if>
+            <if test="communityBuyName != null">community_buy_name = #{communityBuyName},</if>
+            <if test="logisticsCompany != null">logistics_company = #{logisticsCompany},</if>
+            <if test="logisticsCode != null">logistics_code = #{logisticsCode},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteOmsOrderById" parameterType="Long">
+        delete from oms_order where id = #{id}
+    </delete>
+
+    <delete id="deleteOmsOrderByIds" parameterType="String">
+        delete from oms_order where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

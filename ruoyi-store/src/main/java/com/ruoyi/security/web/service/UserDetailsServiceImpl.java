@@ -1,0 +1,70 @@
+package com.ruoyi.security.web.service;
+
+import com.ruoyi.common.core.domain.entity.SysUser;
+import com.ruoyi.common.core.domain.model.LoginUser;
+import com.ruoyi.common.enums.UserStatus;
+import com.ruoyi.common.exception.BaseException;
+import com.ruoyi.common.utils.StringUtils;
+import com.ruoyi.store.domain.TStoreInfo;
+import com.ruoyi.store.service.ITStoreInfoService;
+import com.ruoyi.system.service.ISysStoreUserService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.LockedException;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Service;
+
+import java.util.Objects;
+
+/**
+ * 用户验证处理
+ *
+ * @author ruoyi
+ */
+@Service
+public class UserDetailsServiceImpl implements UserDetailsService {
+    private static final Logger log = LoggerFactory.getLogger(UserDetailsServiceImpl.class);
+
+    @Autowired
+    private ISysStoreUserService userService;
+
+    @Autowired
+    private SysPermissionService permissionService;
+
+    /**
+     * 店铺信息service
+     */
+    @Autowired
+    private ITStoreInfoService storeInfoService;
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        SysUser user = userService.selectUserByUserName(username);
+        if (StringUtils.isNull(user)) {
+            log.info("登录用户：{} 不存在.", username);
+            throw new UsernameNotFoundException("登录用户：" + username + " 不存在");
+        } else if (UserStatus.DELETED.getCode().equals(user.getDelFlag())) {
+            log.info("登录用户：{} 已被删除.", username);
+            throw new BaseException("对不起，您的账号：" + username + " 已被删除");
+        } else if (UserStatus.DISABLE.getCode().equals(user.getStatus())) {
+            log.info("登录用户：{} 已被停用.", username);
+            throw new BaseException("对不起，您的账号：" + username + " 已停用");
+        }
+        // 查询店铺信息
+        TStoreInfo storeInfo = storeInfoService.queryStoreInfo(user.getStoreId());
+
+        if (!Objects.isNull(storeInfo)) {
+            if ("4".equals(storeInfo.getStatus())) {
+                log.error("store login fail due to store is close.....");
+                throw new LockedException("店铺已关闭");
+            }
+        }
+        return createLoginUser(user);
+    }
+
+    public UserDetails createLoginUser(SysUser user) {
+        return new LoginUser(user, permissionService.getMenuPermission(user));
+    }
+}

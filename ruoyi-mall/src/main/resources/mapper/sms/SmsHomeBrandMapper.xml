@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.sms.mapper.SmsHomeBrandMapper">
+
+    <resultMap type="SmsHomeBrand" id="SmsHomeBrandResult">
+        <result property="id" column="id"/>
+        <result property="brandId" column="brand_id"/>
+        <result property="brandName" column="brand_name"/>
+        <result property="recommendStatus" column="recommend_status"/>
+        <result property="sort" column="sort"/>
+        <result property="storeId" column="store_id"/>
+        <result property="logo" column="logo"/>
+    </resultMap>
+
+    <sql id="selectSmsHomeBrandVo">
+        select id, brand_id, brand_name, recommend_status, sort, store_id, logo from sms_home_brand
+    </sql>
+
+    <select id="selectSmsHomeBrandList" parameterType="SmsHomeBrand" resultMap="SmsHomeBrandResult">
+        <include refid="selectSmsHomeBrandVo"/>
+        <where>
+            <if test="brandId != null ">
+                and brand_id = #{brandId}
+            </if>
+            <if test="brandName != null  and brandName != ''">
+                and brand_name like concat('%', #{brandName}, '%')
+            </if>
+            <if test="recommendStatus != null ">
+                and recommend_status = #{recommendStatus}
+            </if>
+            <if test="sort != null ">
+                and sort = #{sort}
+            </if>
+            <if test="storeId != null ">
+                and store_id = #{storeId}
+            </if>
+        </where>
+        order by sort asc
+    </select>
+
+    <select id="selectSmsHomeBrandById" parameterType="Long" resultMap="SmsHomeBrandResult">
+        <include refid="selectSmsHomeBrandVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertSmsHomeBrand" parameterType="SmsHomeBrand" useGeneratedKeys="true"
+            keyProperty="id">
+        insert into sms_home_brand
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="brandId != null">brand_id,
+            </if>
+            <if test="brandName != null">brand_name,
+            </if>
+            <if test="recommendStatus != null">recommend_status,
+            </if>
+            <if test="sort != null">sort,
+            </if>
+            <if test="storeId != null">store_id,
+            </if>
+            <if test="logo != null">logo,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="brandId != null">#{brandId},
+            </if>
+            <if test="brandName != null">#{brandName},
+            </if>
+            <if test="recommendStatus != null">#{recommendStatus},
+            </if>
+            <if test="sort != null">#{sort},
+            </if>
+            <if test="storeId != null">#{storeId},
+            </if>
+            <if test="logo != null">#{logo},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateSmsHomeBrand" parameterType="SmsHomeBrand">
+        update sms_home_brand
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="brandId != null">brand_id =
+                #{brandId},
+            </if>
+            <if test="brandName != null">brand_name =
+                #{brandName},
+            </if>
+            <if test="recommendStatus != null">recommend_status =
+                #{recommendStatus},
+            </if>
+            <if test="sort != null">sort =
+                #{sort},
+            </if>
+            <if test="storeId != null">store_id =
+                #{storeId},
+            </if>
+            <if test="logo != null">logo =
+                #{logo},
+            </if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteSmsHomeBrandById" parameterType="Long">
+        delete from sms_home_brand where id = #{id}
+    </delete>
+
+    <delete id="deleteSmsHomeBrandByIds" parameterType="String">
+        delete from sms_home_brand where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

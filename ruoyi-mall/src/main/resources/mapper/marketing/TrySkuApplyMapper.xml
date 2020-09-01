@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.marketing.mapper.TrySkuApplyMapper">
+
+    <resultMap id="trySkuApply" type="com.ruoyi.marketing.domain.TrySkuApply">
+        <result column="id" property="id"/>
+        <result column="try_id" property="tryId"/>
+        <result column="sku_id" property="skuId"/>
+        <result column="order_id" property="orderId"/>
+        <result column="customer_id" property="customerId"/>
+        <result column="customer_name" property="customerName"/>
+        <result column="customer_img" property="customerImg"/>
+        <result column="status" property="status"/>
+        <result column="apply_time" property="applyTime"/>
+        <result column="store_id" property="storeId"/>
+    </resultMap>
+
+
+    <select id="queryTrySkuApply" parameterType="java.util.Map" resultMap="trySkuApply">
+        select * from sms_trysku_apply where try_id = #{tryId} and customer_id=#{customerId}
+    </select>
+
+    <select id="queryTrySkuApplyById" parameterType="java.util.Map" resultMap="trySkuApply">
+        select * from sms_trysku_apply where id=#{id}
+        <if test="customerId !=null and customerId !=-1">
+            and customer_id=#{customerId}
+        </if>
+    </select>
+
+
+    <insert id="addTrySkuApply" parameterType="com.ruoyi.marketing.domain.TrySkuApply">
+        insert into sms_trysku_apply
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="tryId != null">
+                try_id,
+            </if>
+            <if test="skuId != null">
+                sku_id,
+            </if>
+            <if test="customerId != null">
+                customer_id,
+            </if>
+            status,apply_time
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="tryId != null">
+                #{tryId},
+            </if>
+            <if test="skuId != null">
+                #{skuId},
+            </if>
+            <if test="customerId != null">
+                #{customerId},
+            </if>
+            '0',now()
+        </trim>
+    </insert>
+
+    <update id="updateTrySkuApplyStatus" parameterType="java.util.Map">
+            update sms_trysku_apply set status = #{status} where try_id = #{tryId} and customer_id=#{customerId}
+    </update>
+    <select id="queryTrySkuApplyByTryId" resultMap="trySkuApply" parameterType="java.lang.Long">
+        select * from sms_trysku_apply where try_id = #{tryId}
+    </select>
+    <select id="querySuccessApplyByTryId" resultMap="trySkuApply" parameterType="java.lang.Long">
+        select lta.*,lc.username customer_name,lc.image customer_img from sms_trysku_apply lta JOIN ums_member lc on lta.customer_id=lc.id
+        where lta.try_id=#{tryId} and lta.status in ('1','3','4')
+    </select>
+    <select id="queryTrySkuApplys" resultMap="trySkuApply" parameterType="java.util.Map">
+        select * from sms_trysku_apply where customer_id=#{customerId}
+        <if test="status !=null and status !=1">
+            and status=#{status}
+        </if>
+        <if test="status !=null and status ==1">
+            and status in ('1','3','4')
+        </if>
+        order by apply_time desc
+        limit #{startRowNum},#{pageSize}
+    </select>
+    <select id="queryTrySkuApplysCount" resultType="java.lang.Integer" parameterType="java.util.Map">
+        select COUNT(1) from sms_trysku_apply where customer_id=#{customerId}
+        <if test="status !=null and status !=1">
+            and status=#{status}
+        </if>
+        <if test="status !=null and status ==1">
+            and status in ('1','3','4')
+        </if>
+    </select>
+
+
+    <update id="updateTryApplyOrderdSingle" parameterType="com.ruoyi.marketing.domain.TrySkuApply">
+        update sms_trysku_apply set status = '3' ,order_id = #{orderId} where customer_id=#{customerId} and id = #{id} and sku_id = #{skuId}
+    </update>
+
+    <select id="queryPassedApplyByCustomerIdAndSkuId" parameterType="java.util.Map" resultMap="trySkuApply">
+        select * from sms_trysku_apply where customer_id=#{customerId} and sku_id = #{skuId} and status = '1' limit 1
+    </select>
+
+    <select id="queryApplyByTryIdAndStoreId" parameterType="java.util.Map" resultMap="trySkuApply">
+        select lta.*,lc.username customer_name from sms_trysku_apply lta
+        join ums_member lc on lta.customer_id=lc.id
+        join sms_marketing_try lmt  on lmt.id = lta.try_id
+        join sms_marketing lm on lm.id = lmt.marketing_id
+        where lta.try_id = #{tryId} and lm.store_id = #{storeId};
+    </select>
+
+    <select id="queryApplyByTryIdAndStoreIdCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+        select count(1) from sms_trysku_apply lta
+        join ums_member lc on lta.customer_id=lc.id
+        join sms_marketing_try lmt  on lmt.id = lta.try_id
+        join sms_marketing lm on lm.id = lmt.marketing_id
+        where lta.try_id = #{tryId} and lm.store_id = #{storeId};
+    </select>
+
+</mapper>

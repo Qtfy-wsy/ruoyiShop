@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.store.mapper.TStoreReservationMapper">
+
+    <resultMap type="TStoreReservation" id="TStoreReservationResult">
+        <result property="id" column="id"/>
+        <result property="storeId" column="store_id"/>
+        <result property="customerId" column="customer_id"/>
+        <result property="skuId" column="sku_id"/>
+        <result property="num" column="num"/>
+        <result property="delFlag" column="del_flag"/>
+        <result property="createTime" column="create_time"/>
+    </resultMap>
+
+    <sql id="selectTStoreReservationVo">
+        select id, store_id, customer_id, sku_id, num, del_flag, create_time from t_store_reservation
+    </sql>
+
+    <select id="selectTStoreReservationList" parameterType="TStoreReservation" resultMap="TStoreReservationResult">
+        <include refid="selectTStoreReservationVo"/>
+        <where>
+            <if test="storeId != null ">and store_id = #{storeId}</if>
+            <if test="customerId != null ">and customer_id = #{customerId}</if>
+            <if test="skuId != null  and skuId != ''">and sku_id = #{skuId}</if>
+            <if test="num != null ">and num = #{num}</if>
+        </where>
+    </select>
+
+    <select id="selectTStoreReservationById" parameterType="Long" resultMap="TStoreReservationResult">
+        <include refid="selectTStoreReservationVo"/>
+        where id = #{id}
+    </select>
+    <select id="queryReservationList" parameterType="java.util.Map" resultMap="TStoreReservationResult">
+        select lsr.*,lsi.store_name store_name,ls.`name` sku_name,ls.url url,lss.price price from t_store_reservation
+        lsr
+        join pms_sku ls on lsr.sku_id=ls.id
+        join t_store_sku lss on lss.sku_id=lsr.sku_id and lss.store_id=lsr.store_id
+        join t_store_info lsi on lsi.id=lsr.store_id
+        where lsr. ls. ls.`status`='0' and ls.shelves_status='1' and
+        lsr.customer_id=#{customerId}
+        <if test="skuName != null and skuName != ''">
+            and ls.`name` like CONCAT(CONCAT('%', #{skuName}),'%')
+        </if>
+        order by lsr.create_time desc
+        limit #{startRowNum},#{pageSize}
+    </select>
+
+    <select id="queryReservationListCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+        select count(1) from t_store_reservation lsr
+        join pms_sku ls on lsr.sku_id=ls.id
+        join t_store_sku lss on lss.sku_id=lsr.sku_id and lss.store_id=lsr.store_id
+        join t_store_info lsi on lsi.id=lsr.store_id
+        where lsr. ls. ls.`status`='0' and ls.shelves_status='1' and
+        lsr.customer_id=#{customerId}
+        <if test="skuName != null and skuName != ''">
+            and ls.`name` like CONCAT(CONCAT('%', #{skuName}),'%')
+        </if>
+    </select>
+
+    <update id="cancelReservation" parameterType="java.util.Map">
+        update t_store_reservation set del_flag='1' where
+        id in
+        <foreach collection="ids" index="index" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+        <if test="customerId != null and customerId != '' and customerId != -1">
+            and customer_id = #{customerId}
+        </if>
+        <if test="storeId != null and storeId != '' and storeId != -1">
+            and store_id = #{storeId}
+        </if>
+    </update>
+
+    <select id="queryReservationListForStore" parameterType="java.util.Map" resultMap="TStoreReservationResult">
+        select lsr.*,lsi.store_name store_name,ls.`name` sku_name,ls.url url,lss.price price,lss.stock stock from t_store_reservation lsr
+        join pms_sku ls on lsr.sku_id=ls.id
+        join t_store_sku lss on lss.sku_id=lsr.sku_id and lss.store_id=lsr.store_id
+        join t_store_info lsi on lsi.id=lsr.store_id
+        where lsr. ls. ls.`status`='0' and ls.shelves_status='1' and lsr.customer_id=#{customerId}
+        and lsr.store_id = #{storeId}
+        order by lsr.create_time desc
+    </select>
+
+    <select id="queryReservationListForStoreByIds" parameterType="java.util.Map" resultMap="TStoreReservationResult">
+        select lsr.*,lsi.store_name store_name,ls.`name` sku_name,ls.url url,lss.price price,lss.stock stock from
+        t_store_reservation
+        lsr
+        join pms_sku ls on lsr.sku_id=ls.id
+        join t_store_sku lss on lss.sku_id=lsr.sku_id and lss.store_id=lsr.store_id
+        join t_store_info lsi on lsi.id=lsr.store_id
+        where lsr. ls. ls.`status`='0' and ls.shelves_status='1'
+        and lsr.store_id = #{storeId}
+        and lsr.id in
+        <foreach collection="ids" index="index" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+        order by lsr.create_time desc
+    </select>
+
+    <update id="updateReservationNum" parameterType="java.util.Map">
+        update t_store_reservation set num = #{num} where id = #{id}  and store_id = #{storeId}
+    </update>
+
+    <insert id="insertTStoreReservation" parameterType="TStoreReservation" useGeneratedKeys="true" keyProperty="id">
+        insert into t_store_reservation
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="storeId != null">store_id,</if>
+            <if test="customerId != null">customer_id,</if>
+            <if test="skuId != null">sku_id,</if>
+            <if test="num != null">num,</if>
+            <if test="delFlag != null">del_flag,</if>
+            <if test="createTime != null">create_time,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="storeId != null">#{storeId},</if>
+            <if test="customerId != null">#{customerId},</if>
+            <if test="skuId != null">#{skuId},</if>
+            <if test="num != null">#{num},</if>
+            <if test="delFlag != null">#{delFlag},</if>
+            <if test="createTime != null">#{createTime},</if>
+        </trim>
+    </insert>
+
+    <update id="updateTStoreReservation" parameterType="TStoreReservation">
+        update t_store_reservation
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="storeId != null">store_id = #{storeId},</if>
+            <if test="customerId != null">customer_id = #{customerId},</if>
+            <if test="skuId != null">sku_id = #{skuId},</if>
+            <if test="num != null">num = #{num},</if>
+            <if test="delFlag != null">del_flag = #{delFlag},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteTStoreReservationById" parameterType="Long">
+        delete from t_store_reservation where id = #{id}
+    </delete>
+
+    <delete id="deleteTStoreReservationByIds" parameterType="String">
+        delete from t_store_reservation where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

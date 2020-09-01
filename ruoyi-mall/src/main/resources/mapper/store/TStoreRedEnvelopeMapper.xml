@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.store.mapper.TStoreRedEnvelopeMapper">
+
+    <resultMap type="TStoreRedEnvelope" id="TStoreRedEnvelopeResult">
+        <result property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="num" column="num"/>
+        <result property="desc" column="desc"/>
+        <result property="fullPrice" column="full_price"/>
+        <result property="price" column="price"/>
+        <result property="starttime" column="starttime"/>
+        <result property="endtime" column="endtime"/>
+        <result property="storeId" column="store_id"/>
+    </resultMap>
+
+    <sql id="selectTStoreRedEnvelopeVo">
+        select id, name, num, desc, full_price, price, starttime, endtime, store_id from t_store_red_envelope
+    </sql>
+
+    <select id="selectTStoreRedEnvelopeList" parameterType="TStoreRedEnvelope" resultMap="TStoreRedEnvelopeResult">
+        <include refid="selectTStoreRedEnvelopeVo"/>
+        <where>
+            <if test="name != null  and name != ''">and name like concat('%', #{name}, '%')</if>
+            <if test="num != null ">and num = #{num}</if>
+            <if test="desc != null  and desc != ''">and desc = #{desc}</if>
+            <if test="fullPrice != null ">and full_price = #{fullPrice}</if>
+            <if test="price != null ">and price = #{price}</if>
+            <if test="starttime != null ">and starttime = #{starttime}</if>
+            <if test="endtime != null ">and endtime = #{endtime}</if>
+            <if test="storeId != null ">and store_id = #{storeId}</if>
+        </where>
+    </select>
+
+    <select id="selectTStoreRedEnvelopeById" parameterType="Long" resultMap="TStoreRedEnvelopeResult">
+        <include refid="selectTStoreRedEnvelopeVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertTStoreRedEnvelope" parameterType="TStoreRedEnvelope" useGeneratedKeys="true" keyProperty="id">
+        insert into t_store_red_envelope
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="name != null">name,</if>
+            <if test="num != null">num,</if>
+            <if test="desc != null">desc,</if>
+            <if test="fullPrice != null">full_price,</if>
+            <if test="price != null">price,</if>
+            <if test="starttime != null">starttime,</if>
+            <if test="endtime != null">endtime,</if>
+            <if test="storeId != null">store_id,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="name != null">#{name},</if>
+            <if test="num != null">#{num},</if>
+            <if test="desc != null">#{desc},</if>
+            <if test="fullPrice != null">#{fullPrice},</if>
+            <if test="price != null">#{price},</if>
+            <if test="starttime != null">#{starttime},</if>
+            <if test="endtime != null">#{endtime},</if>
+            <if test="storeId != null">#{storeId},</if>
+        </trim>
+    </insert>
+
+    <update id="updateTStoreRedEnvelope" parameterType="TStoreRedEnvelope">
+        update t_store_red_envelope
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="name != null">name = #{name},</if>
+            <if test="num != null">num = #{num},</if>
+            <if test="desc != null">desc = #{desc},</if>
+            <if test="fullPrice != null">full_price = #{fullPrice},</if>
+            <if test="price != null">price = #{price},</if>
+            <if test="starttime != null">starttime = #{starttime},</if>
+            <if test="endtime != null">endtime = #{endtime},</if>
+            <if test="storeId != null">store_id = #{storeId},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteTStoreRedEnvelopeById" parameterType="Long">
+        delete from t_store_red_envelope where id = #{id}
+    </delete>
+
+    <delete id="deleteTStoreRedEnvelopeByIds" parameterType="String">
+        delete from t_store_red_envelope where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

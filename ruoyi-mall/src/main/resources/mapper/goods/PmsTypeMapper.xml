@@ -1,0 +1,304 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.goods.mapper.PmsTypeMapper">
+
+    <resultMap type="PmsType" id="PmsTypeResult">
+        <result property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="delFlag" column="del_flag"/>
+        <result property="createName" column="create_name"/>
+        <result property="modifyName" column="modify_name"/>
+        <result property="delName" column="del_name"/>
+        <result property="createTime" column="create_time"/>
+        <result property="modifyTime" column="modify_time"/>
+        <result property="delTime" column="del_time"/>
+    </resultMap>
+
+    <resultMap id="type" type="com.ruoyi.goods.domain.PmsType">
+        <result column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="del_flag" property="delFlag"/>
+        <result column="create_name" property="createName"/>
+        <result column="modify_name" property="modifyName"/>
+        <result column="del_name" property="delName"/>
+        <result column="create_time " property="createTime"/>
+        <result column="modify_time" property="modifyTime"/>
+        <result column="del_time" property="delTime"/>
+    </resultMap>
+
+    <resultMap id="attribute" type="com.ruoyi.goods.domain.PmsAttribute">
+        <result column="id" property="id"/>
+        <result column="type_id" property="typeId"/>
+        <result column="name" property="name"/>
+        <result column="sort" property="sort"/>
+        <result column="del_flag" property="delFlag"/>
+    </resultMap>
+
+
+    <resultMap id="attributeValue" type="com.ruoyi.goods.domain.PmsAttributeValue">
+        <result column="id" property="id"/>
+        <result column="attribute_id" property="attributeId"/>
+        <result column="type_id" property="typeId"/>
+        <result column="value" property="value"/>
+        <result column="del_flag" property="delFlag"/>
+    </resultMap>
+
+
+    <select id="queryTypes" parameterType="java.util.Map" resultMap="type">
+        select * from pms_type
+
+        <if test="name != null and name != '' ">
+            where    name like CONCAT(CONCAT('%', #{name}),'%')
+        </if>
+
+        order by create_time desc
+        limit #{startRowNum},#{pageSize}
+    </select>
+
+    <select id="queryTypesCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+        select count(1) from pms_type
+
+        <if test="name != null and name != '' ">
+            where name like CONCAT(CONCAT('%', #{name}),'%')
+        </if>
+    </select>
+
+
+    <insert id="addType" parameterType="com.ruoyi.goods.domain.PmsType" useGeneratedKeys="true" keyProperty="id">
+        insert into pms_type
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="name != null">
+                name,
+            </if>
+            <if test="delFlag != null">
+                del_flag,
+            </if>
+            <if test="createName != null">
+                create_name,
+            </if>
+            <if test="modifyName != null">
+                modify_name,
+            </if>
+            <if test="delName != null">
+                del_name,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="modifyTime != null">
+                modify_time,
+            </if>
+            <if test="delTime != null">
+                del_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="name != null">
+                #{name},
+            </if>
+            <if test="delFlag != null">
+                #{delFlag},
+            </if>
+            <if test="createName != null">
+                #{createName},
+            </if>
+            <if test="modifyName != null">
+                #{modifyName},
+            </if>
+            <if test="delName != null">
+                #{delName},
+            </if>
+            <if test="createTime != null">
+                #{createTime},
+            </if>
+            <if test="modifyTime != null">
+                #{modifyTime},
+            </if>
+            <if test="delTime != null">
+                #{delTime},
+            </if>
+        </trim>
+    </insert>
+
+
+    <insert id="addAttributes" parameterType="java.util.List">
+        insert into pms_attribute
+
+        (id,type_id, name, sort, del_flag)
+        values
+        <foreach collection="list" item="attribute" index="index" separator=",">
+            (
+            #{attribute.id},
+            #{attribute.typeId},
+            #{attribute.name},
+            #{attribute.sort},
+            #{attribute.delFlag}
+            )
+        </foreach>
+    </insert>
+
+    <insert id="addAttributeValues" parameterType="java.util.List">
+        insert into pms_attribute_value
+
+        (id,attribute_id,type_id, value, del_flag)
+        values
+        <foreach collection="list" item="attributeValue" index="index" separator=",">
+            (
+            #{attributeValue.id},
+            #{attributeValue.attributeId},
+            #{attributeValue.typeId},
+            #{attributeValue.value},
+            #{attributeValue.delFlag}
+            )
+        </foreach>
+    </insert>
+
+
+    <update id="deleteType" parameterType="com.ruoyi.goods.domain.PmsType">
+        update pms_type
+        <set>
+            <if test="delFlag != null">
+                del_flag = #{delFlag},
+            </if>
+            <if test="delName != null">
+                del_name = #{delName},
+            </if>
+            <if test="delTime != null">
+                del_time = #{delTime}
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+
+    <update id="deleteAttributes" parameterType="java.lang.Long">
+        update pms_attribute
+                set del_flag = '1'
+        where type_id = #{typeId}
+    </update>
+
+
+    <update id="deleteAttributeValues" parameterType="java.lang.Long">
+        update pms_attribute_value
+        set del_flag = '1'
+        where type_id = #{typeId}
+    </update>
+
+
+    <select id="queryTypeById" parameterType="java.lang.Long" resultMap="type">
+        select * from pms_type where id = #{id}
+    </select>
+
+
+    <select id="queryAttributesByTypeId" parameterType="java.lang.Long" resultMap="attribute">
+        select * from pms_attribute where type_id = #{typeId} order by sort asc
+    </select>
+
+
+    <select id="queryAttributeValueByAttributeId" parameterType="java.lang.String" resultMap="attributeValue">
+        select * from pms_attribute_value where attribute_id = #{id}
+    </select>
+
+    <select id="queryAllType" resultMap="type">
+        select * from pms_type
+    </select>
+
+
+    <update id="updateType" parameterType="com.ruoyi.goods.domain.PmsType">
+        update pms_type
+        <set>
+            <if test="name != null">
+                name = #{name},
+            </if>
+            <if test="modifyName != null">
+                modify_name = #{modifyName},
+            </if>
+            <if test="modifyTime != null">
+                modify_time = #{modifyTime}
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteAttributesByTypeIdPhysical" parameterType="java.lang.Long">
+        delete from pms_attribute where type_id = #{typeId}
+    </delete>
+
+
+    <delete id="deleteAttributeValuesByTypeIdPhysical" parameterType="java.lang.Long">
+        delete from pms_attribute_value where type_id = #{typeId}
+    </delete>
+
+    <select id="queryIsHasTypeByName" parameterType="java.lang.String" resultType="java.lang.Integer">
+        select count(1) from pms_type where  name = #{name}
+    </select>
+
+    <sql id="selectPmsTypeVo">
+        select id, name, del_flag, create_name, modify_name, del_name, create_time, modify_time, del_time from pms_type
+    </sql>
+
+    <select id="selectPmsTypeList" parameterType="PmsType" resultMap="PmsTypeResult">
+        <include refid="selectPmsTypeVo"/>
+        <where>
+            <if test="name != null  and name != ''">and name like concat('%', #{name}, '%')</if>
+        </where>
+    </select>
+
+    <select id="selectPmsTypeById" parameterType="Long" resultMap="PmsTypeResult">
+        <include refid="selectPmsTypeVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertPmsType" parameterType="PmsType" useGeneratedKeys="true" keyProperty="id">
+        insert into pms_type
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="name != null">name,</if>
+            <if test="delFlag != null and delFlag != ''">del_flag,</if>
+            <if test="createName != null">create_name,</if>
+            <if test="modifyName != null">modify_name,</if>
+            <if test="delName != null">del_name,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="modifyTime != null">modify_time,</if>
+            <if test="delTime != null">del_time,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="name != null">#{name},</if>
+            <if test="delFlag != null and delFlag != ''">#{delFlag},</if>
+            <if test="createName != null">#{createName},</if>
+            <if test="modifyName != null">#{modifyName},</if>
+            <if test="delName != null">#{delName},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="modifyTime != null">#{modifyTime},</if>
+            <if test="delTime != null">#{delTime},</if>
+        </trim>
+    </insert>
+
+    <update id="updatePmsType" parameterType="PmsType">
+        update pms_type
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="name != null">name = #{name},</if>
+            <if test="delFlag != null and delFlag != ''">del_flag = #{delFlag},</if>
+            <if test="createName != null">create_name = #{createName},</if>
+            <if test="modifyName != null">modify_name = #{modifyName},</if>
+            <if test="delName != null">del_name = #{delName},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="modifyTime != null">modify_time = #{modifyTime},</if>
+            <if test="delTime != null">del_time = #{delTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deletePmsTypeById" parameterType="Long">
+        delete from pms_type where id = #{id}
+    </delete>
+
+    <delete id="deletePmsTypeByIds" parameterType="String">
+        delete from pms_type where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

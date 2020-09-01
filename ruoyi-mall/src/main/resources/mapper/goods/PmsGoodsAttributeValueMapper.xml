@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.goods.mapper.PmsGoodsAttributeValueMapper">
+
+    <resultMap type="PmsGoodsAttributeValue" id="PmsGoodsAttributeValueResult">
+        <result property="id" column="id"/>
+        <result property="spuId" column="spu_id"/>
+        <result property="attributeId" column="attribute_id"/>
+        <result property="attributeName" column="attribute_name"/>
+        <result property="attributeValueId" column="attribute_value_id"/>
+        <result property="attributeValue" column="attribute_value"/>
+        <result property="delFlag" column="del_flag"/>
+    </resultMap>
+
+    <sql id="selectPmsGoodsAttributeValueVo">
+        select id, spu_id, attribute_id, attribute_name, attribute_value_id, attribute_value, del_flag from pms_goods_attribute_value
+    </sql>
+
+    <select id="selectPmsGoodsAttributeValueList" parameterType="PmsGoodsAttributeValue"
+            resultMap="PmsGoodsAttributeValueResult">
+        <include refid="selectPmsGoodsAttributeValueVo"/>
+        <where>
+            <if test="attributeName != null  and attributeName != ''">and attribute_name like concat('%',
+                #{attributeName}, '%')
+            </if>
+        </where>
+    </select>
+
+    <select id="selectPmsGoodsAttributeValueById" parameterType="Long" resultMap="PmsGoodsAttributeValueResult">
+        <include refid="selectPmsGoodsAttributeValueVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertPmsGoodsAttributeValue" parameterType="PmsGoodsAttributeValue" useGeneratedKeys="true"
+            keyProperty="id">
+        insert into pms_goods_attribute_value
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="spuId != null">spu_id,</if>
+            <if test="attributeId != null and attributeId != ''">attribute_id,</if>
+            <if test="attributeName != null and attributeName != ''">attribute_name,</if>
+            <if test="attributeValueId != null and attributeValueId != ''">attribute_value_id,</if>
+            <if test="attributeValue != null and attributeValue != ''">attribute_value,</if>
+            <if test="delFlag != null and delFlag != ''">del_flag,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="spuId != null">#{spuId},</if>
+            <if test="attributeId != null and attributeId != ''">#{attributeId},</if>
+            <if test="attributeName != null and attributeName != ''">#{attributeName},</if>
+            <if test="attributeValueId != null and attributeValueId != ''">#{attributeValueId},</if>
+            <if test="attributeValue != null and attributeValue != ''">#{attributeValue},</if>
+            <if test="delFlag != null and delFlag != ''">#{delFlag},</if>
+        </trim>
+    </insert>
+
+    <update id="updatePmsGoodsAttributeValue" parameterType="PmsGoodsAttributeValue">
+        update pms_goods_attribute_value
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="spuId != null">spu_id = #{spuId},</if>
+            <if test="attributeId != null and attributeId != ''">attribute_id = #{attributeId},</if>
+            <if test="attributeName != null and attributeName != ''">attribute_name = #{attributeName},</if>
+            <if test="attributeValueId != null and attributeValueId != ''">attribute_value_id = #{attributeValueId},
+            </if>
+            <if test="attributeValue != null and attributeValue != ''">attribute_value = #{attributeValue},</if>
+            <if test="delFlag != null and delFlag != ''">del_flag = #{delFlag},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <insert id="addSpuAttributeValues" parameterType="java.util.List">
+        insert into pms_goods_attribute_value
+        (spu_id, attribute_id,attribute_name,attribute_value_id,attribute_value,del_flag)
+        values
+        <foreach collection="list" item="spuAttributeValue" index="index" separator=",">
+            (
+            #{spuAttributeValue.spuId},
+            #{spuAttributeValue.attributeId},
+            #{spuAttributeValue.attributeName},
+            #{spuAttributeValue.attributeValueId},
+            #{spuAttributeValue.attributeValue},
+            #{spuAttributeValue.delFlag}
+            )
+        </foreach>
+    </insert>
+
+    <update id="deleteBySpuId" parameterType="java.lang.Long">
+        update pms_goods_attribute_value set del_flag = '1' where spu_id = #{spuId}
+    </update>
+
+    <select id="queryBySpuId" parameterType="java.lang.Long" resultMap="PmsGoodsAttributeValueResult">
+        select * from pms_goods_attribute_value where spu_id = #{spuId}
+    </select>
+
+    <delete id="deleteBySpuIdPhysical" parameterType="java.lang.Long">
+        delete from pms_goods_attribute_value where spu_id = #{spuId}
+    </delete>
+    <delete id="deletePmsGoodsAttributeValueById" parameterType="Long">
+        delete from pms_goods_attribute_value where id = #{id}
+    </delete>
+
+    <delete id="deletePmsGoodsAttributeValueByIds" parameterType="String">
+        delete from pms_goods_attribute_value where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

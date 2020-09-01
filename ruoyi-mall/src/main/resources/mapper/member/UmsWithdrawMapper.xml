@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.member.mapper.UmsWithdrawMapper">
+
+    <resultMap type="UmsWithdraw" id="UmsWithdrawResult">
+        <result property="id" column="id"/>
+        <result property="customerId" column="customer_id"/>
+        <result property="money" column="money"/>
+        <result property="status" column="status"/>
+        <result property="tradeNo" column="trade_no"/>
+        <result property="account" column="account"/>
+        <result property="name" column="name"/>
+        <result property="createTime" column="create_time"/>
+        <result property="payingTime" column="paying_time"/>
+    </resultMap>
+
+    <sql id="selectUmsWithdrawVo">
+        select id, customer_id, money, status, trade_no, account, name, create_time, paying_time from ums_withdraw
+    </sql>
+
+    <select id="queryWithdrawRecordById" parameterType="java.lang.Long" resultMap="UmsWithdrawResult">
+        select * from ums_withdraw where id=#{id}
+    </select>
+    <select id="queryWithdrawRecords" parameterType="java.util.Map" resultMap="UmsWithdrawResult">
+        SELECT * from ums_withdraw
+        where 1=1
+        <if test="customerId!=null and customerId!=-1">
+            and customer_id=#{customerId}
+        </if>
+        <if test="name!=null and name!=''">
+            and name=#{name}
+        </if>
+        <if test="startTime!=null and startTime!=''">
+            and create_time &gt;=#{startTime}
+        </if>
+        <if test="endTime!=null and endTime!=''">
+            and create_time &lt;=#{endTime}
+        </if>
+        <if test="status!=null">
+            and status=#{status}
+        </if>
+        <if test="tradeNo!=null">
+            and trade_no=#{tradeNo}
+        </if>
+        order by create_time desc
+        limit #{startRowNum},#{pageSize}
+    </select>
+
+    <select id="queryWithdrawRecordsCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+        SELECT count(1) from ums_withdraw
+        where 1=1
+        <if test="customerId!=null and customerId!=-1">
+            and customer_id=#{customerId}
+        </if>
+        <if test="name!=null and name!=''">
+            and name=#{name}
+        </if>
+        <if test="startTime!=null and startTime!=''">
+            and create_time &gt;=#{startTime}
+        </if>
+        <if test="endTime!=null and endTime!=''">
+            and create_time &lt;=#{endTime}
+        </if>
+        <if test="status!=null">
+            and status=#{status}
+        </if>
+        <if test="tradeNo!=null">
+            and trade_no=#{tradeNo}
+        </if>
+    </select>
+
+    <select id="queryWithdrawRecordsForAdmin" parameterType="java.util.Map" resultMap="UmsWithdrawResult">
+        SELECT ums_withdraw.*, ls_customer.mobile mobile from ums_withdraw
+        left JOIN ls_customer on ums_withdraw.customer_id=ls_customer.id
+        where 1=1
+        <if test="customerId!=null and customerId!=-1">
+            and customer_id=#{customerId}
+        </if>
+        <if test="name!=null and name!=''">
+            and ums_withdraw.name=#{name}
+        </if>
+        <if test="tradeNo!=null">
+            and trade_no=#{tradeNo}
+        </if>
+        <if test="mobile!=null">
+            and ls_customer.mobile=#{mobile}
+        </if>
+        order by create_time desc
+        limit #{startRowNum},#{pageSize}
+    </select>
+    <select id="queryWithdrawRecordsCountForAdmin" parameterType="java.util.Map" resultType="java.lang.Integer">
+        SELECT count(1) from ums_withdraw
+        left JOIN ls_customer on ums_withdraw.customer_id=ls_customer.id
+        where 1=1
+        <if test="customerId!=null and customerId!=-1">
+            and customer_id=#{customerId}
+        </if>
+        <if test="name!=null and name!=''">
+            and ums_withdraw.name=#{name}
+        </if>
+        <if test="tradeNo!=null">
+            and trade_no=#{tradeNo}
+        </if>
+        <if test="mobile!=null">
+            and ls_customer.mobile=#{mobile}
+        </if>
+    </select>
+    <update id="updateWithdrawRecordStatus" parameterType="java.util.Map">
+        UPDATE ums_withdraw SET status=#{status}
+        <if test="status ==3">
+            ,paying_time=now()
+        </if>
+        WHERE id=#{id}
+    </update>
+
+    <insert id="addWithdrawRecord" parameterType="UmsWithdraw">
+        insert into ums_withdraw
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="tradeNo != null">
+                trade_no,
+            </if>
+            <if test="customerId != null">
+                customer_id,
+            </if>
+            <if test="money != null">
+                money,
+            </if>
+            <if test="account != null">
+                account,
+            </if>
+            <if test="name != null">
+                name,
+            </if>
+            status,create_time
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="tradeNo != null">
+                #{tradeNo},
+            </if>
+            <if test="customerId != null">
+                #{customerId},
+            </if>
+            <if test="money != null">
+                #{money},
+            </if>
+            <if test="account != null">
+                #{account},
+            </if>
+            <if test="name != null">
+                #{name},
+            </if>
+            '0',now()
+        </trim>
+    </insert>
+    <select id="selectUmsWithdrawList" parameterType="UmsWithdraw" resultMap="UmsWithdrawResult">
+        <include refid="selectUmsWithdrawVo"/>
+        <where>
+            <if test="customerId != null ">and customer_id = #{customerId}</if>
+            <if test="money != null ">and money = #{money}</if>
+            <if test="status != null  and status != ''">and status = #{status}</if>
+            <if test="tradeNo != null  and tradeNo != ''">and trade_no = #{tradeNo}</if>
+            <if test="account != null  and account != ''">and account = #{account}</if>
+            <if test="name != null  and name != ''">and name like concat('%', #{name}, '%')</if>
+            <if test="payingTime != null ">and paying_time = #{payingTime}</if>
+        </where>
+    </select>
+
+    <select id="selectUmsWithdrawById" parameterType="Long" resultMap="UmsWithdrawResult">
+        <include refid="selectUmsWithdrawVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertUmsWithdraw" parameterType="UmsWithdraw" useGeneratedKeys="true" keyProperty="id">
+        insert into ums_withdraw
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="customerId != null">customer_id,</if>
+            <if test="money != null">money,</if>
+            <if test="status != null">status,</if>
+            <if test="tradeNo != null">trade_no,</if>
+            <if test="account != null">account,</if>
+            <if test="name != null">name,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="payingTime != null">paying_time,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="customerId != null">#{customerId},</if>
+            <if test="money != null">#{money},</if>
+            <if test="status != null">#{status},</if>
+            <if test="tradeNo != null">#{tradeNo},</if>
+            <if test="account != null">#{account},</if>
+            <if test="name != null">#{name},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="payingTime != null">#{payingTime},</if>
+        </trim>
+    </insert>
+
+    <update id="updateUmsWithdraw" parameterType="UmsWithdraw">
+        update ums_withdraw
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="customerId != null">customer_id = #{customerId},</if>
+            <if test="money != null">money = #{money},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="tradeNo != null">trade_no = #{tradeNo},</if>
+            <if test="account != null">account = #{account},</if>
+            <if test="name != null">name = #{name},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="payingTime != null">paying_time = #{payingTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteUmsWithdrawById" parameterType="Long">
+        delete from ums_withdraw where id = #{id}
+    </delete>
+
+    <delete id="deleteUmsWithdrawByIds" parameterType="String">
+        delete from ums_withdraw where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <select id="queryWithdrawMoney" parameterType="java.util.Map" resultType="String">
+        SELECT sum(money) from ums_withdraw
+        where 1=1
+        <if test="customerId!=null and customerId!=-1">
+            and customer_id=#{customerId}
+        </if>
+        <if test="status != null">and status = #{status}</if>
+    </select>
+</mapper>

@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.setting.mapper.LsSmsSettingMapper">
+
+    <resultMap type="LsSmsSetting" id="LsSmsSettingResult">
+        <result property="id" column="id"/>
+        <result property="secret" column="secret"/>
+        <result property="url" column="url"/>
+        <result property="sign" column="sign"/>
+        <result property="templateId" column="template_id"/>
+        <result property="writeoffTemplateId" column="writeoff_template_id"/>
+        <result property="virtualOrderTemplateId" column="virtual_order_template_id"/>
+        <result property="key" column="key"/>
+        <result property="auditTemplateId" column="audit_template_id"/>
+        <result property="settlementTemplateId" column="settlement_template_id"/>
+        <result property="withdrawTemplateId" column="withdraw_template_id"/>
+    </resultMap>
+
+    <sql id="selectLsSmsSettingVo">
+        select id, secret, url, sign, template_id, writeoff_template_id, virtual_order_template_id, 'key', audit_template_id, settlement_template_id, withdraw_template_id from ls_sms_setting
+    </sql>
+
+    <select id="selectLsSmsSettingList" parameterType="LsSmsSetting" resultMap="LsSmsSettingResult">
+        <include refid="selectLsSmsSettingVo"/>
+        <where>
+            <if test="secret != null  and secret != ''">and secret = #{secret}</if>
+            <if test="url != null  and url != ''">and url = #{url}</if>
+            <if test="sign != null  and sign != ''">and sign = #{sign}</if>
+            <if test="templateId != null  and templateId != ''">and template_id = #{templateId}</if>
+            <if test="writeoffTemplateId != null  and writeoffTemplateId != ''">and writeoff_template_id =
+                #{writeoffTemplateId}
+            </if>
+            <if test="virtualOrderTemplateId != null  and virtualOrderTemplateId != ''">and virtual_order_template_id =
+                #{virtualOrderTemplateId}
+            </if>
+            <if test="key != null  and key != ''">and key = #{key}</if>
+            <if test="auditTemplateId != null  and auditTemplateId != ''">and audit_template_id = #{auditTemplateId}
+            </if>
+            <if test="settlementTemplateId != null  and settlementTemplateId != ''">and settlement_template_id =
+                #{settlementTemplateId}
+            </if>
+            <if test="withdrawTemplateId != null  and withdrawTemplateId != ''">and withdraw_template_id =
+                #{withdrawTemplateId}
+            </if>
+        </where>
+    </select>
+
+    <select id="selectLsSmsSettingById" parameterType="Long" resultMap="LsSmsSettingResult">
+        <include refid="selectLsSmsSettingVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertLsSmsSetting" parameterType="LsSmsSetting" useGeneratedKeys="true" keyProperty="id">
+        insert into ls_sms_setting
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="secret != null and secret != ''">secret,</if>
+            <if test="url != null">url,</if>
+            <if test="sign != null">sign,</if>
+            <if test="templateId != null">template_id,</if>
+            <if test="writeoffTemplateId != null">writeoff_template_id,</if>
+            <if test="virtualOrderTemplateId != null">virtual_order_template_id,</if>
+            <if test="key != null">key,</if>
+            <if test="auditTemplateId != null">audit_template_id,</if>
+            <if test="settlementTemplateId != null">settlement_template_id,</if>
+            <if test="withdrawTemplateId != null">withdraw_template_id,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="secret != null and secret != ''">#{secret},</if>
+            <if test="url != null">#{url},</if>
+            <if test="sign != null">#{sign},</if>
+            <if test="templateId != null">#{templateId},</if>
+            <if test="writeoffTemplateId != null">#{writeoffTemplateId},</if>
+            <if test="virtualOrderTemplateId != null">#{virtualOrderTemplateId},</if>
+            <if test="key != null">#{key},</if>
+            <if test="auditTemplateId != null">#{auditTemplateId},</if>
+            <if test="settlementTemplateId != null">#{settlementTemplateId},</if>
+            <if test="withdrawTemplateId != null">#{withdrawTemplateId},</if>
+        </trim>
+    </insert>
+
+    <update id="updateLsSmsSetting" parameterType="LsSmsSetting">
+        update ls_sms_setting
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="secret != null and secret != ''">secret = #{secret},</if>
+            <if test="url != null">url = #{url},</if>
+            <if test="sign != null">sign = #{sign},</if>
+            <if test="templateId != null">template_id = #{templateId},</if>
+            <if test="writeoffTemplateId != null">writeoff_template_id = #{writeoffTemplateId},</if>
+            <if test="virtualOrderTemplateId != null">virtual_order_template_id = #{virtualOrderTemplateId},</if>
+            <if test="key != null">key = #{key},</if>
+            <if test="auditTemplateId != null">audit_template_id = #{auditTemplateId},</if>
+            <if test="settlementTemplateId != null">settlement_template_id = #{settlementTemplateId},</if>
+            <if test="withdrawTemplateId != null">withdraw_template_id = #{withdrawTemplateId},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteLsSmsSettingById" parameterType="Long">
+        delete from ls_sms_setting where id = #{id}
+    </delete>
+
+    <delete id="deleteLsSmsSettingByIds" parameterType="String">
+        delete from ls_sms_setting where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

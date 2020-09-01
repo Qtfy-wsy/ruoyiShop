@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.setting.mapper.SCommunityBuySettingMapper">
+
+    <resultMap type="SCommunityBuySetting" id="SCommunityBuySettingResult">
+        <result property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="audit" column="audit"/>
+        <result property="smsAuditNotice" column="sms_audit_notice"/>
+        <result property="smsPayNotice" column="sms_pay_notice"/>
+        <result property="smsCommissionNotice" column="sms_commission_notice"/>
+    </resultMap>
+
+    <sql id="selectSCommunityBuySettingVo">
+        select id, name, audit, sms_audit_notice, sms_pay_notice, sms_commission_notice from s_community_buy_setting
+    </sql>
+
+    <select id="selectSCommunityBuySettingList" parameterType="SCommunityBuySetting"
+            resultMap="SCommunityBuySettingResult">
+        <include refid="selectSCommunityBuySettingVo"/>
+        <where>
+            <if test="name != null  and name != ''">and name like concat('%', #{name}, '%')</if>
+            <if test="audit != null  and audit != ''">and audit = #{audit}</if>
+            <if test="smsAuditNotice != null  and smsAuditNotice != ''">and sms_audit_notice = #{smsAuditNotice}</if>
+            <if test="smsPayNotice != null  and smsPayNotice != ''">and sms_pay_notice = #{smsPayNotice}</if>
+            <if test="smsCommissionNotice != null  and smsCommissionNotice != ''">and sms_commission_notice =
+                #{smsCommissionNotice}
+            </if>
+        </where>
+    </select>
+
+    <select id="selectSCommunityBuySettingById" parameterType="Long" resultMap="SCommunityBuySettingResult">
+        <include refid="selectSCommunityBuySettingVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertSCommunityBuySetting" parameterType="SCommunityBuySetting" useGeneratedKeys="true"
+            keyProperty="id">
+        insert into s_community_buy_setting
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="name != null">name,</if>
+            <if test="audit != null">audit,</if>
+            <if test="smsAuditNotice != null">sms_audit_notice,</if>
+            <if test="smsPayNotice != null">sms_pay_notice,</if>
+            <if test="smsCommissionNotice != null">sms_commission_notice,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="name != null">#{name},</if>
+            <if test="audit != null">#{audit},</if>
+            <if test="smsAuditNotice != null">#{smsAuditNotice},</if>
+            <if test="smsPayNotice != null">#{smsPayNotice},</if>
+            <if test="smsCommissionNotice != null">#{smsCommissionNotice},</if>
+        </trim>
+    </insert>
+
+    <update id="updateSCommunityBuySetting" parameterType="SCommunityBuySetting">
+        update s_community_buy_setting
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="name != null">name = #{name},</if>
+            <if test="audit != null">audit = #{audit},</if>
+            <if test="smsAuditNotice != null">sms_audit_notice = #{smsAuditNotice},</if>
+            <if test="smsPayNotice != null">sms_pay_notice = #{smsPayNotice},</if>
+            <if test="smsCommissionNotice != null">sms_commission_notice = #{smsCommissionNotice},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteSCommunityBuySettingById" parameterType="Long">
+        delete from s_community_buy_setting where id = #{id}
+    </delete>
+
+    <delete id="deleteSCommunityBuySettingByIds" parameterType="String">
+        delete from s_community_buy_setting where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

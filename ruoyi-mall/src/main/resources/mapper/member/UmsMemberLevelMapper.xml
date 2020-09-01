@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.member.mapper.UmsMemberLevelMapper">
+
+    <resultMap type="UmsMemberLevel" id="UmsMemberLevelResult">
+        <result property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="minMoney" column="min_money"/>
+        <result property="maxMoney" column="max_money"/>
+        <result property="discount" column="discount"/>
+        <result property="delFlag" column="del_flag"/>
+        <result property="createTime" column="create_time"/>
+        <result property="modifyTime" column="modify_time"/>
+        <result property="delTime" column="del_time"/>
+    </resultMap>
+
+    <sql id="selectUmsMemberLevelVo">
+        select id, name, min_money, max_money, discount, del_flag, create_time, modify_time, del_time from ums_member_level
+    </sql>
+
+    <select id="selectUmsMemberLevelList" parameterType="UmsMemberLevel" resultMap="UmsMemberLevelResult">
+        <include refid="selectUmsMemberLevelVo"/>
+        <where>
+            <if test="name != null  and name != ''">and name like concat('%', #{name}, '%')</if>
+            <if test="minMoney != null ">and min_money = #{minMoney}</if>
+            <if test="maxMoney != null ">and max_money = #{maxMoney}</if>
+            <if test="discount != null ">and discount = #{discount}</if>
+            <if test="modifyTime != null ">and modify_time = #{modifyTime}</if>
+            <if test="delTime != null ">and del_time = #{delTime}</if>
+        </where>
+    </select>
+
+    <select id="selectUmsMemberLevelById" parameterType="Long" resultMap="UmsMemberLevelResult">
+        <include refid="selectUmsMemberLevelVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertUmsMemberLevel" parameterType="UmsMemberLevel" useGeneratedKeys="true" keyProperty="id">
+        insert into ums_member_level
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="name != null">name,</if>
+            <if test="minMoney != null">min_money,</if>
+            <if test="maxMoney != null">max_money,</if>
+            <if test="discount != null">discount,</if>
+            <if test="delFlag != null">del_flag,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="modifyTime != null">modify_time,</if>
+            <if test="delTime != null">del_time,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="name != null">#{name},</if>
+            <if test="minMoney != null">#{minMoney},</if>
+            <if test="maxMoney != null">#{maxMoney},</if>
+            <if test="discount != null">#{discount},</if>
+            <if test="delFlag != null">#{delFlag},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="modifyTime != null">#{modifyTime},</if>
+            <if test="delTime != null">#{delTime},</if>
+        </trim>
+    </insert>
+
+    <update id="updateUmsMemberLevel" parameterType="UmsMemberLevel">
+        update ums_member_level
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="name != null">name = #{name},</if>
+            <if test="minMoney != null">min_money = #{minMoney},</if>
+            <if test="maxMoney != null">max_money = #{maxMoney},</if>
+            <if test="discount != null">discount = #{discount},</if>
+            <if test="delFlag != null">del_flag = #{delFlag},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="modifyTime != null">modify_time = #{modifyTime},</if>
+            <if test="delTime != null">del_time = #{delTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteUmsMemberLevelById" parameterType="Long">
+        delete from ums_member_level where id = #{id}
+    </delete>
+
+    <delete id="deleteUmsMemberLevelByIds" parameterType="String">
+        delete from ums_member_level where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    <select id="queryAllCustomerLevels" resultMap="UmsMemberLevelResult">
+        select * from ums_member_level  where del_flag = '0' order by min_money  ASC
+    </select>
+</mapper>

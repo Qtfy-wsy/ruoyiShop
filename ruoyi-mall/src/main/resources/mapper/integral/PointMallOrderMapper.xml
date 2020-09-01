@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.integral.mapper.PointMallOrderMapper">
+
+
+    <resultMap id="pointMallOrder" type="com.ruoyi.integral.domain.PointMallOrder">
+        <result column="id" property="id"/>
+        <result column="customer_id" property="customerId"/>
+        <result column="customer_name" property="customerName"/>
+        <result column="sku_id" property="skuId"/>
+        <result column="num" property="num"/>
+        <result column="code" property="code"/>
+        <result column="receiver" property="receiver"/>
+        <result column="mobile" property="mobile"/>
+        <result column="phone" property="phone"/>
+        <result column="zip_code" property="zipCode"/>
+        <result column="address" property="address"/>
+        <result column="point" property="point"/>
+        <result column="status" property="status"/>
+        <result column="logistics_companyname" property="logisticsCompanyName"/>
+        <result column="logistics_code" property="logisticsCode"/>
+        <result column="create_time" property="createTime"/>
+        <result column="delivery_time" property="deliveryTime"/>
+        <result column="receipt_time" property="receiptTime"/>
+        <result column="sku_info" property="skuInfo"/>
+    </resultMap>
+
+    <insert id="savePointMallOrder" parameterType="com.ruoyi.integral.domain.PointMallOrder">
+        insert into sms_point_order
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="customerId != null and customerId !=''">
+                customer_id,
+            </if>
+            <if test="skuId != null">
+                sku_id,
+            </if>
+            <if test="num != null">
+                num,
+            </if>
+            <if test="code != null">
+                code,
+            </if>
+            <if test="receiver != null">
+                receiver,
+            </if>
+            <if test="mobile != null">
+                mobile,
+            </if>
+            <if test="phone != null">
+                phone,
+            </if>
+            <if test="zipCode != null">
+                zip_code,
+            </if>
+            <if test="address != null">
+                address,
+            </if>
+            <if test="point != null">
+                point,
+            </if>
+            <if test="skuInfo != null">
+                sku_info,
+            </if>
+            status,create_time
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="customerId != null and customerId !=''">
+                #{customerId},
+            </if>
+            <if test="skuId != null">
+                #{skuId},
+            </if>
+            <if test="num != null">
+                #{num},
+            </if>
+            <if test="code != null">
+                #{code},
+            </if>
+            <if test="receiver != null">
+                #{receiver},
+            </if>
+            <if test="mobile != null">
+                #{mobile},
+            </if>
+            <if test="phone != null">
+                #{phone},
+            </if>
+            <if test="zipCode != null">
+                #{zipCode},
+            </if>
+            <if test="address != null">
+                #{address},
+            </if>
+            <if test="point != null">
+                #{point},
+            </if>
+            <if test="skuInfo != null">
+                #{skuInfo},
+            </if>
+            '0',now()
+        </trim>
+    </insert>
+
+
+    <update id="deliverPointMallOrder" parameterType="java.util.Map">
+        update sms_point_order
+        <set>
+            <if test="companyName != null">
+                logistics_companyname = #{companyName},
+            </if>
+            <if test="logisticsCode != null">
+                logistics_code = #{logisticsCode},
+            </if>
+            delivery_time = now(),status='1'
+        </set>
+        where id = #{id}
+    </update>
+
+    <update id="confirmReceipt" parameterType="java.util.Map">
+        update sms_point_order
+        set status='2'
+        where id = #{id} and customer_id=#{customerId}
+    </update>
+
+
+    <select id="queryPointMallOrderById" parameterType="java.util.Map" resultMap="pointMallOrder">
+        select * from sms_point_order where id=#{id}
+        <if test="customerId !=null and customerId !=''">
+            and customer_id=#{customerId}
+        </if>
+    </select>
+    <select id="queryPointMallOrders" parameterType="java.util.Map" resultMap="pointMallOrder">
+        select * from sms_point_order where 1=1
+        <if test="status!=null and status!=''">
+            and status=#{status}
+        </if>
+        <if test="customerId!=null and customerId !=''">
+            and customer_id=#{customerId}
+        </if>
+        <if test="code!=null and code !=''">
+            and code =#{code}
+        </if>
+        <if test="mobile!=null and mobile !=''">
+            and mobile =#{mobile}
+        </if>
+        <if test="receiver!=null and receiver !=''">
+            and receiver =#{receiver}
+        </if>
+        <if test='timeType=="1"'>
+            AND DATE_SUB(CURDATE(), INTERVAL 1 MONTH) &lt;= date(sms_point_order.create_time)
+        </if>
+
+        <if test='timeType=="2"'>
+            AND DATE_SUB(CURDATE(), INTERVAL 1 MONTH) &gt; date(sms_point_order.create_time)
+        </if>
+        order BY create_time desc
+        limit #{startRowNum},#{pageSize}
+    </select>
+    <select id="queryPointMallOrdersCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+        select count(1) from sms_point_order where 1=1
+        <if test="status!=null and status!=''">
+            and status=#{status}
+        </if>
+        <if test="customerId!=null and customerId !=''">
+            and customer_id=#{customerId}
+        </if>
+        <if test="code!=null and code !=''">
+            and code =#{code}
+        </if>
+        <if test="mobile!=null and mobile !=''">
+            and mobile =#{mobile}
+        </if>
+        <if test="receiver!=null and receiver !=''">
+            and receiver =#{receiver}
+        </if>
+        <if test='timeType=="1"'>
+            AND DATE_SUB(CURDATE(), INTERVAL 1 MONTH) &lt;= date(sms_point_order.create_time)
+        </if>
+
+        <if test='timeType=="2"'>
+            AND DATE_SUB(CURDATE(), INTERVAL 1 MONTH) &gt; date(sms_point_order.create_time)
+        </if>
+    </select>
+
+    <select id="queryHotPointSkusId" resultMap="pointMallOrder">
+        select id,sku_id,IFNULL(sum(num),0) num from sms_point_order  where status ='2'
+        GROUP BY sku_id ORDER BY num desc limit 0,50
+    </select>
+
+    <select id="toDeliverPointOrderCount" parameterType="java.lang.Long" resultType="java.lang.Integer">
+        select count(1) from sms_point_order where customer_id = #{customerId} and status = '0'
+    </select>
+
+    <select id="toReceiptPointOrderCount" parameterType="java.lang.Long" resultType="java.lang.Integer">
+        select count(1) from sms_point_order where customer_id = #{customerId} and status = '1'
+    </select>
+
+</mapper>

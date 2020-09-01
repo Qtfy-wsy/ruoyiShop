@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.sms.mapper.SmsHomeRecommendSubjectMapper">
+
+    <resultMap type="SmsHomeRecommendSubject" id="SmsHomeRecommendSubjectResult">
+        <result property="id" column="id"/>
+        <result property="subjectId" column="subject_id"/>
+        <result property="subjectName" column="subject_name"/>
+        <result property="recommendStatus" column="recommend_status"/>
+        <result property="sort" column="sort"/>
+        <result property="storeId" column="store_id"/>
+        <result property="pic" column="pic"/>
+        <result property="readCount" column="read_count"/>
+        <result property="description" column="description"/>
+    </resultMap>
+
+    <sql id="selectSmsHomeRecommendSubjectVo">
+        select id, subject_id, subject_name, recommend_status, sort, store_id, pic, read_count, description from sms_home_recommend_subject
+    </sql>
+
+    <select id="selectSmsHomeRecommendSubjectList" parameterType="SmsHomeRecommendSubject"
+            resultMap="SmsHomeRecommendSubjectResult">
+        <include refid="selectSmsHomeRecommendSubjectVo"/>
+        <where>
+            <if test="subjectId != null ">
+                and subject_id = #{subjectId}
+            </if>
+            <if test="subjectName != null  and subjectName != ''">
+                and subject_name like concat('%', #{subjectName}, '%')
+            </if>
+            <if test="recommendStatus != null ">
+                and recommend_status = #{recommendStatus}
+            </if>
+            <if test="storeId != null ">
+                and store_id = #{storeId}
+            </if>
+        </where>
+        order by sort asc
+    </select>
+
+    <select id="selectSmsHomeRecommendSubjectById" parameterType="Long" resultMap="SmsHomeRecommendSubjectResult">
+        <include refid="selectSmsHomeRecommendSubjectVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertSmsHomeRecommendSubject" parameterType="SmsHomeRecommendSubject" useGeneratedKeys="true"
+            keyProperty="id">
+        insert into sms_home_recommend_subject
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="subjectId != null">subject_id,
+            </if>
+            <if test="subjectName != null">subject_name,
+            </if>
+            <if test="recommendStatus != null">recommend_status,
+            </if>
+            <if test="sort != null">sort,
+            </if>
+            <if test="storeId != null">store_id,
+            </if>
+            <if test="pic != null">pic,
+            </if>
+            <if test="readCount != null">read_count,
+            </if>
+            <if test="description != null">description,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="subjectId != null">#{subjectId},
+            </if>
+            <if test="subjectName != null">#{subjectName},
+            </if>
+            <if test="recommendStatus != null">#{recommendStatus},
+            </if>
+            <if test="sort != null">#{sort},
+            </if>
+            <if test="storeId != null">#{storeId},
+            </if>
+            <if test="pic != null">#{pic},
+            </if>
+            <if test="readCount != null">#{readCount},
+            </if>
+            <if test="description != null">#{description},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateSmsHomeRecommendSubject" parameterType="SmsHomeRecommendSubject">
+        update sms_home_recommend_subject
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="subjectId != null">subject_id =
+                #{subjectId},
+            </if>
+            <if test="subjectName != null">subject_name =
+                #{subjectName},
+            </if>
+            <if test="recommendStatus != null">recommend_status =
+                #{recommendStatus},
+            </if>
+            <if test="sort != null">sort =
+                #{sort},
+            </if>
+            <if test="storeId != null">store_id =
+                #{storeId},
+            </if>
+            <if test="pic != null">pic =
+                #{pic},
+            </if>
+            <if test="readCount != null">read_count =
+                #{readCount},
+            </if>
+            <if test="description != null">description =
+                #{description},
+            </if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteSmsHomeRecommendSubjectById" parameterType="Long">
+        delete from sms_home_recommend_subject where id = #{id}
+    </delete>
+
+    <delete id="deleteSmsHomeRecommendSubjectByIds" parameterType="String">
+        delete from sms_home_recommend_subject where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.order.mapper.CustomerPanicRecordMapper">
+
+    <resultMap id="customerPanicRecord" type="com.ruoyi.order.domain.CustomerPanicRecord">
+        <result column="id" property="id"/>
+        <result column="customer_id" property="customerId"/>
+        <result column="marketing_id" property="marketingId"/>
+        <result column="use_num" property="useNum"/>
+        <result column="panic_num" property="panicNum"/>
+        <result column="order_id" property="orderId"/>
+    </resultMap>
+
+
+    <select id="queryByCustomerIdAndMarktingId" parameterType="java.util.Map" resultMap="customerPanicRecord">
+        select * from ums_member_panic_record where customer_id=#{customerId} and marketing_id=#{marketingId}
+    </select>
+
+    <update id="updateCustomerPanicRecord" parameterType="java.util.Map">
+        update ums_member_panic_record set use_num = use_num+#{num} where panic_num-use_num >= #{num}  and customer_id = #{customerId} and marketing_id = #{marketingId}
+    </update>
+    <insert id="addCustomerPanicRecord" parameterType="com.ruoyi.order.mapper.CustomerPanicRecordMapper">
+        insert into ums_member_panic_record
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="customerId != null">
+                customer_id,
+            </if>
+            <if test="marketingId != null">
+                marketing_id,
+            </if>
+            <if test="useNum != null">
+                use_num,
+            </if>
+            <if test="panicNum != null">
+                panic_num,
+            </if>
+            <if test="orderId != null">
+                order_id
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="customerId != null">
+                #{customerId},
+            </if>
+            <if test="marketingId != null">
+                #{marketingId},
+            </if>
+            <if test="useNum != null">
+                #{useNum},
+            </if>
+            <if test="panicNum != null">
+                #{panicNum},
+            </if>
+            <if test="orderId != null">
+                #{orderId}
+            </if>
+        </trim>
+    </insert>
+
+
+    <select id="queryPanicUsedCount" parameterType="java.lang.Long" resultType="java.lang.Integer">
+     select IFNULL(sum(use_num),0) from ums_member_panic_record  where marketing_id = #{panicbuyId}
+    </select>
+
+</mapper>

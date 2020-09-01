@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.setting.mapper.AreaMapper">
+
+
+    <resultMap id="province" type="com.ruoyi.setting.domain.LsProvince">
+        <result column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="sort" property="sort"/>
+        <result column="del_flag" property="delFlag"/>
+        <result column="create_time " property="createTime"/>
+        <result column="modify_time" property="modifyTime"/>
+        <result column="del_time" property="delTime"/>
+    </resultMap>
+
+    <resultMap id="city" type="com.ruoyi.setting.domain.LsCity">
+        <result column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="province_id" property="provinceId"/>
+        <result column="sort" property="sort"/>
+        <result column="del_flag" property="delFlag"/>
+        <result column="create_time " property="createTime"/>
+        <result column="modify_time" property="modifyTime"/>
+        <result column="del_time" property="delTime"/>
+    </resultMap>
+
+
+    <resultMap id="district" type="com.ruoyi.setting.domain.LsDistrict">
+        <result column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="city_id" property="cityId"/>
+        <result column="sort" property="sort"/>
+        <result column="del_flag" property="delFlag"/>
+        <result column="create_time " property="createTime"/>
+        <result column="modify_time" property="modifyTime"/>
+        <result column="del_time" property="delTime"/>
+    </resultMap>
+
+    <insert id="addProvince" parameterType="com.ruoyi.setting.domain.LsProvince">
+        insert into ls_province
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="name != null">
+                name,
+            </if>
+            <if test="sort != null">
+                sort,
+            </if>
+            <if test="delFlag != null">
+                del_flag,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="modifyTime != null">
+                modify_time,
+            </if>
+            <if test="delTime != null">
+                del_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="name != null">
+                #{name},
+            </if>
+            <if test="sort != null">
+                #{sort},
+            </if>
+            <if test="delFlag != null">
+                #{delFlag},
+            </if>
+            <if test="createTime != null">
+                #{createTime},
+            </if>
+            <if test="modifyTime != null">
+                #{modifyTime},
+            </if>
+            <if test="delTime != null">
+                #{delTime},
+            </if>
+        </trim>
+    </insert>
+
+
+    <insert id="addCity" parameterType="com.ruoyi.setting.domain.LsCity">
+        insert into ls_city
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="name != null">
+                name,
+            </if>
+            <if test="provinceId != null">
+                province_id,
+            </if>
+            <if test="sort != null">
+                sort,
+            </if>
+            <if test="delFlag != null">
+                del_flag,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="modifyTime != null">
+                modify_time,
+            </if>
+            <if test="delTime != null">
+                del_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="name != null">
+                #{name},
+            </if>
+            <if test="provinceId != null">
+                #{provinceId},
+            </if>
+            <if test="sort != null">
+                #{sort},
+            </if>
+            <if test="delFlag != null">
+                #{delFlag},
+            </if>
+            <if test="createTime != null">
+                #{createTime},
+            </if>
+            <if test="modifyTime != null">
+                #{modifyTime},
+            </if>
+            <if test="delTime != null">
+                #{delTime},
+            </if>
+        </trim>
+    </insert>
+
+
+    <insert id="addDistrict" parameterType="com.ruoyi.setting.domain.LsDistrict">
+        insert into ls_district
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="name != null">
+                name,
+            </if>
+            <if test="cityId != null">
+                city_id,
+            </if>
+            <if test="sort != null">
+                sort,
+            </if>
+            <if test="delFlag != null">
+                del_flag,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="modifyTime != null">
+                modify_time,
+            </if>
+            <if test="delTime != null">
+                del_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="name != null">
+                #{name},
+            </if>
+            <if test="cityId != null">
+                #{cityId},
+            </if>
+            <if test="sort != null">
+                #{sort},
+            </if>
+            <if test="delFlag != null">
+                #{delFlag},
+            </if>
+            <if test="createTime != null">
+                #{createTime},
+            </if>
+            <if test="modifyTime != null">
+                #{modifyTime},
+            </if>
+            <if test="delTime != null">
+                #{delTime},
+            </if>
+        </trim>
+    </insert>
+
+
+    <select id="queryAllProvinces" resultMap="province">
+        select * from ls_province where  del_flag = '0'  order by sort asc
+    </select>
+
+    <select id="queryCityByProvinceId" parameterType="java.lang.Long" resultMap="city">
+        select * from ls_city where  province_id = #{provinceId} order by sort asc
+    </select>
+
+
+    <select id="queryDistrictByCityId" parameterType="java.lang.Long" resultMap="district">
+        select * from ls_district where city_id = #{cityId}   order by sort asc
+    </select>
+
+
+    <update id="deleteProvinceById" parameterType="java.lang.Long">
+        update ls_province
+        set del_flag = '1',del_time = now()
+        where id = #{provinceId}
+    </update>
+
+    <update id="deleteCityById" parameterType="java.lang.Long">
+        update ls_city
+        set del_flag = '1',del_time = now()
+        where id = #{cityId}
+    </update>
+
+    <update id="deleteDistrictById" parameterType="java.lang.Long">
+        update ls_district
+        set del_flag = '1',del_time = now()
+        where id = #{districtId}
+    </update>
+
+    <select id="queryProvinceById" parameterType="java.lang.Long" resultMap="province">
+        select * from ls_province where id = #{id}
+    </select>
+
+    <select id="queryCityById" parameterType="java.lang.Long" resultMap="city">
+        select * from ls_city where id = #{id}
+    </select>
+    <select id="queryDistrictById" parameterType="java.lang.Long" resultMap="district">
+        select * from ls_district where id = #{id}
+    </select>
+
+    <update id="updateProvince" parameterType="com.ruoyi.setting.domain.LsProvince">
+        update ls_province
+        <set>
+            <if test="name != null">
+                name = #{name},
+            </if>
+            <if test="sort != null">
+                sort = #{sort},
+            </if>
+            modify_time = now()
+        </set>
+        where id = #{id}
+    </update>
+
+    <update id="updateCity" parameterType="com.ruoyi.setting.domain.LsCity">
+        update ls_city
+        <set>
+            <if test="name != null">
+                name = #{name},
+            </if>
+            <if test="sort != null">
+                sort = #{sort},
+            </if>
+            modify_time = now()
+        </set>
+        where id = #{id}
+    </update>
+    <update id="updateDistrict" parameterType="com.ruoyi.setting.domain.LsDistrict">
+        update ls_district
+        <set>
+            <if test="name != null">
+                name = #{name},
+            </if>
+            <if test="sort != null">
+                sort = #{sort},
+            </if>
+            modify_time = now()
+        </set>
+        where id = #{id}
+    </update>
+    <select id="queryCityIdByName" parameterType="java.lang.String" resultType="long">
+       select id from ls_city where name=#{cityName} limit 1
+    </select>
+</mapper>

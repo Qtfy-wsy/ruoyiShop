@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.setting.mapper.LsStationLetterMapper">
+
+    <resultMap type="LsStationLetter" id="LsStationLetterResult">
+        <result property="id" column="id"/>
+        <result property="customerId" column="customer_id"/>
+        <result property="title" column="title"/>
+        <result property="content" column="content"/>
+        <result property="isRead" column="is_read"/>
+        <result property="delFlag" column="del_flag"/>
+        <result property="createTime" column="create_time"/>
+    </resultMap>
+
+    <sql id="selectLsStationLetterVo">
+        select id, customer_id, title, content, is_read, del_flag, create_time from ls_station_letter
+    </sql>
+    <insert id="addStationLetters" parameterType="LsStationLetter">
+        insert into ls_station_letter
+
+        (customer_id,title, content, is_read, del_flag,create_time)
+        values
+        <foreach collection="list" item="stationLetter" index="index" separator=",">
+            (
+            #{stationLetter.customerId},
+            #{stationLetter.title},
+            #{stationLetter.content},
+            '0',
+            '0',
+            now()
+            )
+        </foreach>
+    </insert>
+
+    <select id="queryStationLettersByCustomerId" parameterType="java.util.Map" resultMap="LsStationLetterResult">
+        select * from ls_station_letter
+        where  customer_id = #{customerId}
+        order by create_time desc
+        limit #{startRowNum},#{pageSize}
+    </select>
+
+    <select id="queryStationLettersCountByCustomerId" parameterType="java.util.Map" resultType="java.lang.Integer">
+        select count(1) from ls_station_letter
+        where  customer_id = #{customerId}
+    </select>
+
+    <update id="deleteStationLetters" parameterType="java.lang.Long">
+        UPDATE ls_station_letter SET del_flag = '1' WHERE id = #{id}
+    </update>
+
+    <update id="updateStationLettersIsRead" parameterType="java.lang.Long">
+        UPDATE ls_station_letter SET is_read = '1' WHERE id = #{id} and  customer_id = #{customerId}
+    </update>
+
+    <select id="unReadNum" parameterType="java.lang.Long" resultType="java.lang.Integer">
+           select count(1) from ls_station_letter
+        where  customer_id = #{customerId} and is_read = '0'
+    </select>
+    <select id="selectLsStationLetterList" parameterType="LsStationLetter" resultMap="LsStationLetterResult">
+        <include refid="selectLsStationLetterVo"/>
+        <where>
+            <if test="customerId != null ">and customer_id = #{customerId}</if>
+            <if test="title != null  and title != ''">and title = #{title}</if>
+            <if test="content != null  and content != ''">and content = #{content}</if>
+            <if test="isRead != null  and isRead != ''">and is_read = #{isRead}</if>
+        </where>
+    </select>
+
+    <select id="selectLsStationLetterById" parameterType="Long" resultMap="LsStationLetterResult">
+        <include refid="selectLsStationLetterVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertLsStationLetter" parameterType="LsStationLetter" useGeneratedKeys="true" keyProperty="id">
+        insert into ls_station_letter
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="customerId != null">customer_id,</if>
+            <if test="title != null and title != ''">title,</if>
+            <if test="content != null and content != ''">content,</if>
+            <if test="isRead != null and isRead != ''">is_read,</if>
+            <if test="delFlag != null">del_flag,</if>
+            <if test="createTime != null">create_time,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="customerId != null">#{customerId},</if>
+            <if test="title != null and title != ''">#{title},</if>
+            <if test="content != null and content != ''">#{content},</if>
+            <if test="isRead != null and isRead != ''">#{isRead},</if>
+            <if test="delFlag != null">#{delFlag},</if>
+            <if test="createTime != null">#{createTime},</if>
+        </trim>
+    </insert>
+
+    <update id="updateLsStationLetter" parameterType="LsStationLetter">
+        update ls_station_letter
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="customerId != null">customer_id = #{customerId},</if>
+            <if test="title != null and title != ''">title = #{title},</if>
+            <if test="content != null and content != ''">content = #{content},</if>
+            <if test="isRead != null and isRead != ''">is_read = #{isRead},</if>
+            <if test="delFlag != null">del_flag = #{delFlag},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteLsStationLetterById" parameterType="Long">
+        delete from ls_station_letter where id = #{id}
+    </delete>
+
+    <delete id="deleteLsStationLetterByIds" parameterType="String">
+        delete from ls_station_letter where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

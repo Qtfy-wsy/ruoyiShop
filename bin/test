@@ -1,0 +1,21 @@
+ls_spu pms_goods
+pms_sku pms_sku
+ls_coupon sms_coupon
+ls_back oms_back
+ls_customer ums_member
+ls_marketing sms_marketing
+ls_order oms_order
+ls_red  sms_red
+ls_seckill sms_seckill
+ls_point sms_point
+ls_shipping pms_shipping
+ls_store_ t_store_
+ls_pre ums_pre
+cms_help cms_help
+ls_category pms_category
+ls_logistics oms_logistics
+ls_brand pms_brand
+ls_combination
+ls_community s_community
+ls_attribute pms_attribute
+cms_article cms_article

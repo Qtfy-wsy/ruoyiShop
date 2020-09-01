@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.marketing.mapper.PanicBuyMapper">
+
+    <resultMap id="panicBuy" type="com.ruoyi.marketing.domain.PanicBuy">
+        <result column="id" property="id"/>
+        <result column="marketing_id" property="marketingId"/>
+        <result column="discount" property="discount"/>
+        <result column="limit_num" property="limitNum"/>
+        <result column="skuId" property="skuId"/>
+        <result column="store_id" property="storeId"/>
+        <result column="is_show" property="isShow"/>
+        <result column="sort" property="sort"/>
+        <result column="starttime" property="startTime"/>
+        <result column="endtime" property="endTime"/>
+    </resultMap>
+
+    <update id="updatePanicBuy" parameterType="com.ruoyi.marketing.domain.PanicBuy">
+        update sms_marketing_panicbuy set discount = #{discount},limit_num=#{limitNum}
+        where id = #{id}
+    </update>
+
+    <select id="queryByMarketingId" parameterType="java.util.Map" resultMap="panicBuy">
+        select * from sms_marketing_panicbuy where marketing_id = #{marketingId}
+        <if test="skuId != null">
+            and skuId = #{skuId}
+        </if>
+    </select>
+
+    <delete id="deletePanicBuy" parameterType="java.util.Map">
+        delete from sms_marketing_panicbuy where marketing_id = #{marketingId}
+        <if test="idList != null">
+            and id not in
+            <foreach collection="idList" index="index" item="item" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+    </delete>
+
+    <insert id="addPanicBuy" parameterType="com.ruoyi.marketing.domain.PanicBuy" keyProperty="id"
+            useGeneratedKeys="true">
+        insert into sms_marketing_panicbuy
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="marketingId != null">
+                marketing_id,
+            </if>
+            <if test="discount != null">
+                discount,
+            </if>
+            <if test="limitNum != null">
+                limit_num,
+            </if>
+            <if test="skuId != null">
+                skuId,
+            </if>
+            <if test="storeId != null">
+                store_id
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="marketingId != null">
+                #{marketingId},
+            </if>
+            <if test="discount != null">
+                #{discount},
+            </if>
+            <if test="limitNum != null">
+                #{limitNum},
+            </if>
+            <if test="skuId != null">
+                #{skuId},
+            </if>
+            <if test="storeId != null">
+                #{storeId}
+            </if>
+        </trim>
+    </insert>
+
+    <select id="queryStorePanicBuyList" parameterType="java.util.Map" resultMap="panicBuy">
+        select lmp.* ,lm.starttime,lm.endtime from sms_marketing_panicbuy lmp
+        join sms_marketing lm on lm.id = lmp.marketing_id
+        where lmp.store_id = #{storeId} and lm.del_flag = '0'  and lm.endtime > now()
+        order by lm.starttime desc
+        limit #{startRowNum},#{pageSize}
+    </select>
+
+    <select id="queryStorePanicBuyCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+        select count(1) from sms_marketing_panicbuy lmp
+        join sms_marketing lm on lm.id = lmp.marketing_id
+        where lmp.store_id = #{storeId} and lm.del_flag = '0'  and lm.endtime > now()
+    </select>
+
+    <update id="updatePanicBuyShow" parameterType="java.util.Map">
+        update sms_marketing_panicbuy
+        <set>
+            <if test="isShow != null and isShow != ''">
+                is_show = #{isShow},
+            </if>
+            <if test="sort != null">
+                sort = #{sort},
+            </if>
+        </set>
+        where id = #{panicBuyId} and store_id = #{storeId}
+    </update>
+
+
+    <select id="queryPanicBuysByTime" parameterType="java.util.Map" resultMap="panicBuy">
+        select p.* from sms_marketing_panicbuy p JOIN sms_marketing m on p.marketing_id = m.id and m. m.store_id = #{storeId} and m.starttime = #{time}
+    </select>
+
+    <select id="queryById" parameterType="java.lang.Long" resultMap="panicBuy">
+        select *  from sms_marketing_panicbuy where id = #{id}
+    </select>
+
+    <select id="queryStorePanicBuyListForSite" parameterType="java.util.Map" resultMap="panicBuy">
+        select lmp.*,lm.starttime from sms_marketing_panicbuy lmp
+        join sms_marketing lm on lm.id = lmp.marketing_id
+        where lmp.store_id = #{storeId} and lm. lmp.is_show = '1' and lm.endtime > now()
+        order by lmp.sort
+        limit #{startRowNum},#{pageSize}
+    </select>
+
+    <select id="queryStorePanicBuyCountForSite" parameterType="java.util.Map" resultType="java.lang.Integer">
+        select count(1) from sms_marketing_panicbuy lmp
+        join sms_marketing lm on lm.id = lmp.marketing_id
+        where lmp.store_id = #{storeId} and lm. lmp.is_show = '1' and lm.endtime > now()
+    </select>
+
+    <delete id="deletePanicBuyByIds" parameterType="java.util.Map">
+        delete from sms_marketing_panicbuy where marketing_id = #{marketingId}
+        and id in
+        <foreach collection="panicBuyIdList" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </delete>
+
+</mapper>

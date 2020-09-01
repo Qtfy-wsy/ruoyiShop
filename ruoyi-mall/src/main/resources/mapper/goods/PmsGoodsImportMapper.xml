@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.goods.mapper.PmsGoodsImportMapper">
+
+    <resultMap type="PmsGoodsImport" id="PmsGoodsImportResult">
+        <result property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="subTitle" column="sub_title"/>
+        <result property="price" column="price"/>
+        <result property="seoTitle" column="seo_title"/>
+        <result property="seoKeywords" column="seo_keywords"/>
+        <result property="seoDesc" column="seo_desc"/>
+        <result property="isRelease" column="is_release"/>
+        <result property="delFlag" column="del_flag"/>
+    </resultMap>
+
+    <sql id="selectPmsGoodsImportVo">
+        select id, name, sub_title, price, seo_title, seo_keywords, seo_desc, is_release, del_flag from pms_goods_import
+    </sql>
+
+    <select id="selectPmsGoodsImportList" parameterType="PmsGoodsImport" resultMap="PmsGoodsImportResult">
+        <include refid="selectPmsGoodsImportVo"/>
+        <where>
+            <if test="name != null  and name != ''">and name like concat('%', #{name}, '%')</if>
+            <if test="subTitle != null  and subTitle != ''">and sub_title = #{subTitle}</if>
+            <if test="price != null ">and price = #{price}</if>
+            <if test="seoTitle != null  and seoTitle != ''">and seo_title = #{seoTitle}</if>
+            <if test="seoKeywords != null  and seoKeywords != ''">and seo_keywords = #{seoKeywords}</if>
+            <if test="seoDesc != null  and seoDesc != ''">and seo_desc = #{seoDesc}</if>
+            <if test="isRelease != null  and isRelease != ''">and is_release = #{isRelease}</if>
+        </where>
+    </select>
+
+    <select id="selectPmsGoodsImportById" parameterType="Long" resultMap="PmsGoodsImportResult">
+        <include refid="selectPmsGoodsImportVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertPmsGoodsImport" parameterType="PmsGoodsImport" useGeneratedKeys="true" keyProperty="id">
+        insert into pms_goods_import
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="name != null">name,</if>
+            <if test="subTitle != null">sub_title,</if>
+            <if test="price != null">price,</if>
+            <if test="seoTitle != null">seo_title,</if>
+            <if test="seoKeywords != null">seo_keywords,</if>
+            <if test="seoDesc != null">seo_desc,</if>
+            <if test="isRelease != null">is_release,</if>
+            <if test="delFlag != null">del_flag,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="name != null">#{name},</if>
+            <if test="subTitle != null">#{subTitle},</if>
+            <if test="price != null">#{price},</if>
+            <if test="seoTitle != null">#{seoTitle},</if>
+            <if test="seoKeywords != null">#{seoKeywords},</if>
+            <if test="seoDesc != null">#{seoDesc},</if>
+            <if test="isRelease != null">#{isRelease},</if>
+            <if test="delFlag != null">#{delFlag},</if>
+        </trim>
+    </insert>
+
+    <update id="updatePmsGoodsImport" parameterType="PmsGoodsImport">
+        update pms_goods_import
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="name != null">name = #{name},</if>
+            <if test="subTitle != null">sub_title = #{subTitle},</if>
+            <if test="price != null">price = #{price},</if>
+            <if test="seoTitle != null">seo_title = #{seoTitle},</if>
+            <if test="seoKeywords != null">seo_keywords = #{seoKeywords},</if>
+            <if test="seoDesc != null">seo_desc = #{seoDesc},</if>
+            <if test="isRelease != null">is_release = #{isRelease},</if>
+            <if test="delFlag != null">del_flag = #{delFlag},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deletePmsGoodsImportById" parameterType="Long">
+        delete from pms_goods_import where id = #{id}
+    </delete>
+
+    <delete id="deletePmsGoodsImportByIds" parameterType="String">
+        delete from pms_goods_import where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

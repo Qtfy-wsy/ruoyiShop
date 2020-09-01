@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.goods.mapper.PmsAttributeValueMapper">
+
+    <resultMap type="PmsAttributeValue" id="PmsAttributeValueResult">
+        <result property="id" column="id"/>
+        <result property="attributeId" column="attribute_id"/>
+        <result property="typeId" column="type_id"/>
+        <result property="value" column="value"/>
+        <result property="delFlag" column="del_flag"/>
+    </resultMap>
+
+    <sql id="selectPmsAttributeValueVo">
+        select id, attribute_id, type_id, value, del_flag from pms_attribute_value
+    </sql>
+
+    <select id="selectPmsAttributeValueList" parameterType="PmsAttributeValue" resultMap="PmsAttributeValueResult">
+        <include refid="selectPmsAttributeValueVo"/>
+        <where>
+            <if test="value != null  and value != ''">and value = #{value}</if>
+        </where>
+    </select>
+
+    <select id="selectPmsAttributeValueById" parameterType="String" resultMap="PmsAttributeValueResult">
+        <include refid="selectPmsAttributeValueVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertPmsAttributeValue" parameterType="PmsAttributeValue">
+        insert into pms_attribute_value
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="attributeId != null">attribute_id,</if>
+            <if test="typeId != null">type_id,</if>
+            <if test="value != null and value != ''">value,</if>
+            <if test="delFlag != null">del_flag,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="attributeId != null">#{attributeId},</if>
+            <if test="typeId != null">#{typeId},</if>
+            <if test="value != null and value != ''">#{value},</if>
+            <if test="delFlag != null">#{delFlag},</if>
+        </trim>
+    </insert>
+
+    <update id="updatePmsAttributeValue" parameterType="PmsAttributeValue">
+        update pms_attribute_value
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="attributeId != null">attribute_id = #{attributeId},</if>
+            <if test="typeId != null">type_id = #{typeId},</if>
+            <if test="value != null and value != ''">value = #{value},</if>
+            <if test="delFlag != null">del_flag = #{delFlag},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deletePmsAttributeValueById" parameterType="String">
+        delete from pms_attribute_value where id = #{id}
+    </delete>
+
+    <delete id="deletePmsAttributeValueByIds" parameterType="String">
+        delete from pms_attribute_value where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.order.mapper.OmsTransRecordsMapper">
+
+    <resultMap type="OmsTransRecords" id="OmsTransRecordsResult">
+        <result property="id" column="id"/>
+        <result property="lsTransCode" column="ls_trans_code"/>
+        <result property="transCode" column="trans_code"/>
+        <result property="type" column="type"/>
+        <result property="money" column="money"/>
+        <result property="orderId" column="order_id"/>
+        <result property="channel" column="channel"/>
+        <result property="createTime" column="create_time"/>
+        <result property="payTime" column="pay_time"/>
+    </resultMap>
+
+    <sql id="selectOmsTransRecordsVo">
+        select id, ls_trans_code, trans_code, type, money, order_id, channel, create_time, pay_time from oms_trans_records
+    </sql>
+
+    <select id="selectOmsTransRecordsList" parameterType="OmsTransRecords" resultMap="OmsTransRecordsResult">
+        <include refid="selectOmsTransRecordsVo"/>
+        <where>
+            <if test="lsTransCode != null  and lsTransCode != ''">and ls_trans_code like concat('%', #{lsTransCode},
+                '%')
+            </if>
+            <if test="transCode != null  and transCode != ''">and trans_code like concat('%', #{transCode}, '%')</if>
+            <if test="type != null  and type != ''">and type = #{type}</if>
+            <if test="storeId != null ">  and store_id = #{storeId} </if>
+        </where>
+    </select>
+
+    <select id="selectOmsTransRecordsById" parameterType="Long" resultMap="OmsTransRecordsResult">
+        <include refid="selectOmsTransRecordsVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertOmsTransRecords" parameterType="OmsTransRecords" useGeneratedKeys="true" keyProperty="id">
+        insert into oms_trans_records
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="lsTransCode != null">ls_trans_code,</if>
+            <if test="transCode != null">trans_code,</if>
+            <if test="type != null">type,</if>
+            <if test="money != null">money,</if>
+            <if test="orderId != null">order_id,</if>
+            <if test="channel != null">channel,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="payTime != null">pay_time,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="lsTransCode != null">#{lsTransCode},</if>
+            <if test="transCode != null">#{transCode},</if>
+            <if test="type != null">#{type},</if>
+            <if test="money != null">#{money},</if>
+            <if test="orderId != null">#{orderId},</if>
+            <if test="channel != null">#{channel},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="payTime != null">#{payTime},</if>
+        </trim>
+    </insert>
+
+    <update id="updateOmsTransRecords" parameterType="OmsTransRecords">
+        update oms_trans_records
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="lsTransCode != null">ls_trans_code = #{lsTransCode},</if>
+            <if test="transCode != null">trans_code = #{transCode},</if>
+            <if test="type != null">type = #{type},</if>
+            <if test="money != null">money = #{money},</if>
+            <if test="orderId != null">order_id = #{orderId},</if>
+            <if test="channel != null">channel = #{channel},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="payTime != null">pay_time = #{payTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteOmsTransRecordsById" parameterType="Long">
+        delete from oms_trans_records where id = #{id}
+    </delete>
+
+    <delete id="deleteOmsTransRecordsByIds" parameterType="String">
+        delete from oms_trans_records where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

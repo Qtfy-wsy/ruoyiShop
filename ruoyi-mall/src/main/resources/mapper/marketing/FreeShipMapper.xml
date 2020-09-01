@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.marketing.mapper.FreeShipMapper">
+
+    <resultMap id="fall" type="com.ruoyi.marketing.domain.FreeShip">
+        <result column="id" property="id"/>
+        <result column="marketing_id" property="marketingId"/>
+        <result column="full_price" property="fullPrice"/>
+        <result column="is_use" property="isUse"/>
+    </resultMap>
+
+    <resultMap id="marketing" type="com.ruoyi.marketing.domain.Marketing">
+        <result column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="type" property="type"/>
+        <result column="store_id" property="storeId"/>
+        <result column="desc" property="desc"/>
+        <result column="starttime" property="startTime"/>
+        <result column="endtime" property="endTime"/>
+        <result column="full_price" property="freeShip.fullPrice"/>
+        <result column="is_use" property="freeShip.isUse"/>
+        <result column="del_flag" property="delFlag"/>
+    </resultMap>
+
+    <delete id="deleteFreeShip" parameterType="java.lang.Long">
+        delete from sms_marketing_freeship where marketing_id = #{marketingId}
+    </delete>
+
+    <select id="queryFreeShip" resultMap="marketing">
+        select * from sms_marketing join sms_marketing_freeship on sms_marketing.id = sms_marketing_freeship.marketing_id where sms_marketing.type = 6 and store_id=#{storeId} limit 1
+    </select>
+
+    <select id="queryEffectiveFreeShip" resultMap="marketing">
+         select * from sms_marketing join sms_marketing_freeship on sms_marketing.id = sms_marketing_freeship.marketing_id where sms_marketing.type = 6 and store_id=#{storeId}
+                and  <![CDATA[sms_marketing.starttime <= now() and  sms_marketing.endtime > now()]]>
+          limit 1
+    </select>
+
+    <insert id="addFreeShip" parameterType="com.ruoyi.marketing.domain.FreeShip">
+        insert into sms_marketing_freeship
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="marketingId != null">
+                marketing_id,
+            </if>
+            <if test="fullPrice != null">
+                full_price,
+            </if>
+            <if test="isUse != null">
+                is_use
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="marketingId != null">
+                #{marketingId},
+            </if>
+            <if test="fullPrice != null">
+                #{fullPrice},
+            </if>
+            <if test="isUse != null">
+                #{isUse}
+            </if>
+        </trim>
+    </insert>
+</mapper>

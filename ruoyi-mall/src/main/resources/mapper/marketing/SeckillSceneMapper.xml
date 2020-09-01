@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.marketing.mapper.SeckillSceneMapper">
+
+    <resultMap id="seckillScene" type="com.ruoyi.marketing.domain.SeckillScene">
+        <result column="id" property="id"/>
+        <result column="seckill_time" property="seckillTime"/>
+        <result column="scene" property="scene"/>
+        <result column="del_flag" property="delFlag"/>
+    </resultMap>
+
+    <select id="queryByTime" parameterType="java.lang.String" resultMap="seckillScene">
+        select * from sms_seckill_scene where datediff(seckill_time, #{time})=0order by scene
+    </select>
+
+
+    <insert id="addSeckillScene" parameterType="com.ruoyi.marketing.domain.SeckillScene" useGeneratedKeys="true"
+            keyProperty="id">
+        insert into sms_seckill_scene
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="seckillTime != null">
+                seckill_time,
+            </if>
+            <if test="scene != null">
+                scene,
+            </if>
+            del_flag
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="seckillTime != null">
+                #{seckillTime},
+            </if>
+            <if test="scene != null">
+                #{scene},
+            </if>
+            0
+        </trim>
+    </insert>
+
+    <update id="deleteSeckillScene" parameterType="java.util.Map">
+        update sms_seckill_scene set del_flag = '1' where datediff(seckill_time, #{seckillTime})=0
+        <if test="ids != null">
+            and id not in
+            <foreach collection="ids" index="index" item="item" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+    </update>
+
+
+    <select id="queryByStartTime" parameterType="java.util.Map" resultMap="seckillScene">
+        select * from sms_seckill_scene where seckill_time = #{startTime,jdbcType=TIMESTAMP}
+    </select>
+
+    <select id="querySeckillScenesCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+        select count(1) from sms_seckill_scene where del_flag = '0'
+        <if test="type==1">
+            and DATE_FORMAT(seckill_time,'%Y-%m-%d %H') &gt; DATE_FORMAT(NOW(),'%Y-%m-%d %H')
+        </if>
+
+        <if test="type==2">
+            and DATE_FORMAT(seckill_time,'%Y-%m-%d %H') = DATE_FORMAT(NOW(),'%Y-%m-%d %H')
+        </if>
+
+        <if test="type==3">
+            and DATE_FORMAT(seckill_time,'%Y-%m-%d %H') &lt; DATE_FORMAT(NOW(),'%Y-%m-%d %H')
+        </if>
+
+        <if test="seckillTime != null and seckillTime != ''">
+            and datediff(seckill_time, #{seckillTime})=0
+        </if>
+    </select>
+
+    <select id="querySeckillScenes" parameterType="java.util.Map" resultMap="seckillScene">
+        select * from sms_seckill_scene where del_flag = '0'
+        <if test="type==1">
+            and DATE_FORMAT(seckill_time,'%Y-%m-%d %H') &gt; DATE_FORMAT(NOW(),'%Y-%m-%d %H')
+        </if>
+
+        <if test="type==2">
+            and DATE_FORMAT(seckill_time,'%Y-%m-%d %H') = DATE_FORMAT(NOW(),'%Y-%m-%d %H')
+        </if>
+
+        <if test="type==3">
+            and DATE_FORMAT(seckill_time,'%Y-%m-%d %H') &lt; DATE_FORMAT(NOW(),'%Y-%m-%d %H')
+        </if>
+
+        <if test="seckillTime != null and seckillTime != ''">
+            and datediff(seckill_time, #{seckillTime})=0
+        </if>
+
+        order by seckill_time desc
+        limit #{startRowNum},#{pageSize}
+    </select>
+
+    <select id="querySeckillSceneById" parameterType="java.lang.Long" resultMap="seckillScene">
+        select * from sms_seckill_scene where  id = #{seckillSceneId}
+    </select>
+
+</mapper>

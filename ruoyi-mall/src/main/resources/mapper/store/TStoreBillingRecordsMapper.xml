@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.store.mapper.TStoreBillingRecordsMapper">
+
+    <resultMap type="TStoreBillingRecords" id="TStoreBillingRecordsResult">
+        <result property="id" column="id"/>
+        <result property="orderCode" column="order_code"/>
+        <result property="type" column="type"/>
+        <result property="storeId" column="store_id"/>
+        <result property="storeName" column="store_name"/>
+        <result property="recordType" column="record_type"/>
+        <result property="orderPrice" column="order_price"/>
+        <result property="createTime" column="create_time"/>
+        <result property="status" column="status"/>
+    </resultMap>
+
+    <sql id="selectTStoreBillingRecordsVo">
+        select id, order_code, type, store_id, store_name, record_type, order_price, create_time, status from t_store_billing_records
+    </sql>
+
+    <select id="selectTStoreBillingRecordsList" parameterType="TStoreBillingRecords"
+            resultMap="TStoreBillingRecordsResult">
+        <include refid="selectTStoreBillingRecordsVo"/>
+        <where>
+            <if test="orderCode != null  and orderCode != ''">and order_code = #{orderCode}</if>
+            <if test="type != null  and type != ''">and type = #{type}</if>
+            <if test="storeId != null ">and store_id = #{storeId}</if>
+            <if test="storeName != null  and storeName != ''">and store_name like concat('%', #{storeName}, '%')</if>
+            <if test="recordType != null  and recordType != ''">and record_type = #{recordType}</if>
+            <if test="orderPrice != null ">and order_price = #{orderPrice}</if>
+            <if test="status != null  and status != ''">and status = #{status}</if>
+        </where>
+    </select>
+
+    <select id="selectTStoreBillingRecordsById" parameterType="Long" resultMap="TStoreBillingRecordsResult">
+        <include refid="selectTStoreBillingRecordsVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertTStoreBillingRecords" parameterType="TStoreBillingRecords" useGeneratedKeys="true"
+            keyProperty="id">
+        insert into t_store_billing_records
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="orderCode != null">order_code,</if>
+            <if test="type != null">type,</if>
+            <if test="storeId != null">store_id,</if>
+            <if test="storeName != null">store_name,</if>
+            <if test="recordType != null">record_type,</if>
+            <if test="orderPrice != null">order_price,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="status != null">status,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="orderCode != null">#{orderCode},</if>
+            <if test="type != null">#{type},</if>
+            <if test="storeId != null">#{storeId},</if>
+            <if test="storeName != null">#{storeName},</if>
+            <if test="recordType != null">#{recordType},</if>
+            <if test="orderPrice != null">#{orderPrice},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="status != null">#{status},</if>
+        </trim>
+    </insert>
+
+    <update id="updateTStoreBillingRecords" parameterType="TStoreBillingRecords">
+        update t_store_billing_records
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="orderCode != null">order_code = #{orderCode},</if>
+            <if test="type != null">type = #{type},</if>
+            <if test="storeId != null">store_id = #{storeId},</if>
+            <if test="storeName != null">store_name = #{storeName},</if>
+            <if test="recordType != null">record_type = #{recordType},</if>
+            <if test="orderPrice != null">order_price = #{orderPrice},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="status != null">status = #{status},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteTStoreBillingRecordsById" parameterType="Long">
+        delete from t_store_billing_records where id = #{id}
+    </delete>
+
+    <delete id="deleteTStoreBillingRecordsByIds" parameterType="String">
+        delete from t_store_billing_records where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

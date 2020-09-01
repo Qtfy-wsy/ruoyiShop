@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.marketing.mapper.StoreRedEnvelopeMapper">
+    <resultMap id="storeRedEnvelope" type="com.ruoyi.marketing.domain.StoreRedEnvelope">
+        <result column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="num" property="num"/>
+        <result column="desc" property="desc"/>
+        <result column="full_price" property="fullPrice"/>
+        <result column="price" property="price"/>
+        <result column="starttime" property="startTime"/>
+        <result column="endtime" property="endTime"/>
+        <result column="store_id" property="storeId"/>
+    </resultMap>
+    <insert id="addStoreRedEnvelope" parameterType="com.ruoyi.marketing.domain.StoreRedEnvelope"
+            useGeneratedKeys="true"
+            keyProperty="id">
+        insert into t_store_red_envelope(`name`,num,`desc`,full_price,price,starttime,endtime,store_id) values
+        (#{name},#{num},#{desc},#{fullPrice},#{price},#{startTime},#{endTime},#{storeId})
+    </insert>
+    <select id="queryStoreRedEnvelopeCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+        select count(1) from t_store_red_envelope where store_id = #{storeId}
+        <if test="name != null and name!=''">
+            AND `name` LIKE CONCAT(CONCAT('%', #{name}),'%')
+        </if>
+    </select>
+    <select id="queryStoreRedEnvelopes" parameterType="java.util.Map" resultMap="storeRedEnvelope">
+        select * from t_store_red_envelope where store_id = #{storeId}
+        <if test="name != null and name!=''">
+            AND `name` LIKE CONCAT(CONCAT('%', #{name}),'%')
+        </if>
+        order by id desc
+        limit #{startRowNum},#{pageSize}
+    </select>
+    <select id="queryStoreRedEnvelopeById" parameterType="java.lang.Long" resultMap="storeRedEnvelope">
+        select * from t_store_red_envelope where id=#{id}
+    </select>
+    <delete id="deleteStoreRedEnvelope" parameterType="java.util.Arrays">
+        delete from t_store_red_envelope where id in
+        <foreach collection="array" index="index" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    <select id="queryStoreRedEnvelopeByIdForReceive" parameterType="java.lang.Long" resultMap="storeRedEnvelope">
+        SELECT * FROM t_store_red_envelope WHERE id=#{redEnvelopeId}
+    </select>
+
+    <update id="updateStoreRedEnvelopeAllReceived" parameterType="java.lang.Long">
+        update t_store_red_envelope set status = '1' where id = #{id}
+    </update>
+
+    <select id="queryCanUseStoreRedEnvelopes" resultMap="storeRedEnvelope">
+       select lsre.*, count(lsrec.`status`) from t_store_red_envelope lsre
+       join t_store_red_envelope_code lsrec  on lsre.id=lsrec.red_envelope_id
+       where lsre.store_id=#{storeId} and lsrec.status='0' and lsre.full_price &lt;= #{price}
+       and lsre.endtime &gt; now()
+       GROUP BY lsre.id
+    </select>
+
+</mapper>

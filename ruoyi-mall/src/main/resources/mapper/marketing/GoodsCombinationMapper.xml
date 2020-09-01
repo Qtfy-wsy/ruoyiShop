@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.marketing.mapper.GoodsCombinationMapper">
+
+    <resultMap id="goodsCombinationResult" type="com.ruoyi.marketing.domain.GoodsCombination">
+        <result column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="store_id" property="storeId"/>
+        <result column="del_flag" property="delFlag"/>
+        <result column="create_time" property="createTime"/>
+        <result column="modify_time" property="modifyTime"/>
+        <result column="del_time" property="delTime"/>
+    </resultMap>
+
+    <select id="queryGoodsCombination" parameterType="java.util.Map" resultMap="goodsCombinationResult">
+        SELECT id,`name`
+        FROM pms_combination WHERE  store_id = #{storeId}
+        <if test='name != null and !"".equals(name)'>
+            AND `name` LIKE CONCAT(CONCAT("%", #{name}),"%")
+        </if>
+        ORDER BY create_time DESC
+        limit #{startRowNum},#{pageSize}
+    </select>
+
+    <select id="queryGoodsCombinationCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+        SELECT COUNT(1)
+        FROM pms_combination WHERE  store_id = #{storeId}
+        <if test='name != null and !"".equals(name)'>
+            AND `name` LIKE CONCAT(CONCAT("%", #{name}),"%")
+        </if>
+    </select>
+
+    <insert id="addGoodsCombination" parameterType="com.ruoyi.marketing.domain.GoodsCombination">
+        INSERT INTO pms_combination (`name`,store_id,del_flag,create_time) VALUES (#{name},#{storeId},'0',NOW())
+    </insert>
+
+    <update id="batchDeleteGoodsCombination" parameterType="java.util.Map">
+        update pms_combination SET del_flag = '1', del_time = NOW() WHERE store_id = #{storeId} AND id IN
+        <foreach collection="ids" item="item" separator="," open="(" close=")">
+            #{item}
+        </foreach>
+    </update>
+
+    <select id="queryGoodsCombinationById" parameterType="java.util.Map" resultMap="goodsCombinationResult">
+        SELECT id,`name` FROM pms_combination WHERE id = #{id} AND store_id = #{storeId}
+    </select>
+
+    <update id="updateGoodsCombination" parameterType="com.ruoyi.marketing.domain.GoodsCombination">
+        UPDATE pms_combination SET `name` = #{name}, modify_time = NOW() WHERE id = #{id} AND store_id = #{storeId}
+    </update>
+
+    <select id="queryBySkuId" parameterType="java.lang.String" resultMap="goodsCombinationResult">
+        select pms_combination.* from pms_combination JOIN  pms_combination_sku on pms_combination.id = pms_combination_sku.combination_id  where pms_combination_sku.sku_id = #{skuId} and pms_combination.del_flag = '0' limit 1
+    </select>
+    <select id="queryGoodsCombinationCountBySkuIds" parameterType="java.util.List" resultType="java.lang.Integer">
+        select count(1) from pms_combination JOIN pms_combination_sku on pms_combination.id =
+        pms_combination_sku.combination_id where
+        pms_combination_sku.sku_id IN
+        <foreach collection="list" separator="," open="(" close=")" item="skuId" index="index">
+            #{skuId}
+        </foreach>
+        and pms_combination.del_flag = '0'
+    </select>
+</mapper>

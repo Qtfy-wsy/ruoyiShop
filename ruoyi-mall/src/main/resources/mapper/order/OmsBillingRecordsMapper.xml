@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.order.mapper.OmsBillingRecordsMapper">
+
+    <resultMap type="OmsBillingRecords" id="OmsBillingRecordsResult">
+        <result property="id" column="id"/>
+        <result property="orderCode" column="order_code"/>
+        <result property="type" column="type"/>
+        <result property="storeId" column="store_id"/>
+        <result property="storeName" column="store_name"/>
+        <result property="recordType" column="record_type"/>
+        <result property="orderPrice" column="order_price"/>
+        <result property="orderBackPrice" column="order_back_price"/>
+        <result property="orderCommission" column="order_commission"/>
+        <result property="orderActualPrice" column="order_actual_price"/>
+        <result property="createTime" column="create_time"/>
+        <result property="status" column="status"/>
+    </resultMap>
+
+    <sql id="selectOmsBillingRecordsVo">
+        select id, order_code, type, store_id, store_name, record_type, order_price, order_back_price, order_commission, order_actual_price, create_time, status from oms_billing_records
+    </sql>
+
+    <select id="selectOmsBillingRecordsList" parameterType="OmsBillingRecords" resultMap="OmsBillingRecordsResult">
+        <include refid="selectOmsBillingRecordsVo"/>
+        <where>
+            <if test="orderCode != null  and orderCode != ''">and order_code = #{orderCode}</if>
+            <if test="type != null  and type != ''">and type = #{type}</if>
+            <if test="storeId != null ">  and store_id = #{storeId} </if>
+            <if test="storeName != null  and storeName != ''">and store_name like concat('%', #{storeName}, '%')</if>
+            <if test="recordType != null  and recordType != ''">and record_type = #{recordType}</if>
+            <if test="status != null  and status != ''">and status = #{status}</if>
+        </where>
+    </select>
+
+    <select id="selectOmsBillingRecordsById" parameterType="Long" resultMap="OmsBillingRecordsResult">
+        <include refid="selectOmsBillingRecordsVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertOmsBillingRecords" parameterType="OmsBillingRecords" useGeneratedKeys="true" keyProperty="id">
+        insert into oms_billing_records
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="orderCode != null and orderCode != ''">order_code,</if>
+            <if test="type != null and type != ''">type,</if>
+            <if test="storeId != null">store_id,</if>
+            <if test="storeName != null">store_name,</if>
+            <if test="recordType != null">record_type,</if>
+            <if test="orderPrice != null">order_price,</if>
+            <if test="orderBackPrice != null">order_back_price,</if>
+            <if test="orderCommission != null">order_commission,</if>
+            <if test="orderActualPrice != null">order_actual_price,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="status != null">status,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="orderCode != null and orderCode != ''">#{orderCode},</if>
+            <if test="type != null and type != ''">#{type},</if>
+            <if test="storeId != null">#{storeId},</if>
+            <if test="storeName != null">#{storeName},</if>
+            <if test="recordType != null">#{recordType},</if>
+            <if test="orderPrice != null">#{orderPrice},</if>
+            <if test="orderBackPrice != null">#{orderBackPrice},</if>
+            <if test="orderCommission != null">#{orderCommission},</if>
+            <if test="orderActualPrice != null">#{orderActualPrice},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="status != null">#{status},</if>
+        </trim>
+    </insert>
+
+    <update id="updateOmsBillingRecords" parameterType="OmsBillingRecords">
+        update oms_billing_records
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="orderCode != null and orderCode != ''">order_code = #{orderCode},</if>
+            <if test="type != null and type != ''">type = #{type},</if>
+            <if test="storeId != null">store_id = #{storeId},</if>
+            <if test="storeName != null">store_name = #{storeName},</if>
+            <if test="recordType != null">record_type = #{recordType},</if>
+            <if test="orderPrice != null">order_price = #{orderPrice},</if>
+            <if test="orderBackPrice != null">order_back_price = #{orderBackPrice},</if>
+            <if test="orderCommission != null">order_commission = #{orderCommission},</if>
+            <if test="orderActualPrice != null">order_actual_price = #{orderActualPrice},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="status != null">status = #{status},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteOmsBillingRecordsById" parameterType="Long">
+        delete from oms_billing_records where id = #{id}
+    </delete>
+
+    <delete id="deleteOmsBillingRecordsByIds" parameterType="String">
+        delete from oms_billing_records where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

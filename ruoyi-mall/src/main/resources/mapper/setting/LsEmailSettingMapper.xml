@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.setting.mapper.LsEmailSettingMapper">
+
+    <resultMap type="LsEmailSetting" id="LsEmailSettingResult">
+        <result property="id" column="id"/>
+        <result property="senderMail" column="sender_mail"/>
+        <result property="senderName" column="sender_name"/>
+        <result property="smtpServer" column="smtp_server"/>
+        <result property="smtpPort" column="smtp_port"/>
+        <result property="username" column="username"/>
+        <result property="password" column="password"/>
+    </resultMap>
+
+    <sql id="selectLsEmailSettingVo">
+        select id, sender_mail, sender_name, smtp_server, smtp_port, username, password from ls_email_setting
+    </sql>
+
+    <select id="selectLsEmailSettingList" parameterType="LsEmailSetting" resultMap="LsEmailSettingResult">
+        <include refid="selectLsEmailSettingVo"/>
+        <where>
+            <if test="senderMail != null  and senderMail != ''">and sender_mail = #{senderMail}</if>
+            <if test="senderName != null  and senderName != ''">and sender_name like concat('%', #{senderName}, '%')
+            </if>
+            <if test="smtpServer != null  and smtpServer != ''">and smtp_server = #{smtpServer}</if>
+            <if test="smtpPort != null ">and smtp_port = #{smtpPort}</if>
+            <if test="username != null  and username != ''">and username like concat('%', #{username}, '%')</if>
+            <if test="password != null  and password != ''">and password = #{password}</if>
+        </where>
+    </select>
+
+    <select id="selectLsEmailSettingById" parameterType="Long" resultMap="LsEmailSettingResult">
+        <include refid="selectLsEmailSettingVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertLsEmailSetting" parameterType="LsEmailSetting" useGeneratedKeys="true" keyProperty="id">
+        insert into ls_email_setting
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="senderMail != null and senderMail != ''">sender_mail,</if>
+            <if test="senderName != null and senderName != ''">sender_name,</if>
+            <if test="smtpServer != null and smtpServer != ''">smtp_server,</if>
+            <if test="smtpPort != null">smtp_port,</if>
+            <if test="username != null and username != ''">username,</if>
+            <if test="password != null and password != ''">password,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="senderMail != null and senderMail != ''">#{senderMail},</if>
+            <if test="senderName != null and senderName != ''">#{senderName},</if>
+            <if test="smtpServer != null and smtpServer != ''">#{smtpServer},</if>
+            <if test="smtpPort != null">#{smtpPort},</if>
+            <if test="username != null and username != ''">#{username},</if>
+            <if test="password != null and password != ''">#{password},</if>
+        </trim>
+    </insert>
+
+    <update id="updateLsEmailSetting" parameterType="LsEmailSetting">
+        update ls_email_setting
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="senderMail != null and senderMail != ''">sender_mail = #{senderMail},</if>
+            <if test="senderName != null and senderName != ''">sender_name = #{senderName},</if>
+            <if test="smtpServer != null and smtpServer != ''">smtp_server = #{smtpServer},</if>
+            <if test="smtpPort != null">smtp_port = #{smtpPort},</if>
+            <if test="username != null and username != ''">username = #{username},</if>
+            <if test="password != null and password != ''">password = #{password},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteLsEmailSettingById" parameterType="Long">
+        delete from ls_email_setting where id = #{id}
+    </delete>
+
+    <delete id="deleteLsEmailSettingByIds" parameterType="String">
+        delete from ls_email_setting where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

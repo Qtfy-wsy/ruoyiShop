@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.setting.mapper.LsCityMapper">
+
+    <resultMap type="LsCity" id="LsCityResult">
+        <result property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="provinceId" column="province_id"/>
+        <result property="sort" column="sort"/>
+        <result property="delFlag" column="del_flag"/>
+        <result property="createTime" column="create_time"/>
+        <result property="modifyTime" column="modify_time"/>
+        <result property="delTime" column="del_time"/>
+    </resultMap>
+
+    <sql id="selectLsCityVo">
+        select id, name, province_id, sort, del_flag, create_time, modify_time, del_time from ls_city
+    </sql>
+
+    <select id="selectLsCityList" parameterType="LsCity" resultMap="LsCityResult">
+        <include refid="selectLsCityVo"/>
+        <where>
+            <if test="name != null  and name != ''">and name like concat('%', #{name}, '%')</if>
+            <if test="provinceId != null ">and province_id = #{provinceId}</if>
+            <if test="sort != null ">and sort = #{sort}</if>
+            <if test="modifyTime != null ">and modify_time = #{modifyTime}</if>
+            <if test="delTime != null ">and del_time = #{delTime}</if>
+        </where>
+    </select>
+
+    <select id="selectLsCityById" parameterType="Long" resultMap="LsCityResult">
+        <include refid="selectLsCityVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertLsCity" parameterType="LsCity" useGeneratedKeys="true" keyProperty="id">
+        insert into ls_city
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="name != null and name != ''">name,</if>
+            <if test="provinceId != null">province_id,</if>
+            <if test="sort != null">sort,</if>
+            <if test="delFlag != null">del_flag,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="modifyTime != null">modify_time,</if>
+            <if test="delTime != null">del_time,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="name != null and name != ''">#{name},</if>
+            <if test="provinceId != null">#{provinceId},</if>
+            <if test="sort != null">#{sort},</if>
+            <if test="delFlag != null">#{delFlag},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="modifyTime != null">#{modifyTime},</if>
+            <if test="delTime != null">#{delTime},</if>
+        </trim>
+    </insert>
+
+    <update id="updateLsCity" parameterType="LsCity">
+        update ls_city
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="name != null and name != ''">name = #{name},</if>
+            <if test="provinceId != null">province_id = #{provinceId},</if>
+            <if test="sort != null">sort = #{sort},</if>
+            <if test="delFlag != null">del_flag = #{delFlag},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="modifyTime != null">modify_time = #{modifyTime},</if>
+            <if test="delTime != null">del_time = #{delTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteLsCityById" parameterType="Long">
+        delete from ls_city where id = #{id}
+    </delete>
+
+    <delete id="deleteLsCityByIds" parameterType="String">
+        delete from ls_city where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

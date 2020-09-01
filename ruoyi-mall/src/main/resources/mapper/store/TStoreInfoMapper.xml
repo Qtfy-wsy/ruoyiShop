@@ -1,0 +1,587 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.store.mapper.TStoreInfoMapper">
+
+    <resultMap type="TStoreInfo" id="TStoreInfoResult">
+        <result property="id" column="id"/>
+        <result property="storeName" column="store_name"/>
+        <result property="status" column="status"/>
+        <result property="companyName" column="company_name"/>
+        <result property="companyAddress" column="company_address"/>
+        <result property="companyPhone" column="company_phone"/>
+        <result property="companyEmail" column="company_email"/>
+        <result property="contactPerson" column="contact_person"/>
+        <result property="contactPhone" column="contact_phone"/>
+        <result property="legalPerson" column="legal_person"/>
+        <result property="cardNo" column="card_no"/>
+        <result property="cardPic" column="card_pic"/>
+        <result property="busLicenec" column="bus_licenec"/>
+        <result property="busLicenecPic" column="bus_licenec_pic"/>
+        <result property="businessScope" column="business_scope"/>
+        <result property="orgPic" column="org_pic"/>
+        <result property="taxPic" column="tax_pic"/>
+        <result property="bankUserName" column="bank_user_name"/>
+        <result property="bankAccount" column="bank_account"/>
+        <result property="bankName" column="bank_name"/>
+        <result property="bankNumber" column="bank_number"/>
+        <result property="bankAddress" column="bank_address"/>
+        <result property="bankPic" column="bank_pic"/>
+        <result property="billingCycle" column="billing_cycle"/>
+        <result property="ismerge" column="ismerge"/>
+        <result property="delFlag" column="del_flag"/>
+        <result property="serviceQq" column="service_qq"/>
+        <result property="reason" column="reason"/>
+        <result property="aveScore" column="ave_score"/>
+        <result property="effectiveTime" column="effective_time"/>
+        <result property="createTime" column="create_time"/>
+        <result property="modifyTime" column="modify_time"/>
+        <result property="delTime" column="del_time"/>
+        <result property="type" column="type"/>
+        <result property="longitude" column="longitude"/>
+        <result property="latitude" column="latitude"/>
+        <result property="businessTime" column="business_time"/>
+        <result property="busRoutes" column="bus_routes"/>
+        <result property="avatarPicture" column="avatar_picture"/>
+        <result property="provinceId" column="province_id"/>
+        <result property="cityId" column="city_id"/>
+        <result property="districtId" column="district_id"/>
+        <result property="companyDetailAddress" column="company_detail_address"/>
+    </resultMap>
+
+    <sql id="selectTStoreInfoVo">
+        select id, store_name, status, company_name, company_address, company_phone, company_email, contact_person, contact_phone, legal_person, card_no, card_pic, bus_licenec, bus_licenec_pic, business_scope, org_pic, tax_pic, bank_user_name, bank_account, bank_name, bank_number, bank_address, bank_pic, billing_cycle, ismerge, del_flag, service_qq, reason, ave_score, effective_time, create_time, modify_time, del_time, type, longitude, latitude, business_time, bus_routes, avatar_picture, province_id, city_id, district_id, company_detail_address from t_store_info
+    </sql>
+
+    <select id="selectTStoreInfoList" parameterType="TStoreInfo" resultMap="TStoreInfoResult">
+        <include refid="selectTStoreInfoVo"/>
+        <where>
+            <if test="storeName != null  and storeName != ''">and store_name like concat('%', #{storeName}, '%')</if>
+            <if test="status != null  and status != ''">and status = #{status}</if>
+            <if test="companyName != null  and companyName != ''">and company_name like concat('%', #{companyName},
+                '%')
+            </if>
+            <if test="companyAddress != null  and companyAddress != ''">and company_address = #{companyAddress}</if>
+            <if test="companyPhone != null  and companyPhone != ''">and company_phone = #{companyPhone}</if>
+            <if test="companyEmail != null  and companyEmail != ''">and company_email = #{companyEmail}</if>
+            <if test="contactPerson != null  and contactPerson != ''">and contact_person = #{contactPerson}</if>
+            <if test="contactPhone != null  and contactPhone != ''">and contact_phone = #{contactPhone}</if>
+            <if test="legalPerson != null  and legalPerson != ''">and legal_person = #{legalPerson}</if>
+            <if test="cardNo != null  and cardNo != ''">and card_no = #{cardNo}</if>
+            <if test="cardPic != null  and cardPic != ''">and card_pic = #{cardPic}</if>
+            <if test="busLicenec != null  and busLicenec != ''">and bus_licenec = #{busLicenec}</if>
+            <if test="busLicenecPic != null  and busLicenecPic != ''">and bus_licenec_pic = #{busLicenecPic}</if>
+            <if test="businessScope != null  and businessScope != ''">and business_scope = #{businessScope}</if>
+            <if test="orgPic != null  and orgPic != ''">and org_pic = #{orgPic}</if>
+            <if test="taxPic != null  and taxPic != ''">and tax_pic = #{taxPic}</if>
+            <if test="bankUserName != null  and bankUserName != ''">and bank_user_name like concat('%', #{bankUserName},
+                '%')
+            </if>
+            <if test="bankAccount != null  and bankAccount != ''">and bank_account = #{bankAccount}</if>
+            <if test="bankName != null  and bankName != ''">and bank_name like concat('%', #{bankName}, '%')</if>
+            <if test="bankNumber != null  and bankNumber != ''">and bank_number = #{bankNumber}</if>
+            <if test="bankAddress != null  and bankAddress != ''">and bank_address = #{bankAddress}</if>
+            <if test="bankPic != null  and bankPic != ''">and bank_pic = #{bankPic}</if>
+            <if test="billingCycle != null  and billingCycle != ''">and billing_cycle = #{billingCycle}</if>
+            <if test="ismerge != null  and ismerge != ''">and ismerge = #{ismerge}</if>
+            <if test="serviceQq != null  and serviceQq != ''">and service_qq = #{serviceQq}</if>
+            <if test="reason != null  and reason != ''">and reason = #{reason}</if>
+            <if test="aveScore != null ">and ave_score = #{aveScore}</if>
+            <if test="effectiveTime != null ">and effective_time = #{effectiveTime}</if>
+            <if test="modifyTime != null ">and modify_time = #{modifyTime}</if>
+            <if test="delTime != null ">and del_time = #{delTime}</if>
+            <if test="type != null  and type != ''">and type = #{type}</if>
+            <if test="longitude != null ">and longitude = #{longitude}</if>
+            <if test="latitude != null ">and latitude = #{latitude}</if>
+            <if test="businessTime != null  and businessTime != ''">and business_time = #{businessTime}</if>
+            <if test="busRoutes != null  and busRoutes != ''">and bus_routes = #{busRoutes}</if>
+            <if test="avatarPicture != null  and avatarPicture != ''">and avatar_picture = #{avatarPicture}</if>
+            <if test="provinceId != null ">and province_id = #{provinceId}</if>
+            <if test="cityId != null ">and city_id = #{cityId}</if>
+            <if test="districtId != null ">and district_id = #{districtId}</if>
+            <if test="companyDetailAddress != null  and companyDetailAddress != ''">and company_detail_address =
+                #{companyDetailAddress}
+            </if>
+        </where>
+    </select>
+
+    <select id="selectTStoreInfoById" parameterType="Long" resultMap="TStoreInfoResult">
+        <include refid="selectTStoreInfoVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertTStoreInfo" parameterType="TStoreInfo" useGeneratedKeys="true" keyProperty="id">
+        insert into t_store_info
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="storeName != null">store_name,</if>
+            <if test="status != null">status,</if>
+            <if test="companyName != null">company_name,</if>
+            <if test="companyAddress != null">company_address,</if>
+            <if test="companyPhone != null">company_phone,</if>
+            <if test="companyEmail != null">company_email,</if>
+            <if test="contactPerson != null">contact_person,</if>
+            <if test="contactPhone != null">contact_phone,</if>
+            <if test="legalPerson != null">legal_person,</if>
+            <if test="cardNo != null">card_no,</if>
+            <if test="cardPic != null">card_pic,</if>
+            <if test="busLicenec != null">bus_licenec,</if>
+            <if test="busLicenecPic != null">bus_licenec_pic,</if>
+            <if test="businessScope != null">business_scope,</if>
+            <if test="orgPic != null">org_pic,</if>
+            <if test="taxPic != null">tax_pic,</if>
+            <if test="bankUserName != null">bank_user_name,</if>
+            <if test="bankAccount != null">bank_account,</if>
+            <if test="bankName != null">bank_name,</if>
+            <if test="bankNumber != null">bank_number,</if>
+            <if test="bankAddress != null">bank_address,</if>
+            <if test="bankPic != null">bank_pic,</if>
+            <if test="billingCycle != null">billing_cycle,</if>
+            <if test="ismerge != null">ismerge,</if>
+            <if test="delFlag != null">del_flag,</if>
+            <if test="serviceQq != null">service_qq,</if>
+            <if test="reason != null">reason,</if>
+            <if test="aveScore != null">ave_score,</if>
+            <if test="effectiveTime != null">effective_time,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="modifyTime != null">modify_time,</if>
+            <if test="delTime != null">del_time,</if>
+            <if test="type != null">type,</if>
+            <if test="longitude != null">longitude,</if>
+            <if test="latitude != null">latitude,</if>
+            <if test="businessTime != null">business_time,</if>
+            <if test="busRoutes != null">bus_routes,</if>
+            <if test="avatarPicture != null">avatar_picture,</if>
+            <if test="provinceId != null">province_id,</if>
+            <if test="cityId != null">city_id,</if>
+            <if test="districtId != null">district_id,</if>
+            <if test="companyDetailAddress != null">company_detail_address,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="storeName != null">#{storeName},</if>
+            <if test="status != null">#{status},</if>
+            <if test="companyName != null">#{companyName},</if>
+            <if test="companyAddress != null">#{companyAddress},</if>
+            <if test="companyPhone != null">#{companyPhone},</if>
+            <if test="companyEmail != null">#{companyEmail},</if>
+            <if test="contactPerson != null">#{contactPerson},</if>
+            <if test="contactPhone != null">#{contactPhone},</if>
+            <if test="legalPerson != null">#{legalPerson},</if>
+            <if test="cardNo != null">#{cardNo},</if>
+            <if test="cardPic != null">#{cardPic},</if>
+            <if test="busLicenec != null">#{busLicenec},</if>
+            <if test="busLicenecPic != null">#{busLicenecPic},</if>
+            <if test="businessScope != null">#{businessScope},</if>
+            <if test="orgPic != null">#{orgPic},</if>
+            <if test="taxPic != null">#{taxPic},</if>
+            <if test="bankUserName != null">#{bankUserName},</if>
+            <if test="bankAccount != null">#{bankAccount},</if>
+            <if test="bankName != null">#{bankName},</if>
+            <if test="bankNumber != null">#{bankNumber},</if>
+            <if test="bankAddress != null">#{bankAddress},</if>
+            <if test="bankPic != null">#{bankPic},</if>
+            <if test="billingCycle != null">#{billingCycle},</if>
+            <if test="ismerge != null">#{ismerge},</if>
+            <if test="delFlag != null">#{delFlag},</if>
+            <if test="serviceQq != null">#{serviceQq},</if>
+            <if test="reason != null">#{reason},</if>
+            <if test="aveScore != null">#{aveScore},</if>
+            <if test="effectiveTime != null">#{effectiveTime},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="modifyTime != null">#{modifyTime},</if>
+            <if test="delTime != null">#{delTime},</if>
+            <if test="type != null">#{type},</if>
+            <if test="longitude != null">#{longitude},</if>
+            <if test="latitude != null">#{latitude},</if>
+            <if test="businessTime != null">#{businessTime},</if>
+            <if test="busRoutes != null">#{busRoutes},</if>
+            <if test="avatarPicture != null">#{avatarPicture},</if>
+            <if test="provinceId != null">#{provinceId},</if>
+            <if test="cityId != null">#{cityId},</if>
+            <if test="districtId != null">#{districtId},</if>
+            <if test="companyDetailAddress != null">#{companyDetailAddress},</if>
+        </trim>
+    </insert>
+
+    <update id="updateTStoreInfo" parameterType="TStoreInfo">
+        update t_store_info
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="storeName != null">store_name = #{storeName},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="companyName != null">company_name = #{companyName},</if>
+            <if test="companyAddress != null">company_address = #{companyAddress},</if>
+            <if test="companyPhone != null">company_phone = #{companyPhone},</if>
+            <if test="companyEmail != null">company_email = #{companyEmail},</if>
+            <if test="contactPerson != null">contact_person = #{contactPerson},</if>
+            <if test="contactPhone != null">contact_phone = #{contactPhone},</if>
+            <if test="legalPerson != null">legal_person = #{legalPerson},</if>
+            <if test="cardNo != null">card_no = #{cardNo},</if>
+            <if test="cardPic != null">card_pic = #{cardPic},</if>
+            <if test="busLicenec != null">bus_licenec = #{busLicenec},</if>
+            <if test="busLicenecPic != null">bus_licenec_pic = #{busLicenecPic},</if>
+            <if test="businessScope != null">business_scope = #{businessScope},</if>
+            <if test="orgPic != null">org_pic = #{orgPic},</if>
+            <if test="taxPic != null">tax_pic = #{taxPic},</if>
+            <if test="bankUserName != null">bank_user_name = #{bankUserName},</if>
+            <if test="bankAccount != null">bank_account = #{bankAccount},</if>
+            <if test="bankName != null">bank_name = #{bankName},</if>
+            <if test="bankNumber != null">bank_number = #{bankNumber},</if>
+            <if test="bankAddress != null">bank_address = #{bankAddress},</if>
+            <if test="bankPic != null">bank_pic = #{bankPic},</if>
+            <if test="billingCycle != null">billing_cycle = #{billingCycle},</if>
+            <if test="ismerge != null">ismerge = #{ismerge},</if>
+            <if test="delFlag != null">del_flag = #{delFlag},</if>
+            <if test="serviceQq != null">service_qq = #{serviceQq},</if>
+            <if test="reason != null">reason = #{reason},</if>
+            <if test="aveScore != null">ave_score = #{aveScore},</if>
+            <if test="effectiveTime != null">effective_time = #{effectiveTime},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="modifyTime != null">modify_time = #{modifyTime},</if>
+            <if test="delTime != null">del_time = #{delTime},</if>
+            <if test="type != null">type = #{type},</if>
+            <if test="longitude != null">longitude = #{longitude},</if>
+            <if test="latitude != null">latitude = #{latitude},</if>
+            <if test="businessTime != null">business_time = #{businessTime},</if>
+            <if test="busRoutes != null">bus_routes = #{busRoutes},</if>
+            <if test="avatarPicture != null">avatar_picture = #{avatarPicture},</if>
+            <if test="provinceId != null">province_id = #{provinceId},</if>
+            <if test="cityId != null">city_id = #{cityId},</if>
+            <if test="districtId != null">district_id = #{districtId},</if>
+            <if test="companyDetailAddress != null">company_detail_address = #{companyDetailAddress},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteTStoreInfoById" parameterType="Long">
+        delete from t_store_info where id = #{id}
+    </delete>
+
+    <delete id="deleteTStoreInfoByIds" parameterType="String">
+        delete from t_store_info where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <select id="queryStoreInfo" parameterType="java.lang.Long" resultMap="TStoreInfoResult">
+        SELECT * FROM t_store_info WHERE id=#{storeId}
+    </select>
+    <select id="queryAuditPassStoreInfo" parameterType="java.lang.Long" resultMap="TStoreInfoResult">
+        SELECT * FROM t_store_info WHERE id=#{storeId}  AND status='2'
+    </select>
+    <insert id="addStoreInfo" parameterType="com.ruoyi.store.domain.TStoreInfo" useGeneratedKeys="true"
+            keyProperty="id">
+        INSERT INTO t_store_info
+        (status,company_name,company_address,company_phone,company_email,contact_person,contact_phone,legal_person,card_no,card_pic,bus_licenec,bus_licenec_pic,business_scope,
+        org_pic,tax_pic,del_flag,effective_time,create_time,ismerge,longitude,latitude,business_time,bus_routes,avatar_picture,province_id,city_id,district_id,company_detail_address) VALUES
+        (#{status},#{companyName},#{companyAddress},#{companyPhone},#{companyEmail},#{contactPerson},#{contactPhone},#{legalPerson},#{cardNo},#{cardPic},#{busLicense},
+        #{busLicensePic},#{businessScope},#{orgPic},#{taxPic},'0',#{effectiveTime},#{createTime},#{isMerge},#{longitude},#{latitude},#{businessTime},#{busRoutes},#{avatarPicture},
+        #{provinceId},#{cityId},#{districtId},#{companyDetailAddress})
+    </insert>
+    <update id="editStoreInfo" parameterType="com.ruoyi.store.domain.TStoreInfo">
+        UPDATE t_store_info SET company_name=#{companyName},company_address=#{companyAddress},company_phone=#{companyPhone},company_email=#{companyEmail},contact_person=#{contactPerson},
+        contact_phone=#{contactPhone},legal_person=#{legalPerson},card_no=#{cardNo},card_pic=#{cardPic},bus_licenec=#{busLicense},bus_licenec_pic=#{busLicensePic},business_scope=#{businessScope},org_pic=#{orgPic},tax_pic=#{taxPic},
+        del_flag='0',effective_time=#{effectiveTime},create_time=#{createTime},ismerge=#{isMerge},longitude=#{longitude},latitude=#{latitude},business_time=#{businessTime},
+        bus_routes=#{busRoutes},avatar_picture=#{avatarPicture},province_id=#{provinceId},city_id=#{cityId},district_id=#{districtId},company_detail_address=#{companyDetailAddress}  WHERE id=#{id}
+    </update>
+    <update id="editStoreName" parameterType="com.ruoyi.store.domain.TStoreInfo">
+        UPDATE t_store_info SET store_name=#{storeName},status=#{status} WHERE id=#{id}
+    </update>
+    <select id="queryStoreInfoByName" parameterType="java.lang.String" resultMap="TStoreInfoResult">
+        SELECT * FROM t_store_info WHERE store_name=#{storeName} and  del_flag='0'
+    </select>
+    <select id="queryStoreInfoForAuditListCount" resultType="java.lang.Integer" parameterType="java.util.Map">
+        SELECT COUNT(1) FROM t_store_info
+        LEFT JOIN ums_member on t_store_info.id=ums_member.store_id
+        WHERE t_store_info.del_flag='0' AND ums_member.type='2' and t_store_info.type='0' AND
+        <if test='status =="2"'>
+            (t_store_info.status=#{status} OR t_store_info.status='4')
+        </if>
+        <if test='status !="2"'>
+            t_store_info.status=#{status}
+        </if>
+        <if test='mobile !=null'>
+            AND ums_member.mobile=#{mobile}
+        </if>
+        <if test="companyName != null and companyName != '' ">
+            AND t_store_info.company_name = #{companyName}
+        </if>
+        <if test="storeName != null and storeName != '' ">
+            AND t_store_info.store_name = #{storeName}
+        </if>
+        <if test="createTime != null and createTime != ''">
+            AND DATE(t_store_info.create_time) = #{createTime}
+        </if>
+        <if test="provinceId != null and provinceId != -1">
+            AND t_store_info.province_id = #{provinceId}
+        </if>
+    </select>
+    <select id="queryStoreInfoForAuditList" resultMap="TStoreInfoResult" parameterType="java.util.Map">
+        SELECT t_store_info.* ,ums_member.mobile customer_mobile FROM t_store_info
+        LEFT JOIN ums_member on t_store_info.id=ums_member.store_id
+        WHERE t_store_info.del_flag='0' AND ums_member.type='2' and t_store_info.type='0' AND
+        <if test='status =="2"'>
+            (t_store_info.status=#{status} OR t_store_info.status='4')
+        </if>
+        <if test='status !="2"'>
+            t_store_info.status=#{status}
+        </if>
+        <if test='mobile !=null'>
+            AND ums_member.mobile=#{mobile}
+        </if>
+        <if test="companyName != null and companyName != '' ">
+            AND t_store_info.company_name = #{companyName}
+        </if>
+        <if test="storeName != null and storeName != '' ">
+            AND t_store_info.store_name = #{storeName}
+        </if>
+        <if test="createTime != null and createTime != ''">
+            AND DATE(t_store_info.create_time) = #{createTime}
+        </if>
+        <if test="provinceId != null and provinceId != -1">
+            AND t_store_info.province_id = #{provinceId}
+        </if>
+        ORDER BY t_store_info.create_time DESC
+        limit #{startRowNum},#{pageSize}
+    </select>
+    <update id="editStoreTimeAndIsClose" parameterType="com.ruoyi.store.domain.TStoreInfo">
+        UPDATE t_store_info SET
+        <if test="billingCycle!=null ">
+            billing_cycle=#{billingCycle},
+        </if>
+        effective_time=#{effectiveTime},status=#{status}
+        WHERE id=#{id}
+    </update>
+    <update id="passStoreAudit" parameterType="com.ruoyi.store.domain.TStoreInfo">
+        UPDATE t_store_info SET status = #{status}
+        <if test="billingCycle!=null ">
+            ,billing_cycle=#{billingCycle}
+        </if>
+        WHERE id = #{id}
+    </update>
+    <update id="refuseStoreAudit" parameterType="com.ruoyi.store.domain.TStoreInfo">
+        UPDATE t_store_info SET status = #{status},reason = #{reason} WHERE id = #{id}
+    </update>
+    <update id="deleteStore" parameterType="java.lang.Long">
+        UPDATE t_store_info SET del_flag='1' WHERE id = #{id}
+    </update>
+    <update id="editStoreInfoForServiceQQ" parameterType="com.ruoyi.store.domain.TStoreInfo">
+        UPDATE t_store_info SET service_qq=#{serviceQQ} WHERE id = #{id}
+    </update>
+    <update id="editStoreInfoForCompanyInfo" parameterType="com.ruoyi.store.domain.TStoreInfo">
+        UPDATE t_store_info SET company_phone=#{companyPhone},contact_person=#{contactPerson},contact_phone=#{contactPhone},
+        legal_person=#{legalPerson},card_no=#{cardNo},bus_licenec=#{busLicense},bus_licenec_pic=#{busLicensePic},business_scope=#{businessScope},card_pic=#{cardPic},
+        org_pic=#{orgPic},tax_pic=#{taxPic},company_address=#{companyAddress},longitude=#{longitude},latitude=#{latitude},business_time=#{businessTime},
+        bus_routes=#{busRoutes},avatar_picture=#{avatarPicture},province_id=#{provinceId},city_id=#{cityId},district_id=#{districtId},company_detail_address=#{companyDetailAddress}
+        WHERE id = #{id}
+    </update>
+    <update id="editStoreInfoForBankInfo" parameterType="com.ruoyi.store.domain.TStoreInfo">
+        UPDATE t_store_info SET bank_user_name=#{bankUserName},bank_account=#{bankAccount},bank_name=#{bankName},bank_number=#{bankNumber},
+        bank_address=#{bankAddress},bank_pic=#{bankPic} WHERE id = #{id}
+    </update>
+    <select id="queryStoreInfoForSearch" parameterType="java.util.Map" resultMap="TStoreInfoResult">
+        select lsi.* ,IFNULL(lc.comment_count,0) comment_count,IFNULL(lsale.sale_count,0) sale_count from t_store_info
+        lsi
+        left JOIN (select COUNT(1) comment_count,store_id comment_store_id from pms_comment GROUP BY store_id ) lc on
+        lsi.id=lc.comment_store_id
+        left JOIN (select sum(los.num) sale_count,lo.store_id order_store_id from oms_order lo,oms_order_sku los
+        where los.order_id = lo.id and lo.store_id !=0 and lo.status in ('4','6','7') GROUP BY lo.store_id) lsale on
+        lsi.id=lsale.order_store_id
+        where lsi.status='2'
+        <if test="keyword != null ">and (lsi.store_name like concat('%',#{keyword},'%') || lsi.business_scope like concat('%',#{keyword},'%'))</if>
+
+        <if test="orderBys == 1">
+            order by lsale.sale_count desc
+        </if>
+        <if test="orderBys == 2">
+            order by lc.comment_count desc
+        </if>
+        limit #{startRowNum},#{pageSize}
+    </select>
+    <select id="queryStoreInfoForSearchCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+        select count(1) from t_store_info lsi
+        left JOIN (select COUNT(1) comment_count,store_id comment_store_id from pms_comment GROUP BY store_id ) lc on
+        lsi.id=lc.comment_store_id
+        left JOIN (select sum(los.num) sale_count,lo.store_id order_store_id from oms_order lo,oms_order_sku los
+        where los.order_id = lo.id and lo.store_id !=0 and lo.status in ('4','6','7') GROUP BY lo.store_id) lsale on
+        lsi.id=lsale.order_store_id
+        where lsi.status='2'
+        <if test="keyword != null ">and (lsi.store_name like concat('%',#{keyword},'%') || lsi.business_scope like concat('%',#{keyword},'%'))</if>
+
+    </select>
+
+    <resultMap id="storeinfostatistics" type="com.ruoyi.store.vo.NewStoreInfoStatistics">
+        <result column="newStoreInfoTime" property="newStoreInfoTime"/>
+        <result column="newStoreInfoNum" property="newStoreInfoNum"/>
+    </resultMap>
+
+    <select id="queryNewStoreInfoStatistics" parameterType="java.util.Map" resultMap="storeinfostatistics">
+        select DATE(create_time) as 'newStoreInfoTime',count(1) as 'newStoreInfoNum' from t_store_info
+        where DATE(create_time) between #{startTime,jdbcType=TIMESTAMP} and #{endTime,jdbcType=TIMESTAMP}
+        and (status = '2' or status = '4') and `type` = '0'group by DATE(create_time) order by create_time
+    </select>
+
+    <select id="queryNewStoreInfoStatisticsCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+        select count(1) from (select count(1) from t_store_info where DATE(create_time) between #{startTime,jdbcType=TIMESTAMP}
+        and #{endTime,jdbcType=TIMESTAMP} and (status = '2' or status = '4') and `type` = '0'group by DATE(create_time)) as num
+    </select>
+
+    <select id="queryNewStoreInfoStatisticsWithPage" parameterType="java.util.Map" resultMap="storeinfostatistics">
+        select DATE(create_time) as 'newStoreInfoTime',count(1) as 'newStoreInfoNum' from t_store_info
+        where DATE(create_time) between #{startTime,jdbcType=TIMESTAMP} and #{endTime,jdbcType=TIMESTAMP}
+        and (status = '2' or status = '4') and `type` = '0'group by DATE(create_time) order by create_time
+        limit #{startRowNum},#{pageSize}
+    </select>
+
+    <resultMap id="storeInfoAreaStatistics" type="com.ruoyi.store.vo.StoreInfoAreaStatistics">
+        <result column="province_id" property="provinceId"/>
+        <result column="store_info_num" property="storeInfoNum"/>
+    </resultMap>
+
+    <select id="queryStoreInfoAreaStatistics" parameterType="java.util.Map" resultMap="storeInfoAreaStatistics">
+        select province_id,count(1) store_info_num from t_store_info
+        where DATE(create_time) between #{startTime,jdbcType=TIMESTAMP} and #{endTime,jdbcType=TIMESTAMP}
+        and (status = '2' or status = '4') and `type` = '0'and province_id is not null group by province_id order by province_id
+    </select>
+
+    <update id="closeStores" parameterType="java.util.List">
+        update t_store_info set status='4' where id IN
+        <foreach collection="list" open="(" close=")" separator="," index="index" item="id">
+            #{id}
+        </foreach>
+        and status='2'
+    </update>
+
+    <update id="openStoreForOutLetStore" parameterType="java.lang.Long">
+        update t_store_info set status='2'  where id=#{storeId}
+    </update>
+    <select id="queryStoreCountByStoreName" parameterType="java.util.Map" resultType="java.lang.Integer">
+        select count(1) from t_store_info where
+        store_name=#{storeName}
+        <if test="storeId !=-1">
+            and id !=#{storeId}
+        </if>
+    </select>
+    <select id="queryStoreCountByCompanyName" parameterType="java.util.Map" resultType="java.lang.Integer">
+        select count(1) from t_store_info where
+        company_name=#{companyName}
+        <if test="storeId !=-1">
+            and id !=#{storeId}
+        </if>
+    </select>
+    <insert id="addStore" parameterType="com.ruoyi.store.domain.TStoreInfo">
+        <selectKey resultType="java.lang.Long" order="AFTER" keyProperty="id">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        INSERT INTO t_store_info
+        (status,company_name,company_address,company_phone,company_email,contact_person,contact_phone,legal_person,card_no,card_pic,bus_licenec,bus_licenec_pic,business_scope,
+        org_pic,tax_pic,del_flag,effective_time,create_time,ismerge,store_name,type,longitude,latitude
+        ,business_time,bus_routes,avatar_picture,province_id,city_id,district_id,company_detail_address) VALUES
+        ('2',#{companyName},#{companyAddress},#{companyPhone},#{companyEmail},#{contactPerson},#{contactPhone},#{legalPerson},#{cardNo},#{cardPic},#{busLicense},
+        #{busLicensePic},#{businessScope},#{orgPic},#{taxPic},'0',#{effectiveTime},#{createTime},#{isMerge},#{storeName},#{type},#{longitude},#{latitude}
+        ,#{businessTime},#{busRoutes},#{avatarPicture},#{provinceId},#{cityId},#{districtId},#{companyDetailAddress})
+    </insert>
+
+    <select id="queryOneOnSaleStore" resultMap="TStoreInfoResult">
+        select lsi.id,lsi.store_name,lsi.company_address,lsi.avatar_picture from t_store_info lsi
+        JOIN t_store_sku lss on lsi.id=lss.store_id
+        where lss.sku_id=#{skuId} and lsi.city_id=#{cityId} and lsi.del_flag='0' and lsi.status='2'
+        and lsi.effective_time >now()
+        limit 0,1
+    </select>
+    <select id="queryOnSaleStoreList" resultMap="TStoreInfoResult">
+        select lsi.id,lsi.store_name,lsi.company_address,lsi.avatar_picture,lsi.company_phone,lsi.longitude,lsi.latitude,lss.price reach_price from t_store_info lsi
+        JOIN t_store_sku lss on lsi.id=lss.store_id
+        where lss.sku_id=#{skuId} and lsi.city_id=#{cityId} and lsi.del_flag='0' and lsi.status='2'
+        and lsi.effective_time >now()
+    </select>
+
+    <select id="queryOneOnSaleStoreByCoordinate" resultMap="TStoreInfoResult"
+            parameterType="com.ruoyi.store.vo.OnSaleStoreQueryParam">
+        select lsi.id,lsi.store_name,lsi.company_address,lsi.avatar_picture,lsi.longitude,lsi.latitude
+        <if test="longitude !=-1 and latitude!=-1">
+            ,(st_distance (point (longitude, latitude),point(#{longitude},#{latitude}) ) / 0.0111) AS distance
+        </if>
+        from t_store_info lsi
+        JOIN t_store_sku lss on lsi.id=lss.store_id
+        where lss.sku_id=#{skuId} and lsi.city_id=#{cityId} and lsi.del_flag='0' and lsi.status='2'
+        and lsi.effective_time >now()
+        <if test="longitude !=-1 and latitude!=-1">
+            ORDER BY distance
+        </if>
+        limit 0,1
+    </select>
+    <select id="queryOnSaleStoreListByCoordinate" resultMap="TStoreInfoResult"
+            parameterType="com.ruoyi.store.vo.OnSaleStoreQueryParam">
+        select
+        lsi.id,lsi.store_name,lsi.company_address,lsi.avatar_picture,lsi.company_phone,lsi.longitude,lsi.latitude,lss.price
+        reach_price
+        <if test="longitude !=-1 and latitude!=-1">
+            ,(st_distance (point (longitude, latitude),point(#{longitude},#{latitude}) ) / 0.0111) AS distance
+        </if>
+        from t_store_info lsi
+        JOIN t_store_sku lss on lsi.id=lss.store_id
+        where lss.sku_id=#{skuId} and lsi.city_id=#{cityId} and lsi.del_flag='0' and lsi.status='2'
+        and lsi.effective_time >now()
+        <if test="longitude !=-1 and latitude!=-1">
+            ORDER BY distance
+        </if>
+    </select>
+    <select id="queryNearByStoreList" resultMap="TStoreInfoResult">
+        select id,store_name,company_address,avatar_picture,company_phone,longitude,latitude
+        ,(st_distance (point (longitude, latitude),point(#{longitude},#{latitude}) ) / 0.0111) AS distance
+        from t_store_info
+        where del_flag='0' and status='2' and effective_time >now() and type !='0'
+        <if test="distance!=-1">
+            HAVING distance &lt; #{distance}
+        </if>
+        ORDER BY distance
+    </select>
+
+
+    <select id="queryStoreInfoListCount" resultType="java.lang.Integer" parameterType="java.util.Map">
+        SELECT COUNT(1) FROM t_store_info
+        LEFT JOIN ums_member on t_store_info.id=ums_member.store_id
+        WHERE t_store_info.del_flag='0' AND ums_member.type='2' and t_store_info.type !='0'
+        <if test='mobile !=null'>
+            AND ums_member.mobile=#{mobile}
+        </if>
+        <if test="companyName != null and companyName != '' ">
+            AND t_store_info.company_name = #{companyName}
+        </if>
+        <if test="storeName != null and storeName != '' ">
+            AND t_store_info.store_name = #{storeName}
+        </if>
+    </select>
+    <select id="queryStoreInfoList" resultMap="TStoreInfoResult" parameterType="java.util.Map">
+        SELECT t_store_info.* ,ums_member.mobile customer_mobile FROM t_store_info
+        LEFT JOIN ums_member on t_store_info.id=ums_member.store_id
+        WHERE t_store_info.del_flag='0' AND ums_member.type='2' and t_store_info.type!='0'
+        <if test='mobile !=null'>
+            AND ums_member.mobile=#{mobile}
+        </if>
+        <if test="companyName != null and companyName != '' ">
+            AND t_store_info.company_name = #{companyName}
+        </if>
+        <if test="storeName != null and storeName != '' ">
+            AND t_store_info.store_name = #{storeName}
+        </if>
+        ORDER BY t_store_info.create_time DESC
+        limit #{startRowNum},#{pageSize}
+    </select>
+
+    <select id="queryNearStoreList" resultMap="TStoreInfoResult">
+        select lsi.*,(st_distance (point (lsi.longitude, lsi.latitude),point(#{longitude},#{latitude}) ) / 0.0111) AS
+        distance,
+        IFNULL(lc.comment_count,0) comment_count,IFNULL(lsale.sale_count,0) sale_count from t_store_info lsi
+        left JOIN (select COUNT(1) comment_count,store_id comment_store_id from pms_comment GROUP BY store_id ) lc on
+        lsi.id=lc.comment_store_id
+        left JOIN (select sum(los.num) sale_count,lo.store_id order_store_id from oms_order lo,oms_order_sku los
+        where store_id !=0 and lo.status in ('4','6','7') GROUP BY lo.store_id) lsale on lsi.id=lsale.order_store_id
+        where lsi.status='2' and lsi.effective_time &gt; now() and lsi.del_flag='0' and lsi.type = '0'
+        <if test="distance!=-1">
+            HAVING distance &lt; #{distance}
+        </if>
+        ORDER BY distance
+    </select>
+</mapper>

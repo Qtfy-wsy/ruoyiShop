@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.goods.mapper.PmsCategorySpecMapper">
+
+    <resultMap type="PmsCategorySpec" id="PmsCategorySpecResult">
+        <result property="id" column="id"/>
+        <result property="cateId" column="cate_id"/>
+        <result property="specId" column="spec_id"/>
+        <result property="delFlag" column="del_flag"/>
+    </resultMap>
+
+    <sql id="selectPmsCategorySpecVo">
+        select id, cate_id, spec_id, del_flag from pms_category_spec
+    </sql>
+
+    <select id="selectPmsCategorySpecList" parameterType="PmsCategorySpec" resultMap="PmsCategorySpecResult">
+        <include refid="selectPmsCategorySpecVo"/>
+        <where>
+            <if test="cateId != null ">and cate_id = #{cateId}</if>
+            <if test="specId != null ">and spec_id = #{specId}</if>
+        </where>
+    </select>
+
+    <select id="selectPmsCategorySpecById" parameterType="Long" resultMap="PmsCategorySpecResult">
+        <include refid="selectPmsCategorySpecVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertPmsCategorySpec" parameterType="PmsCategorySpec" useGeneratedKeys="true" keyProperty="id">
+        insert into pms_category_spec
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="cateId != null">cate_id,</if>
+            <if test="specId != null">spec_id,</if>
+            <if test="delFlag != null and delFlag != ''">del_flag,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="cateId != null">#{cateId},</if>
+            <if test="specId != null">#{specId},</if>
+            <if test="delFlag != null and delFlag != ''">#{delFlag},</if>
+        </trim>
+    </insert>
+
+    <update id="updatePmsCategorySpec" parameterType="PmsCategorySpec">
+        update pms_category_spec
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="cateId != null">cate_id = #{cateId},</if>
+            <if test="specId != null">spec_id = #{specId},</if>
+            <if test="delFlag != null and delFlag != ''">del_flag = #{delFlag},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deletePmsCategorySpecById" parameterType="Long">
+        delete from pms_category_spec where id = #{id}
+    </delete>
+
+    <delete id="deletePmsCategorySpecByIds" parameterType="String">
+        delete from pms_category_spec where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

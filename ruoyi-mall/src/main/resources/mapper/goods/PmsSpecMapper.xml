@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.goods.mapper.PmsSpecMapper">
+
+    <resultMap type="PmsSpec" id="PmsSpecResult">
+        <result property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="nickName" column="nick_name"/>
+        <result property="delFlag" column="del_flag"/>
+        <result property="createName" column="create_name"/>
+        <result property="modifyName" column="modify_name"/>
+        <result property="delName" column="del_name"/>
+        <result property="createTime" column="create_time"/>
+        <result property="delTime" column="del_time"/>
+        <result property="modifyTime" column="modify_time"/>
+    </resultMap>
+
+    <sql id="selectPmsSpecVo">
+        select id, name, nick_name, del_flag, create_name, modify_name, del_name, create_time, del_time, modify_time from pms_spec
+    </sql>
+
+    <select id="selectPmsSpecList" parameterType="PmsSpec" resultMap="PmsSpecResult">
+        <include refid="selectPmsSpecVo"/>
+        <where>
+            <if test="name != null  and name != ''">and name like concat('%', #{name}, '%')</if>
+            <if test="nickName != null  and nickName != ''">and nick_name like concat('%', #{nickName}, '%')</if>
+            <if test="createName != null  and createName != ''">and create_name like concat('%', #{createName}, '%')
+            </if>
+            <if test="modifyName != null  and modifyName != ''">and modify_name like concat('%', #{modifyName}, '%')
+            </if>
+            <if test="delName != null  and delName != ''">and del_name like concat('%', #{delName}, '%')</if>
+            <if test="delTime != null ">and del_time = #{delTime}</if>
+            <if test="modifyTime != null ">and modify_time = #{modifyTime}</if>
+        </where>
+    </select>
+
+    <select id="selectPmsSpecById" parameterType="Long" resultMap="PmsSpecResult">
+        <include refid="selectPmsSpecVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertPmsSpec" parameterType="PmsSpec" useGeneratedKeys="true" keyProperty="id">
+        insert into pms_spec
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="name != null and name != ''">name,</if>
+            <if test="nickName != null">nick_name,</if>
+            <if test="delFlag != null and delFlag != ''">del_flag,</if>
+            <if test="createName != null">create_name,</if>
+            <if test="modifyName != null">modify_name,</if>
+            <if test="delName != null">del_name,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="delTime != null">del_time,</if>
+            <if test="modifyTime != null">modify_time,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="name != null and name != ''">#{name},</if>
+            <if test="nickName != null">#{nickName},</if>
+            <if test="delFlag != null and delFlag != ''">#{delFlag},</if>
+            <if test="createName != null">#{createName},</if>
+            <if test="modifyName != null">#{modifyName},</if>
+            <if test="delName != null">#{delName},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="delTime != null">#{delTime},</if>
+            <if test="modifyTime != null">#{modifyTime},</if>
+        </trim>
+    </insert>
+
+    <update id="updatePmsSpec" parameterType="PmsSpec">
+        update pms_spec
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="name != null and name != ''">name = #{name},</if>
+            <if test="nickName != null">nick_name = #{nickName},</if>
+            <if test="delFlag != null and delFlag != ''">del_flag = #{delFlag},</if>
+            <if test="createName != null">create_name = #{createName},</if>
+            <if test="modifyName != null">modify_name = #{modifyName},</if>
+            <if test="delName != null">del_name = #{delName},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="delTime != null">del_time = #{delTime},</if>
+            <if test="modifyTime != null">modify_time = #{modifyTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deletePmsSpecById" parameterType="Long">
+        delete from pms_spec where id = #{id}
+    </delete>
+
+    <delete id="deletePmsSpecByIds" parameterType="String">
+        delete from pms_spec where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <insert id="addSpec" parameterType="com.ruoyi.goods.domain.PmsSpec" useGeneratedKeys="true" keyProperty="id">
+        insert into pms_spec
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="name != null">
+                name,
+            </if>
+            <if test="nickName != null">
+                nick_name,
+            </if>
+            <if test="delFlag != null">
+                del_flag,
+            </if>
+            <if test="createName != null">
+                create_name,
+            </if>
+            <if test="modifyName != null">
+                modify_name,
+            </if>
+            <if test="delName != null">
+                del_name,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="modifyTime != null">
+                modify_time,
+            </if>
+            <if test="delTime != null">
+                del_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="name != null">
+                #{name},
+            </if>
+            <if test="nickName != null">
+                #{nickName},
+            </if>
+            <if test="delFlag != null">
+                #{delFlag},
+            </if>
+            <if test="createName != null">
+                #{createName},
+            </if>
+            <if test="modifyName != null">
+                #{modifyName},
+            </if>
+            <if test="delName != null">
+                #{delName},
+            </if>
+            <if test="createTime != null">
+                #{createTime},
+            </if>
+            <if test="modifyTime != null">
+                #{modifyTime},
+            </if>
+            <if test="delTime != null">
+                #{delTime},
+            </if>
+        </trim>
+    </insert>
+
+
+    <select id="querySpecs" parameterType="java.util.Map" resultMap="PmsSpecResult">
+        select * from pms_spec
+        where del_flag = '0'
+        <if test="name != null and name != '' ">
+            AND name like CONCAT(CONCAT('%', #{name}),'%')
+        </if>
+
+        order by create_time desc
+        limit #{startRowNum},#{pageSize}
+    </select>
+
+    <select id="querySpecsCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+        select count(1) from pms_spec
+        where del_flag = '0'
+        <if test="name != null and name != '' ">
+            AND name like CONCAT(CONCAT('%', #{name}),'%')
+        </if>
+    </select>
+
+
+    <select id="querySpecById" parameterType="java.lang.Long" resultMap="PmsSpecResult">
+        select * from pms_spec
+        where   id = #{id}
+    </select>
+
+    <update id="deleteSpec" parameterType="com.ruoyi.goods.domain.PmsSpec">
+        update pms_spec
+        <set>
+            <if test="delFlag != null">
+                del_flag = #{delFlag},
+            </if>
+            <if test="delName != null">
+                del_name = #{delName},
+            </if>
+            <if test="delTime != null">
+                del_time = #{delTime}
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <update id="updateSpec" parameterType="com.ruoyi.goods.domain.PmsSpec">
+        update pms_spec
+        <set>
+            <if test="name != null">
+                name = #{name},
+            </if>
+            <if test="nickName != null">
+                nick_name = #{nickName},
+            </if>
+            <if test="modifyName != null">
+                modify_name = #{modifyName},
+            </if>
+            <if test="modifyTime != null">
+                modify_time = #{modifyTime}
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <select id="queryAllSpec" parameterType="java.lang.Long" resultMap="PmsSpecResult">
+        select * from pms_spec
+        where del_flag = '0'
+    </select>
+</mapper>

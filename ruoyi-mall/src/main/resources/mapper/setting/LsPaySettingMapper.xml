@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.setting.mapper.LsPaySettingMapper">
+
+    <resultMap type="LsPaySetting" id="LsPaySettingResult">
+        <result property="id" column="id"/>
+        <result property="codetype" column="codeType"/>
+        <result property="columnName" column="column_name"/>
+        <result property="columnValue" column="column_value"/>
+    </resultMap>
+
+    <sql id="selectLsPaySettingVo">
+        select id, codeType, column_name, column_value from ls_pay_setting
+    </sql>
+
+    <select id="selectLsPaySettingList" parameterType="LsPaySetting" resultMap="LsPaySettingResult">
+        <include refid="selectLsPaySettingVo"/>
+        <where>
+            <if test="codetype != null  and codetype != ''">and codeType = #{codetype}</if>
+            <if test="columnName != null  and columnName != ''">and column_name like concat('%', #{columnName}, '%')
+            </if>
+            <if test="columnValue != null  and columnValue != ''">and column_value = #{columnValue}</if>
+        </where>
+    </select>
+
+    <select id="selectLsPaySettingById" parameterType="Long" resultMap="LsPaySettingResult">
+        <include refid="selectLsPaySettingVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertLsPaySetting" parameterType="LsPaySetting" useGeneratedKeys="true" keyProperty="id">
+        insert into ls_pay_setting
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="codetype != null and codetype != ''">codeType,</if>
+            <if test="columnName != null and columnName != ''">column_name,</if>
+            <if test="columnValue != null and columnValue != ''">column_value,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="codetype != null and codetype != ''">#{codetype},</if>
+            <if test="columnName != null and columnName != ''">#{columnName},</if>
+            <if test="columnValue != null and columnValue != ''">#{columnValue},</if>
+        </trim>
+    </insert>
+
+    <update id="updateLsPaySetting" parameterType="LsPaySetting">
+        update ls_pay_setting
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="codetype != null and codetype != ''">codeType = #{codetype},</if>
+            <if test="columnName != null and columnName != ''">column_name = #{columnName},</if>
+            <if test="columnValue != null and columnValue != ''">column_value = #{columnValue},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteLsPaySettingById" parameterType="Long">
+        delete from ls_pay_setting where id = #{id}
+    </delete>
+
+    <delete id="deleteLsPaySettingByIds" parameterType="String">
+        delete from ls_pay_setting where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    <resultMap id="BaseResult" type="com.ruoyi.setting.bean.PaySet">
+        <result column="id" property="id"/>
+        <result column="codeType" property="codeType"/>
+        <result column="column_name" property="columnName"/>
+        <result column="column_value" property="columnValue"/>
+    </resultMap>
+    <select id="queryPaySet" resultMap="BaseResult">
+        SELECT id,codeType,`column_name`,column_value FROM ls_pay_setting
+    </select>
+    <delete id="deletePaySet" parameterType="java.lang.String">
+        DELETE  FROM ls_pay_setting WHERE codeType=#{codeType}
+    </delete>
+    <insert id="addPaySet" parameterType="com.ruoyi.setting.bean.PaySet">
+        INSERT INTO ls_pay_setting (codeType,`column_name`,column_value) VALUES
+        <foreach collection="list" index="index" item="paySet" separator=",">
+            (
+            #{paySet.codeType},#{paySet.columnName},#{paySet.columnValue}
+            )
+        </foreach>
+    </insert>
+</mapper>

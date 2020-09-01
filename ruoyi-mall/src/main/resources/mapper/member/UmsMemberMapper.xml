@@ -1,0 +1,609 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.member.mapper.UmsMemberMapper">
+
+    <resultMap type="UmsMember" id="UmsMemberResult">
+        <result property="id" column="id"/>
+        <result property="username" column="username"/>
+        <result property="password" column="password"/>
+        <result property="nickname" column="nickname"/>
+        <result property="image" column="image"/>
+        <result property="relename" column="relename"/>
+        <result property="cardid" column="cardid"/>
+        <result property="gender" column="gender"/>
+        <result property="birthday" column="birthday"/>
+        <result property="monthlyIncome" column="monthly_income"/>
+        <result property="marriageStatus" column="marriage_status"/>
+        <result property="mobile" column="mobile"/>
+        <result property="email" column="email"/>
+        <result property="modifiedEmail" column="modified_email"/>
+        <result property="checkCode" column="check_code"/>
+        <result property="province" column="province"/>
+        <result property="city" column="city"/>
+        <result property="county" column="county"/>
+        <result property="detailaddress" column="detailaddress"/>
+        <result property="interest" column="interest"/>
+        <result property="storeId" column="store_id"/>
+        <result property="type" column="type"/>
+        <result property="consumptionAmount" column="consumption_amount"/>
+        <result property="paypassword" column="paypassword"/>
+        <result property="source" column="source"/>
+        <result property="status" column="status"/>
+        <result property="signNum" column="sign_num"/>
+        <result property="isMobileVerification" column="is_mobile_verification"/>
+        <result property="isEmailVerification" column="is_email_verification"/>
+        <result property="loginErrorCount" column="login_error_count"/>
+        <result property="delFlag" column="del_flag"/>
+        <result property="createTime" column="create_time"/>
+        <result property="modifyTime" column="modify_time"/>
+        <result property="delTime" column="del_time"/>
+        <result property="lockTime" column="lock_time"/>
+        <result property="lastLoginTime" column="last_login_time"/>
+        <result property="recommended" column="recommended"/>
+        <result property="sRecommended" column="s_recommended"/>
+        <result property="selfRecommendCode" column="self_recommend_code"/>
+        <result property="commission" column="commission"/>
+        <result property="beloneStoreId" column="belone_store_id"/>
+        <result property="appletOpenId" column="applet_open_id"/>
+        <result property="appOpenId" column="app_open_id"/>
+        <result property="h5OpenId" column="h5_open_id"/>
+
+    </resultMap>
+
+    <sql id="selectUmsMemberVo">
+        select id, username,applet_open_id,app_open_id,h5_open_id, password, nickname, image, relename, cardid, gender, birthday, monthly_income, marriage_status, mobile, email, modified_email, check_code, province, city, county, detailaddress, interest, store_id, type, consumption_amount, paypassword, source, status, sign_num, is_mobile_verification, is_email_verification, login_error_count, del_flag, create_time, modify_time, del_time, lock_time, last_login_time, recommended, s_recommended, self_recommend_code, commission, belone_store_id from ums_member
+    </sql>
+
+    <select id="queryCustomerByh5OpenId" parameterType="java.lang.String" resultMap="UmsMemberResult">
+        select * from ums_member where h5_open_id = #{h5OpenId}
+    </select>
+    <select id="queryCustomerByappOpenId" parameterType="java.lang.String" resultMap="UmsMemberResult">
+        select * from ums_member where app_open_id = #{appOpenId}
+    </select>
+    <select id="queryCustomerByappletOpenId" parameterType="java.lang.String" resultMap="UmsMemberResult">
+        select * from ums_member where applet_open_id = #{appletOpenId}
+    </select>
+    <select id="queryCustomers" parameterType="java.util.Map" resultMap="UmsMemberResult">
+        select * from ums_member
+        where del_flag = '0'
+        <if test="username != null and username != '' ">
+            AND username like CONCAT(CONCAT('%', #{username}),'%')
+        </if>
+
+        <if test="relename != null and relename != ''">
+            AND relename like CONCAT(CONCAT('%', #{relename}),'%')
+        </if>
+
+        <if test="mobile != null and mobile != ''">
+            AND mobile = #{mobile}
+        </if>
+
+        <if test="email != null and email != ''">
+            AND email = #{email}
+        </if>
+
+        <if test="isMobileVerification != null and isMobileVerification != ''">
+            AND is_mobile_verification = #{isMobileVerification}
+        </if>
+
+        <if test="isEmailVerification != null and isEmailVerification != ''">
+            AND is_email_verification = #{isEmailVerification}
+        </if>
+
+        <if test="status != null and status != ''">
+            AND status = #{status}
+        </if>
+
+        <if test="type != null and type != ''">
+            AND type = #{type}
+        </if>
+
+        <if test="createTime != null and createTime != ''">
+            AND DATE(create_time) = #{createTime}
+        </if>
+
+        <if test="beloneStoreId != null and beloneStoreId != '' and beloneStoreId != 0">
+            and belone_store_id = #{beloneStoreId}
+        </if>
+
+        order by create_time desc
+        limit #{startRowNum},#{pageSize}
+    </select>
+
+    <select id="queryCustomerCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+        select count(1) from ums_member
+        where del_flag = '0'
+        <if test="username != null and username != '' ">
+            AND username like CONCAT(CONCAT('%', #{username}),'%')
+        </if>
+
+        <if test="relename != null and relename != ''">
+            AND relename like CONCAT(CONCAT('%', #{relename}),'%')
+        </if>
+
+        <if test="mobile != null and mobile != ''">
+            AND mobile = #{mobile}
+        </if>
+
+        <if test="email != null and email != ''">
+            AND email = #{email}
+        </if>
+
+        <if test="isMobileVerification != null and isMobileVerification != ''">
+            AND is_mobile_verification = #{isMobileVerification}
+        </if>
+
+        <if test="isEmailVerification != null and isEmailVerification != ''">
+            AND is_email_verification = #{isEmailVerification}
+        </if>
+
+        <if test="status != null and status != ''">
+            AND status = #{status}
+        </if>
+
+        <if test="type != null and type != ''">
+            AND type = #{type}
+        </if>
+
+        <if test="createTime != null and createTime != ''">
+            AND DATE(create_time) = #{createTime}
+        </if>
+        <if test="beloneStoreId != null and beloneStoreId != '' and beloneStoreId != 0">
+            and belone_store_id = #{beloneStoreId}
+        </if>
+    </select>
+
+    <select id="queryCustomerById" parameterType="java.lang.Long" resultMap="UmsMemberResult">
+        select * from ums_member where id = #{id}
+    </select>
+
+    <update id="deleteCustomers" parameterType="java.util.List">
+        update ums_member set del_flag = '1' , del_time =
+        now(),username=concat(username,'-del-',UNIX_TIMESTAMP(CURRENT_TIMESTAMP(3)))
+        ,mobile=concat(mobile,'-del-',UNIX_TIMESTAMP(CURRENT_TIMESTAMP(3))) where id in
+        <foreach collection="list" item="item" index="index" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </update>
+
+    <update id="updateCustomer" parameterType="com.ruoyi.member.domain.UmsMember">
+        update ums_member
+        <set>
+            <if test="username != null">
+                username = #{username},
+            </if>
+            <if test="nickname != null">
+                nickname = #{nickname},
+            </if>
+            image = #{image},
+            <if test="relename != null">
+                relename = #{relename},
+            </if>
+            <if test="cardid != null">
+                cardid = #{cardid},
+            </if>
+            <if test="gender != null">
+                gender = #{gender},
+            </if>
+            <if test="birthday != null">
+                birthday = #{birthday},
+            </if>
+            <if test="monthlyIncome != null">
+                monthly_income = #{monthlyIncome},
+            </if>
+            <if test="marriageStatus != null">
+                marriage_status = #{marriageStatus},
+            </if>
+            <if test="province != null">
+                province = #{province},
+            </if>
+            <if test="city != null">
+                city = #{city},
+            </if>
+            <if test="county != null">
+                county = #{county},
+            </if>
+            <if test="detailaddress != null">
+                detailaddress = #{detailaddress},
+            </if>
+            <if test="interest != null">
+                interest = #{interest},
+            </if>
+            <if test="recommended != null">
+                recommended=#{recommended},
+            </if>
+            modify_time = now()
+        </set>
+        where id = #{id}
+    </update>
+    <select id="customerStoreLogin" parameterType="java.lang.String" resultMap="UmsMemberResult">
+        SELECT * FROM ums_member where  username=#{username}
+    </select>
+    <update id="updateLoginTime" parameterType="java.lang.Long">
+        UPDATE ums_member SET last_login_time=now() WHERE id=#{customerId}
+    </update>
+    <select id="queryCustomerIdByStoreId" parameterType="java.lang.Long" resultMap="UmsMemberResult">
+        SELECT * FROM ums_member WHERE `type`='2' AND status='1'  AND store_id=#{storeId}
+    </select>
+
+    <resultMap id="customerAndRole" type="com.ruoyi.member.vo.StoreStaff">
+        <result column="id" property="id"/>
+        <result column="username" property="username"/>
+        <result column="relename" property="relename"/>
+        <result column="store_id" property="storeId"/>
+        <result column="type" property="type"/>
+        <result column="status" property="status"/>
+        <result column="create_time" property="createTime"/>
+        <result column="last_login_time" property="lastLoginTime"/>
+        <result column="role_id" property="roleId"/>
+        <result column="name" property="roleName"/>
+    </resultMap>
+    <select id="queryStoreStall" parameterType="java.util.Map" resultMap="customerAndRole">
+        SELECT
+        lc.id,lc.username,lc.nickname,lc.relename,lc.store_id,lc.`type`,lc.`status`,lc.last_login_time,lc.create_time,
+        custoer_role.role_id,custoer_role.`name` FROM ums_member AS lc
+        JOIN (SELECT lcr.customer_id,lcr.role_id,lsr.name FROM ums_member_role as lcr JOIN t_store_role as lsr ON
+        lcr.role_id=lsr.id
+        WHERE lsr.store_id=#{storeId}) AS custoer_role
+        ON lc.id=custoer_role.customer_id where  store_id=#{storeId} AND `type`=3
+        <if test="name != null and name != '' ">
+            AND username like CONCAT(CONCAT('%', #{name}),'%')
+        </if>
+        ORDER BY create_time DESC
+        limit #{startRowNum},#{pageSize}
+    </select>
+    <select id="queryStoreStallCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+        select count(1) from ums_member
+        where  store_id=#{storeId} AND `type`=3
+        <if test="name != null and name != '' ">
+            AND username like CONCAT(CONCAT('%', #{name}),'%')
+        </if>
+    </select>
+    <insert id="addStoreStaff" parameterType="com.ruoyi.member.vo.StoreStaff" useGeneratedKeys="true"
+            keyProperty="id">
+        INSERT INTO ums_member(consumption_amount,login_error_count,source,username,password,relename,store_id,`type`,status,create_time)
+        VALUES (0.00,0,'4',#{username},#{password},#{relename},#{storeId},#{type},#{status},now());
+    </insert>
+    <update id="updateStatus" parameterType="com.ruoyi.member.vo.StoreStaff">
+        UPDATE ums_member SET status=#{status} WHERE id=#{id}
+    </update>
+    <update id="updatePassWord" parameterType="com.ruoyi.member.domain.UmsMember">
+        UPDATE ums_member SET password=#{password} WHERE id=#{id}
+    </update>
+    <update id="updateStoreIdAndType" parameterType="com.ruoyi.member.domain.UmsMember">
+        UPDATE ums_member SET store_id=#{storeId},`type`=#{type} WHERE id=#{id}
+    </update>
+    <update id="updatePersonalInfo" parameterType="java.util.Map">
+        UPDATE ums_member SET
+        <if test="param == 1">
+            nickname=#{customer.nickname},gender=#{customer.gender},birthday=#{customer.birthday},relename=#{customer.relename}
+        </if>
+        <if test="param == 2">
+            image=#{customer.image}
+        </if>
+        <if test="param == 3">
+            monthly_income=#{customer.monthlyIncome},marriage_status=#{customer.marriageStatus},cardid=#{customer.cardid}
+        </if>
+        WHERE id=#{customer.id}
+    </update>
+
+    <select id="queryCustomerByName" resultMap="UmsMemberResult" parameterType="java.util.Map">
+        select * from ums_member where (username = #{username} or mobile = #{username} or email=#{username})
+    </select>
+
+    <select id="queryCustomerByNameInWriteDataSource" resultMap="UmsMemberResult" parameterType="java.util.Map">
+        select * from ums_member where (username = #{username} or mobile = #{username} or email=#{username})
+    </select>
+
+    <update id="unlockUser" parameterType="java.lang.Long">
+        update ums_member set login_error_count = 0 ,lock_time = null where id = #{customerId}
+    </update>
+
+    <update id="updateLoginErrorCount" parameterType="java.lang.Long">
+        update ums_member set login_error_count = login_error_count+1  where id = #{customerId}
+    </update>
+
+    <update id="lockUser" parameterType="java.lang.Long">
+         update ums_member set lock_time = now() where id = #{customerId}
+    </update>
+
+    <select id="queryByMobile" parameterType="java.lang.String" resultType="java.lang.Integer">
+        select count(1) from ums_member where mobile = #{mobile}
+    </select>
+
+    <select id="queryByEmail" parameterType="java.lang.String" resultType="java.lang.Integer">
+        select count(1) from ums_member where email = #{email}
+    </select>
+
+    <update id="updatePassword" parameterType="java.util.Map">
+        update ums_member set password = #{password} where id = #{customerId}
+    </update>
+
+    <update id="updatePayPassword" parameterType="java.util.Map">
+        update ums_member set paypassword = #{payPassword} where id = #{customerId}
+    </update>
+
+    <update id="bindNewMobile" parameterType="java.util.Map">
+        update ums_member set username = #{mobile} , mobile = #{mobile} where id = #{customerId}
+    </update>
+
+    <update id="updatePasswordByMobile" parameterType="java.util.Map">
+        update ums_member set password = #{password} where mobile = #{mobile}
+    </update>
+    <update id="updateCustomerConsumptionAmount" parameterType="java.util.Map">
+         update ums_member set consumption_amount = consumption_amount+#{orderMoney} where id = #{customerId}
+    </update>
+
+    <update id="updateCustomerCommission" parameterType="java.util.Map">
+        update ums_member set commission = commission+#{commission} where id = #{customerId}
+    </update>
+
+    <select id="queryCustomersByIds" parameterType="java.util.List" resultMap="UmsMemberResult">
+        select * from ums_member where del_flag='0' and id IN
+        <foreach collection="list" open="(" close=")" separator="," item="id" index="index">
+            #{id}
+        </foreach>
+    </select>
+    <select id="queryAllCustomer" resultMap="UmsMemberResult">
+      SELECT * from ums_member where del_flag='0'
+    </select>
+    <update id="updateModifiedEmailInfo" parameterType="java.util.Map">
+        update ums_member set modified_email=#{modifiedEmail},check_code=#{checkCode} where id=#{customerId}
+    </update>
+    <update id="modifiedEmail" parameterType="java.util.Map">
+        update ums_member set email=modified_email, modified_email='',check_code='',is_email_verification='1' where id=#{customerId}
+    </update>
+    <select id="selectModifiedEmailInfo" parameterType="java.util.Map" resultMap="UmsMemberResult">
+        select * from ums_member where id=#{customerId} and check_code =#{checkCode}
+    </select>
+    <update id="updateSignNum" parameterType="java.util.Map">
+        update ums_member
+        set
+        <if test="continueFlag==true">
+            sign_num=sign_num+1
+        </if>
+        <if test="continueFlag==false">
+            sign_num=1
+        </if>
+        where id=#{customerId}
+    </update>
+
+    <resultMap id="customerStatistics" type="com.ruoyi.store.vo.NewCustomerStatistics">
+        <result column="newCustomerTime" property="newCustomerTime"/>
+        <result column="newCustomerNum" property="newCustomerNum"/>
+    </resultMap>
+
+    <select id="queryNewCustomerStatistics" parameterType="java.util.Map" resultMap="customerStatistics">
+        select DATE(create_time) as 'newCustomerTime',count(1) as 'newCustomerNum' from ums_member
+        where DATE(create_time) between #{startTime,jdbcType=TIMESTAMP} and #{endTime,jdbcType=TIMESTAMP}
+       group by DATE(create_time) order by create_time
+    </select>
+
+    <select id="queryNewCustomerStatisticsCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+        select count(1) from (select count(1) from ums_member where DATE(create_time)
+        between #{startTime,jdbcType=TIMESTAMP} and #{endTime,jdbcType=TIMESTAMP}
+       group by DATE(create_time)) as num
+    </select>
+
+    <select id="queryNewCustomerStatisticsWithPage" parameterType="java.util.Map" resultMap="customerStatistics">
+        select DATE(create_time) as 'newCustomerTime',count(1) as 'newCustomerNum' from ums_member
+        where DATE(create_time) between #{startTime,jdbcType=TIMESTAMP} and #{endTime,jdbcType=TIMESTAMP}
+       group by DATE(create_time) order by create_time
+        limit #{startRowNum},#{pageSize}
+    </select>
+
+
+    <select id="queryNewCustomerToday" resultType="java.lang.Integer">
+        select count(1) from ums_member where   DATE(create_time) = DATE(now())
+    </select>
+
+    <select id="queryNewCustomerThisWeek" resultType="java.lang.Integer">
+        select count(1) from ums_member where
+        YEARWEEK(date_format(create_time,'%Y-%m-%d')- INTERVAL 1 DAY) = YEARWEEK(now()- INTERVAL 1 DAY)
+    </select>
+
+    <select id="queryNewCustomerThisWeekGroupByDay" resultMap="customerStatistics">
+        select DATE(create_time) as 'newCustomerTime',count(1) as 'newCustomerNum'
+        from ums_member where
+        YEARWEEK(date_format(create_time,'%Y-%m-%d')- INTERVAL 1 DAY) = YEARWEEK(now()- INTERVAL 1 DAY)
+        group by DATE(create_time) order by create_time
+    </select>
+    <select id="queryAllCustomerMobileForCreateStore" resultType="java.lang.String">
+        select mobile from ums_member where del_flag='0' and store_id=0 and mobile !=''
+    </select>
+
+    <select id="querySpreadCustomerIdList" parameterType="java.util.Map" resultType="java.lang.Long">
+        select recommended from (select distinct recommended from ums_member where del_flag='0' and recommended != -1) a
+        limit #{startRowNum},#{pageSize}
+    </select>
+
+    <select id="querySpreadCustomerIdListCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+        select count(1) from (select distinct recommended from ums_member where del_flag='0' and recommended != -1) a
+    </select>
+
+    <select id="querySpreadCustomerByCustomerId" parameterType="java.lang.Long" resultMap="UmsMemberResult">
+        select * from ums_member
+        where  recommended = #{customerId}
+    </select>
+
+    <select id="querySpreadCustomerCountByCustomerId" parameterType="java.lang.Long" resultType="java.lang.Integer">
+        select count(1) from ums_member
+        where  recommended = #{customerId}
+    </select>
+    <select id="selectUmsMemberList" parameterType="UmsMember" resultMap="UmsMemberResult">
+        <include refid="selectUmsMemberVo"/>
+        <where>
+            <if test="username != null  and username != ''">and username like concat('%', #{username}, '%')</if>
+            <if test="password != null  and password != ''">and password = #{password}</if>
+            <if test="cardid != null  and cardid != ''">and cardid = #{cardid}</if>
+            <if test="gender != null  and gender != ''">and gender = #{gender}</if>
+            <if test="mobile != null  and mobile != ''">and mobile = #{mobile}</if>
+            <if test="email != null  and email != ''">and email = #{email}</if>
+            <if test="status != null  and status != ''">and status = #{status}</if>
+        </where>
+    </select>
+
+    <select id="selectUmsMemberById" parameterType="Long" resultMap="UmsMemberResult">
+        <include refid="selectUmsMemberVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertUmsMember" parameterType="UmsMember" useGeneratedKeys="true" keyProperty="id">
+        insert into ums_member
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="username != null and username != ''">username,</if>
+            <if test="password != null and password != ''">password,</if>
+            <if test="nickname != null">nickname,</if>
+            <if test="image != null">image,</if>
+            <if test="relename != null">relename,</if>
+            <if test="cardid != null">cardid,</if>
+            <if test="gender != null and gender != ''">gender,</if>
+            <if test="birthday != null">birthday,</if>
+            <if test="monthlyIncome != null">monthly_income,</if>
+            <if test="marriageStatus != null and marriageStatus != ''">marriage_status,</if>
+            <if test="mobile != null">mobile,</if>
+            <if test="email != null">email,</if>
+            <if test="modifiedEmail != null">modified_email,</if>
+            <if test="checkCode != null">check_code,</if>
+            <if test="province != null">province,</if>
+            <if test="city != null">city,</if>
+            <if test="county != null">county,</if>
+            <if test="detailaddress != null">detailaddress,</if>
+            <if test="interest != null">interest,</if>
+            <if test="storeId != null">store_id,</if>
+            <if test="type != null">type,</if>
+            <if test="consumptionAmount != null">consumption_amount,</if>
+            <if test="paypassword != null">paypassword,</if>
+            <if test="source != null">source,</if>
+            <if test="status != null">status,</if>
+            <if test="signNum != null">sign_num,</if>
+            <if test="isMobileVerification != null">is_mobile_verification,</if>
+            <if test="isEmailVerification != null">is_email_verification,</if>
+            <if test="loginErrorCount != null">login_error_count,</if>
+            <if test="delFlag != null">del_flag,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="modifyTime != null">modify_time,</if>
+            <if test="delTime != null">del_time,</if>
+            <if test="lockTime != null">lock_time,</if>
+            <if test="lastLoginTime != null">last_login_time,</if>
+            <if test="recommended != null">recommended,</if>
+            <if test="sRecommended != null">s_recommended,</if>
+            <if test="selfRecommendCode != null">self_recommend_code,</if>
+            <if test="commission != null">commission,</if>
+            <if test="beloneStoreId != null">belone_store_id,</if>
+            <if test="appletOpenId != null">applet_open_id,</if>
+            <if test="appOpenId != null">app_open_id,</if>
+            <if test="h5OpenId != null">h5_open_id,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="username != null and username != ''">#{username},</if>
+            <if test="password != null and password != ''">#{password},</if>
+            <if test="nickname != null">#{nickname},</if>
+            <if test="image != null">#{image},</if>
+            <if test="relename != null">#{relename},</if>
+            <if test="cardid != null">#{cardid},</if>
+            <if test="gender != null and gender != ''">#{gender},</if>
+            <if test="birthday != null">#{birthday},</if>
+            <if test="monthlyIncome != null">#{monthlyIncome},</if>
+            <if test="marriageStatus != null and marriageStatus != ''">#{marriageStatus},</if>
+            <if test="mobile != null">#{mobile},</if>
+            <if test="email != null">#{email},</if>
+            <if test="modifiedEmail != null">#{modifiedEmail},</if>
+            <if test="checkCode != null">#{checkCode},</if>
+            <if test="province != null">#{province},</if>
+            <if test="city != null">#{city},</if>
+            <if test="county != null">#{county},</if>
+            <if test="detailaddress != null">#{detailaddress},</if>
+            <if test="interest != null">#{interest},</if>
+            <if test="storeId != null">#{storeId},</if>
+            <if test="type != null">#{type},</if>
+            <if test="consumptionAmount != null">#{consumptionAmount},</if>
+            <if test="paypassword != null">#{paypassword},</if>
+            <if test="source != null">#{source},</if>
+            <if test="status != null">#{status},</if>
+            <if test="signNum != null">#{signNum},</if>
+            <if test="isMobileVerification != null">#{isMobileVerification},</if>
+            <if test="isEmailVerification != null">#{isEmailVerification},</if>
+            <if test="loginErrorCount != null">#{loginErrorCount},</if>
+            <if test="delFlag != null">#{delFlag},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="modifyTime != null">#{modifyTime},</if>
+            <if test="delTime != null">#{delTime},</if>
+            <if test="lockTime != null">#{lockTime},</if>
+            <if test="lastLoginTime != null">#{lastLoginTime},</if>
+            <if test="recommended != null">#{recommended},</if>
+            <if test="sRecommended != null">#{sRecommended},</if>
+            <if test="selfRecommendCode != null">#{selfRecommendCode},</if>
+            <if test="commission != null">#{commission},</if>
+            <if test="beloneStoreId != null">#{beloneStoreId},</if>
+
+            <if test="appletOpenId != null">#{appletOpenId},,</if>
+            <if test="appOpenId != null">#{appOpenId},,</if>
+            <if test="h5OpenId != null">#{h5OpenId},,</if>
+        </trim>
+    </insert>
+
+    <update id="updateUmsMember" parameterType="UmsMember">
+        update ums_member
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="username != null and username != ''">username = #{username},</if>
+            <if test="password != null and password != ''">password = #{password},</if>
+            <if test="nickname != null">nickname = #{nickname},</if>
+            <if test="image != null">image = #{image},</if>
+            <if test="relename != null">relename = #{relename},</if>
+            <if test="cardid != null">cardid = #{cardid},</if>
+            <if test="gender != null and gender != ''">gender = #{gender},</if>
+            <if test="birthday != null">birthday = #{birthday},</if>
+            <if test="monthlyIncome != null">monthly_income = #{monthlyIncome},</if>
+            <if test="marriageStatus != null and marriageStatus != ''">marriage_status = #{marriageStatus},</if>
+            <if test="mobile != null">mobile = #{mobile},</if>
+            <if test="email != null">email = #{email},</if>
+            <if test="modifiedEmail != null">modified_email = #{modifiedEmail},</if>
+            <if test="checkCode != null">check_code = #{checkCode},</if>
+            <if test="province != null">province = #{province},</if>
+            <if test="city != null">city = #{city},</if>
+            <if test="county != null">county = #{county},</if>
+            <if test="detailaddress != null">detailaddress = #{detailaddress},</if>
+            <if test="interest != null">interest = #{interest},</if>
+            <if test="storeId != null">store_id = #{storeId},</if>
+            <if test="type != null">type = #{type},</if>
+            <if test="consumptionAmount != null">consumption_amount = #{consumptionAmount},</if>
+            <if test="paypassword != null">paypassword = #{paypassword},</if>
+            <if test="source != null">source = #{source},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="signNum != null">sign_num = #{signNum},</if>
+            <if test="isMobileVerification != null">is_mobile_verification = #{isMobileVerification},</if>
+            <if test="isEmailVerification != null">is_email_verification = #{isEmailVerification},</if>
+            <if test="loginErrorCount != null">login_error_count = #{loginErrorCount},</if>
+            <if test="delFlag != null">del_flag = #{delFlag},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="modifyTime != null">modify_time = #{modifyTime},</if>
+            <if test="delTime != null">del_time = #{delTime},</if>
+            <if test="lockTime != null">lock_time = #{lockTime},</if>
+            <if test="lastLoginTime != null">last_login_time = #{lastLoginTime},</if>
+            <if test="recommended != null">recommended = #{recommended},</if>
+            <if test="sRecommended != null">s_recommended = #{sRecommended},</if>
+            <if test="selfRecommendCode != null">self_recommend_code = #{selfRecommendCode},</if>
+            <if test="commission != null">commission = #{commission},</if>
+            <if test="beloneStoreId != null">belone_store_id = #{beloneStoreId},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteUmsMemberById" parameterType="Long">
+        delete from ums_member where id = #{id}
+    </delete>
+
+    <delete id="deleteUmsMemberByIds" parameterType="String">
+        delete from ums_member where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <select id="queryCustomerByRecommondCode" parameterType="java.lang.String" resultMap="UmsMemberResult">
+        SELECT  * from  ums_member where self_recommend_code = #{code}
+    </select>
+</mapper>

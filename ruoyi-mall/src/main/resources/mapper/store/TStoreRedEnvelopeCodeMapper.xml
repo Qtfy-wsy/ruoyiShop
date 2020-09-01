@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.store.mapper.TStoreRedEnvelopeCodeMapper">
+
+    <resultMap type="TStoreRedEnvelopeCode" id="TStoreRedEnvelopeCodeResult">
+        <result property="id" column="id"/>
+        <result property="redEnvelopeId" column="red_envelope_id"/>
+        <result property="code" column="code"/>
+        <result property="customerId" column="customer_id"/>
+        <result property="status" column="status"/>
+        <result property="receiveTime" column="receive_time"/>
+    </resultMap>
+
+    <sql id="selectTStoreRedEnvelopeCodeVo">
+        select id, red_envelope_id, code, customer_id, status, receive_time from t_store_red_envelope_code
+    </sql>
+
+    <select id="selectTStoreRedEnvelopeCodeList" parameterType="TStoreRedEnvelopeCode"
+            resultMap="TStoreRedEnvelopeCodeResult">
+        <include refid="selectTStoreRedEnvelopeCodeVo"/>
+        <where>
+            <if test="redEnvelopeId != null ">and red_envelope_id = #{redEnvelopeId}</if>
+            <if test="code != null  and code != ''">and code = #{code}</if>
+            <if test="customerId != null ">and customer_id = #{customerId}</if>
+            <if test="status != null  and status != ''">and status = #{status}</if>
+            <if test="receiveTime != null ">and receive_time = #{receiveTime}</if>
+        </where>
+    </select>
+
+    <select id="selectTStoreRedEnvelopeCodeById" parameterType="Long" resultMap="TStoreRedEnvelopeCodeResult">
+        <include refid="selectTStoreRedEnvelopeCodeVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertTStoreRedEnvelopeCode" parameterType="TStoreRedEnvelopeCode" useGeneratedKeys="true"
+            keyProperty="id">
+        insert into t_store_red_envelope_code
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="redEnvelopeId != null">red_envelope_id,</if>
+            <if test="code != null">code,</if>
+            <if test="customerId != null">customer_id,</if>
+            <if test="status != null">status,</if>
+            <if test="receiveTime != null">receive_time,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="redEnvelopeId != null">#{redEnvelopeId},</if>
+            <if test="code != null">#{code},</if>
+            <if test="customerId != null">#{customerId},</if>
+            <if test="status != null">#{status},</if>
+            <if test="receiveTime != null">#{receiveTime},</if>
+        </trim>
+    </insert>
+
+    <update id="updateTStoreRedEnvelopeCode" parameterType="TStoreRedEnvelopeCode">
+        update t_store_red_envelope_code
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="redEnvelopeId != null">red_envelope_id = #{redEnvelopeId},</if>
+            <if test="code != null">code = #{code},</if>
+            <if test="customerId != null">customer_id = #{customerId},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="receiveTime != null">receive_time = #{receiveTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteTStoreRedEnvelopeCodeById" parameterType="Long">
+        delete from t_store_red_envelope_code where id = #{id}
+    </delete>
+
+    <delete id="deleteTStoreRedEnvelopeCodeByIds" parameterType="String">
+        delete from t_store_red_envelope_code where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

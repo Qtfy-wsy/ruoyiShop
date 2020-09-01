@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.goods.mapper.PmsShippingMethodFreeshipMapper">
+
+    <resultMap type="PmsShippingMethodFreeship" id="PmsShippingMethodFreeshipResult">
+        <result property="id" column="id"/>
+        <result property="templateId" column="template_id"/>
+        <result property="type" column="type"/>
+        <result property="num" column="num"/>
+        <result property="money" column="money"/>
+    </resultMap>
+
+    <sql id="selectPmsShippingMethodFreeshipVo">
+        select id, template_id, type, num, money from pms_shipping_method_freeship
+    </sql>
+
+    <select id="selectPmsShippingMethodFreeshipList" parameterType="PmsShippingMethodFreeship"
+            resultMap="PmsShippingMethodFreeshipResult">
+        <include refid="selectPmsShippingMethodFreeshipVo"/>
+        <where>
+            <if test="templateId != null ">and template_id = #{templateId}</if>
+            <if test="type != null  and type != ''">and type = #{type}</if>
+            <if test="num != null ">and num = #{num}</if>
+            <if test="money != null ">and money = #{money}</if>
+        </where>
+    </select>
+
+    <select id="selectPmsShippingMethodFreeshipById" parameterType="Long" resultMap="PmsShippingMethodFreeshipResult">
+        <include refid="selectPmsShippingMethodFreeshipVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertPmsShippingMethodFreeship" parameterType="PmsShippingMethodFreeship" useGeneratedKeys="true"
+            keyProperty="id">
+        insert into pms_shipping_method_freeship
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="templateId != null">template_id,</if>
+            <if test="type != null">type,</if>
+            <if test="num != null">num,</if>
+            <if test="money != null">money,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="templateId != null">#{templateId},</if>
+            <if test="type != null">#{type},</if>
+            <if test="num != null">#{num},</if>
+            <if test="money != null">#{money},</if>
+        </trim>
+    </insert>
+
+    <update id="updatePmsShippingMethodFreeship" parameterType="PmsShippingMethodFreeship">
+        update pms_shipping_method_freeship
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="templateId != null">template_id = #{templateId},</if>
+            <if test="type != null">type = #{type},</if>
+            <if test="num != null">num = #{num},</if>
+            <if test="money != null">money = #{money},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deletePmsShippingMethodFreeshipById" parameterType="Long">
+        delete from pms_shipping_method_freeship where id = #{id}
+    </delete>
+
+    <delete id="deletePmsShippingMethodFreeshipByIds" parameterType="String">
+        delete from pms_shipping_method_freeship where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    <insert id="addShippingMethodFreeShips" parameterType="java.util.List" useGeneratedKeys="true" keyProperty="id">
+        insert into pms_shipping_method_freeship
+        (template_id,`type`,num, money)
+        values
+        <foreach collection="list" item="shippingMethodFreeShip" index="index" separator=",">
+            (
+            #{shippingMethodFreeShip.templateId},
+            #{shippingMethodFreeShip.type},
+            #{shippingMethodFreeShip.num},
+            #{shippingMethodFreeShip.money}
+            )
+        </foreach>
+    </insert>
+
+    <select id="queryShippingMethodFreeShips" parameterType="java.lang.Long"
+            resultMap="PmsShippingMethodFreeshipResult">
+        select * from pms_shipping_method_freeship where template_id = #{templateId}
+    </select>
+
+
+    <delete id="deleteByTemplateId" parameterType="java.lang.Long">
+        delete from pms_shipping_method_freeship where template_id = #{id}
+    </delete>
+
+
+    <select id="queryByCityIdAndTemplateId" parameterType="java.util.Map" resultMap="PmsShippingMethodFreeshipResult">
+        select lf.* from pms_shipping_method_freeship lf join pms_shipping_method_freeship_area la
+         on lf.id = la.shipping_method_freeship_id where la.city_id = #{cityId} and la.template_id = #{templateId}
+    </select>
+</mapper>

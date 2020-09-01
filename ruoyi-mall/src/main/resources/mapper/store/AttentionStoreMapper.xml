@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.store.mapper.AttentionStoreMapper">
+    <resultMap id="attentionStore" type="com.ruoyi.store.domain.AttentionStore">
+        <result column="id" property="id"/>
+        <result column="customer_id" property="customerId"/>
+        <result column="store_id" property="storeId"/>
+        <result column="del_flag" property="delFlag"/>
+        <result column="create_time" property="createTime"/>
+    </resultMap>
+    <select id="queryAttentionByCustomerId" parameterType="java.util.Map" resultMap="attentionStore">
+        SELECT * FROM t_attention_store WHERE customer_id=#{customerId}
+        limit #{startRowNum},#{pageSize}
+    </select>
+    <select id="queryAttentionByCustomerIdCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+        SELECT count(1) FROM t_attention_store WHERE customer_id=#{customerId}
+    </select>
+    <select id="queryStoreAttentionCountByStoreId" parameterType="java.lang.Long" resultType="java.lang.Integer">
+        SELECT COUNT(1) FROM t_attention_store WHERE store_id=#{storeId}
+    </select>
+    <update id="cancelStoreAttention" parameterType="java.util.Map">
+        UPDATE t_attention_store SET del_flag='1' WHERE customer_id=#{customerId} AND store_id=#{storeId}
+    </update>
+
+    <insert id="attentionStore" parameterType="java.util.Map">
+        insert into t_attention_store (customer_id,store_id,del_flag,create_time) values (#{customerId},#{storeId},'0',now())
+    </insert>
+
+    <select id="queryStoreAttentionByCustomerIdCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+        SELECT count(1) FROM t_attention_store WHERE customer_id=#{customerId}  and store_id = #{storeId}
+    </select>
+</mapper>

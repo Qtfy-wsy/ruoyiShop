@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.marketing.mapper.CouponCodeMapper">
+    <resultMap id="BaseResult" type="com.ruoyi.marketing.domain.CouponCode">
+        <result column="id" property="id"/>
+        <result column="coupon_id" property="couponId"/>
+        <result column="code" property="code"/>
+        <result column="customer_id" property="customerId"/>
+        <result column="status" property="status"/>
+        <result column="receive_time" property="receiveTime"/>
+        <result column="username" property="username"/>
+        <result column="type" property="type"/>
+        <result column="store_id" property="storeId"/>
+        <result column="name" property="name"/>
+        <result column="desc" property="desc"/>
+        <result column="starttime" property="startTime"/>
+        <result column="endtime" property="endTime"/>
+        <result column="del_flag" property="delFlag"/>
+        <result column="store_name" property="storeName"/>
+        <result column="store_status" property="storeStatus"/>
+        <result column="store_delflag" property="storeDelFlag"/>
+        <result column="fall_price" property="fallPrice"/>
+        <result column="full_price" property="fullPrice"/>
+        <result column="price" property="price"/>
+        <result column="order_id" property="orderId"/>
+        <result column="user_time" property="userTime"/>
+    </resultMap>
+    <insert id="addCouponCode" parameterType="java.util.List">
+        INSERT INTO sms_coupon_code(coupon_id,code,status) VALUES
+        <foreach collection="list" index="index" item="couponCode" separator=",">
+            (#{couponCode.couponId},#{couponCode.code},'0')
+        </foreach>
+    </insert>
+    <update id="deleteCouponCode" parameterType="java.util.Arrays">
+        UPDATE sms_coupon_code SET status='3' WHERE coupon_id IN
+        <foreach collection="array" index="index" item="couponId" open="(" separator="," close=")">
+            #{couponId}
+        </foreach>
+    </update>
+    <select id="queryCouponCodeByCouponId" parameterType="java.lang.Long" resultMap="BaseResult">
+        SELECT lcc.id,lcc.coupon_id,lcc.code,lcc.customer_id,lcc.status,lcc.receive_time,lc.username FROM sms_coupon_code  AS lcc
+        LEFT JOIN ums_member AS lc ON lcc.customer_id=lc.id
+        WHERE coupon_id=#{couponId}
+    </select>
+    <select id="queryCouponCodeByCustomerId" parameterType="java.util.Map" resultMap="BaseResult">
+        select cc.id,cc.coupon_id ,cc.code ,cc.order_id,cc.user_time,cc.customer_id,cc.status , cc.receive_time,
+        c.type,c.store_id,c.name,c.desc,c.starttime,c.endtime,si.store_name
+        from sms_coupon c join sms_coupon_code cc on cc.coupon_id = c.id left join t_store_info si on c.store_id =si.id
+        where cc.customer_id=#{customerId} and c.del_flag='0'
+        <choose>
+            <when test="status==1">
+                and cc.status='1' and <![CDATA[  c.endtime  > now()]]>
+            </when>
+            <when test="status==2">
+                and cc.status='2'
+            </when>
+            <when test="status==3">
+                and (cc.status='3' || <![CDATA[  c.endtime  <= now()]]>)
+            </when>
+        </choose>
+        order by cc.receive_time desc
+        limit #{startRowNum},#{pageSize}
+    </select>
+
+    <select id="queryCouponCodeCountByCustomerId" parameterType="java.util.Map" resultType="java.lang.Integer">
+        select COUNT(1)
+        from sms_coupon c join sms_coupon_code cc on cc.coupon_id = c.id
+        where cc.customer_id=#{customerId} and c.del_flag='0'
+        <choose>
+            <when test="status==1">
+                and cc.status='1' and <![CDATA[  c.endtime  > now()]]>
+            </when>
+            <when test="status==2">
+                and cc.status='2'
+            </when>
+            <when test="status==3">
+                and (cc.status='3' || <![CDATA[  c.endtime  <= now()]]>)
+            </when>
+        </choose>
+    </select>
+    <select id="queryCustomerCanUserCoupon" parameterType="java.util.Map" resultMap="BaseResult">
+      select  cc.id,cc.coupon_id ,cc.code ,cc.customer_id,cc.status , cc.receive_time, c.type,c.store_id,c.name,c.desc,c.starttime,c.endtime
+       from sms_coupon c join sms_coupon_code cc on  cc.coupon_id = c.id where cc.customer_id = #{customerId} and cc.status = '1'  and c.store_id  = #{storeId}
+             AND <![CDATA[  c.starttime <= now() and  c.endtime  > now()]]>
+         order by cc.receive_time desc
+    </select>
+
+    <update id="setCouponUsed" parameterType="java.util.Map">
+        update sms_coupon_code set status = '2',order_id=#{orderId},user_time=now() where code = #{couponCode} and customer_id = #{customerId}
+    </update>
+
+    <update id="backCoupon" parameterType="java.util.Map">
+        update sms_coupon_code set status = '1' where code = #{couponCode} and customer_id = #{customerId}
+    </update>
+    <select id="queryCanReceiveCouponCode" parameterType="java.lang.Long" resultMap="BaseResult">
+        select * from sms_coupon_code where coupon_id=#{couponId} and status ='0'
+    </select>
+    <select id="queryCanReceiveCouponCodeCount" parameterType="java.lang.Long" resultType="java.lang.Integer">
+        select count(1) from sms_coupon_code where coupon_id=#{couponId} and status ='0'
+    </select>
+    <select id="queryReceivedCouponCodeByCustomerId" parameterType="java.util.Map" resultType="java.lang.Integer">
+        select count(1) from sms_coupon_code where coupon_id=#{couponId} and customer_id=#{customerId}
+    </select>
+    <update id="updateReceivedCoupon" parameterType="com.ruoyi.marketing.domain.CouponCode">
+        update sms_coupon_code set status ='1' ,customer_id=#{customerId},receive_time=now() where id=#{id} and status='0'
+    </update>
+    <update id="updateReceivedCouponByCode" parameterType="com.ruoyi.marketing.domain.CouponCode">
+        update sms_coupon_code set status ='1' ,customer_id=#{customerId},receive_time=now() where code=#{code} and status='0'
+    </update>
+    <select id="queryCouponIdByCode" parameterType="java.lang.String" resultType="java.lang.Long">
+        select coupon_id from sms_coupon_code where code = #{code}
+    </select>
+</mapper>

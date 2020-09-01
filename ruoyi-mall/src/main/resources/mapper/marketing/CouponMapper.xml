@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.marketing.mapper.CouponMapper">
+    <resultMap id="BaseResult" type="com.ruoyi.marketing.domain.Coupon">
+        <result column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="num" property="num"/>
+        <result column="limit_num" property="limitNum"/>
+        <result column="type" property="type"/>
+        <result column="desc" property="desc"/>
+        <result column="store_id" property="storeId"/>
+        <result column="starttime" property="startTime"/>
+        <result column="endtime" property="endTime"/>
+        <result column="del_flag" property="delFlag"/>
+        <result column="status" property="status"/>
+        <result column="store_name" property="storeName"/>
+        <result column="use_type" property="useType"/>
+    </resultMap>
+    <insert id="addCoupon" parameterType="com.ruoyi.marketing.domain.Coupon" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO sms_coupon(`name`,num,limit_num,`type`,`desc`,store_id,starttime,endtime,use_type,del_flag) VALUES
+        (#{name},#{num},#{limitNum},#{type},#{desc},#{storeId},#{startTime},#{endTime},#{useType},'0')
+    </insert>
+    <select id="queryCouponCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+        SELECT COUNT(1) FROM sms_coupon WHERE del_flag='0' AND store_id=#{storeId}
+        <if test="name != null and name!=''">
+            AND `name` LIKE CONCAT(CONCAT('%', #{name}),'%')
+        </if>
+    </select>
+    <select id="queryCoupon" parameterType="java.util.Map" resultMap="BaseResult">
+        SELECT id,`name`,num,limit_num,`type`,`desc`,store_id,starttime,endtime,use_type,del_flag
+        FROM sms_coupon WHERE del_flag='0' AND store_id=#{storeId}
+        <if test="name != null and name!=''">
+            AND `name` LIKE CONCAT(CONCAT('%', #{name}),'%')
+        </if>
+        order by id desc
+        limit #{startRowNum},#{pageSize}
+    </select>
+    <select id="queryCouponForPc" parameterType="java.util.Map" resultMap="BaseResult">
+        select lf.* from (SELECT lc.*, ls.store_name store_name FROM sms_coupon lc left JOIN
+        (select lsi.store_name store_name,lsi.id id from t_store_info lsi where lsi.status='2' and lsi.effective_time
+        &gt; now() and lsi.del_flag='0') ls
+        on lc.store_id=ls.id
+        WHERE lc.del_flag='0' and lc.endtime &gt; now() and lc.use_type='1' ) lf where (lf.store_id=0 || lf.store_name
+        is not null)
+        <if test="storeId != null and storeId != -1 and storeId != 0">
+            and lf.store_id = #{storeId}
+        </if>
+        order by id desc
+        limit #{startRowNum},#{pageSize}
+    </select>
+    <select id="queryCouponForPcCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+        select count(1) from (SELECT lc.*, ls.store_name store_name FROM sms_coupon lc left JOIN
+        (select lsi.store_name store_name,lsi.id id from t_store_info lsi where lsi.status='2' and lsi.effective_time
+        &gt; now() and lsi.del_flag='0') ls
+        on lc.store_id=ls.id
+        WHERE lc.del_flag='0' and lc.endtime &gt; now() and lc.status='0' and lc.use_type='1' ) lf where (lf.store_id=0
+        || lf.store_name is not null)
+        <if test="storeId != null and storeId != -1 and storeId != 0">
+            and lf.store_id = #{storeId}
+        </if>
+    </select>
+    <update id="deleteCoupon" parameterType="java.util.Map">
+        UPDATE sms_coupon SET del_flag='1' WHERE store_id=#{storeId} AND id IN
+        <foreach collection="ids" index="index" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </update>
+    <select id="queryCouponById" parameterType="java.util.Map" resultMap="BaseResult">
+        SELECT id,`name`,num,limit_num,`type`,`desc`,store_id,starttime,endtime,use_type,del_flag
+        FROM sms_coupon WHERE del_flag='0' AND store_id=#{storeId} AND id=#{id}
+    </select>
+    <select id="queryCouponByIdForReceive" parameterType="java.lang.Long" resultMap="BaseResult">
+        SELECT id,`name`,num,limit_num,`type`,`desc`,store_id,starttime,endtime,use_type,del_flag
+        FROM sms_coupon WHERE del_flag='0' AND id=#{couponId}
+        <if test="useType !=-1">
+            AND use_type=#{useType}
+        </if>
+    </select>
+    <select id="queryCouponByStoreId" resultMap="BaseResult" parameterType="java.lang.Long">
+        SELECT id,`name`,num,limit_num,`type`,`desc`,store_id,starttime,endtime,use_type,del_flag
+        FROM sms_coupon WHERE del_flag='0' AND store_id=#{storeId}
+        <if test="useType !=-1">
+            AND use_type=#{useType}
+        </if>
+        AND starttime &lt;= now() AND endtime > now()
+    </select>
+
+    <update id="updateCouponAllReceived" parameterType="java.lang.Long">
+        UPDATE sms_coupon SET status='1' WHERE id=#{id}
+    </update>
+</mapper>

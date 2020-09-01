@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.marketing.mapper.TryMapper">
+
+    <resultMap id="tryMarketing" type="com.ruoyi.marketing.domain.TryMarketing">
+        <result column="id" property="id"/>
+        <result column="marketing_id" property="marketingId"/>
+        <result column="type" property="type"/>
+        <result column="try_num" property="tryNum"/>
+        <result column="apply_num" property="applyNum"/>
+        <result column="coupon_id" property="couponId"/>
+        <result column="alerdy_apply_num" property="alerdyApplyNum"/>
+        <result column="has_audit" property="hasAudit"/>
+        <result column="sku_info" property="skuInfo"/>
+        <result column="skuid" property="skuId"/>
+        <result column="starttime" property="startTime"/>
+        <result column="endtime" property="endTime"/>
+        <result column="store_id" property="storeId"/>
+    </resultMap>
+
+
+    <select id="queryTryMarketing" parameterType="java.util.Map" resultMap="tryMarketing">
+        select * from sms_marketing_try where marketing_id = #{marketingId}
+        <if test="skuId != null">
+            and skuid = #{skuId}
+        </if>
+    </select>
+
+    <insert id="addTryMarketing" parameterType="com.ruoyi.marketing.domain.TryMarketing">
+        insert into sms_marketing_try
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="marketingId != null">
+                marketing_id,
+            </if>
+            <if test="type != null">
+                `type`,
+            </if>
+            <if test="tryNum != null">
+                try_num,
+            </if>
+            <if test="applyNum != null">
+                apply_num,
+            </if>
+            <if test="couponId != null">
+                coupon_id,
+            </if>
+            <if test="skuInfo != null">
+                sku_info,
+            </if>
+            <if test="skuId != null">
+                skuid,
+            </if>
+            alerdy_apply_num
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="marketingId != null">
+                #{marketingId},
+            </if>
+            <if test="type != null">
+                #{type},
+            </if>
+            <if test="tryNum != null">
+                #{tryNum},
+            </if>
+            <if test="applyNum != null">
+                #{applyNum},
+            </if>
+            <if test="couponId != null">
+                #{couponId},
+            </if>
+            <if test="skuInfo != null">
+                #{skuInfo},
+            </if>
+            <if test="skuId != null">
+                #{skuId},
+            </if>
+            0
+        </trim>
+    </insert>
+
+    <update id="updateTryMarketing" parameterType="com.ruoyi.marketing.domain.TryMarketing">
+            update sms_marketing_try set  `type` = #{type}, try_num = #{tryNum},apply_num = #{applyNum},coupon_id=#{couponId},
+            sku_info=#{skuInfo}
+            where id = #{id}
+    </update>
+    <update id="updateAlreadyApplyNum" parameterType="java.lang.Long">
+        update sms_marketing_try set alerdy_apply_num=alerdy_apply_num+1 where id = #{tryId}
+    </update>
+
+    <update id="updateAuditStatus" parameterType="java.lang.Long">
+        update sms_marketing_try set has_audit='1' where id = #{tryId}
+    </update>
+
+    <delete id="deleteTryMarketingByIds" parameterType="java.util.Map">
+        delete from sms_marketing_try where marketing_id = #{marketingId}
+        and id in
+        <foreach collection="tryMarketingIdList" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </delete>
+
+    <select id="queryTryMarketingList" parameterType="java.util.Map" resultMap="tryMarketing">
+        select lmt.*,lm.store_id from sms_marketing_try lmt
+        join sms_marketing lm on lm.id = lmt.marketing_id
+        join pms_sku ls on ls.id = lmt.skuid
+        where lm. ls. now() &gt;= lm.starttime and now() &lt; lm.endtime
+        and (select count(1) as num from sms_marketing_try_show lmts where lmts.try_id = lmt.id and lmts.store_id =
+        #{storeId} and lmts.del_flag = '0') = 0
+        <if test="storeId != null and storeId != 0">
+            and lm.store_id = #{storeId}
+        </if>
+        <if test="name != null and name != ''">
+            and ls.name like CONCAT(CONCAT('%', #{name}),'%')
+        </if>
+        <if test="skuNo != null and skuNo != ''">
+            and ls.sku_no = #{skuNo}
+        </if>
+        order by lmt.id desc
+        limit #{startRowNum},#{pageSize}
+    </select>
+
+    <select id="queryTryMarketingListCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+        select count(1) from sms_marketing_try lmt
+        join sms_marketing lm on lm.id = lmt.marketing_id
+        join pms_sku ls on ls.id = lmt.skuid
+        where lm. ls. now() &gt;= lm.starttime and now() &lt; lm.endtime
+        and (select count(1) as num from sms_marketing_try_show lmts where lmts.try_id = lmt.id and lmts.store_id =
+        #{storeId} and lmts.del_flag = '0') = 0
+        <if test="storeId != null and storeId != 0">
+            and lm.store_id = #{storeId}
+        </if>
+        <if test="name != null and name != ''">
+            and ls.name like CONCAT(CONCAT('%', #{name}),'%')
+        </if>
+        <if test="skuNo != null and skuNo != ''">
+            and ls.sku_no = #{skuNo}
+        </if>
+    </select>
+
+    <select id="queryTryMarketingById" parameterType="java.util.Map" resultMap="tryMarketing">
+        select lmt.*,lm.starttime,lm.endtime from sms_marketing_try lmt
+        join sms_marketing lm on lm.id = lmt.marketing_id
+        where lmt.id = #{id}
+        <if test="storeId != null and storeId != -1">
+            and lm.store_id = #{storeId}
+        </if>
+    </select>
+
+    <select id="queryTimeOutAndUnAuditTryMarketingList" resultMap="tryMarketing">
+        select lmt.* from sms_marketing_try lmt
+        join sms_marketing lm on lm.id = lmt.marketing_id
+        where lmt.has_audit ='0' and lm.del_flag='0' and lm.endtime &lt; now()
+    </select>
+
+</mapper>

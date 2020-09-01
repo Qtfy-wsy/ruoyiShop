@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.marketing.mapper.DepositPreSaleMapper">
+
+    <resultMap id="depositPreSale" type="com.ruoyi.marketing.domain.DepositPreSale">
+        <result column="id" property="id"/>
+        <result column="marketing_id" property="marketingId"/>
+        <result column="deposit_pre" property="depositPre"/>
+    </resultMap>
+
+    <update id="updateDepositPreSale" parameterType="com.ruoyi.marketing.domain.DepositPreSale">
+        update sms_marketing_presale set deposit_pre = #{depositPre} where marketing_id = #{marketingId}
+    </update>
+
+    <select id="queryDepositPreSaleByMarketingId" parameterType="java.lang.Long" resultMap="depositPreSale">
+        select * from sms_marketing_presale where marketing_id = #{marketingId}
+    </select>
+
+    <insert id="addDepositPreSale" parameterType="com.ruoyi.marketing.domain.DepositPreSale">
+        insert into sms_marketing_presale
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="marketingId != null">
+                marketing_id,
+            </if>
+            <if test="depositPre != null">
+                deposit_pre
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="marketingId != null">
+                #{marketingId},
+            </if>
+            <if test="depositPre != null">
+                #{depositPre}
+            </if>
+        </trim>
+    </insert>
+</mapper>

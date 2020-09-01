@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.goods.mapper.PmsCombinationSkuMapper">
+
+    <resultMap type="PmsCombinationSku" id="PmsCombinationSkuResult">
+        <result property="id" column="id"/>
+        <result property="combinationId" column="combination_id"/>
+        <result property="skuId" column="sku_id"/>
+    </resultMap>
+
+    <sql id="selectPmsCombinationSkuVo">
+        select id, combination_id, sku_id from_sku
+    </sql>
+
+    <select id="selectPmsCombinationSkuList" parameterType="PmsCombinationSku" resultMap="PmsCombinationSkuResult">
+        <include refid="selectPmsCombinationSkuVo"/>
+        <where>
+            <if test="combinationId != null ">and combination_id = #{combinationId}</if>
+            <if test="skuId != null  and skuId != ''">and sku_id = #{skuId}</if>
+        </where>
+    </select>
+
+    <select id="selectPmsCombinationSkuById" parameterType="Long" resultMap="PmsCombinationSkuResult">
+        <include refid="selectPmsCombinationSkuVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertPmsCombinationSku" parameterType="PmsCombinationSku" useGeneratedKeys="true" keyProperty="id">
+        insert into_sku
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="combinationId != null">combination_id,</if>
+            <if test="skuId != null and skuId != ''">sku_id,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="combinationId != null">#{combinationId},</if>
+            <if test="skuId != null and skuId != ''">#{skuId},</if>
+        </trim>
+    </insert>
+
+    <update id="updatePmsCombinationSku" parameterType="PmsCombinationSku">
+        update_sku
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="combinationId != null">combination_id = #{combinationId},</if>
+            <if test="skuId != null and skuId != ''">sku_id = #{skuId},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deletePmsCombinationSkuById" parameterType="Long">
+        delete from_sku where id = #{id}
+    </delete>
+
+    <delete id="deletePmsCombinationSkuByIds" parameterType="String">
+        delete from_sku where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

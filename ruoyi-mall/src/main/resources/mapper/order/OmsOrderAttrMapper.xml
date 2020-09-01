@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.order.mapper.OmsOrderAttrMapper">
+
+    <resultMap type="OmsOrderAttr" id="OmsOrderAttrResult">
+        <result property="id" column="id"/>
+        <result property="orderId" column="order_id"/>
+        <result property="receiptName" column="receipt_name"/>
+        <result property="receiptAddress" column="receipt_address"/>
+        <result property="receiptDetailAddress" column="receipt_detail_address"/>
+        <result property="receiptMobile" column="receipt_mobile"/>
+        <result property="receiptPhone" column="receipt_phone"/>
+        <result property="receiptZipCode" column="receipt_zip_code"/>
+        <result property="invoiceType" column="invoice_type"/>
+        <result property="invoiceTitle" column="invoice_title"/>
+        <result property="invoiceContent" column="invoice_content"/>
+        <result property="invoiceTaxid" column="invoice_taxid"/>
+        <result property="remark" column="remark"/>
+        <result property="giftInfos" column="gift_infos"/>
+        <result property="donationMessage" column="donation_message"/>
+        <result property="invoiceCompanyName" column="invoice_company_name"/>
+        <result property="invoiceRegisterAddress" column="invoice_register_address"/>
+        <result property="invoiceRegisterMobile" column="invoice_register_mobile"/>
+        <result property="invoiceOpenBank" column="invoice_open_bank"/>
+        <result property="invoiceBankAccount" column="invoice_bank_account"/>
+        <result property="invoiceTitleType" column="invoice_title_type"/>
+        <result property="deliveryTime" column="delivery_time"/>
+        <result property="address" column="address"/>
+        <result property="detailAddress" column="detail_address"/>
+        <result property="pickUpAddress" column="pick_up_address"/>
+        <result property="deliveryType" column="delivery_type"/>
+        <result property="houseNumber" column="house_number"/>
+    </resultMap>
+
+    <sql id="selectOmsOrderAttrVo">
+        select id, order_id, receipt_name, receipt_address, receipt_detail_address, receipt_mobile, receipt_phone, receipt_zip_code, invoice_type, invoice_title, invoice_content, invoice_taxid, remark, gift_infos, donation_message, invoice_company_name, invoice_register_address, invoice_register_mobile, invoice_open_bank, invoice_bank_account, invoice_title_type, delivery_time, address, detail_address, pick_up_address, delivery_type, house_number from oms_order_attr
+    </sql>
+
+    <select id="selectOmsOrderAttrList" parameterType="OmsOrderAttr" resultMap="OmsOrderAttrResult">
+        <include refid="selectOmsOrderAttrVo"/>
+        <where>
+            <if test="receiptName != null  and receiptName != ''">and receipt_name like concat('%', #{receiptName},
+                '%')
+            </if>
+            <if test="receiptMobile != null  and receiptMobile != ''">and receipt_mobile = #{receiptMobile}</if>
+        </where>
+    </select>
+
+    <select id="selectOmsOrderAttrById" parameterType="Long" resultMap="OmsOrderAttrResult">
+        <include refid="selectOmsOrderAttrVo"/>
+        where id = #{id}
+    </select>
+
+    <select id="queryByOrderId" parameterType="java.lang.Long" resultMap="OmsOrderAttrResult">
+        select * from oms_order_attr where order_id=#{orderId}
+    </select>
+    <insert id="insertOmsOrderAttr" parameterType="OmsOrderAttr" useGeneratedKeys="true" keyProperty="id">
+        insert into oms_order_attr
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="orderId != null">order_id,</if>
+            <if test="receiptName != null">receipt_name,</if>
+            <if test="receiptAddress != null">receipt_address,</if>
+            <if test="receiptDetailAddress != null">receipt_detail_address,</if>
+            <if test="receiptMobile != null">receipt_mobile,</if>
+            <if test="receiptPhone != null">receipt_phone,</if>
+            <if test="receiptZipCode != null">receipt_zip_code,</if>
+            <if test="invoiceType != null">invoice_type,</if>
+            <if test="invoiceTitle != null">invoice_title,</if>
+            <if test="invoiceContent != null">invoice_content,</if>
+            <if test="invoiceTaxid != null">invoice_taxid,</if>
+            <if test="remark != null">remark,</if>
+            <if test="giftInfos != null">gift_infos,</if>
+            <if test="donationMessage != null">donation_message,</if>
+            <if test="invoiceCompanyName != null">invoice_company_name,</if>
+            <if test="invoiceRegisterAddress != null">invoice_register_address,</if>
+            <if test="invoiceRegisterMobile != null">invoice_register_mobile,</if>
+            <if test="invoiceOpenBank != null">invoice_open_bank,</if>
+            <if test="invoiceBankAccount != null">invoice_bank_account,</if>
+            <if test="invoiceTitleType != null">invoice_title_type,</if>
+            <if test="deliveryTime != null">delivery_time,</if>
+            <if test="address != null">address,</if>
+            <if test="detailAddress != null">detail_address,</if>
+            <if test="pickUpAddress != null">pick_up_address,</if>
+            <if test="deliveryType != null">delivery_type,</if>
+            <if test="houseNumber != null">house_number,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="orderId != null">#{orderId},</if>
+            <if test="receiptName != null">#{receiptName},</if>
+            <if test="receiptAddress != null">#{receiptAddress},</if>
+            <if test="receiptDetailAddress != null">#{receiptDetailAddress},</if>
+            <if test="receiptMobile != null">#{receiptMobile},</if>
+            <if test="receiptPhone != null">#{receiptPhone},</if>
+            <if test="receiptZipCode != null">#{receiptZipCode},</if>
+            <if test="invoiceType != null">#{invoiceType},</if>
+            <if test="invoiceTitle != null">#{invoiceTitle},</if>
+            <if test="invoiceContent != null">#{invoiceContent},</if>
+            <if test="invoiceTaxid != null">#{invoiceTaxid},</if>
+            <if test="remark != null">#{remark},</if>
+            <if test="giftInfos != null">#{giftInfos},</if>
+            <if test="donationMessage != null">#{donationMessage},</if>
+            <if test="invoiceCompanyName != null">#{invoiceCompanyName},</if>
+            <if test="invoiceRegisterAddress != null">#{invoiceRegisterAddress},</if>
+            <if test="invoiceRegisterMobile != null">#{invoiceRegisterMobile},</if>
+            <if test="invoiceOpenBank != null">#{invoiceOpenBank},</if>
+            <if test="invoiceBankAccount != null">#{invoiceBankAccount},</if>
+            <if test="invoiceTitleType != null">#{invoiceTitleType},</if>
+            <if test="deliveryTime != null">#{deliveryTime},</if>
+            <if test="address != null">#{address},</if>
+            <if test="detailAddress != null">#{detailAddress},</if>
+            <if test="pickUpAddress != null">#{pickUpAddress},</if>
+            <if test="deliveryType != null">#{deliveryType},</if>
+            <if test="houseNumber != null">#{houseNumber},</if>
+        </trim>
+    </insert>
+
+    <update id="updateOmsOrderAttr" parameterType="OmsOrderAttr">
+        update oms_order_attr
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="orderId != null">order_id = #{orderId},</if>
+            <if test="receiptName != null">receipt_name = #{receiptName},</if>
+            <if test="receiptAddress != null">receipt_address = #{receiptAddress},</if>
+            <if test="receiptDetailAddress != null">receipt_detail_address = #{receiptDetailAddress},</if>
+            <if test="receiptMobile != null">receipt_mobile = #{receiptMobile},</if>
+            <if test="receiptPhone != null">receipt_phone = #{receiptPhone},</if>
+            <if test="receiptZipCode != null">receipt_zip_code = #{receiptZipCode},</if>
+            <if test="invoiceType != null">invoice_type = #{invoiceType},</if>
+            <if test="invoiceTitle != null">invoice_title = #{invoiceTitle},</if>
+            <if test="invoiceContent != null">invoice_content = #{invoiceContent},</if>
+            <if test="invoiceTaxid != null">invoice_taxid = #{invoiceTaxid},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            <if test="giftInfos != null">gift_infos = #{giftInfos},</if>
+            <if test="donationMessage != null">donation_message = #{donationMessage},</if>
+            <if test="invoiceCompanyName != null">invoice_company_name = #{invoiceCompanyName},</if>
+            <if test="invoiceRegisterAddress != null">invoice_register_address = #{invoiceRegisterAddress},</if>
+            <if test="invoiceRegisterMobile != null">invoice_register_mobile = #{invoiceRegisterMobile},</if>
+            <if test="invoiceOpenBank != null">invoice_open_bank = #{invoiceOpenBank},</if>
+            <if test="invoiceBankAccount != null">invoice_bank_account = #{invoiceBankAccount},</if>
+            <if test="invoiceTitleType != null">invoice_title_type = #{invoiceTitleType},</if>
+            <if test="deliveryTime != null">delivery_time = #{deliveryTime},</if>
+            <if test="address != null">address = #{address},</if>
+            <if test="detailAddress != null">detail_address = #{detailAddress},</if>
+            <if test="pickUpAddress != null">pick_up_address = #{pickUpAddress},</if>
+            <if test="deliveryType != null">delivery_type = #{deliveryType},</if>
+            <if test="houseNumber != null">house_number = #{houseNumber},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteOmsOrderAttrById" parameterType="Long">
+        delete from oms_order_attr where id = #{id}
+    </delete>
+
+    <delete id="deleteOmsOrderAttrByIds" parameterType="String">
+        delete from oms_order_attr where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

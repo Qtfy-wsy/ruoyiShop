@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.goods.mapper.PmsCombinationMapper">
+
+    <resultMap type="PmsCombination" id="PmsCombinationResult">
+        <result property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="storeId" column="store_id"/>
+        <result property="delFlag" column="del_flag"/>
+        <result property="createTime" column="create_time"/>
+        <result property="modifyTime" column="modify_time"/>
+        <result property="delTime" column="del_time"/>
+    </resultMap>
+
+    <sql id="selectPmsCombinationVo">
+        select id, name, store_id, del_flag, create_time, modify_time, del_time from
+    </sql>
+
+    <select id="selectPmsCombinationList" parameterType="PmsCombination" resultMap="PmsCombinationResult">
+        <include refid="selectPmsCombinationVo"/>
+        <where>
+            <if test="name != null  and name != ''">and name like concat('%', #{name}, '%')</if>
+        </where>
+    </select>
+
+    <select id="selectPmsCombinationById" parameterType="Long" resultMap="PmsCombinationResult">
+        <include refid="selectPmsCombinationVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertPmsCombination" parameterType="PmsCombination" useGeneratedKeys="true" keyProperty="id">
+        insert into
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="name != null">name,</if>
+            <if test="storeId != null">store_id,</if>
+            <if test="delFlag != null">del_flag,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="modifyTime != null">modify_time,</if>
+            <if test="delTime != null">del_time,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="name != null">#{name},</if>
+            <if test="storeId != null">#{storeId},</if>
+            <if test="delFlag != null">#{delFlag},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="modifyTime != null">#{modifyTime},</if>
+            <if test="delTime != null">#{delTime},</if>
+        </trim>
+    </insert>
+
+    <update id="updatePmsCombination" parameterType="PmsCombination">
+        update
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="name != null">name = #{name},</if>
+            <if test="storeId != null">store_id = #{storeId},</if>
+            <if test="delFlag != null">del_flag = #{delFlag},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="modifyTime != null">modify_time = #{modifyTime},</if>
+            <if test="delTime != null">del_time = #{delTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deletePmsCombinationById" parameterType="Long">
+        delete fromwhere id = #{id}
+    </delete>
+
+    <delete id="deletePmsCombinationByIds" parameterType="String">
+        delete fromwhere id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

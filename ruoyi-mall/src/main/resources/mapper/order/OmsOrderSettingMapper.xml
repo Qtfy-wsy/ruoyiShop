@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.order.mapper.OmsOrderSettingMapper">
+
+    <resultMap type="OmsOrderSetting" id="OmsOrderSettingResult">
+        <result property="id" column="id"/>
+        <result property="allowBack" column="allow_back"/>
+        <result property="aotuConfirm" column="aotu_confirm"/>
+        <result property="refundsDesc" column="refunds_desc"/>
+        <result property="returnDesc" column="return_desc"/>
+        <result property="cashonDelivery" column="cashon_delivery"/>
+    </resultMap>
+
+    <sql id="selectOmsOrderSettingVo">
+        select id, allow_back, aotu_confirm, refunds_desc, return_desc, cashon_delivery from oms_order_setting
+    </sql>
+
+    <select id="selectOmsOrderSettingList" parameterType="OmsOrderSetting" resultMap="OmsOrderSettingResult">
+        <include refid="selectOmsOrderSettingVo"/>
+        <where>
+            <if test="allowBack != null  and allowBack != ''">and allow_back = #{allowBack}</if>
+            <if test="aotuConfirm != null ">and aotu_confirm = #{aotuConfirm}</if>
+            <if test="refundsDesc != null  and refundsDesc != ''">and refunds_desc = #{refundsDesc}</if>
+            <if test="returnDesc != null  and returnDesc != ''">and return_desc = #{returnDesc}</if>
+            <if test="cashonDelivery != null  and cashonDelivery != ''">and cashon_delivery = #{cashonDelivery}</if>
+        </where>
+    </select>
+
+    <select id="selectOmsOrderSettingById" parameterType="Long" resultMap="OmsOrderSettingResult">
+        <include refid="selectOmsOrderSettingVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertOmsOrderSetting" parameterType="OmsOrderSetting" useGeneratedKeys="true" keyProperty="id">
+        insert into oms_order_setting
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="allowBack != null">allow_back,</if>
+            <if test="aotuConfirm != null">aotu_confirm,</if>
+            <if test="refundsDesc != null">refunds_desc,</if>
+            <if test="returnDesc != null">return_desc,</if>
+            <if test="cashonDelivery != null">cashon_delivery,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="allowBack != null">#{allowBack},</if>
+            <if test="aotuConfirm != null">#{aotuConfirm},</if>
+            <if test="refundsDesc != null">#{refundsDesc},</if>
+            <if test="returnDesc != null">#{returnDesc},</if>
+            <if test="cashonDelivery != null">#{cashonDelivery},</if>
+        </trim>
+    </insert>
+
+    <update id="updateOmsOrderSetting" parameterType="OmsOrderSetting">
+        update oms_order_setting
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="allowBack != null">allow_back = #{allowBack},</if>
+            <if test="aotuConfirm != null">aotu_confirm = #{aotuConfirm},</if>
+            <if test="refundsDesc != null">refunds_desc = #{refundsDesc},</if>
+            <if test="returnDesc != null">return_desc = #{returnDesc},</if>
+            <if test="cashonDelivery != null">cashon_delivery = #{cashonDelivery},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteOmsOrderSettingById" parameterType="Long">
+        delete from oms_order_setting where id = #{id}
+    </delete>
+
+    <delete id="deleteOmsOrderSettingByIds" parameterType="String">
+        delete from oms_order_setting where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

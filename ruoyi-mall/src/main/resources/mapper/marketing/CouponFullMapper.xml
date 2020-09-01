@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.marketing.mapper.CouponFullMapper">
+    <resultMap id="BaseResult" type="com.ruoyi.marketing.domain.CouponFull">
+        <result column="id" property="id"/>
+        <result column="coupon_id" property="couponId"/>
+        <result column="full_price" property="fullPrice"/>
+        <result column="price" property="price"/>
+    </resultMap>
+    <insert id="addCouponFull" parameterType="com.ruoyi.marketing.domain.CouponFall">
+        INSERT INTO sms_coupon_full(coupon_id,full_price,price) VALUES (#{couponId},#{fullPrice},#{price})
+    </insert>
+    <delete id="deleteCouponFull" parameterType="java.util.Arrays">
+        DELETE FROM sms_coupon_full WHERE coupon_id IN
+        <foreach collection="array" index="index" item="couponId" open="(" separator="," close=")">
+            #{couponId}
+        </foreach>
+    </delete>
+    <select id="queryCouponFullById" parameterType="java.lang.Long" resultMap="BaseResult">
+        SELECT id,coupon_id,full_price,price FROM sms_coupon_full WHERE coupon_id=#{couponId}
+    </select>
+</mapper>

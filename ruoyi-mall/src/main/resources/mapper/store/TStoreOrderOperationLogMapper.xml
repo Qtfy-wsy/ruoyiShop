@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.store.mapper.TStoreOrderOperationLogMapper">
+
+    <resultMap type="TStoreOrderOperationLog" id="TStoreOrderOperationLogResult">
+        <result property="id" column="id"/>
+        <result property="orderId" column="order_id"/>
+        <result property="type" column="type"/>
+        <result property="remark" column="remark"/>
+        <result property="operationName" column="operation_name"/>
+        <result property="createTime" column="create_time"/>
+    </resultMap>
+
+    <sql id="selectTStoreOrderOperationLogVo">
+        select id, order_id, type, remark, operation_name, create_time from t_store_order_operation_log
+    </sql>
+
+    <select id="selectTStoreOrderOperationLogList" parameterType="TStoreOrderOperationLog"
+            resultMap="TStoreOrderOperationLogResult">
+        <include refid="selectTStoreOrderOperationLogVo"/>
+        <where>
+            <if test="orderId != null ">and order_id = #{orderId}</if>
+            <if test="type != null  and type != ''">and type = #{type}</if>
+            <if test="operationName != null  and operationName != ''">and operation_name like concat('%',
+                #{operationName}, '%')
+            </if>
+        </where>
+    </select>
+    <select id="queryStoreOrderOperationLogByOrderId" parameterType="java.lang.Long"
+            resultMap="TStoreOrderOperationLogResult">
+        select * from t_store_order_operation_log where order_id=#{orderId} order by create_time desc
+    </select>
+    <select id="selectTStoreOrderOperationLogById" parameterType="Long" resultMap="TStoreOrderOperationLogResult">
+        <include refid="selectTStoreOrderOperationLogVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertTStoreOrderOperationLog" parameterType="TStoreOrderOperationLog" useGeneratedKeys="true"
+            keyProperty="id">
+        insert into t_store_order_operation_log
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="orderId != null">order_id,</if>
+            <if test="type != null and type != ''">type,</if>
+            <if test="remark != null">remark,</if>
+            <if test="operationName != null">operation_name,</if>
+            <if test="createTime != null">create_time,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="orderId != null">#{orderId},</if>
+            <if test="type != null and type != ''">#{type},</if>
+            <if test="remark != null">#{remark},</if>
+            <if test="operationName != null">#{operationName},</if>
+            <if test="createTime != null">#{createTime},</if>
+        </trim>
+    </insert>
+
+    <update id="updateTStoreOrderOperationLog" parameterType="TStoreOrderOperationLog">
+        update t_store_order_operation_log
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="orderId != null">order_id = #{orderId},</if>
+            <if test="type != null and type != ''">type = #{type},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            <if test="operationName != null">operation_name = #{operationName},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteTStoreOrderOperationLogById" parameterType="Long">
+        delete from t_store_order_operation_log where id = #{id}
+    </delete>
+
+    <delete id="deleteTStoreOrderOperationLogByIds" parameterType="String">
+        delete from t_store_order_operation_log where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

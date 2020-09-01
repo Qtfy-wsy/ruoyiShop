@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.store.mapper.TStoreSignedCategoryMapper">
+
+    <resultMap type="TStoreSignedCategory" id="TStoreSignedCategoryResult">
+        <result property="id" column="id"/>
+        <result property="storeId" column="store_id"/>
+        <result property="cateId" column="cate_id"/>
+    </resultMap>
+
+    <sql id="selectTStoreSignedCategoryVo">
+        select id, store_id, cate_id from t_store_signed_category
+    </sql>
+
+    <select id="selectTStoreSignedCategoryList" parameterType="TStoreSignedCategory"
+            resultMap="TStoreSignedCategoryResult">
+        <include refid="selectTStoreSignedCategoryVo"/>
+        <where>
+            <if test="storeId != null ">and store_id = #{storeId}</if>
+            <if test="cateId != null ">and cate_id = #{cateId}</if>
+        </where>
+    </select>
+
+    <select id="selectTStoreSignedCategoryById" parameterType="Long" resultMap="TStoreSignedCategoryResult">
+        <include refid="selectTStoreSignedCategoryVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertTStoreSignedCategory" parameterType="TStoreSignedCategory" useGeneratedKeys="true"
+            keyProperty="id">
+        insert into t_store_signed_category
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="storeId != null">store_id,</if>
+            <if test="cateId != null">cate_id,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="storeId != null">#{storeId},</if>
+            <if test="cateId != null">#{cateId},</if>
+        </trim>
+    </insert>
+
+    <update id="updateTStoreSignedCategory" parameterType="TStoreSignedCategory">
+        update t_store_signed_category
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="storeId != null">store_id = #{storeId},</if>
+            <if test="cateId != null">cate_id = #{cateId},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteTStoreSignedCategoryById" parameterType="Long">
+        delete from t_store_signed_category where id = #{id}
+    </delete>
+
+    <delete id="deleteTStoreSignedCategoryByIds" parameterType="String">
+        delete from t_store_signed_category where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    <select id="queryAllSignedCategorys" parameterType="java.lang.Long" resultMap="TStoreSignedCategoryResult">
+      select t_store_signed_category.*, pms_category.name ,pms_category.type_id from t_store_signed_category join
+      pms_category on t_store_signed_category.cate_id = pms_category.id
+      where store_id = #{storeId}
+      and pms_category.del_flag = '0'
+    </select>
+
+    <insert id="addSignedCategory" parameterType="java.util.List">
+        INSERT INTO t_store_signed_category (store_id,cate_id, state) VALUES
+        <foreach collection="list" index="index" item="item" separator=",">
+            (
+            #{item.storeId},#{item.cateId},#{item.state}
+            )
+        </foreach>
+    </insert>
+    <delete id="deleteSignedCategory" parameterType="java.lang.Long">
+        DELETE FROM t_store_signed_category WHERE store_id=#{storeId}
+    </delete>
+    <delete id="deleteSingedCategoryById" parameterType="java.util.Map">
+        DELETE FROM t_store_signed_category WHERE store_id=#{storeId} AND cate_id=#{cateId}
+    </delete>
+    <select id="querySignedCategorysPageList" resultType="TStoreSignedCategory">
+        select t_store_signed_category.*, pms_category.name ,pms_category.type_id
+        from t_store_signed_category join pms_category
+        on t_store_signed_category.cate_id = pms_category.id
+        <where>
+            <if test='null != storeId'>t_store_signed_category.store_id = #{storeId},</if>
+            <if test='null != state'>t_store_signed_category.state = #{state},</if>
+        </where>
+        order by update_time desc
+        limit #{startRowNum},#{pageSize}
+    </select>
+    <update id="update" parameterType="java.util.Map">
+        UPDATE t_store_signed_category
+        <set>
+            state = #{state}
+        </set>
+        WHERE id in
+        <foreach collection="ids" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </update>
+</mapper>

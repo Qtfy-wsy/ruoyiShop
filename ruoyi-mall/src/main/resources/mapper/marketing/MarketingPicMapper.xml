@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.marketing.mapper.MarketingPicMapper">
+    <resultMap id="marketingPic" type="com.ruoyi.marketing.domain.MarketingPic">
+        <result column="id" property="id"/>
+        <result column="pc_pic" property="pcPic"/>
+        <result column="mobile_pic" property="mobilePic"/>
+        <result column="type" property="type"/>
+        <result column="store_id" property="storeId"/>
+        <result column="try_rule" property="tryRule"/>
+        <result column="presale_rule" property="preSaleRule"/>
+    </resultMap>
+
+    <insert id="addMarketingPic" parameterType="com.ruoyi.marketing.domain.MarketingPic" useGeneratedKeys="true"
+            keyProperty="id">
+        insert into sms_marketing_pic
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="pcPic != null and pcPic != ''">
+                pc_pic,
+            </if>
+            <if test="mobilePic != null and mobilePic != ''">
+                mobile_pic,
+            </if>
+            <if test="type != null and type != ''">
+                `type`,
+            </if>
+            <if test="storeId != null">
+                store_id,
+            </if>
+            <if test="tryRule != null and tryRule != ''">
+                try_rule,
+            </if>
+            <if test="preSaleRule != null and preSaleRule != ''">
+                presale_rule
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="pcPic != null and pcPic != ''">
+                #{pcPic},
+            </if>
+            <if test="mobilePic != null and mobilePic != ''">
+                #{mobilePic},
+            </if>
+            <if test="type != null and type != ''">
+                #{type},
+            </if>
+            <if test="storeId != null">
+                #{storeId},
+            </if>
+            <if test="tryRule != null and tryRule != ''">
+                #{tryRule},
+            </if>
+            <if test="preSaleRule != null and preSaleRule != ''">
+                #{preSaleRule}
+            </if>
+        </trim>
+    </insert>
+
+    <select id="queryMarketingPic" parameterType="java.util.Map" resultMap="marketingPic">
+        select * from sms_marketing_pic where `type` = #{type} and store_id = #{storeId}
+    </select>
+
+    <select id="queryMarketingPicCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+        select count(1) from sms_marketing_pic where `type` = #{type} and store_id = #{storeId}
+    </select>
+
+    <update id="updateMarketingPic" parameterType="com.ruoyi.marketing.domain.MarketingPic">
+        update sms_marketing_pic
+        <set>
+            <if test="pcPic != null and pcPic != ''">
+                pc_pic = #{pcPic},
+            </if>
+            <if test="mobilePic != null and mobilePic != ''">
+                mobile_pic = #{mobilePic},
+            </if>
+            try_rule = #{tryRule},
+            presale_rule = #{preSaleRule}
+        </set>
+        where id = #{id} and store_id = #{storeId}
+    </update>
+
+
+</mapper>

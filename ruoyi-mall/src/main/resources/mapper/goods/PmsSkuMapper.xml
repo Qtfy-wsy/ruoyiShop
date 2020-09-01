@@ -1,0 +1,339 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.goods.mapper.PmsSkuMapper">
+
+    <resultMap type="PmsSku" id="PmsSkuResult">
+        <result property="id" column="id"/>
+        <result property="spuId" column="spu_id"/>
+        <result property="skuNo" column="sku_no"/>
+        <result property="name" column="name"/>
+        <result property="subtitle" column="subtitle"/>
+        <result property="stock" column="stock"/>
+        <result property="warningStock" column="warning_stock"/>
+        <result property="price" column="price"/>
+        <result property="weight" column="weight"/>
+        <result property="storeId" column="store_id"/>
+        <result property="shelvesStatus" column="shelves_status"/>
+        <result property="url" column="url"/>
+        <result property="status" column="status"/>
+        <result property="reason" column="reason"/>
+        <result property="delFlag" column="del_flag"/>
+        <result property="createName" column="create_name"/>
+        <result property="modifyName" column="modify_name"/>
+        <result property="delName" column="del_name"/>
+        <result property="createTime" column="create_time"/>
+        <result property="modifyTime" column="modify_time"/>
+        <result property="delTime" column="del_time"/>
+        <result property="upTime" column="up_time"/>
+        <result property="commissionRate" column="commission_rate"/>
+        <result property="sCommissionRate" column="s_commission_rate"/>
+        <result property="isVirtual" column="is_virtual"/>
+        <result property="isBatchSku" column="is_batch_sku"/>
+        <result property="logisticsTemplateId" column="logistics_template_id"/>
+    </resultMap>
+
+    <sql id="selectPmsSkuVo">
+        select id, spu_id, sku_no, name, subtitle, stock, warning_stock, price, weight, store_id, shelves_status, url, status, reason, del_flag, create_name, modify_name, del_name, create_time, modify_time, del_time, up_time, commission_rate, s_commission_rate, is_virtual, is_batch_sku, logistics_template_id from pms_sku
+    </sql>
+
+    <select id="selectPmsSkuList" parameterType="PmsSku" resultMap="PmsSkuResult">
+        <include refid="selectPmsSkuVo"/>
+        <where>
+            <if test="skuNo != null  and skuNo != ''">and sku_no = #{skuNo}</if>
+            <if test="name != null  and name != ''">and name like concat('%', #{name}, '%')</if>
+            <if test="status != null  and status != ''">and status = #{status}</if>
+            <if test="sCommissionRate != null ">and s_commission_rate = #{sCommissionRate}</if>
+            <if test="isVirtual != null  and isVirtual != ''">and is_virtual = #{isVirtual}</if>
+            <if test="logisticsTemplateId != null ">and logistics_template_id = #{logisticsTemplateId}</if>
+        </where>
+    </select>
+
+    <select id="selectPmsSkuById" parameterType="String" resultMap="PmsSkuResult">
+        <include refid="selectPmsSkuVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertPmsSku" parameterType="PmsSku">
+        insert into pms_sku
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="spuId != null">spu_id,</if>
+            <if test="skuNo != null and skuNo != ''">sku_no,</if>
+            <if test="name != null and name != ''">name,</if>
+            <if test="subtitle != null">subtitle,</if>
+            <if test="stock != null">stock,</if>
+            <if test="warningStock != null">warning_stock,</if>
+            <if test="price != null">price,</if>
+            <if test="weight != null">weight,</if>
+            <if test="storeId != null">store_id,</if>
+            <if test="shelvesStatus != null">shelves_status,</if>
+            <if test="url != null">url,</if>
+            <if test="status != null">status,</if>
+            <if test="reason != null">reason,</if>
+            <if test="delFlag != null and delFlag != ''">del_flag,</if>
+            <if test="createName != null">create_name,</if>
+            <if test="modifyName != null">modify_name,</if>
+            <if test="delName != null">del_name,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="modifyTime != null">modify_time,</if>
+            <if test="delTime != null">del_time,</if>
+            <if test="upTime != null">up_time,</if>
+            <if test="commissionRate != null">commission_rate,</if>
+            <if test="sCommissionRate != null">s_commission_rate,</if>
+            <if test="isVirtual != null">is_virtual,</if>
+            <if test="isBatchSku != null">is_batch_sku,</if>
+            <if test="logisticsTemplateId != null">logistics_template_id,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="spuId != null">#{spuId},</if>
+            <if test="skuNo != null and skuNo != ''">#{skuNo},</if>
+            <if test="name != null and name != ''">#{name},</if>
+            <if test="subtitle != null">#{subtitle},</if>
+            <if test="stock != null">#{stock},</if>
+            <if test="warningStock != null">#{warningStock},</if>
+            <if test="price != null">#{price},</if>
+            <if test="weight != null">#{weight},</if>
+            <if test="storeId != null">#{storeId},</if>
+            <if test="shelvesStatus != null">#{shelvesStatus},</if>
+            <if test="url != null">#{url},</if>
+            <if test="status != null">#{status},</if>
+            <if test="reason != null">#{reason},</if>
+            <if test="delFlag != null and delFlag != ''">#{delFlag},</if>
+            <if test="createName != null">#{createName},</if>
+            <if test="modifyName != null">#{modifyName},</if>
+            <if test="delName != null">#{delName},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="modifyTime != null">#{modifyTime},</if>
+            <if test="delTime != null">#{delTime},</if>
+            <if test="upTime != null">#{upTime},</if>
+            <if test="commissionRate != null">#{commissionRate},</if>
+            <if test="sCommissionRate != null">#{sCommissionRate},</if>
+            <if test="isVirtual != null">#{isVirtual},</if>
+            <if test="isBatchSku != null">#{isBatchSku},</if>
+            <if test="logisticsTemplateId != null">#{logisticsTemplateId},</if>
+        </trim>
+    </insert>
+    <select id="querySkus" parameterType="java.util.Map" resultMap="PmsSkuResult">
+        select * from pms_sku
+        where del_flag = '0'
+        <if test="storeId!=null and storeId!=-1">
+            and store_id = #{storeId}
+        </if>
+        <if test="name != null and name != '' ">
+            AND name like CONCAT(CONCAT('%', #{name}),'%')
+        </if>
+        <if test="skuNo != null and skuNo != ''">
+            AND sku_no = #{skuNo}
+        </if>
+
+        <if test="id != null and id != ''">
+            AND id = #{id}
+        </if>
+
+        <if test="commissionRate != null ">
+            AND commission_rate > #{commissionRate}
+        </if>
+        order by create_time desc
+        limit #{startRowNum},#{pageSize}
+    </select>
+
+    <select id="querySkuCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+        select count(1) from pms_sku
+        where del_flag = '0'
+        <if test="storeId!=null and storeId!=-1">
+            and store_id = #{storeId}
+        </if>
+        <if test="name != null and name != '' ">
+            AND name like CONCAT(CONCAT('%', #{name}),'%')
+        </if>
+        <if test="skuNo != null and skuNo != ''">
+            AND sku_no = #{skuNo}
+        </if>
+
+        <if test="id != null and id != ''">
+            AND id = #{id}
+        </if>
+
+        <if test="commissionRate != null ">
+            AND commission_rate > #{commissionRate}
+        </if>
+
+    </select>
+    <update id="updatePmsSku" parameterType="PmsSku">
+        update pms_sku
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="spuId != null">spu_id = #{spuId},</if>
+            <if test="skuNo != null and skuNo != ''">sku_no = #{skuNo},</if>
+            <if test="name != null and name != ''">name = #{name},</if>
+            <if test="subtitle != null">subtitle = #{subtitle},</if>
+            <if test="stock != null">stock = #{stock},</if>
+            <if test="warningStock != null">warning_stock = #{warningStock},</if>
+            <if test="price != null">price = #{price},</if>
+            <if test="weight != null">weight = #{weight},</if>
+            <if test="storeId != null">store_id = #{storeId},</if>
+            <if test="shelvesStatus != null">shelves_status = #{shelvesStatus},</if>
+            <if test="url != null">url = #{url},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="reason != null">reason = #{reason},</if>
+            <if test="delFlag != null and delFlag != ''">del_flag = #{delFlag},</if>
+            <if test="createName != null">create_name = #{createName},</if>
+            <if test="modifyName != null">modify_name = #{modifyName},</if>
+            <if test="delName != null">del_name = #{delName},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="modifyTime != null">modify_time = #{modifyTime},</if>
+            <if test="delTime != null">del_time = #{delTime},</if>
+            <if test="upTime != null">up_time = #{upTime},</if>
+            <if test="commissionRate != null">commission_rate = #{commissionRate},</if>
+            <if test="sCommissionRate != null">s_commission_rate = #{sCommissionRate},</if>
+            <if test="isVirtual != null">is_virtual = #{isVirtual},</if>
+            <if test="isBatchSku != null">is_batch_sku = #{isBatchSku},</if>
+            <if test="logisticsTemplateId != null">logistics_template_id = #{logisticsTemplateId},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deletePmsSkuById" parameterType="String">
+        delete from pms_sku where id = #{id}
+    </delete>
+
+    <delete id="deletePmsSkuByIds" parameterType="String">
+        delete from pms_sku where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <select id="querySkuBySpuId" parameterType="java.util.Map" resultMap="PmsSkuResult">
+        select * from pms_sku where spu_id = #{spuId}
+        <if test="storeId != null and storeId != -1 ">
+            and store_id = #{storeId}
+        </if>
+    </select>
+
+    <update id="updateShelvesStatus" parameterType="java.util.Map">
+        update pms_sku
+        <set>
+            <if test='status=="1"'>
+                up_time = #{upTime},
+            </if>
+            shelves_status = #{status}
+        </set>
+        where
+        <if test="storeId!=-1">
+            store_id = #{storeId} and
+        </if>
+        spu_id in
+        <foreach collection="spuIds" item="item" index="index" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </update>
+
+    <update id="updateSkuAuditStatus" parameterType="java.util.Map">
+        update pms_sku set status = #{status} where store_id = #{storeId} and spu_id in
+        <foreach collection="spuIds" item="item" index="index" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </update>
+
+    <update id="deleteBySpuId" parameterType="java.util.Map">
+        update pms_sku set del_flag = '1' where spu_id = #{spuId} and store_id = #{storeId}
+    </update>
+    <delete id="deleteBySpuIdPhysical" parameterType="java.util.Map">
+            delete from pms_sku where spu_id = #{spuId} and store_id = #{storeId}
+    </delete>
+
+    <update id="auditPass" parameterType="java.lang.Long">
+        update pms_sku set status = '0' where spu_id = #{spuId}
+    </update>
+
+    <update id="auditRefuse" parameterType="java.util.Map">
+        update pms_sku set status = '1', reason = #{reason} where spu_id = #{spuId}
+    </update>
+
+    <select id="queryFiveDataForAttentionStore" parameterType="java.lang.Long" resultMap="PmsSkuResult">
+        SELECT * FROM pms_sku WHERE  store_id = #{storeId} AND shelves_status='1' AND status='0' ORDER BY up_time DESC limit 5
+    </select>
+
+    <select id="querySkuByIds" parameterType="java.util.List" resultMap="PmsSkuResult">
+        select * from pms_sku where  id IN
+        <foreach item="id" collection="list" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </select>
+
+    <update id="reduceSkuStock" parameterType="java.util.Map">
+        update pms_sku set stock = stock-#{stock} where id = #{skuId} and stock>=#{stock}
+    </update>
+
+    <update id="increaseSkuStock" parameterType="java.util.Map">
+        update pms_sku set stock = stock+#{stock} where id = #{skuId}
+    </update>
+
+    <select id="lastUpSkusNum" parameterType="java.lang.Long" resultType="java.lang.Integer">
+        select count(1) from pms_sku where store_id = #{storeId} and status = '1' and shelves_status = '1'
+        and  date_sub(curdate(), INTERVAL 7 DAY) &lt;= date(`up_time`)
+    </select>
+
+    <select id="marketSkusNum" parameterType="java.lang.Long" resultType="java.lang.Integer">
+        select  COUNT(distinct skuid)  from sms_marketing join pms_sku_marketing on sms_marketing.id = pms_sku_marketing.marketing_id
+        join pms_sku on pms_sku_marketing.skuid =pms_sku.id  and sms_marketing.store_id = #{storeId} and sms_marketing. pms_sku.shelves_status = '1' and pms_sku.  <![CDATA[sms_marketing.starttime <= now() and  sms_marketing.endtime > now()
+
+
+
+        ]]>
+    </select>
+
+    <select id="queryLastUpSkus" parameterType="java.util.Map" resultMap="PmsSkuResult">
+      select * from pms_sku where store_id = #{storeId} and status = '1' and shelves_status = '1'
+        and  date_sub(curdate(), INTERVAL 7 DAY) &lt;= date(`up_time`)    limit #{startRowNum},#{pageSize}
+    </select>
+
+
+    <select id="queryMarketSkus" parameterType="java.util.Map" resultMap="PmsSkuResult">
+       select  pms_sku.*  from sms_marketing join pms_sku_marketing on sms_marketing.id = pms_sku_marketing.marketing_id
+        join pms_sku on pms_sku_marketing.skuid =pms_sku.id  and sms_marketing.store_id = #{storeId} and sms_marketing. pms_sku.shelves_status = '1' and pms_sku.  <![CDATA[sms_marketing.starttime <= now() and  sms_marketing.endtime > now()]]>
+         group by pms_sku.id limit #{startRowNum},#{pageSize}
+    </select>
+
+    <update id="updateCommission" parameterType="java.util.Map">
+        update pms_sku
+        <set>
+            <if test="commissionRate != null">
+                commission_rate = #{commissionRate},
+            </if>
+            <if test="sCommissionRate != null">
+                s_commission_rate = #{sCommissionRate},
+            </if>
+            modify_time = now()
+        </set>
+        where spu_id = #{spuId} and store_id = #{storeId}
+    </update>
+
+    <update id="updateShelvesStatusByStoreIds" parameterType="java.util.Map">
+        update pms_sku set shelves_status = #{status}
+        where store_id in
+        <foreach collection="storeIds" item="item" index="index" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+
+    </update>
+
+    <update id="updateSkuToAudit" parameterType="java.util.Map">
+        update pms_sku set status = #{status} where store_id = #{storeId} and spu_id in
+        <foreach collection="spuIds" item="item" index="index" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </update>
+
+    <select id="querySkuCountByStoreId" parameterType="java.lang.Long" resultType="java.lang.Integer">
+        SELECT count(1) FROM pms_sku WHERE  store_id = #{storeId} AND shelves_status='1' AND status='0'
+    </select>
+
+    <update id="updateSkuLogisticsTemplateId" parameterType="java.util.Map">
+        update pms_sku set logistics_template_id = #{defaultLogisticsTemplateId}
+        where  store_id = #{storeId} and logistics_template_id = #{logisticsTemplateId}
+    </update>
+</mapper>

@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.marketing.mapper.PreSaleShowMapper">
+
+    <resultMap id="preSaleShow" type="com.ruoyi.marketing.domain.PreSaleShow">
+        <result column="id" property="id"/>
+        <result column="presale_id" property="preSaleId"/>
+        <result column="store_id" property="storeId"/>
+        <result column="sort" property="sort"/>
+        <result column="cate_id" property="cateId"/>
+        <result column="del_flag" property="delFlag"/>
+        <result column="store_name" property="storeName"/>
+        <result column="skuid" property="skuId"/>
+        <result column="old_store_id" property="oldStoreId"/>
+        <result column="starttime" property="startTime"/>
+        <result column="endtime" property="endTime"/>
+    </resultMap>
+
+    <insert id="addPreSaleShows" parameterType="java.util.List">
+        insert into sms_marketing_presale_show
+        (presale_id, store_id, del_flag)
+        values
+        <foreach collection="list" item="item" index="index" separator=",">
+            (
+            #{item.preSaleId},
+            #{item.storeId},
+            '0'
+            )
+        </foreach>
+    </insert>
+
+    <update id="deletePreSaleShows" parameterType="java.util.Map">
+        update sms_marketing_presale_show set del_flag = '1' where id in
+        <foreach collection="ids" index="index" item="id" open="(" close=")" separator=",">
+            #{id}
+        </foreach>
+        and store_id = #{storeId}
+    </update>
+
+    <update id="updatePreSaleShow" parameterType="java.util.Map">
+        update sms_marketing_presale_show
+        <set>
+            <if test="cateId != null">
+                cate_id = #{cateId},
+            </if>
+            <if test="sort != null">
+                sort = #{sort},
+            </if>
+        </set>
+        where id = #{id} and store_id = #{storeId}
+    </update>
+
+    <select id="queryPreSaleShowCountByPreSaleId" parameterType="java.util.Map" resultType="java.lang.Integer">
+        select count(1) from sms_marketing_presale_show where presale_id = #{preSaleId} and store_id = #{storeId}
+    </select>
+
+    <select id="queryPreSaleShowList" parameterType="java.util.Map" resultMap="preSaleShow">
+        select lmps.*,lm.store_id old_store_id,lmp.skuid,lm.starttime,lm.endtime from sms_marketing_presale_show lmps
+        join sms_marketing_presale lmp on lmp.id = lmps.presale_id
+        join sms_marketing lm on lm.id = lmp.marketing_id
+        join pms_sku ls on ls.id = lmp.skuid
+        where  lmps.store_id = #{storeId}
+        <if test="name != null and name != ''">
+            and ls.name like CONCAT(CONCAT('%', #{name}),'%')
+        </if>
+        <if test="skuNo != null and skuNo != ''">
+            and ls.sku_no = #{skuNo}
+        </if>
+        order by lmps.id desc
+        limit #{startRowNum},#{pageSize}
+    </select>
+
+    <select id="queryPreSaleShowListCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+        select count(1) from sms_marketing_presale_show lmps
+        join sms_marketing_presale lmp on lmp.id = lmps.presale_id
+        join sms_marketing lm on lm.id = lmp.marketing_id
+        join pms_sku ls on ls.id = lmp.skuid
+        where  lmps.store_id = #{storeId}
+        <if test="name != null and name != ''">
+            and ls.name like CONCAT(CONCAT('%', #{name}),'%')
+        </if>
+        <if test="skuNo != null and skuNo != ''">
+            and ls.sku_no = #{skuNo}
+        </if>
+    </select>
+
+    <select id="queryPreSaleShowListForStore" parameterType="java.util.Map" resultMap="preSaleShow">
+        select lmps.*,lm.store_id old_store_id,lmp.skuid,lm.starttime,lm.endtime from sms_marketing_presale_show lmps
+        join sms_marketing_presale lmp on lmp.id = lmps.presale_id
+        join sms_marketing lm on lm.id = lmp.marketing_id
+        join pms_sku ls on ls.id = lmp.skuid
+        where
+         lmps.store_id = 0 and lm.store_id = #{storeId}
+        <if test="name != null and name != ''">
+            and ls.name like CONCAT(CONCAT('%', #{name}),'%')
+        </if>
+        <if test="skuNo != null and skuNo != ''">
+            and ls.sku_no = #{skuNo}
+        </if>
+        order by lmps.id desc
+        limit #{startRowNum},#{pageSize}
+    </select>
+
+    <select id="queryPreSaleShowListCountForStore" parameterType="java.util.Map" resultType="java.lang.Integer">
+        select count(1) from sms_marketing_presale_show lmps
+        join sms_marketing_presale lmp on lmp.id = lmps.presale_id
+        join sms_marketing lm on lm.id = lmp.marketing_id
+        join pms_sku ls on ls.id = lmp.skuid
+        where
+         lmps.store_id = 0 and lm.store_id = #{storeId}
+        <if test="name != null and name != ''">
+            and ls.name like CONCAT(CONCAT('%', #{name}),'%')
+        </if>
+        <if test="skuNo != null and skuNo != ''">
+            and ls.sku_no = #{skuNo}
+        </if>
+    </select>
+
+    <update id="deletePreSaleCate" parameterType="java.util.Map">
+        update sms_marketing_presale_show set cate_id = -1 where cate_id = #{cateId} and store_id = #{storeId}
+    </update>
+
+    <select id="queryPreSalesForSite" parameterType="java.util.Map" resultMap="preSaleShow">
+        select lmps.*,lm.starttime,lm.endtime from sms_marketing_presale_show lmps
+        join sms_marketing_presale lmp on lmp.id = lmps.presale_id
+        join sms_marketing lm on lm.id = lmp.marketing_id
+        join pms_sku ls on ls.id = lmp.skuid
+        where
+         now() &gt;= lm.starttime and now() &lt; lm.endtime and lmps.store_id = #{storeId}
+        <if test="cateId != 0">
+            and lmps.cate_id = #{cateId}
+        </if>
+        order by lmps.sort
+        limit #{startRowNum},#{pageSize}
+    </select>
+
+    <select id="queryPreSalesCountForSite" parameterType="java.util.Map" resultType="java.lang.Integer">
+        select count(1) from sms_marketing_presale_show lmps
+        join sms_marketing_presale lmp on lmp.id = lmps.presale_id
+        join sms_marketing lm on lm.id = lmp.marketing_id
+        join pms_sku ls on ls.id = lmp.skuid
+        where
+         now() &gt;= lm.starttime and now() &lt; lm.endtime and lmps.store_id = #{storeId}
+        <if test="cateId != 0">
+            and lmps.cate_id = #{cateId}
+        </if>
+    </select>
+
+    <update id="deletePreSalesByMarketingIds" parameterType="java.util.Map">
+        update sms_marketing_presale_show lmps
+        join sms_marketing_presale lmp on lmp.id = lmps.presale_id
+        set lmps.del_flag = '1'
+        where lmp.marketing_id in
+        <foreach collection="marketingIds" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </update>
+
+    <update id="deleteEndPreSales" parameterType="java.util.Map">
+        update sms_marketing_presale_show lmps
+        join sms_marketing_presale lmp on lmp.id = lmps.presale_id
+        join sms_marketing lm on lm.id = lmp.marketing_id
+        set lmps.del_flag = '1'
+        where now() &gt;= lm.endtime
+    </update>
+
+</mapper>

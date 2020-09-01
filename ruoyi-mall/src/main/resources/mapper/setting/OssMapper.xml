@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.setting.mapper.OssMapper">
+
+    <resultMap id="ossSetting" type="com.ruoyi.setting.bean.OssSetting">
+        <id column="id" property="id"/>
+        <id column="access_key_id" property="accessKeyId"/>
+        <id column="access_key_secret" property="accessKeySecret"/>
+        <id column="bucket_name" property="bucketName"/>
+        <id column="address" property="address"/>
+        <id column="end_point" property="endPoint"/>
+        <id column="style_name" property="styleName"/>
+        <id column="prefix" property="prefix"/>
+
+    </resultMap>
+
+    <sql id="Base_Column_List">
+                id,
+                access_key_id,
+                access_key_secret,
+                bucket_name,
+                end_point,
+                style_name,
+                prefix,
+                address
+    </sql>
+
+
+    <select id="queryOssSetting" resultMap="ossSetting">
+        select
+        <include refid="Base_Column_List"/>
+        from ls_aliyun_oss_setting limit 1
+    </select>
+
+    <update id="updateOss" parameterType="com.ruoyi.setting.bean.OssSetting">
+        update ls_aliyun_oss_setting
+        <set>
+            <if test='null != accessKeyId'>access_key_id = #{accessKeyId},</if>
+            <if test='null != accessKeySecret'>access_key_secret = #{accessKeySecret},</if>
+            <if test='null != bucketName'>bucket_name = #{bucketName},</if>
+            <if test='null != endPoint'>end_point = #{endPoint},</if>
+            <if test='null != styleName'>style_name = #{styleName},</if>
+            <if test='null != prefix'>prefix = #{prefix},</if>
+            <if test='null != address'>address = #{address},</if>
+        </set>
+        where id = #{id}
+    </update>
+</mapper>

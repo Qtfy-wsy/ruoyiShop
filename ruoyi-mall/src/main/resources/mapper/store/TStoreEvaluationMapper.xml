@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.store.mapper.TStoreEvaluationMapper">
+
+    <resultMap type="TStoreEvaluation" id="TStoreEvaluationResult">
+        <result property="id" column="id"/>
+        <result property="score" column="score"/>
+        <result property="desc" column="desc"/>
+        <result property="orderCode" column="order_code"/>
+        <result property="storeId" column="store_id"/>
+        <result property="customerId" column="customer_id"/>
+        <result property="createTime" column="create_time"/>
+        <result column="avatar_picture" property="avatarPicture"/>
+        <result column="store_name" property="storeName"/>
+    </resultMap>
+
+    <sql id="selectTStoreEvaluationVo">
+        select id, score, desc, order_code, store_id, customer_id, create_time from t_store_evaluation
+    </sql>
+
+    <select id="selectTStoreEvaluationList" parameterType="TStoreEvaluation" resultMap="TStoreEvaluationResult">
+        <include refid="selectTStoreEvaluationVo"/>
+        <where>
+            <if test="score != null ">and score = #{score}</if>
+            <if test="desc != null  and desc != ''">and desc = #{desc}</if>
+            <if test="orderCode != null  and orderCode != ''">and order_code = #{orderCode}</if>
+            <if test="storeId != null ">and store_id = #{storeId}</if>
+            <if test="customerId != null ">and customer_id = #{customerId}</if>
+        </where>
+    </select>
+
+    <select id="selectTStoreEvaluationById" parameterType="Long" resultMap="TStoreEvaluationResult">
+        <include refid="selectTStoreEvaluationVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertTStoreEvaluation" parameterType="TStoreEvaluation" useGeneratedKeys="true" keyProperty="id">
+        insert into t_store_evaluation
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="score != null">score,</if>
+            <if test="desc != null">desc,</if>
+            <if test="orderCode != null">order_code,</if>
+            <if test="storeId != null">store_id,</if>
+            <if test="customerId != null">customer_id,</if>
+            <if test="createTime != null">create_time,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="score != null">#{score},</if>
+            <if test="desc != null">#{desc},</if>
+            <if test="orderCode != null">#{orderCode},</if>
+            <if test="storeId != null">#{storeId},</if>
+            <if test="customerId != null">#{customerId},</if>
+            <if test="createTime != null">#{createTime},</if>
+        </trim>
+    </insert>
+
+    <update id="updateTStoreEvaluation" parameterType="TStoreEvaluation">
+        update t_store_evaluation
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="score != null">score = #{score},</if>
+            <if test="desc != null">desc = #{desc},</if>
+            <if test="orderCode != null">order_code = #{orderCode},</if>
+            <if test="storeId != null">store_id = #{storeId},</if>
+            <if test="customerId != null">customer_id = #{customerId},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+    <insert id="addStoreEvaluation" parameterType="TStoreEvaluation">
+        INSERT INTO t_store_evaluation (score, `desc`, order_code, store_id, customer_id, create_time) VALUES (#{score}, #{desc}, #{orderCode}, #{storeId}, #{customerId}, NOW())
+    </insert>
+
+    <select id="queryStoreEvaluationCount" resultType="java.lang.Integer" parameterType="java.util.Map">
+        SELECT COUNT(1) FROM t_store_evaluation se JOIN ums_member c ON se.customer_id = c.id
+        WHERE 1=1 AND se.store_id = #{storeId}
+        <if test="userName != null and userName !=''">
+            AND c.username like CONCAT(CONCAT('%', #{userName}),'%')
+        </if>
+    </select>
+
+    <select id="queryStoreEvaluation" resultMap="TStoreEvaluationResult" parameterType="java.util.Map">
+        SELECT c.username,c.image user_pic, se.create_time, se.score, se.`desc`, se.order_code FROM t_store_evaluation
+        se JOIN ums_member c ON se.customer_id = c.id
+        WHERE 1=1 AND se.store_id = #{storeId}
+        <if test="userName != null and userName !=''">
+            AND c.username like CONCAT(CONCAT('%', #{userName}),'%')
+        </if>
+        ORDER BY se.create_time DESC
+        limit #{startRowNum},#{pageSize}
+    </select>
+
+    <select id="selStoreEvaluationListCount" resultType="java.lang.Integer" parameterType="java.util.Map">
+        SELECT COUNT(1) FROM t_store_evaluation se JOIN t_store_info si ON se.store_id = si.id WHERE se.customer_id = #{customerId}
+    </select>
+
+    <select id="selStoreEvaluationList" resultMap="TStoreEvaluationResult" parameterType="java.util.Map">
+        SELECT si.store_name,si.avatar_picture,se.score,se.`desc`,se.create_time
+        FROM t_store_evaluation se JOIN t_store_info si ON se.store_id = si.id
+        WHERE se.customer_id = #{customerId}
+        ORDER BY se.create_time DESC
+        limit #{startRowNum},#{pageSize}
+    </select>
+
+    <select id="queryStoreAveScore" parameterType="java.lang.Long" resultType="java.lang.Long">
+        select IFNULL(ROUND(AVG(score),0),1) from t_store_evaluation where store_id=#{storeId};
+    </select>
+
+    <update id="updEvaluationStatus" parameterType="java.lang.String">
+        UPDATE t_store_order SET evaluation_status = '1' WHERE order_code = #{orderCode}
+    </update>
+
+    <select id="queryStoreInfoDetail" resultMap="TStoreEvaluationResult" parameterType="java.util.Map">
+        SELECT * FROM t_store_evaluation WHERE order_code = #{orderCode} AND customer_id = #{customerId}
+    </select>
+
+    <select id="queryAdminStoreEvaluationCount" resultType="java.lang.Integer" parameterType="java.util.Map">
+        SELECT COUNT(1) FROM t_store_evaluation se JOIN t_store_info si on se.store_id = si.id
+        WHERE 1=1
+        <if test="storeName != null and storeName !=''">
+            AND si.store_name like CONCAT(CONCAT('%', #{storeName}),'%')
+        </if>
+    </select>
+
+    <select id="queryAdminStoreEvaluationList" resultMap="TStoreEvaluationResult" parameterType="java.util.Map">
+        SELECT si.store_name, se.create_time, se.score, se.`desc`, se.order_code FROM t_store_evaluation se JOIN
+        t_store_info si on se.store_id = si.id
+        WHERE 1=1
+        <if test="storeName != null and storeName !=''">
+            AND si.store_name like CONCAT(CONCAT('%', #{storeName}),'%')
+        </if>
+        ORDER BY se.create_time DESC
+        limit #{startRowNum},#{pageSize}
+    </select>
+    <delete id="deleteTStoreEvaluationById" parameterType="Long">
+        delete from t_store_evaluation where id = #{id}
+    </delete>
+
+    <delete id="deleteTStoreEvaluationByIds" parameterType="String">
+        delete from t_store_evaluation where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

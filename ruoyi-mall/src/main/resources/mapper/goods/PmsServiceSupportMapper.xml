@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.goods.mapper.PmsServiceSupportMapper">
+
+    <resultMap type="PmsServiceSupport" id="PmsServiceSupportResult">
+        <result property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="url" column="url"/>
+        <result property="delFlag" column="del_flag"/>
+        <result property="createName" column="create_name"/>
+        <result property="modifyName" column="modify_name"/>
+        <result property="delName" column="del_name"/>
+        <result property="createTime" column="create_time"/>
+        <result property="modifyTime" column="modify_time"/>
+        <result property="delTime" column="del_time"/>
+    </resultMap>
+
+    <sql id="selectPmsServiceSupportVo">
+        select id, name, url, del_flag, create_name, modify_name, del_name, create_time, modify_time, del_time from pms_service_support
+    </sql>
+
+    <select id="selectPmsServiceSupportList" parameterType="PmsServiceSupport" resultMap="PmsServiceSupportResult">
+        <include refid="selectPmsServiceSupportVo"/>
+        <where>
+            <if test="name != null  and name != ''">and name like concat('%', #{name}, '%')</if>
+        </where>
+    </select>
+
+    <select id="selectPmsServiceSupportById" parameterType="Long" resultMap="PmsServiceSupportResult">
+        <include refid="selectPmsServiceSupportVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertPmsServiceSupport" parameterType="PmsServiceSupport" useGeneratedKeys="true" keyProperty="id">
+        insert into pms_service_support
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="name != null and name != ''">name,</if>
+            <if test="url != null">url,</if>
+            <if test="delFlag != null and delFlag != ''">del_flag,</if>
+            <if test="createName != null">create_name,</if>
+            <if test="modifyName != null">modify_name,</if>
+            <if test="delName != null">del_name,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="modifyTime != null">modify_time,</if>
+            <if test="delTime != null">del_time,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="name != null and name != ''">#{name},</if>
+            <if test="url != null">#{url},</if>
+            <if test="delFlag != null and delFlag != ''">#{delFlag},</if>
+            <if test="createName != null">#{createName},</if>
+            <if test="modifyName != null">#{modifyName},</if>
+            <if test="delName != null">#{delName},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="modifyTime != null">#{modifyTime},</if>
+            <if test="delTime != null">#{delTime},</if>
+        </trim>
+    </insert>
+
+    <update id="updatePmsServiceSupport" parameterType="PmsServiceSupport">
+        update pms_service_support
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="name != null and name != ''">name = #{name},</if>
+            <if test="url != null">url = #{url},</if>
+            <if test="delFlag != null and delFlag != ''">del_flag = #{delFlag},</if>
+            <if test="createName != null">create_name = #{createName},</if>
+            <if test="modifyName != null">modify_name = #{modifyName},</if>
+            <if test="delName != null">del_name = #{delName},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="modifyTime != null">modify_time = #{modifyTime},</if>
+            <if test="delTime != null">del_time = #{delTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deletePmsServiceSupportById" parameterType="Long">
+        delete from pms_service_support where id = #{id}
+    </delete>
+
+    <delete id="deletePmsServiceSupportByIds" parameterType="String">
+        delete from pms_service_support where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    <select id="queryServiceSupport" parameterType="java.util.Map" resultMap="PmsServiceSupportResult">
+        SELECT * from pms_service_support s
+
+        <if test="name != null and name!=''">
+            WHERE  s.`name` LIKE CONCAT(CONCAT('%',#{name}),'%')
+        </if>
+        ORDER BY s.create_time
+        limit #{startRowNum},#{pageSize}
+    </select>
+
+    <select id="queryServiceSupportCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+        SELECT COUNT(1) FROM
+        pms_service_support
+
+        <if test="name != null and name!=''">
+            WHERE   `name` LIKE CONCAT(CONCAT('%',#{name}),'%')
+        </if>
+    </select>
+
+    <insert id="addServiceSupport" parameterType="com.ruoyi.goods.domain.PmsServiceSupport">
+        INSERT INTO pms_service_support (`name`,url,create_time) VALUES (#{name},#{url},NOW())
+    </insert>
+
+    <update id="deleteServiceSupport" parameterType="java.lang.Long">
+        UPDATE pms_service_support SET del_flag = '1',del_time = NOW() WHERE id = #{id}
+    </update>
+
+    <update id="batchDeleteServiceSupport" parameterType="java.lang.Long">
+        UPDATE pms_service_support SET del_flag = '1',del_time = NOW() WHERE id IN
+        <foreach collection="array" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </update>
+
+    <select id="queryServiceSupportById" parameterType="java.lang.Long" resultMap="PmsServiceSupportResult">
+        SELECT id,`name`,url FROM pms_service_support WHERE id = #{id}
+    </select>
+
+    <update id="updateServiceSupport" parameterType="com.ruoyi.goods.domain.PmsServiceSupport">
+        UPDATE pms_service_support SET `name` = #{name},url=#{url} WHERE id = #{id}
+    </update>
+
+    <select id="queryAllServiceSupport" resultMap="PmsServiceSupportResult">
+        select * from pms_service_support where  del_flag = '0'
+    </select>
+</mapper>

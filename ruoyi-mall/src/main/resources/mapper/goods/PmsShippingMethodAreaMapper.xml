@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.goods.mapper.PmsShippingMethodAreaMapper">
+
+    <resultMap type="PmsShippingMethodArea" id="PmsShippingMethodAreaResult">
+        <result property="id" column="id"/>
+        <result property="shippingMethodId" column="shipping_method_id"/>
+        <result property="templateId" column="template_id"/>
+        <result property="cityId" column="city_id"/>
+    </resultMap>
+
+    <sql id="selectPmsShippingMethodAreaVo">
+        select id, shipping_method_id, template_id, city_id from pms_shipping_method_area
+    </sql>
+
+    <select id="selectPmsShippingMethodAreaList" parameterType="PmsShippingMethodArea"
+            resultMap="PmsShippingMethodAreaResult">
+        <include refid="selectPmsShippingMethodAreaVo"/>
+        <where>
+            <if test="shippingMethodId != null ">and shipping_method_id = #{shippingMethodId}</if>
+            <if test="templateId != null ">and template_id = #{templateId}</if>
+            <if test="cityId != null ">and city_id = #{cityId}</if>
+        </where>
+    </select>
+
+    <select id="selectPmsShippingMethodAreaById" parameterType="Long" resultMap="PmsShippingMethodAreaResult">
+        <include refid="selectPmsShippingMethodAreaVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertPmsShippingMethodArea" parameterType="PmsShippingMethodArea" useGeneratedKeys="true"
+            keyProperty="id">
+        insert into pms_shipping_method_area
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="shippingMethodId != null">shipping_method_id,</if>
+            <if test="templateId != null">template_id,</if>
+            <if test="cityId != null">city_id,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="shippingMethodId != null">#{shippingMethodId},</if>
+            <if test="templateId != null">#{templateId},</if>
+            <if test="cityId != null">#{cityId},</if>
+        </trim>
+    </insert>
+
+    <update id="updatePmsShippingMethodArea" parameterType="PmsShippingMethodArea">
+        update pms_shipping_method_area
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="shippingMethodId != null">shipping_method_id = #{shippingMethodId},</if>
+            <if test="templateId != null">template_id = #{templateId},</if>
+            <if test="cityId != null">city_id = #{cityId},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deletePmsShippingMethodAreaById" parameterType="Long">
+        delete from pms_shipping_method_area where id = #{id}
+    </delete>
+
+    <delete id="deletePmsShippingMethodAreaByIds" parameterType="String">
+        delete from pms_shipping_method_area where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    <insert id="addShippingMethodAreas" parameterType="java.util.List">
+        insert into pms_shipping_method_area
+        (shipping_method_id,template_id, city_id)
+        values
+        <foreach collection="list" item="shippingMethodArea" index="index" separator=",">
+            (
+            #{shippingMethodArea.shippingMethodId},
+            #{shippingMethodArea.templateId},
+            #{shippingMethodArea.cityId}
+            )
+        </foreach>
+    </insert>
+
+    <select id="queryByShippingMethodId" parameterType="java.lang.Long" resultMap="PmsShippingMethodAreaResult">
+        select * from pms_shipping_method_area where shipping_method_id = #{id}
+    </select>
+
+    <delete id="deleteByTemplateId" parameterType="java.lang.Long">
+        delete from pms_shipping_method_area where template_id = #{id}
+    </delete>
+
+    <select id="queryShippingMethodAreaByTemplateIdAndCityId" parameterType="java.util.Map"
+            resultMap="PmsShippingMethodAreaResult">
+                select * from pms_shipping_method_area where template_id = #{templateId} and city_id = #{cityId}
+    </select>
+</mapper>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.marketing.mapper.RedEnvelopeStoreMapper">
+    <resultMap id="redEnvelopeStore" type="com.ruoyi.marketing.domain.RedEnvelopeStore">
+        <result column="id" property="id"/>
+        <result column="red_envelope_id" property="redEnvelopeId"/>
+        <result column="store_id" property="storeId"/>
+        <result column="store_name" property="storeName"/>
+        <result column="create_time" property="createTime"/>
+    </resultMap>
+
+    <select id="queryByRedEnvelopeId" parameterType="java.lang.Long" resultMap="redEnvelopeStore">
+      select * from sms_red_envelope_store where red_envelope_id = #{redEnvelopeId}
+    </select>
+
+    <select id="queryStoresByRedEnvelopeId" parameterType="java.lang.Long" resultMap="redEnvelopeStore">
+        select lres.*,lsi.store_name store_name from sms_red_envelope_store lres join t_store_info lsi on lsi.id = lres.store_id  where red_envelope_id = #{redEnvelopeId} and lsi.store_name is not null
+    </select>
+
+    <insert id="addRedEnvelopeStore" parameterType="java.lang.Long">
+        insert into sms_red_envelope_store(red_envelope_id,store_id,create_time) values (#{redEnvelopeId},'0',now())
+    </insert>
+
+    <insert id="joinRedEnvelope" parameterType="java.util.Map" useGeneratedKeys="true" keyProperty="id">
+        insert into sms_red_envelope_store(red_envelope_id,store_id,create_time) values (#{redEnvelopeId},#{storeId},now())
+    </insert>
+
+    <select id="hasJoinRedEnvelope" parameterType="java.util.Map" resultType="java.lang.Integer">
+        select count(1) from sms_red_envelope_store where red_envelope_id = #{redEnvelopeId} and store_id = #{storeId}
+    </select>
+
+</mapper>

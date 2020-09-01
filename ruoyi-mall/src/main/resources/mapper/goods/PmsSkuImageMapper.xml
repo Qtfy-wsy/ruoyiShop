@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.goods.mapper.PmsSkuImageMapper">
+
+    <resultMap type="PmsSkuImage" id="PmsSkuImageResult">
+        <result property="id" column="id"/>
+        <result property="spuId" column="spu_id"/>
+        <result property="skuId" column="sku_id"/>
+        <result property="url" column="url"/>
+        <result property="defaultFlag" column="default_flag"/>
+        <result property="delFlag" column="del_flag"/>
+    </resultMap>
+
+    <sql id="selectPmsSkuImageVo">
+        select id, spu_id, sku_id, url, default_flag, del_flag from pms_sku_image
+    </sql>
+
+    <select id="selectPmsSkuImageList" parameterType="PmsSkuImage" resultMap="PmsSkuImageResult">
+        <include refid="selectPmsSkuImageVo"/>
+        <where>
+            <if test="spuId != null ">and spu_id = #{spuId}</if>
+            <if test="skuId != null  and skuId != ''">and sku_id = #{skuId}</if>
+            <if test="url != null  and url != ''">and url = #{url}</if>
+            <if test="defaultFlag != null  and defaultFlag != ''">and default_flag = #{defaultFlag}</if>
+        </where>
+    </select>
+
+    <select id="selectPmsSkuImageById" parameterType="Long" resultMap="PmsSkuImageResult">
+        <include refid="selectPmsSkuImageVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertPmsSkuImage" parameterType="PmsSkuImage" useGeneratedKeys="true" keyProperty="id">
+        insert into pms_sku_image
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="spuId != null">spu_id,</if>
+            <if test="skuId != null and skuId != ''">sku_id,</if>
+            <if test="url != null and url != ''">url,</if>
+            <if test="defaultFlag != null">default_flag,</if>
+            <if test="delFlag != null and delFlag != ''">del_flag,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="spuId != null">#{spuId},</if>
+            <if test="skuId != null and skuId != ''">#{skuId},</if>
+            <if test="url != null and url != ''">#{url},</if>
+            <if test="defaultFlag != null">#{defaultFlag},</if>
+            <if test="delFlag != null and delFlag != ''">#{delFlag},</if>
+        </trim>
+    </insert>
+
+    <update id="updatePmsSkuImage" parameterType="PmsSkuImage">
+        update pms_sku_image
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="spuId != null">spu_id = #{spuId},</if>
+            <if test="skuId != null and skuId != ''">sku_id = #{skuId},</if>
+            <if test="url != null and url != ''">url = #{url},</if>
+            <if test="defaultFlag != null">default_flag = #{defaultFlag},</if>
+            <if test="delFlag != null and delFlag != ''">del_flag = #{delFlag},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deletePmsSkuImageById" parameterType="Long">
+        delete from pms_sku_image where id = #{id}
+    </delete>
+
+    <delete id="deletePmsSkuImageByIds" parameterType="String">
+        delete from pms_sku_image where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <insert id="addSkuImages" parameterType="java.util.List">
+        insert into pms_sku_image
+        (spu_id,sku_id, url,default_flag,del_flag)
+        values
+        <foreach collection="list" item="skuImage" index="index" separator=",">
+            (
+            #{skuImage.spuId},
+            #{skuImage.skuId},
+            #{skuImage.url},
+            #{skuImage.defaultFlag},
+            #{skuImage.delFlag}
+            )
+        </foreach>
+    </insert>
+
+
+    <select id="queryBySkuId" parameterType="java.lang.String" resultMap="PmsSkuImageResult">
+        select * from pms_sku_image where sku_id = #{skuId}
+    </select>
+
+
+    <update id="deleteBySpuId" parameterType="java.lang.Long">
+        update pms_sku_image set del_flag = '1' where spu_id = #{spuId}
+    </update>
+
+    <delete id="deleteBySpuIdPhysical" parameterType="java.lang.Long">
+        delete from pms_sku_image  where spu_id = #{spuId}
+    </delete>
+</mapper>

@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.goods.mapper.PmsShippingMethodMapper">
+
+    <resultMap type="PmsShippingMethod" id="PmsShippingMethodResult">
+        <result property="id" column="id"/>
+        <result property="templateId" column="template_id"/>
+        <result property="first" column="first"/>
+        <result property="money" column="money"/>
+        <result property="firstPlu" column="first_plu"/>
+        <result property="moenyPlu" column="moeny_plu"/>
+        <result property="isDefault" column="is_default"/>
+    </resultMap>
+
+    <sql id="selectPmsShippingMethodVo">
+        select id, template_id, first, money, first_plu, moeny_plu, is_default from pms_shipping_method
+    </sql>
+
+    <select id="selectPmsShippingMethodList" parameterType="PmsShippingMethod" resultMap="PmsShippingMethodResult">
+        <include refid="selectPmsShippingMethodVo"/>
+        <where>
+        </where>
+    </select>
+
+    <select id="selectPmsShippingMethodById" parameterType="Long" resultMap="PmsShippingMethodResult">
+        <include refid="selectPmsShippingMethodVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertPmsShippingMethod" parameterType="PmsShippingMethod" useGeneratedKeys="true" keyProperty="id">
+        insert into pms_shipping_method
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="templateId != null">template_id,</if>
+            <if test="first != null">first,</if>
+            <if test="money != null">money,</if>
+            <if test="firstPlu != null">first_plu,</if>
+            <if test="moenyPlu != null">moeny_plu,</if>
+            <if test="isDefault != null">is_default,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="templateId != null">#{templateId},</if>
+            <if test="first != null">#{first},</if>
+            <if test="money != null">#{money},</if>
+            <if test="firstPlu != null">#{firstPlu},</if>
+            <if test="moenyPlu != null">#{moenyPlu},</if>
+            <if test="isDefault != null">#{isDefault},</if>
+        </trim>
+    </insert>
+
+    <update id="updatePmsShippingMethod" parameterType="PmsShippingMethod">
+        update pms_shipping_method
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="templateId != null">template_id = #{templateId},</if>
+            <if test="first != null">first = #{first},</if>
+            <if test="money != null">money = #{money},</if>
+            <if test="firstPlu != null">first_plu = #{firstPlu},</if>
+            <if test="moenyPlu != null">moeny_plu = #{moenyPlu},</if>
+            <if test="isDefault != null">is_default = #{isDefault},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deletePmsShippingMethodById" parameterType="Long">
+        delete from pms_shipping_method where id = #{id}
+    </delete>
+
+    <delete id="deletePmsShippingMethodByIds" parameterType="String">
+        delete from pms_shipping_method where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    <insert id="addShippingMethods" parameterType="java.util.List" useGeneratedKeys="true" keyProperty="id">
+        insert into pms_shipping_method
+        (template_id,first, money, first_plu, moeny_plu,is_default)
+        values
+        <foreach collection="list" item="shippingMethod" index="index" separator=",">
+            (
+            #{shippingMethod.templateId},
+            #{shippingMethod.first},
+            #{shippingMethod.money},
+            #{shippingMethod.firstPlu},
+            #{shippingMethod.moenyPlu},
+            #{shippingMethod.isDefault}
+            )
+        </foreach>
+    </insert>
+
+
+    <select id="queryByTemplateId" parameterType="java.lang.Long" resultMap="PmsShippingMethodResult">
+        select * from pms_shipping_method where template_id = #{id}
+    </select>
+
+    <delete id="deleteByTemplateId" parameterType="java.lang.Long">
+        delete from pms_shipping_method where template_id = #{id}
+    </delete>
+
+    <select id="queryDefaultShippingMethod" parameterType="java.lang.Long" resultMap="PmsShippingMethodResult">
+                select * from pms_shipping_method where template_id = #{templateId} and is_default = '1'
+    </select>
+
+    <select id="queryById" parameterType="java.util.Map" resultMap="PmsShippingMethodResult">
+        select * from pms_shipping_method where template_id = #{templateId}  and id = #{id}
+    </select>
+</mapper>

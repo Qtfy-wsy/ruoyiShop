@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.store.mapper.TStoreSkuMapper">
+
+    <resultMap type="TStoreSku" id="TStoreSkuResult">
+        <result property="id" column="id"/>
+        <result property="storeId" column="store_id"/>
+        <result property="spuId" column="spu_id"/>
+        <result property="skuId" column="sku_id"/>
+        <result property="price" column="price"/>
+        <result property="stock" column="stock"/>
+    </resultMap>
+
+    <sql id="selectTStoreSkuVo">
+        select id, store_id, spu_id, sku_id, price, stock from t_store_sku
+    </sql>
+
+    <select id="selectTStoreSkuList" parameterType="TStoreSku" resultMap="TStoreSkuResult">
+        <include refid="selectTStoreSkuVo"/>
+        <where>
+            <if test="storeId != null ">and store_id = #{storeId}</if>
+            <if test="spuId != null ">and spu_id = #{spuId}</if>
+            <if test="skuId != null  and skuId != ''">and sku_id = #{skuId}</if>
+            <if test="price != null ">and price = #{price}</if>
+            <if test="stock != null ">and stock = #{stock}</if>
+        </where>
+    </select>
+
+    <select id="selectTStoreSkuById" parameterType="Long" resultMap="TStoreSkuResult">
+        <include refid="selectTStoreSkuVo"/>
+        where id = #{id}
+    </select>
+    <select id="queryStoreSkuList" resultMap="TStoreSkuResult" parameterType="java.util.Map">
+        SELECT * FROM t_store_sku
+        WHERE 1=1
+        <if test="storeId !=null and storeId !=-1">
+            and store_id=#{storeId}
+        </if>
+        <if test="spuId !=null ">
+            and spu_id=#{spuId}
+        </if>
+        <if test="skuId !=null">
+            and sku_id=#{skuId}
+        </if>
+    </select>
+    <insert id="addStoreSkuList" parameterType="java.util.List">
+        INSERT INTO t_store_sku(store_id,spu_id,sku_id,price,stock)
+        VALUES
+        <foreach collection="storeSkuList" separator="," index="index" item="storeSku">
+            (#{storeSku.storeId},#{storeSku.spuId},#{storeSku.skuId},#{storeSku.price},#{storeSku.stock})
+        </foreach>
+    </insert>
+    <delete id="deleteStoreSkuBySpuId" parameterType="java.lang.Long">
+        DELETE FROM t_store_sku WHERE spu_id=#{spuId}
+        <if test="storeId !=null">
+            AND store_id=#{storeId}
+        </if>
+    </delete>
+
+    <update id="reduceStoreSkusStock" parameterType="java.util.Map">
+          update t_store_sku set stock = stock-#{stock} where sku_id = #{skuId} and store_id = #{storeId}  and stock>=#{stock}
+    </update>
+    <insert id="insertTStoreSku" parameterType="TStoreSku" useGeneratedKeys="true" keyProperty="id">
+        insert into t_store_sku
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="storeId != null">store_id,</if>
+            <if test="spuId != null">spu_id,</if>
+            <if test="skuId != null">sku_id,</if>
+            <if test="price != null">price,</if>
+            <if test="stock != null">stock,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="storeId != null">#{storeId},</if>
+            <if test="spuId != null">#{spuId},</if>
+            <if test="skuId != null">#{skuId},</if>
+            <if test="price != null">#{price},</if>
+            <if test="stock != null">#{stock},</if>
+        </trim>
+    </insert>
+
+    <update id="updateTStoreSku" parameterType="TStoreSku">
+        update t_store_sku
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="storeId != null">store_id = #{storeId},</if>
+            <if test="spuId != null">spu_id = #{spuId},</if>
+            <if test="skuId != null">sku_id = #{skuId},</if>
+            <if test="price != null">price = #{price},</if>
+            <if test="stock != null">stock = #{stock},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteTStoreSkuById" parameterType="Long">
+        delete from t_store_sku where id = #{id}
+    </delete>
+
+    <delete id="deleteTStoreSkuByIds" parameterType="String">
+        delete from t_store_sku where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.member.mapper.UmsPreDepositRecordMapper">
+
+    <resultMap type="UmsPreDepositRecord" id="UmsPreDepositRecordResult">
+        <result property="id" column="id"/>
+        <result property="customerId" column="customer_id"/>
+        <result property="transType" column="trans_type"/>
+        <result property="money" column="money"/>
+        <result property="currentMoney" column="current_money"/>
+        <result property="remark" column="remark"/>
+        <result property="status" column="status"/>
+        <result property="transcode" column="transcode"/>
+        <result property="createTime" column="create_time"/>
+    </resultMap>
+
+    <sql id="selectUmsPreDepositRecordVo">
+        select id, customer_id, trans_type, money, current_money, remark, status, transcode, create_time from ums_pre_deposit_record
+    </sql>
+
+    <select id="selectUmsPreDepositRecordList" parameterType="UmsPreDepositRecord"
+            resultMap="UmsPreDepositRecordResult">
+        <include refid="selectUmsPreDepositRecordVo"/>
+        <where>
+            <if test="customerId != null ">and customer_id = #{customerId}</if>
+            <if test="transType != null  and transType != ''">and trans_type = #{transType}</if>
+            <if test="money != null ">and money = #{money}</if>
+            <if test="currentMoney != null ">and current_money = #{currentMoney}</if>
+            <if test="status != null  and status != ''">and status = #{status}</if>
+            <if test="transcode != null  and transcode != ''">and transcode = #{transcode}</if>
+        </where>
+    </select>
+
+    <select id="selectUmsPreDepositRecordById" parameterType="Long" resultMap="UmsPreDepositRecordResult">
+        <include refid="selectUmsPreDepositRecordVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertUmsPreDepositRecord" parameterType="UmsPreDepositRecord" useGeneratedKeys="true" keyProperty="id">
+        insert into ums_pre_deposit_record
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="customerId != null">customer_id,</if>
+            <if test="transType != null">trans_type,</if>
+            <if test="money != null">money,</if>
+            <if test="currentMoney != null">current_money,</if>
+            <if test="remark != null">remark,</if>
+            <if test="status != null">status,</if>
+            <if test="transcode != null">transcode,</if>
+            <if test="createTime != null">create_time,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="customerId != null">#{customerId},</if>
+            <if test="transType != null">#{transType},</if>
+            <if test="money != null">#{money},</if>
+            <if test="currentMoney != null">#{currentMoney},</if>
+            <if test="remark != null">#{remark},</if>
+            <if test="status != null">#{status},</if>
+            <if test="transcode != null">#{transcode},</if>
+            <if test="createTime != null">#{createTime},</if>
+        </trim>
+    </insert>
+
+    <update id="updateUmsPreDepositRecord" parameterType="UmsPreDepositRecord">
+        update ums_pre_deposit_record
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="customerId != null">customer_id = #{customerId},</if>
+            <if test="transType != null">trans_type = #{transType},</if>
+            <if test="money != null">money = #{money},</if>
+            <if test="currentMoney != null">current_money = #{currentMoney},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="transcode != null">transcode = #{transcode},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteUmsPreDepositRecordById" parameterType="Long">
+        delete from ums_pre_deposit_record where id = #{id}
+    </delete>
+
+    <delete id="deleteUmsPreDepositRecordByIds" parameterType="String">
+        delete from ums_pre_deposit_record where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <insert id="addPredepositRecord" parameterType="UmsPreDepositRecord">
+        insert into ums_pre_deposit_record
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="customerId != null">
+                customer_id,
+            </if>
+            <if test="transType != null">
+                trans_type,
+            </if>
+            <if test="money != null">
+                money,
+            </if>
+            <if test="currentMoney != null">
+                current_money,
+            </if>
+            <if test="remark != null">
+                remark,
+            </if>
+            <if test="status != null">
+                status,
+            </if>
+            <if test="transcode != null">
+                transcode,
+            </if>
+            create_time
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="customerId != null">
+                #{customerId},
+            </if>
+            <if test="transType != null">
+                #{transType},
+            </if>
+            <if test="money != null">
+                #{money},
+            </if>
+            <if test="currentMoney != null">
+                #{currentMoney},
+            </if>
+            <if test="remark != null">
+                #{remark},
+            </if>
+            <if test="status != null">
+                #{status},
+            </if>
+            <if test="transcode != null">
+                #{transcode},
+            </if>
+            now()
+        </trim>
+    </insert>
+
+    <select id="queryLastRecordByCustomerId" parameterType="java.lang.Long" resultMap="UmsPreDepositRecordResult">
+      select * from ums_pre_deposit_record where customer_id = #{id} and status = '1' order by id desc limit 1
+    </select>
+
+    <select id="queryPredepositRecords" resultMap="UmsPreDepositRecordResult" parameterType="java.util.Map">
+        SELECT ums_pre_deposit_record.*,ums_member.username FROM
+        ums_pre_deposit_record JOIN ums_member ON ums_member.id=ums_pre_deposit_record.customer_id WHERE
+        ums_pre_deposit_record.status = 1
+
+        <if test='filterType =="2"'>
+            AND (trans_type = '1' OR trans_type = '3' or trans_type = '4')
+        </if>
+
+        <if test='filterType =="3"'>
+            AND (trans_type ='2' or trans_type = '5')
+        </if>
+
+        <if test="customerId!=null and customerId!=0">
+            AND ums_member.id = #{customerId}
+        </if>
+        <if test="userName!=null and userName!=''">
+            AND ums_member.username LIKE CONCAT(CONCAT('%', #{userName},'%'))
+        </if>
+        <if test="transcode!=''and transcode!=null">
+            AND ums_pre_deposit_record.transcode LIKE CONCAT(CONCAT('%', #{transcode},'%'))
+        </if>
+        <if test="startTime!=''and startTime!=null">
+            AND ums_pre_deposit_record.create_time &gt;=#{startTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="endTime!=''and endTime!=null">
+            AND ums_pre_deposit_record.create_time &lt;=#{endTime,jdbcType=TIMESTAMP}
+        </if>
+        order by ums_pre_deposit_record.create_time desc
+    </select>
+
+
+    <select id="queryPredepositRecordCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+        SELECT count(1) FROM
+        ums_pre_deposit_record JOIN ums_member ON ums_member.id=ums_pre_deposit_record.customer_id WHERE
+        ums_pre_deposit_record.status = 1
+
+        <if test='filterType =="2"'>
+            AND (trans_type = '1' OR trans_type = '3' or trans_type = '4')
+        </if>
+
+        <if test='filterType =="3"'>
+            AND (trans_type ='2' or trans_type = '5')
+        </if>
+
+        <if test="customerId!=null and customerId!=0">
+            AND ums_member.id = #{customerId}
+        </if>
+        <if test="userName!=null and userName!=''">
+            AND ums_member.username LIKE CONCAT(CONCAT('%', #{userName},'%'))
+        </if>
+        <if test="transcode!=''and transcode!=null">
+            AND ums_pre_deposit_record.transcode LIKE CONCAT(CONCAT('%', #{transcode},'%'))
+        </if>
+        <if test="startTime!=''and startTime!=null">
+            AND ums_pre_deposit_record.create_time &gt;=#{startTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="endTime!=''and endTime!=null">
+            AND ums_pre_deposit_record.create_time &lt;=#{endTime,jdbcType=TIMESTAMP}
+        </if>
+    </select>
+
+    <select id="queryPredepositRecordBytranscode" parameterType="java.util.Map" resultMap="UmsPreDepositRecordResult">
+        select * from ums_pre_deposit_record where transcode=#{transcode}
+        <if test="customerId != null and customerId !=-1">
+            and customer_id = #{customerId}
+        </if>
+    </select>
+    <update id="updatePredepositRecordStatus" parameterType="UmsPreDepositRecord">
+        update ums_pre_deposit_record
+        <set>
+            <trim suffixOverrides=",">
+                <if test="remark != null">
+                    remark=#{remark},
+                </if>
+                <if test="status != null">
+                    status=#{status},
+                </if>
+            </trim>
+        </set>
+        where id=#{id}
+    </update>
+</mapper>

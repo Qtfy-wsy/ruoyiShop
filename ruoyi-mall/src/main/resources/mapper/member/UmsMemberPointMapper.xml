@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.member.mapper.UmsMemberPointMapper">
+
+    <resultMap type="UmsMemberPoint" id="UmsMemberPointResult">
+        <result property="id" column="id"/>
+        <result property="customerId" column="customer_id"/>
+        <result property="detail" column="detail"/>
+        <result property="type" column="type"/>
+        <result property="sourceType" column="source_type"/>
+        <result property="point" column="point"/>
+        <result property="createTime" column="create_time"/>
+        <result property="signData" column="sign_data"/>
+    </resultMap>
+
+    <sql id="selectUmsMemberPointVo">
+        select id, customer_id, detail, type, source_type, point, create_time, sign_data from ums_member_point
+    </sql>
+
+    <select id="selectUmsMemberPointList" parameterType="UmsMemberPoint" resultMap="UmsMemberPointResult">
+        <include refid="selectUmsMemberPointVo"/>
+        <where>
+            <if test="customerId != null ">and customer_id = #{customerId}</if>
+            <if test="detail != null  and detail != ''">and detail = #{detail}</if>
+            <if test="type != null  and type != ''">and type = #{type}</if>
+            <if test="sourceType != null  and sourceType != ''">and source_type = #{sourceType}</if>
+            <if test="point != null ">and point = #{point}</if>
+            <if test="signData != null ">and sign_data = #{signData}</if>
+        </where>
+    </select>
+
+    <select id="selectUmsMemberPointById" parameterType="Long" resultMap="UmsMemberPointResult">
+        <include refid="selectUmsMemberPointVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertUmsMemberPoint" parameterType="UmsMemberPoint" useGeneratedKeys="true" keyProperty="id">
+        insert into ums_member_point
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="customerId != null">customer_id,</if>
+            <if test="detail != null">detail,</if>
+            <if test="type != null">type,</if>
+            <if test="sourceType != null">source_type,</if>
+            <if test="point != null">point,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="signData != null">sign_data,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="customerId != null">#{customerId},</if>
+            <if test="detail != null">#{detail},</if>
+            <if test="type != null">#{type},</if>
+            <if test="sourceType != null">#{sourceType},</if>
+            <if test="point != null">#{point},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="signData != null">#{signData},</if>
+        </trim>
+    </insert>
+
+    <update id="updateUmsMemberPoint" parameterType="UmsMemberPoint">
+        update ums_member_point
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="customerId != null">customer_id = #{customerId},</if>
+            <if test="detail != null">detail = #{detail},</if>
+            <if test="type != null">type = #{type},</if>
+            <if test="sourceType != null">source_type = #{sourceType},</if>
+            <if test="point != null">point = #{point},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="signData != null">sign_data = #{signData},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteUmsMemberPointById" parameterType="Long">
+        delete from ums_member_point where id = #{id}
+    </delete>
+
+    <delete id="deleteUmsMemberPointByIds" parameterType="String">
+        delete from ums_member_point where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

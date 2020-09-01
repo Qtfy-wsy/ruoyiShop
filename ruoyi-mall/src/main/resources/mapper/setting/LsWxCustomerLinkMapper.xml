@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.setting.mapper.LsWxCustomerLinkMapper">
+
+    <resultMap type="LsWxCustomerLink" id="LsWxCustomerLinkResult">
+        <result property="id" column="id"/>
+        <result property="wxUnionId" column="wx_union_id"/>
+        <result property="customerId" column="customer_id"/>
+        <result property="wxOpenId" column="wx_open_id"/>
+        <result property="wxAppletOpenId" column="wx_applet_open_id"/>
+    </resultMap>
+
+    <sql id="selectLsWxCustomerLinkVo">
+        select id, wx_union_id, customer_id, wx_open_id, wx_applet_open_id from ls_wx_customer_link
+    </sql>
+
+    <select id="selectLsWxCustomerLinkList" parameterType="LsWxCustomerLink" resultMap="LsWxCustomerLinkResult">
+        <include refid="selectLsWxCustomerLinkVo"/>
+        <where>
+            <if test="wxUnionId != null  and wxUnionId != ''">and wx_union_id = #{wxUnionId}</if>
+            <if test="customerId != null ">and customer_id = #{customerId}</if>
+            <if test="wxOpenId != null  and wxOpenId != ''">and wx_open_id = #{wxOpenId}</if>
+            <if test="wxAppletOpenId != null  and wxAppletOpenId != ''">and wx_applet_open_id = #{wxAppletOpenId}</if>
+        </where>
+    </select>
+
+    <select id="selectLsWxCustomerLinkById" parameterType="Long" resultMap="LsWxCustomerLinkResult">
+        <include refid="selectLsWxCustomerLinkVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertLsWxCustomerLink" parameterType="LsWxCustomerLink" useGeneratedKeys="true" keyProperty="id">
+        insert into ls_wx_customer_link
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="wxUnionId != null">wx_union_id,</if>
+            <if test="customerId != null">customer_id,</if>
+            <if test="wxOpenId != null">wx_open_id,</if>
+            <if test="wxAppletOpenId != null">wx_applet_open_id,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="wxUnionId != null">#{wxUnionId},</if>
+            <if test="customerId != null">#{customerId},</if>
+            <if test="wxOpenId != null">#{wxOpenId},</if>
+            <if test="wxAppletOpenId != null">#{wxAppletOpenId},</if>
+        </trim>
+    </insert>
+
+    <update id="updateLsWxCustomerLink" parameterType="LsWxCustomerLink">
+        update ls_wx_customer_link
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="wxUnionId != null">wx_union_id = #{wxUnionId},</if>
+            <if test="customerId != null">customer_id = #{customerId},</if>
+            <if test="wxOpenId != null">wx_open_id = #{wxOpenId},</if>
+            <if test="wxAppletOpenId != null">wx_applet_open_id = #{wxAppletOpenId},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteLsWxCustomerLinkById" parameterType="Long">
+        delete from ls_wx_customer_link where id = #{id}
+    </delete>
+
+    <delete id="deleteLsWxCustomerLinkByIds" parameterType="String">
+        delete from ls_wx_customer_link where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.member.mapper.UmsMemberPanicRecordMapper">
+
+    <resultMap type="UmsMemberPanicRecord" id="UmsMemberPanicRecordResult">
+        <result property="id" column="id"/>
+        <result property="customerId" column="customer_id"/>
+        <result property="marketingId" column="marketing_id"/>
+        <result property="useNum" column="use_num"/>
+        <result property="panicNum" column="panic_num"/>
+        <result property="orderId" column="order_id"/>
+    </resultMap>
+
+    <sql id="selectUmsMemberPanicRecordVo">
+        select id, customer_id, marketing_id, use_num, panic_num, order_id from ums_member_panic_record
+    </sql>
+
+    <select id="selectUmsMemberPanicRecordList" parameterType="UmsMemberPanicRecord"
+            resultMap="UmsMemberPanicRecordResult">
+        <include refid="selectUmsMemberPanicRecordVo"/>
+        <where>
+            <if test="customerId != null ">and customer_id = #{customerId}</if>
+            <if test="marketingId != null ">and marketing_id = #{marketingId}</if>
+            <if test="useNum != null ">and use_num = #{useNum}</if>
+            <if test="panicNum != null ">and panic_num = #{panicNum}</if>
+            <if test="orderId != null ">and order_id = #{orderId}</if>
+        </where>
+    </select>
+
+    <select id="selectUmsMemberPanicRecordById" parameterType="Long" resultMap="UmsMemberPanicRecordResult">
+        <include refid="selectUmsMemberPanicRecordVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertUmsMemberPanicRecord" parameterType="UmsMemberPanicRecord" useGeneratedKeys="true"
+            keyProperty="id">
+        insert into ums_member_panic_record
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="customerId != null">customer_id,</if>
+            <if test="marketingId != null">marketing_id,</if>
+            <if test="useNum != null">use_num,</if>
+            <if test="panicNum != null">panic_num,</if>
+            <if test="orderId != null">order_id,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="customerId != null">#{customerId},</if>
+            <if test="marketingId != null">#{marketingId},</if>
+            <if test="useNum != null">#{useNum},</if>
+            <if test="panicNum != null">#{panicNum},</if>
+            <if test="orderId != null">#{orderId},</if>
+        </trim>
+    </insert>
+
+    <update id="updateUmsMemberPanicRecord" parameterType="UmsMemberPanicRecord">
+        update ums_member_panic_record
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="customerId != null">customer_id = #{customerId},</if>
+            <if test="marketingId != null">marketing_id = #{marketingId},</if>
+            <if test="useNum != null">use_num = #{useNum},</if>
+            <if test="panicNum != null">panic_num = #{panicNum},</if>
+            <if test="orderId != null">order_id = #{orderId},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteUmsMemberPanicRecordById" parameterType="Long">
+        delete from ums_member_panic_record where id = #{id}
+    </delete>
+
+    <delete id="deleteUmsMemberPanicRecordByIds" parameterType="String">
+        delete from ums_member_panic_record where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

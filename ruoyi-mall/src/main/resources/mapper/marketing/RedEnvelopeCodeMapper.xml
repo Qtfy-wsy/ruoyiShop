@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.marketing.mapper.RedEnvelopeCodeMapper">
+    <resultMap id="redEnvelopeCode" type="com.ruoyi.marketing.domain.RedEnvelopeCode">
+        <result column="id" property="id"/>
+        <result column="red_envelope_id" property="redEnvelopeId"/>
+        <result column="code" property="code"/>
+        <result column="customer_id" property="customerId"/>
+        <result column="status" property="status"/>
+        <result column="receive_time" property="receiveTime"/>
+        <result column="rid" property="redEnvelope.id"/>
+        <result column="name" property="redEnvelope.name"/>
+        <result column="full_price" property="redEnvelope.fullPrice"/>
+        <result column="price" property="redEnvelope.price"/>
+        <result column="starttime" property="redEnvelope.startTime"/>
+        <result column="endtime" property="redEnvelope.endTime"/>
+        <result column="username" property="userName"/>
+    </resultMap>
+    <insert id="addRedEnvelopeCode" parameterType="java.util.List">
+        insert into sms_red_envelope_code(red_envelope_id,code,status) values
+        <foreach collection="list" index="index" item="redEnvelopeCode" separator=",">
+            (#{redEnvelopeCode.redEnvelopeId},#{redEnvelopeCode.code},'0')
+        </foreach>
+    </insert>
+    <select id="queryRedEnvelopeCodeByRedEnvelopeId" parameterType="java.lang.Long" resultMap="redEnvelopeCode">
+        select lrec.id,lrec.red_envelope_id,lrec.code,lrec.customer_id,lrec.status,lrec.receive_time,lc.username from sms_red_envelope_code  as lrec
+        left join ums_member as lc on lrec.customer_id=lc.id
+        where red_envelope_id=#{redEnvelopeId}
+    </select>
+    <update id="deleteRedEnvelopeCode" parameterType="java.util.Arrays">
+        UPDATE sms_red_envelope_code SET status='3' WHERE red_envelope_id IN
+        <foreach collection="array" index="index" item="redEnvelopeId" open="(" separator="," close=")">
+            #{redEnvelopeId}
+        </foreach>
+    </update>
+
+    <select id="queryCanReceiveRedEnvelopeCode" parameterType="java.lang.Long" resultMap="redEnvelopeCode">
+        select * from sms_red_envelope_code where red_envelope_id=#{redEnvelopeId} and status ='0'
+    </select>
+    <select id="queryCanReceiveRedEnvelopeCodeCount" parameterType="java.lang.Long" resultType="java.lang.Integer">
+        select count(1) from sms_red_envelope_code where red_envelope_id=#{redEnvelopeId} and status ='0'
+    </select>
+    <select id="queryReceivedRedEnvelopeCodeByCustomerId" parameterType="java.util.Map" resultType="java.lang.Integer">
+        select count(1) from sms_red_envelope_code where red_envelope_id=#{redEnvelopeId} and customer_id=#{customerId}
+    </select>
+    <update id="updateReceivedRedEnvelope" parameterType="com.ruoyi.marketing.domain.RedEnvelopeCode">
+        update sms_red_envelope_code set status ='1' ,customer_id=#{customerId},receive_time=now() where id=#{id} and status='0'
+    </update>
+
+    <select id="queryRedEnvelopeIdByCode" parameterType="java.lang.String" resultType="java.lang.Long">
+        select red_envelope_id from sms_red_envelope_code where code = #{code}
+    </select>
+
+    <select id="queryCustomerCanUseRedEnvelope" parameterType="java.lang.Long" resultMap="redEnvelopeCode">
+        select r.id as rid,r.name ,r.full_price,r.price,r.starttime,r.endtime,rc.* from sms_red_envelope r join
+        sms_red_envelope_code rc on rc.red_envelope_id = r.id where rc.customer_id = #{customerId} and rc.status = '1' and
+        <![CDATA[  r.starttime <= now() and  r.endtime  > now()]]>
+         order by rc.receive_time desc
+    </select>
+
+    <select id="queryRedEnvelopeCodeByCustomerId" parameterType="java.util.Map" resultMap="redEnvelopeCode">
+        select cc.id,cc.red_envelope_id ,cc.code ,cc.customer_id,cc.status , cc.receive_time,
+        c.name,c.desc,c.starttime,c.endtime
+        from sms_red_envelope c join sms_red_envelope_code cc on cc.red_envelope_id = c.id
+        where cc.customer_id=#{customerId} and c.del_flag='0'
+        <choose>
+            <when test="status==1">
+                and cc.status='1' and <![CDATA[  c.endtime  > now()]]>
+            </when>
+            <when test="status==2">
+                and cc.status='2'
+            </when>
+            <when test="status==3">
+                and (cc.status='3' || <![CDATA[  c.endtime  <= now()]]>)
+            </when>
+        </choose>
+        order by cc.receive_time desc
+        limit #{startRowNum},#{pageSize}
+    </select>
+
+    <select id="queryRedEnvelopeCodeCountByCustomerId" parameterType="java.util.Map" resultType="java.lang.Integer">
+        select COUNT(1)
+        from sms_red_envelope c join sms_red_envelope_code cc on cc.red_envelope_id = c.id
+        where cc.customer_id=#{customerId} and c.del_flag='0'
+        <choose>
+            <when test="status==1">
+                and cc.status='1' and <![CDATA[  c.endtime  > now()]]>
+            </when>
+            <when test="status==2">
+                and cc.status='2'
+            </when>
+            <when test="status==3">
+                and (cc.status='3' || <![CDATA[  c.endtime  <= now()]]>)
+            </when>
+        </choose>
+    </select>
+
+
+    <update id="setRedEnvelopeUsed" parameterType="java.util.Map">
+        update sms_red_envelope_code set status = '2' where code = #{redEnvelopeCode} and customer_id = #{customerId}
+    </update>
+</mapper>

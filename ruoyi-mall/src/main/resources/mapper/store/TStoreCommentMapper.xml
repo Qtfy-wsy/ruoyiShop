@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.store.mapper.TStoreCommentMapper">
+
+    <resultMap type="TStoreComment" id="TStoreCommentResult">
+        <result property="id" column="id"/>
+        <result property="storeId" column="store_id"/>
+        <result property="orderId" column="order_id"/>
+        <result property="customerId" column="customer_id"/>
+        <result property="descScore" column="desc_score"/>
+        <result property="sellerScore" column="seller_score"/>
+        <result property="logisticsScore" column="logistics_score"/>
+        <result property="createTime" column="create_time"/>
+    </resultMap>
+
+    <sql id="selectTStoreCommentVo">
+        select id, store_id, order_id, customer_id, desc_score, seller_score, logistics_score, create_time from t_store_comment
+    </sql>
+
+    <select id="selectTStoreCommentList" parameterType="TStoreComment" resultMap="TStoreCommentResult">
+        <include refid="selectTStoreCommentVo"/>
+        <where>
+            <if test="storeId != null ">and store_id = #{storeId}</if>
+            <if test="orderId != null ">and order_id = #{orderId}</if>
+            <if test="customerId != null ">and customer_id = #{customerId}</if>
+            <if test="descScore != null ">and desc_score = #{descScore}</if>
+            <if test="sellerScore != null ">and seller_score = #{sellerScore}</if>
+            <if test="logisticsScore != null ">and logistics_score = #{logisticsScore}</if>
+        </where>
+    </select>
+
+    <select id="selectTStoreCommentById" parameterType="Long" resultMap="TStoreCommentResult">
+        <include refid="selectTStoreCommentVo"/>
+        where id = #{id}
+    </select>
+    <select id="queryByOrderIdAndCutomerId" parameterType="java.util.Map" resultMap="TStoreCommentResult">
+        select * from t_store_comment where order_id = #{orderId} and customer_id = #{customerId}
+    </select>
+
+    <resultMap id="storeScore" type="com.ruoyi.store.vo.StoreScore">
+        <result column="store_id" property="storeId"/>
+        <result column="desc_score" property="descScore"/>
+        <result column="seller_score" property="sellerScore"/>
+        <result column="logistics_score" property="logisticsScore"/>
+    </resultMap>
+    <select id="queryStoreScore" parameterType="java.lang.Long" resultMap="storeScore">
+     select AVG(desc_score) desc_score,AVG(seller_score) seller_score,AVG(logistics_score) logistics_score,store_id
+     from t_store_comment where store_id=#{storeId} GROUP BY store_id
+    </select>
+    <insert id="insertTStoreComment" parameterType="TStoreComment" useGeneratedKeys="true" keyProperty="id">
+        insert into t_store_comment
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="storeId != null">store_id,</if>
+            <if test="orderId != null">order_id,</if>
+            <if test="customerId != null">customer_id,</if>
+            <if test="descScore != null">desc_score,</if>
+            <if test="sellerScore != null">seller_score,</if>
+            <if test="logisticsScore != null">logistics_score,</if>
+            <if test="createTime != null">create_time,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="storeId != null">#{storeId},</if>
+            <if test="orderId != null">#{orderId},</if>
+            <if test="customerId != null">#{customerId},</if>
+            <if test="descScore != null">#{descScore},</if>
+            <if test="sellerScore != null">#{sellerScore},</if>
+            <if test="logisticsScore != null">#{logisticsScore},</if>
+            <if test="createTime != null">#{createTime},</if>
+        </trim>
+    </insert>
+
+    <update id="updateTStoreComment" parameterType="TStoreComment">
+        update t_store_comment
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="storeId != null">store_id = #{storeId},</if>
+            <if test="orderId != null">order_id = #{orderId},</if>
+            <if test="customerId != null">customer_id = #{customerId},</if>
+            <if test="descScore != null">desc_score = #{descScore},</if>
+            <if test="sellerScore != null">seller_score = #{sellerScore},</if>
+            <if test="logisticsScore != null">logistics_score = #{logisticsScore},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteTStoreCommentById" parameterType="Long">
+        delete from t_store_comment where id = #{id}
+    </delete>
+
+    <delete id="deleteTStoreCommentByIds" parameterType="String">
+        delete from t_store_comment where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

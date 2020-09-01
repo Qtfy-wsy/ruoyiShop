@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.integral.mapper.CustomerPointMapper">
+
+    <resultMap id="customerPoint" type="com.ruoyi.integral.domain.CustomerPoint">
+        <result column="id" property="id"/>
+        <result column="customer_id" property="customerId"/>
+        <result column="detail" property="detail"/>
+        <result column="type" property="type"/>
+        <result column="source_type" property="sourceType"/>
+        <result column="point" property="point"/>
+        <result column="create_time" property="createTime"/>
+    </resultMap>
+
+
+    <select id="queryCustomerPoints" resultMap="customerPoint" parameterType="java.util.Map">
+        select * from ums_member_point where 1=1
+        <if test="customerId != 0 ">
+            AND customer_id = #{customerId}
+        </if>
+        <if test="sourceType !=null and sourceType != '' ">
+            AND source_type = #{sourceType}
+        </if>
+        <if test="type !=null and type != '' ">
+            AND type = #{type}
+        </if>
+        order by create_time desc limit #{startRowNum},#{pageSize}
+    </select>
+
+
+    <select id="queryCustomerPointCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+        select count(1) from ums_member_point where 1=1
+        <if test="customerId != 0 ">
+            AND customer_id = #{customerId}
+        </if>
+        <if test="sourceType !=null and sourceType != '' ">
+            AND source_type = #{sourceType}
+        </if>
+        <if test="type !=null and type != '' ">
+            AND type = #{type}
+        </if>
+    </select>
+
+    <select id="queryCustomerPointAllCount" parameterType="java.lang.Long" resultType="java.lang.Integer">
+        select sum(point) from ums_member_point where customer_id = #{customerId}
+    </select>
+    <select id="queryCustomerPointGroupByType" parameterType="java.lang.Long" resultMap="customerPoint">
+        select sum(point) point,type from ums_member_point where customer_id=#{customerId} GROUP BY type
+    </select>
+    <insert id="addCustomerPoint" parameterType="com.ruoyi.integral.domain.CustomerPoint">
+        insert into ums_member_point
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="customerId != null">
+                customer_id,
+            </if>
+            <if test="detail != null">
+                detail,
+            </if>
+            <if test="type != null">
+                type,
+            </if>
+            <if test="sourceType != null">
+                source_type,
+            </if>
+            <if test="point != null">
+                point,
+            </if>
+            create_time,
+            <if test='sourceType=="4"'>
+                sign_data
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="customerId != null">
+                #{customerId},
+            </if>
+            <if test="detail != null">
+                #{detail},
+            </if>
+            <if test="type != null">
+                #{type},
+            </if>
+            <if test="sourceType != null">
+                #{sourceType},
+            </if>
+            <if test="point != null">
+                #{point},
+            </if>
+            now(),
+            <if test='sourceType=="4"'>
+                now()
+            </if>
+        </trim>
+    </insert>
+    <select id="queryLastSign" parameterType="java.lang.Long" resultMap="customerPoint">
+        select * from ums_member_point where source_type='4' and customer_id=#{customerId} order by create_time desc limit 0,1
+    </select>
+</mapper>

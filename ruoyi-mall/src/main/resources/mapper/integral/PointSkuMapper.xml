@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.integral.mapper.PointSkuMapper">
+
+
+    <resultMap id="pointSku" type="com.ruoyi.integral.domain.PointSku">
+        <result column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="sub_title" property="subTitle"/>
+        <result column="code" property="code"/>
+        <result column="point" property="point"/>
+        <result column="status" property="status"/>
+        <result column="price" property="price"/>
+        <result column="stock" property="stock"/>
+        <result column="cate_id" property="cateId"/>
+        <result column="pics" property="pics"/>
+        <result column="desc" property="desc"/>
+        <result column="mobile_desc" property="mobileDesc"/>
+        <result column="del_flag" property="delFlag"/>
+        <result column="create_time" property="createTime"/>
+        <result column="modify_time" property="modifyTime"/>
+        <result column="del_time" property="delTime"/>
+    </resultMap>
+
+    <insert id="addPointSku" parameterType="com.ruoyi.integral.domain.PointSku">
+        insert into sms_point_sku
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="name != null">
+                name,
+            </if>
+            <if test="subTitle != null">
+                sub_title,
+            </if>
+            <if test="code != null">
+                code,
+            </if>
+            <if test="point != null">
+                point,
+            </if>
+            <if test="status != null">
+                status,
+            </if>
+            <if test="price != null">
+                price,
+            </if>
+            <if test="stock != null">
+                stock,
+            </if>
+            <if test="cateId != null">
+                cate_id,
+            </if>
+            <if test="pics != null">
+                pics,
+            </if>
+            <if test="desc != null">
+                `desc`,
+            </if>
+            <if test="mobileDesc != null">
+                mobile_desc,
+            </if>
+            del_flag,create_time
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="name != null">
+                #{name},
+            </if>
+            <if test="subTitle != null">
+                #{subTitle},
+            </if>
+            <if test="code != null">
+                #{code},
+            </if>
+            <if test="point != null">
+                #{point},
+            </if>
+            <if test="status != null">
+                #{status},
+            </if>
+            <if test="price != null">
+                #{price},
+            </if>
+            <if test="stock != null">
+                #{stock},
+            </if>
+            <if test="cateId != null">
+                #{cateId},
+            </if>
+            <if test="pics != null">
+                #{pics},
+            </if>
+            <if test="desc != null">
+                #{desc},
+            </if>
+            <if test="mobileDesc != null">
+                #{mobileDesc},
+            </if>
+            '0',now()
+        </trim>
+    </insert>
+
+
+    <update id="updatePointSku" parameterType="com.ruoyi.integral.domain.PointSku">
+        update sms_point_sku
+        <set>
+            <if test="name != null">
+                name = #{name},
+            </if>
+            <if test="subTitle != null">
+                sub_title=#{subTitle},
+            </if>
+            <if test="code != null">
+                code=#{code},
+            </if>
+            <if test="point != null">
+                point= #{point},
+            </if>
+            <if test="status != null">
+                status= #{status},
+            </if>
+            <if test="price != null">
+                price= #{price},
+            </if>
+            <if test="stock != null">
+                stock= #{stock},
+            </if>
+            <if test="cateId != null">
+                cate_id= #{cateId},
+            </if>
+            <if test="pics != null">
+                pics= #{pics},
+            </if>
+            <if test="desc != null">
+                `desc` = #{desc},
+            </if>
+            <if test="mobileDesc != null">
+                mobile_desc = #{mobileDesc},
+            </if>
+            modify_time = now()
+        </set>
+        where id = #{id}
+    </update>
+
+
+    <update id="deletePointSku" parameterType="java.lang.Long">
+    update sms_point_sku set del_flag='1' ,del_time=now() where id=#{id}
+</update>
+    <update id="deletePointSkus" parameterType="java.util.List">
+        update sms_point_sku set del_flag='1' ,del_time=now() where id in
+        <foreach collection="list" index="index" item="id" open="(" close=")" separator=",">
+            #{id}
+        </foreach>
+    </update>
+
+    <select id="queryPointSkuById" parameterType="java.lang.Long" resultMap="pointSku">
+        select * from sms_point_sku where id=#{id}
+    </select>
+    <select id="queryPointSkuByCode" parameterType="java.lang.String" resultMap="pointSku">
+        select * from sms_point_sku where code=#{code}
+    </select>
+    <select id="queryPointSkus" parameterType="java.util.Map" resultMap="pointSku">
+        select * from sms_point_sku where del_flag='0'
+        <if test="status!=null and status!=''">
+            and status=#{status}
+        </if>
+        <if test="cateId!=null and status!=''">
+            and cate_id=#{cateId}
+        </if>
+        <if test="name!=null and name !=''">
+            and name like concat('%',#{name},'%')
+        </if>
+        order by create_time desc
+        limit #{startRowNum},#{pageSize}
+    </select>
+    <select id="queryPointSkusCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+        select count(1) from sms_point_sku where del_flag='0'
+        <if test="status!=null and status!=''">
+            and status=#{status}
+        </if>
+        <if test="cateId!=null and status!=''">
+            and cate_id=#{cateId}
+        </if>
+        <if test="name!=null and name !=''">
+            and name like concat('%',#{name},'%')
+        </if>
+    </select>
+
+    <update id="reducePointSkuStock" parameterType="java.util.Map">
+        update sms_point_sku set stock = stock-#{num} where id = #{id} and stock>=#{num}
+    </update>
+</mapper>

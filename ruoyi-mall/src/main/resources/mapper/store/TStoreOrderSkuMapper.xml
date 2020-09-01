@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.store.mapper.TStoreOrderSkuMapper">
+
+    <resultMap type="TStoreOrderSku" id="TStoreOrderSkuResult">
+        <result property="id" column="id"/>
+        <result property="orderId" column="order_id"/>
+        <result property="skuId" column="sku_id"/>
+        <result property="num" column="num"/>
+        <result property="price" column="price"/>
+        <result property="skuPrice" column="sku_price"/>
+        <result property="skuName" column="sku_name"/>
+        <result property="skuNo" column="sku_no"/>
+        <result property="skuImage" column="sku_image"/>
+        <result property="skuSpecs" column="sku_specs"/>
+        <result property="redEnvelopePrice" column="red_envelope_price"/>
+    </resultMap>
+
+    <sql id="selectTStoreOrderSkuVo">
+        select id, order_id, sku_id, num, price, sku_price, sku_name, sku_no, sku_image, sku_specs, red_envelope_price from t_store_order_sku
+    </sql>
+    <select id="queryByStoreOrderId" parameterType="java.lang.Long" resultMap="TStoreOrderSkuResult">
+        select * from t_store_order_sku where order_id=#{orderId}
+    </select>
+    <insert id="saveStoreOrderSkus" parameterType="java.util.List">
+        insert into t_store_order_sku
+        (order_id, sku_id,num,price,sku_price,sku_name,sku_no,sku_image,sku_specs,red_envelope_price)
+        values
+        <foreach collection="list" item="sku" index="index" separator=",">
+            (
+            #{sku.orderId},
+            #{sku.skuId},
+            #{sku.num},
+            #{sku.price},
+            #{sku.skuPrice},
+            #{sku.skuName},
+            #{sku.skuNo},
+            #{sku.skuImage},
+            #{sku.skuSpecs},
+            #{sku.redEnvelopePrice}
+            )
+        </foreach>
+    </insert>
+
+    <select id="queryStoreRecommentSkusThirtyDays" parameterType="java.lang.Long" resultMap="TStoreOrderSkuResult">
+        select lsos.id,lsos.sku_id,IFNULL(sum(lsos.num),0) num from t_store_order_sku lsos join t_store_order lso on
+        lso.id=lsos.order_id where  lso.`status` in ('3') and lso.store_id = #{storeId}
+        and date(lso.real_pick_up_time) >= DATE_SUB(CURDATE(), INTERVAL 30 DAY)
+        GROUP BY lsos.sku_id ORDER BY num desc limit 0,24;
+    </select>
+    <select id="selectTStoreOrderSkuList" parameterType="TStoreOrderSku" resultMap="TStoreOrderSkuResult">
+        <include refid="selectTStoreOrderSkuVo"/>
+        <where>
+            <if test="orderId != null ">and order_id = #{orderId}</if>
+            <if test="skuId != null  and skuId != ''">and sku_id = #{skuId}</if>
+            <if test="num != null ">and num = #{num}</if>
+            <if test="price != null ">and price = #{price}</if>
+            <if test="skuPrice != null ">and sku_price = #{skuPrice}</if>
+            <if test="skuName != null  and skuName != ''">and sku_name like concat('%', #{skuName}, '%')</if>
+            <if test="skuNo != null  and skuNo != ''">and sku_no = #{skuNo}</if>
+            <if test="skuImage != null  and skuImage != ''">and sku_image = #{skuImage}</if>
+            <if test="skuSpecs != null  and skuSpecs != ''">and sku_specs = #{skuSpecs}</if>
+            <if test="redEnvelopePrice != null ">and red_envelope_price = #{redEnvelopePrice}</if>
+        </where>
+    </select>
+
+    <select id="selectTStoreOrderSkuById" parameterType="Long" resultMap="TStoreOrderSkuResult">
+        <include refid="selectTStoreOrderSkuVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertTStoreOrderSku" parameterType="TStoreOrderSku" useGeneratedKeys="true" keyProperty="id">
+        insert into t_store_order_sku
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="orderId != null">order_id,</if>
+            <if test="skuId != null">sku_id,</if>
+            <if test="num != null">num,</if>
+            <if test="price != null">price,</if>
+            <if test="skuPrice != null">sku_price,</if>
+            <if test="skuName != null">sku_name,</if>
+            <if test="skuNo != null">sku_no,</if>
+            <if test="skuImage != null">sku_image,</if>
+            <if test="skuSpecs != null">sku_specs,</if>
+            <if test="redEnvelopePrice != null">red_envelope_price,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="orderId != null">#{orderId},</if>
+            <if test="skuId != null">#{skuId},</if>
+            <if test="num != null">#{num},</if>
+            <if test="price != null">#{price},</if>
+            <if test="skuPrice != null">#{skuPrice},</if>
+            <if test="skuName != null">#{skuName},</if>
+            <if test="skuNo != null">#{skuNo},</if>
+            <if test="skuImage != null">#{skuImage},</if>
+            <if test="skuSpecs != null">#{skuSpecs},</if>
+            <if test="redEnvelopePrice != null">#{redEnvelopePrice},</if>
+        </trim>
+    </insert>
+
+    <update id="updateTStoreOrderSku" parameterType="TStoreOrderSku">
+        update t_store_order_sku
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="orderId != null">order_id = #{orderId},</if>
+            <if test="skuId != null">sku_id = #{skuId},</if>
+            <if test="num != null">num = #{num},</if>
+            <if test="price != null">price = #{price},</if>
+            <if test="skuPrice != null">sku_price = #{skuPrice},</if>
+            <if test="skuName != null">sku_name = #{skuName},</if>
+            <if test="skuNo != null">sku_no = #{skuNo},</if>
+            <if test="skuImage != null">sku_image = #{skuImage},</if>
+            <if test="skuSpecs != null">sku_specs = #{skuSpecs},</if>
+            <if test="redEnvelopePrice != null">red_envelope_price = #{redEnvelopePrice},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteTStoreOrderSkuById" parameterType="Long">
+        delete from t_store_order_sku where id = #{id}
+    </delete>
+
+    <delete id="deleteTStoreOrderSkuByIds" parameterType="String">
+        delete from t_store_order_sku where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

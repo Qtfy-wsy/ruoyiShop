@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.order.mapper.OmsShoppingCartMapper">
+
+    <resultMap type="OmsShoppingCart" id="OmsShoppingCartResult">
+        <result property="id" column="id"/>
+        <result property="customerId" column="customer_id"/>
+        <result property="skuId" column="sku_id"/>
+        <result property="storeId" column="store_id"/>
+        <result property="num" column="num"/>
+        <result property="marketingId" column="marketing_id"/>
+        <result property="delFlag" column="del_flag"/>
+        <result property="createTime" column="create_time"/>
+        <result property="spuId" column="spu_id"/>
+    </resultMap>
+
+    <sql id="selectOmsShoppingCartVo">
+        select id, customer_id, sku_id,spu_id, store_id, num, marketing_id, del_flag, create_time from oms_shopping_cart
+    </sql>
+
+    <select id="selectOmsShoppingCartList" parameterType="OmsShoppingCart" resultMap="OmsShoppingCartResult">
+        <include refid="selectOmsShoppingCartVo"/>
+        <where>
+            <if test="customerId != null ">and customer_id = #{customerId}</if>
+            <if test="skuId != null  and skuId != ''">and sku_id = #{skuId}</if>
+            <if test="storeId != null ">and store_id = #{storeId}</if>
+            <if test="num != null ">and num = #{num}</if>
+            <if test="marketingId != null ">and marketing_id = #{marketingId}</if>
+        </where>
+    </select>
+
+    <select id="selectOmsShoppingCartById" parameterType="Long" resultMap="OmsShoppingCartResult">
+        <include refid="selectOmsShoppingCartVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="addShoppingCart" parameterType="OmsShoppingCart">
+        insert into oms_shopping_cart
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="customerId != null">
+                customer_id,
+            </if>
+            <if test="skuId != null">
+                sku_id,
+            </if>
+            <if test="storeId != null">
+                store_id,
+            </if>
+            <if test="num != null">
+                num,
+            </if>
+            <if test="marketingId != 0">
+                marketing_id,
+            </if>
+            <if test="delFlag != null">
+                del_flag,
+            </if>
+            <if test="createTime != null">
+                create_time
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="customerId != null">
+                #{customerId},
+            </if>
+            <if test="skuId != null">
+                #{skuId},
+            </if>
+            <if test="storeId != null">
+                #{storeId},
+            </if>
+            <if test="num != null">
+                #{num},
+            </if>
+            <if test="marketingId != 0">
+                #{marketingId},
+            </if>
+            <if test="delFlag != null">
+                #{delFlag},
+            </if>
+            <if test="createTime != null">
+                #{createTime}
+            </if>
+        </trim>
+        ON DUPLICATE KEY UPDATE `num`=`num`+1;
+    </insert>
+
+
+    <select id="queryBySkuIdAndCustomerIdCount" parameterType="java.util.Map" resultMap="OmsShoppingCartResult">
+        select * from oms_shopping_cart where   customer_id=#{customerId} and sku_id=#{skuId}
+    </select>
+
+
+    <update id="updateShoppingCartNum" parameterType="java.util.Map">
+        update oms_shopping_cart
+        set num  = num + #{num}
+       where   customer_id=#{customerId} and sku_id=#{skuId}
+    </update>
+
+
+    <update id="modifyShoppingCartNum" parameterType="java.util.Map">
+        update oms_shopping_cart
+        set num  = #{num}
+       where   customer_id=#{customerId} and id=#{id}
+    </update>
+
+
+    <delete id="deleteShoppingCart" parameterType="java.util.Map">
+        DELETE from oms_shopping_cart
+        where id in
+        <foreach item="id" collection="ids" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+        and customer_id=#{customerId}
+    </delete>
+
+    <delete id="deleteShoppingCartBySkuId" parameterType="java.lang.String">
+        DELETE FROM oms_shopping_cart
+        where sku_id=#{skuId}
+    </delete>
+
+    <select id="queryShoppingCartCount" parameterType="java.lang.Long" resultType="java.lang.Integer">
+        SELECT ifNull(sum(s.num),0) from oms_shopping_cart s  join pms_sku sku on s.sku_id = sku.id where  sku.shelves_status = '1' and sku.status='0' and customer_id=#{customerId}
+    </select>
+
+    <select id="queryByCustomerId" parameterType="java.lang.Long" resultMap="OmsShoppingCartResult">
+        select * from oms_shopping_cart where  customer_id=#{customerId}
+    </select>
+
+    <update id="updateMarketing" parameterType="OmsShoppingCart">
+             update oms_shopping_cart
+        set marketing_id = #{marketingId}
+       where   customer_id=#{customerId} and id=#{id}
+    </update>
+
+    <select id="queryByIds" parameterType="java.util.List" resultMap="OmsShoppingCartResult">
+        select * from oms_shopping_cart where  customer_id=#{customerId} and id in
+        <foreach item="id" collection="ids" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </select>
+    <insert id="insertOmsShoppingCart" parameterType="OmsShoppingCart" useGeneratedKeys="true" keyProperty="id">
+        insert into oms_shopping_cart
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="customerId != null">customer_id,</if>
+            <if test="skuId != null and skuId != ''">sku_id,</if>
+            <if test="storeId != null">store_id,</if>
+            <if test="num != null">num,</if>
+            <if test="marketingId != null">marketing_id,</if>
+            <if test="delFlag != null">del_flag,</if>
+            <if test="createTime != null">create_time,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="customerId != null">#{customerId},</if>
+            <if test="skuId != null and skuId != ''">#{skuId},</if>
+            <if test="storeId != null">#{storeId},</if>
+            <if test="num != null">#{num},</if>
+            <if test="marketingId != null">#{marketingId},</if>
+            <if test="delFlag != null">#{delFlag},</if>
+            <if test="createTime != null">#{createTime},</if>
+        </trim>
+    </insert>
+
+    <update id="updateOmsShoppingCart" parameterType="OmsShoppingCart">
+        update oms_shopping_cart
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="customerId != null">customer_id = #{customerId},</if>
+            <if test="skuId != null and skuId != ''">sku_id = #{skuId},</if>
+            <if test="storeId != null">store_id = #{storeId},</if>
+            <if test="num != null">num = #{num},</if>
+            <if test="marketingId != null">marketing_id = #{marketingId},</if>
+            <if test="delFlag != null">del_flag = #{delFlag},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteOmsShoppingCartById" parameterType="Long">
+        delete from oms_shopping_cart where id = #{id}
+    </delete>
+
+    <delete id="deleteOmsShoppingCartByIds" parameterType="String">
+        delete from oms_shopping_cart where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

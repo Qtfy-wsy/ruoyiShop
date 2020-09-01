@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.sms.mapper.SmsHomeRecommendProductMapper">
+
+    <resultMap type="SmsHomeRecommendProduct" id="SmsHomeRecommendProductResult">
+        <result property="id" column="id"/>
+        <result property="productId" column="product_id"/>
+        <result property="productName" column="product_name"/>
+        <result property="recommendStatus" column="recommend_status"/>
+        <result property="sort" column="sort"/>
+        <result property="storeId" column="store_id"/>
+        <result property="price" column="price"/>
+        <result property="pic" column="pic"/>
+    </resultMap>
+
+    <sql id="selectSmsHomeRecommendProductVo">
+        select id, product_id, product_name, recommend_status, sort, store_id, price, pic from sms_home_recommend_product
+    </sql>
+
+    <select id="selectSmsHomeRecommendProductList" parameterType="SmsHomeRecommendProduct"
+            resultMap="SmsHomeRecommendProductResult">
+        <include refid="selectSmsHomeRecommendProductVo"/>
+        <where>
+            <if test="productId != null ">
+                and product_id = #{productId}
+            </if>
+            <if test="productName != null  and productName != ''">
+                and product_name like concat('%', #{productName}, '%')
+            </if>
+            <if test="recommendStatus != null ">
+                and recommend_status = #{recommendStatus}
+            </if>
+            <if test="storeId != null ">
+                and store_id = #{storeId}
+            </if>
+            <if test="price != null ">
+                and price = #{price}
+            </if>
+        </where>
+        order by sort asc
+    </select>
+
+    <select id="selectSmsHomeRecommendProductById" parameterType="Long" resultMap="SmsHomeRecommendProductResult">
+        <include refid="selectSmsHomeRecommendProductVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertSmsHomeRecommendProduct" parameterType="SmsHomeRecommendProduct" useGeneratedKeys="true"
+            keyProperty="id">
+        insert into sms_home_recommend_product
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="productId != null">product_id,
+            </if>
+            <if test="productName != null">product_name,
+            </if>
+            <if test="recommendStatus != null">recommend_status,
+            </if>
+            <if test="sort != null">sort,
+            </if>
+            <if test="storeId != null">store_id,
+            </if>
+            <if test="price != null">price,
+            </if>
+            <if test="pic != null">pic,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="productId != null">#{productId},
+            </if>
+            <if test="productName != null">#{productName},
+            </if>
+            <if test="recommendStatus != null">#{recommendStatus},
+            </if>
+            <if test="sort != null">#{sort},
+            </if>
+            <if test="storeId != null">#{storeId},
+            </if>
+            <if test="price != null">#{price},
+            </if>
+            <if test="pic != null">#{pic},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateSmsHomeRecommendProduct" parameterType="SmsHomeRecommendProduct">
+        update sms_home_recommend_product
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="productId != null">product_id =
+                #{productId},
+            </if>
+            <if test="productName != null">product_name =
+                #{productName},
+            </if>
+            <if test="recommendStatus != null">recommend_status =
+                #{recommendStatus},
+            </if>
+            <if test="sort != null">sort =
+                #{sort},
+            </if>
+            <if test="storeId != null">store_id =
+                #{storeId},
+            </if>
+            <if test="price != null">price =
+                #{price},
+            </if>
+            <if test="pic != null">pic =
+                #{pic},
+            </if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteSmsHomeRecommendProductById" parameterType="Long">
+        delete from sms_home_recommend_product where id = #{id}
+    </delete>
+
+    <delete id="deleteSmsHomeRecommendProductByIds" parameterType="String">
+        delete from sms_home_recommend_product where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.goods.mapper.PmsCommentPictureMapper">
+
+    <resultMap type="PmsCommentPicture" id="PmsCommentPictureResult">
+        <result property="id" column="id"/>
+        <result property="commentId" column="comment_id"/>
+        <result property="url" column="url"/>
+    </resultMap>
+
+    <sql id="selectPmsCommentPictureVo">
+        select id, comment_id, url from pms_comment_picture
+    </sql>
+
+    <select id="selectPmsCommentPictureList" parameterType="PmsCommentPicture" resultMap="PmsCommentPictureResult">
+        <include refid="selectPmsCommentPictureVo"/>
+        <where>
+            <if test="commentId != null ">and comment_id = #{commentId}</if>
+            <if test="url != null  and url != ''">and url = #{url}</if>
+        </where>
+    </select>
+
+    <select id="selectPmsCommentPictureById" parameterType="Long" resultMap="PmsCommentPictureResult">
+        <include refid="selectPmsCommentPictureVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertPmsCommentPicture" parameterType="PmsCommentPicture" useGeneratedKeys="true" keyProperty="id">
+        insert into pms_comment_picture
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="commentId != null">comment_id,</if>
+            <if test="url != null">url,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="commentId != null">#{commentId},</if>
+            <if test="url != null">#{url},</if>
+        </trim>
+    </insert>
+
+    <update id="updatePmsCommentPicture" parameterType="PmsCommentPicture">
+        update pms_comment_picture
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="commentId != null">comment_id = #{commentId},</if>
+            <if test="url != null">url = #{url},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deletePmsCommentPictureById" parameterType="Long">
+        delete from pms_comment_picture where id = #{id}
+    </delete>
+
+    <delete id="deletePmsCommentPictureByIds" parameterType="String">
+        delete from pms_comment_picture where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

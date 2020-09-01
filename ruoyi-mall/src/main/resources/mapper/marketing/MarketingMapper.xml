@@ -1,0 +1,512 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.marketing.mapper.MarketingMapper">
+
+    <resultMap id="marketing" type="com.ruoyi.marketing.domain.Marketing">
+        <result column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="type" property="type"/>
+        <result column="cate_id" property="cateId"/>
+        <result column="store_id" property="storeId"/>
+        <result column="store_name" property="storeName"/>
+        <result column="desc" property="desc"/>
+        <result column="starttime" property="startTime"/>
+        <result column="endtime" property="endTime"/>
+        <result column="del_flag" property="delFlag"/>
+        <result column="skuid" property="sku.id"/>
+        <result column="skuname" property="sku.name"/>
+        <result column="price" property="sku.price"/>
+        <result column="crowd_funding_money" property="crowdFunding.money"/>
+        <result column="crowd_funding_already_money" property="crowdFunding.alreadyMoney"/>
+    </resultMap>
+
+    <update id="deleteMarketing" parameterType="java.util.Map">
+        update sms_marketing set del_flag = '1' where id = #{id}  and store_id = #{storeId}
+    </update>
+    <update id="deleteMarketings" parameterType="java.util.Map">
+        update sms_marketing set del_flag = '1' where id in
+        <foreach collection="list" item="id" open="(" close=")" separator="," index="index">
+            #{id}
+        </foreach>
+        and store_id = #{storeId}
+    </update>
+
+    <update id="updateMarketing" parameterType="com.ruoyi.marketing.domain.Marketing">
+        update sms_marketing set name = #{name} , `desc` = #{desc},
+        <if test="cateId !=null">
+            cate_id = #{cateId} ,
+        </if>
+        <if test="startTime !=null">
+            starttime = #{startTime} ,
+        </if>
+        endtime = #{endTime} where id = #{id} and store_id=#{storeId}
+    </update>
+
+    <select id="queryMarketingById" parameterType="java.util.Map" resultMap="marketing">
+        select * from sms_marketing where del_flag = '0'
+        <if test="storeId !=-1">
+            and store_id = #{storeId}
+        </if>
+        and id = #{id}
+    </select>
+
+
+    <insert id="addMarketing" parameterType="com.ruoyi.marketing.domain.Marketing" useGeneratedKeys="true"
+            keyProperty="id">
+        insert into sms_marketing
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="name != null">
+                name,
+            </if>
+            <if test="type != null">
+                type,
+            </if>
+            <if test="storeId != null">
+                store_id,
+            </if>
+            <if test="desc != null">
+                `desc`,
+            </if>
+            <if test="startTime != null">
+                starttime,
+            </if>
+            <if test="endTime != null">
+                endtime,
+            </if>
+            <if test="cateId != null">
+                cate_id,
+            </if>
+            <if test="delFlag != null">
+                del_flag
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="name != null">
+                #{name},
+            </if>
+            <if test="type != null">
+                #{type},
+            </if>
+            <if test="storeId != null">
+                #{storeId},
+            </if>
+            <if test="desc != null">
+                #{desc},
+            </if>
+            <if test="startTime != null">
+                #{startTime},
+            </if>
+            <if test="endTime != null">
+                #{endTime},
+            </if>
+            <if test="cateId != null">
+                #{cateId},
+            </if>
+            <if test="delFlag != null">
+                #{delFlag}
+            </if>
+        </trim>
+    </insert>
+
+    <select id="queryMarketings" parameterType="java.util.Map" resultMap="marketing">
+        select * from sms_marketing
+        where del_flag = '0'
+        <if test="storeId !=null and storeId !=-1">
+            and store_id = #{storeId}
+        </if>
+        <if test="name != null and name != '' ">
+            AND name like CONCAT(CONCAT('%', #{name}),'%')
+        </if>
+
+        <if test='type != null and type != "" and  type!= "0"'>
+            AND type = #{type}
+        </if>
+
+        <if test='type=="0"'>
+            AND type in ('1','2','4','5')
+        </if>
+        <if test='cateId!=null and cateId!=0'>
+            AND cate_id=#{cateId}
+        </if>
+        <if test='status=="1"'>
+            AND now() &lt; starttime
+        </if>
+        <if test='status=="2"'>
+            AND now() &gt;= starttime AND now() &lt; endtime
+        </if>
+        <if test='status=="3"'>
+            AND now() &gt;= endtime
+        </if>
+        <if test='status=="999"'>
+            AND endtime &gt; now()
+        </if>
+        order by id desc
+        limit #{startRowNum},#{pageSize}
+    </select>
+
+    <select id="queryMarketingCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+        select count(1) from sms_marketing
+        where del_flag = '0'
+        <if test="storeId !=null and storeId !=-1">
+            and store_id = #{storeId}
+        </if>
+        <if test="name != null and name != '' ">
+            AND name like CONCAT(CONCAT('%', #{name}),'%')
+        </if>
+
+        <if test='type != null and type != "" and  type!= "0"'>
+            AND type = #{type}
+        </if>
+
+        <if test='type=="0"'>
+            AND type in ('1','2','4','5')
+        </if>
+        <if test='cateId!=null and cateId!=0'>
+            AND cate_id=#{cateId}
+        </if>
+        <if test='status=="1"'>
+            AND now() &lt; starttime
+        </if>
+        <if test='status=="2"'>
+            AND now() &gt;= starttime AND now() &lt; endtime
+        </if>
+        <if test='status=="3"'>
+            AND now() &gt;= endtime
+        </if>
+        <if test='status=="999"'>
+            AND endtime &gt; now()
+        </if>
+
+    </select>
+
+    <select id="queryMarketingForShoppingCart" parameterType="java.lang.String" resultMap="marketing">
+        select sms_marketing.* from sms_marketing join pms_sku_marketing on
+        sms_marketing.id = pms_sku_marketing.marketing_id
+        where 
+        (sms_marketing.type='5' or sms_marketing.type = '4'or sms_marketing.type = '2') and
+        <![CDATA[sms_marketing.starttime <= now() and  sms_marketing.endtime > now()]]>
+        and pms_sku_marketing.skuId=#{skuId} limit 1
+    </select>
+
+    <select id="queryMarketingsBySkuId" parameterType="java.util.Map" resultMap="marketing">
+        select sms_marketing.* ,pms_sku_marketing.skuId as skuid from sms_marketing join pms_sku_marketing on
+        sms_marketing.id = pms_sku_marketing.marketing_id
+        where
+        <![CDATA[ sms_marketing.starttime <= now() and  sms_marketing.endtime > now()]]>
+        and pms_sku_marketing.skuId=#{skuId}
+
+        AND type in
+        <foreach collection="types" item="type" open="(" close=")" separator="," index="index">
+            #{type}
+        </foreach>
+    </select>
+    <select id="queryPanicBuyMaketingBySkuId" parameterType="java.lang.String" resultMap="marketing">
+        select sms_marketing.*, pms_sku_marketing.skuId as skuid from sms_marketing join pms_sku_marketing on
+        sms_marketing.id = pms_sku_marketing.marketing_id
+        where
+       sms_marketing.endtime &gt; now()
+        and pms_sku_marketing.skuId=#{skuId}
+            AND type ='3' order by id limit 1
+    </select>
+
+    <select id="queryTryMarketingsForSiteCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+        select count(1) from sms_marketing m join
+        pms_sku_marketing s on s.marketing_id = m.id
+        where m.del_flag = '0'
+        and type = #{type}
+        <if test='cateId!=0'>
+            AND m.cate_id = #{cateId}
+        </if>
+    </select>
+
+    <select id="queryTryMarketingsForSite" parameterType="java.util.Map" resultMap="marketing">
+        select m.* from sms_marketing m join
+        pms_sku_marketing s on s.marketing_id = m.id
+        where m.del_flag = '0'
+        and type=#{type}
+        <if test='cateId!=0'>
+            AND m.cate_id = #{cateId}
+        </if>
+        ORDER BY id desc
+        limit #{startRowNum},#{pageSize}
+    </select>
+
+    <select id="queryMarketingsForSiteCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+        select count(1) from sms_marketing m join
+        pms_sku_marketing s on s.marketing_id = m.id join pms_sku sku on sku.id = s.skuid
+        where m. sku. sku.shelves_status = '1'
+        and m.endtime> now() and now() >= m.starttime
+        and type in
+        <foreach collection="types" item="type" open="(" close=")" separator="," index="index">
+            #{type}
+        </foreach>
+        <if test='cateId!=0'>
+            AND m.cate_id = #{cateId}
+        </if>
+    </select>
+
+
+    <select id="queryMarketingsForSite" parameterType="java.util.Map" resultMap="marketing">
+        select m.*,sku.id as skuid,sku.name as skuname,sku.price from sms_marketing m join
+        pms_sku_marketing s on s.marketing_id = m.id join pms_sku sku on sku.id = s.skuid
+        where m. sku. sku.shelves_status = '1'
+        and m.endtime> now() and now() >= m.starttime
+        and type in
+        <foreach collection="types" item="type" open="(" close=")" separator="," index="index">
+            #{type}
+        </foreach>
+        <if test='cateId!=0'>
+            AND m.cate_id = #{cateId}
+        </if>
+        order by id desc
+        limit #{startRowNum},#{pageSize}
+    </select>
+
+    <select id="queryCrowdFundingMarketingsForSiteCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+        select count(1) from sms_marketing
+        where  now() >= starttime and type = #{type}
+        <if test='cateId!=0'>
+            AND cate_id = #{cateId}
+        </if>
+    </select>
+
+
+    <select id="queryCrowdFundingMarketingsForSite" parameterType="java.util.Map" resultMap="marketing">
+        select * from sms_marketing
+        where  now() >= starttime and type = #{type}
+        <if test='cateId!=0'>
+            AND cate_id = #{cateId}
+        </if>
+        order by id desc
+        limit #{startRowNum},#{pageSize}
+    </select>
+
+    <select id="queryTimeOutAndUnAuditTryMarketings" resultMap="marketing">
+        select * from sms_marketing lm join sms_marketing_try lmt on lm.id=lmt.marketing_id where lmt.has_audit ='0' and lm.del_flag='0' and lm.endtime &lt; now()
+        and lm.type='9'
+    </select>
+
+    <select id="queryExclusionMarketingCount" resultType="java.lang.Integer" parameterType="java.util.Map">
+        select count(1) from sms_marketing lm join pms_sku_marketing lms on lm.id=lms.marketing_id
+        where
+        <choose>
+            <when test="queryType==1">
+                !(lm.endtime &lt;#{startTime} || lm.starttime &gt;#{endTime})
+            </when>
+            <otherwise>
+                lm.endtime &gt;=now()
+            </otherwise>
+        </choose>
+        <choose>
+            <when test="skuIds!=null">
+                and lms.skuid in
+                <foreach collection="skuIds" separator="," open="(" close=")" item="skuId" index="index">
+                    #{skuId}
+                </foreach>
+            </when>
+            <otherwise>
+                and lms.skuid ='-1'
+            </otherwise>
+        </choose>
+        and lm.type IN
+        <foreach collection="types" separator="," open="(" close=")" item="type" index="index">
+            #{type}
+        </foreach>
+        and lm.del_flag='0'
+        <if test="id!=null">
+            and lm.id !=#{id}
+        </if>
+    </select>
+
+    <select id="querySpuExclusionMarketingCount" resultType="java.lang.Integer" parameterType="java.util.Map">
+        select count(1) from sms_marketing lm join sms_marketing_crowdfunding lms on lm.id=lms.marketing_id
+        where
+        <choose>
+            <when test="queryType==1">
+                !(lm.endtime &lt;#{startTime} || lm.starttime &gt;#{endTime})
+            </when>
+            <otherwise>
+                lm.endtime &gt;=now()
+            </otherwise>
+        </choose>
+        and lms.spu_id=#{spuId}
+        and lm.type ='11'
+        and lm.del_flag='0'
+        <if test="id!=null">
+            and lm.id !=#{id}
+        </if>
+    </select>
+
+    <select id="queryCrowdFundingMarketings" parameterType="java.util.Map" resultMap="marketing">
+        SELECT lm.*,lmc.money as crowd_funding_money,lmc.already_money as crowd_funding_already_money
+        FROM sms_marketing lm
+        JOIN sms_marketing_crowdfunding lmc on lm.id=lmc.marketing_id
+        WHERE lm.del_flag = '0'
+        <if test="storeId !=null and storeId !=-1">
+            AND lm.store_id = #{storeId}
+        </if>
+        <if test="name != null and name != '' ">
+            AND lm.name like CONCAT(CONCAT('%', #{name}),'%')
+        </if>
+        <if test="startTime !=null">
+            AND lm.starttime &gt; #{startTime}
+        </if>
+        <if test="endTime !=null">
+            AND lm.endtime &lt; #{endTime}
+        </if>
+        <if test="status!=-1">
+            <choose>
+                <when test="status==1">
+                    AND lm.starttime &gt; now()
+                </when>
+                <when test="status==2">
+                    AND lm.starttime &lt; now()
+                    AND lm.endtime &gt; now()
+                </when>
+                <when test="status==3">
+                    AND lm.endtime &lt; now()
+                    HAVING crowd_funding_money &lt;=crowd_funding_already_money
+                </when>
+                <when test="status==4">
+                    AND lm.endtime &lt; now()
+                    HAVING crowd_funding_money &gt;crowd_funding_already_money
+                </when>
+            </choose>
+        </if>
+        order by lm.id desc
+        limit #{startRowNum},#{pageSize}
+    </select>
+
+    <select id="queryCrowdFundingMarketingCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+        SELECT count(1) FROM (SELECT lmc.money as crowd_funding_money,lmc.already_money as crowd_funding_already_money
+        FROM sms_marketing lm
+        JOIN sms_marketing_crowdfunding lmc on lm.id=lmc.marketing_id
+        WHERE lm.del_flag = '0'
+        <if test="storeId !=null and storeId !=-1">
+            AND lm.store_id = #{storeId}
+        </if>
+        <if test="name != null and name != '' ">
+            AND lm.name like CONCAT(CONCAT('%', #{name}),'%')
+        </if>
+        <if test="startTime !=null">
+            AND lm.starttime &gt; #{startTime}
+        </if>
+        <if test="endTime !=null">
+            AND lm.endtime &lt; #{endTime}
+        </if>
+        <if test="status!=-1">
+            <choose>
+                <when test="status==1">
+                    AND lm.starttime &gt; now()
+                </when>
+                <when test="status==2">
+                    AND lm.starttime &lt; now()
+                    AND lm.endtime &gt; now()
+                </when>
+                <when test="status==3">
+                    AND lm.endtime &lt; now()
+                    HAVING crowd_funding_money &lt;=crowd_funding_already_money
+                </when>
+                <when test="status==4">
+                    AND lm.endtime &lt; now()
+                    HAVING crowd_funding_money &gt;crowd_funding_already_money
+                </when>
+            </choose>
+        </if>
+        ) ll
+    </select>
+
+    <select id="queryEndCrowdFundingMarketingList" resultMap="marketing">
+        SELECT lm.*
+        FROM sms_marketing lm
+        JOIN sms_marketing_crowdfunding lmc on lm.id=lmc.marketing_id
+        WHERE lm. lmc.auto_handle_status='0'
+        and lm.endtime &lt; now()
+        order by lm.id desc
+    </select>
+
+
+    <select id="queryStoreCrowdFundingMarketings" parameterType="java.util.Map" resultMap="marketing">
+        SELECT lm.*,lmc.money as crowd_funding_money,lmc.already_money as crowd_funding_already_money,lsi.store_name as
+        store_name
+        FROM sms_marketing lm
+        JOIN sms_marketing_crowdfunding lmc on lm.id=lmc.marketing_id
+        join t_store_info lsi on lm.store_id = lsi.id
+        WHERE lm. lsi.del_flag = '0'
+        <if test="storeName != null and storeName != '' ">
+            AND lsi.store_name = #{storeName}
+        </if>
+        <if test="name != null and name != '' ">
+            AND lm.name like CONCAT(CONCAT('%', #{name}),'%')
+        </if>
+        <if test="startTime !=null">
+            AND lm.starttime &gt; #{startTime}
+        </if>
+        <if test="endTime !=null">
+            AND lm.endtime &lt; #{endTime}
+        </if>
+        <if test="status!=-1">
+            <choose>
+                <when test="status==1">
+                    AND lm.starttime &gt; now()
+                </when>
+                <when test="status==2">
+                    AND lm.starttime &lt; now()
+                    AND lm.endtime &gt; now()
+                </when>
+                <when test="status==3">
+                    AND lm.endtime &lt; now()
+                    HAVING crowd_funding_money &lt;=crowd_funding_already_money
+                </when>
+                <when test="status==4">
+                    AND lm.endtime &lt; now()
+                    HAVING crowd_funding_money &gt;crowd_funding_already_money
+                </when>
+            </choose>
+        </if>
+        order by lm.id desc
+        limit #{startRowNum},#{pageSize}
+    </select>
+
+    <select id="queryStoreCrowdFundingMarketingCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+        SELECT count(1) FROM (SELECT lmc.money as crowd_funding_money,lmc.already_money as
+        crowd_funding_already_money,lsi.store_name as store_name
+        FROM sms_marketing lm
+        JOIN sms_marketing_crowdfunding lmc on lm.id=lmc.marketing_id
+        join t_store_info lsi on lm.store_id = lsi.id
+        WHERE lm. lsi.del_flag = '0'
+        <if test="storeName != null and storeName != '' ">
+            AND lsi.store_name = #{storeName}
+        </if>
+        <if test="name != null and name != '' ">
+            AND lm.name like CONCAT(CONCAT('%', #{name}),'%')
+        </if>
+        <if test="startTime !=null">
+            AND lm.starttime &gt; #{startTime}
+        </if>
+        <if test="endTime !=null">
+            AND lm.endtime &lt; #{endTime}
+        </if>
+        <if test="status!=-1">
+            <choose>
+                <when test="status==1">
+                    AND lm.starttime &gt; now()
+                </when>
+                <when test="status==2">
+                    AND lm.starttime &lt; now()
+                    AND lm.endtime &gt; now()
+                </when>
+                <when test="status==3">
+                    AND lm.endtime &lt; now()
+                    HAVING crowd_funding_money &lt;=crowd_funding_already_money
+                </when>
+                <when test="status==4">
+                    AND lm.endtime &lt; now()
+                    HAVING crowd_funding_money &gt;crowd_funding_already_money
+                </when>
+            </choose>
+        </if>
+        ) ll
+    </select>
+
+</mapper>

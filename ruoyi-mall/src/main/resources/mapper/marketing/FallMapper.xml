@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.marketing.mapper.FallMapper">
+
+    <resultMap id="fall" type="com.ruoyi.marketing.domain.Fall">
+        <result column="id" property="id"/>
+        <result column="marketing_id" property="marketingId"/>
+        <result column="price" property="price"/>
+    </resultMap>
+
+    <update id="updateFallMarketing" parameterType="com.ruoyi.marketing.domain.Fall">
+        update sms_marketing_fall set price = #{price} where marketing_id = #{marketingId}
+    </update>
+
+    <select id="queryFallByMarketingId" parameterType="java.lang.Long" resultMap="fall">
+        select * from sms_marketing_fall where marketing_id = #{marketingId}
+    </select>
+
+    <insert id="addFallMarketing" parameterType="com.ruoyi.marketing.domain.Fall">
+        insert into sms_marketing_fall
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="marketingId != null">
+                marketing_id,
+            </if>
+            <if test="price != null">
+                price
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="marketingId != null">
+                #{marketingId},
+            </if>
+            <if test="price != null">
+                #{price}
+            </if>
+        </trim>
+    </insert>
+</mapper>

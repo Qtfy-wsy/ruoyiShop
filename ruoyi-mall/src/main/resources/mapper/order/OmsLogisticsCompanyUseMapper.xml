@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.order.mapper.OmsLogisticsCompanyUseMapper">
+
+    <resultMap type="OmsLogisticsCompanyUse" id="OmsLogisticsCompanyUseResult">
+        <result property="id" column="id"/>
+        <result property="storeId" column="store_id"/>
+        <result property="companyId" column="company_id"/>
+    </resultMap>
+
+    <sql id="selectOmsLogisticsCompanyUseVo">
+        select id, store_id, company_id from oms_logistics_company_use
+    </sql>
+
+    <insert id="addLogisticsCompanyUse" parameterType="java.util.Map">
+        insert into oms_logistics_company_use
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="storeId != null">
+                store_id,
+            </if>
+            <if test="companyId != null">
+                company_id,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="storeId != null">
+                #{storeId},
+            </if>
+            <if test="companyId != null">
+                #{companyId},
+            </if>
+        </trim>
+    </insert>
+
+    <delete id="deleteLogisticsCompanyUse" parameterType="java.util.Map">
+        delete from oms_logistics_company_use WHERE company_id =#{companyId} AND store_id = #{storeId}
+    </delete>
+
+    <select id="queryLogisticsCompanyUseCount" resultType="java.lang.Integer" parameterType="java.lang.Long">
+        select count(1) from oms_logistics_company_use where  store_id = #{storeId}
+    </select>
+    
+    <select id="selectOmsLogisticsCompanyUseList" parameterType="OmsLogisticsCompanyUse"
+            resultMap="OmsLogisticsCompanyUseResult">
+        <include refid="selectOmsLogisticsCompanyUseVo"/>
+        <where>
+            <if test="storeId != null ">and store_id = #{storeId}</if>
+            <if test="companyId != null ">and company_id = #{companyId}</if>
+        </where>
+    </select>
+
+    <select id="selectOmsLogisticsCompanyUseById" parameterType="Long" resultMap="OmsLogisticsCompanyUseResult">
+        <include refid="selectOmsLogisticsCompanyUseVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertOmsLogisticsCompanyUse" parameterType="OmsLogisticsCompanyUse" useGeneratedKeys="true"
+            keyProperty="id">
+        insert into oms_logistics_company_use
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="storeId != null">store_id,</if>
+            <if test="companyId != null">company_id,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="storeId != null">#{storeId},</if>
+            <if test="companyId != null">#{companyId},</if>
+        </trim>
+    </insert>
+
+    <update id="updateOmsLogisticsCompanyUse" parameterType="OmsLogisticsCompanyUse">
+        update oms_logistics_company_use
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="storeId != null">store_id = #{storeId},</if>
+            <if test="companyId != null">company_id = #{companyId},</if>
+        </trim>
+        where id = #{id}
+    </update>
+    <select id="queryLogisticsCompanyUses" resultMap="OmsLogisticsCompanyUseResult" parameterType="java.lang.Long">
+        select * from oms_logistics_company_use where  store_id = #{storeId}
+    </select>
+    <delete id="deleteOmsLogisticsCompanyUseById" parameterType="Long">
+        delete from oms_logistics_company_use where id = #{id}
+    </delete>
+
+    <delete id="deleteOmsLogisticsCompanyUseByIds" parameterType="String">
+        delete from oms_logistics_company_use where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>
