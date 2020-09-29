@@ -34,7 +34,7 @@ module.exports = {
     proxy: {
       // detail: https://cli.vuejs.org/config/#devserver-proxy
       [process.env.VUE_APP_BASE_API]: {
-        //target: `https://mojin.51wangshi.com/api-admin`,
+        //target: `https://mojin.localhost/api-admin`,
         target: `http://127.0.0.1:8092`,
         changeOrigin: true,
         pathRewrite: {

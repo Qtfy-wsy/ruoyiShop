@@ -57,7 +57,7 @@ spring:
   # redis 配置
   redis:
     # 地址
-    host: 51wangshi.com
+    host: localhost
     # 端口，默认为6379
     port: 16379
     # 密码

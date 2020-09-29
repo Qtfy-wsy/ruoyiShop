@@ -100,21 +100,17 @@ public class SpuController {
      *
      * @param pageHelper    分页帮助类
      * @return 返回用户积分商城订单列表
-     */
+     */@UnAuth
     @RequestMapping(value = "/goodsList")
     @ResponseBody
     public AjaxResult querySimpleSpusUpdate(@ApiIgnore PageHelper<PmsGoods> pageHelper, @ApiIgnore SpuSearchCondition spuSearchCondition) {
 
-       // spuSearchCondition.setIsVirtual(0);
-        spuSearchCondition.setShelvesStatus("1");
-        spuSearchCondition.setStatus(StatusEnum.AuditType.SUCESS.code()+"");
+       // spuSearchCondition.setIsVirtual(0);//
+        // spuSearchCondition.setShelvesStatus("1");
+        //spuSearchCondition.setStatus(StatusEnum.AuditType.SUCESS.code()+"");
         return AjaxResult.success(pmsGoodsService.querySimpleSpus(pageHelper, spuSearchCondition));
     }
-    @RequestMapping(value = "/brandList")
-    @ResponseBody
-    public AjaxResult brandList(PmsBrand brand) {
-        return AjaxResult.success(pmsBrandService.selectPmsBrandList(brand));
-    }
+    @UnAuth
     @RequestMapping(value = "/cateList")
     @ResponseBody
     public AjaxResult cateList(PmsBrand brand) {

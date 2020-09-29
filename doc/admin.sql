@@ -4,7 +4,7 @@
  Source Server         : 51wangshi
  Source Server Type    : MySQL
  Source Server Version : 50719
- Source Host           : 51wangshi.com:3306
+ Source Host           : localhost:3306
  Source Schema         : mallplus
 
  Target Server Type    : MySQL

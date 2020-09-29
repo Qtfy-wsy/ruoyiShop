@@ -39,9 +39,9 @@
 文档地址：http://doc.ruoyi.vip
 
 - 商城还在部分开发中
-https://mojin.51wangshi.com/admin  平台管理 admin admin123
-https://mojin.51wangshi.com/store  商户管理 admin admin123
-https://mojin.51wangshi.com  13146587711 123456
+https://mojin.localhost/admin  平台管理 admin admin123
+https://mojin.localhost/store  商户管理 admin admin123
+https://mojin.localhost  13146587711 123456
 
 ## 演示图
 
