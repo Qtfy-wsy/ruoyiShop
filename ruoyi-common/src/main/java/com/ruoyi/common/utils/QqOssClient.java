@@ -31,13 +31,13 @@ import java.util.List;
 public class QqOssClient {
 
 
-    private static final String ACCESSKEY = "AKID1oQ4hjfItRjjplnu6HFwouHOEo7AOQgl";
-    private static final String SECRETKEY = "ysBEBsLZonV1KPIu3CUWWGfngdIhpiKn";
-    private static final String BUCKETNAME = "wanshunfu-1301582899";
-    private static final String APPID = "12517827811";
-    private static final String REGIONID = "ap-guangzhou";
-    private static final String KEY = "MyFile1/zookeeper-3.4.8.tar.gz";
-    private static final String KEY01 = "MyFile1/1.jpg";
+    private static final String ACCESSKEY = "AKID187989o64Q4hjfItRjjplnu6HFwouHOEo7AOQgl";
+    private static final String SECRETKEY = "ysBE66Bs64LZ56onV1KPIu3CUWWGfngdIhpiKn";
+    private static final String BUCKETNAME = "wans76787hunfu-1301582899";
+    private static final String APPID = "125178787827811";
+    private static final String REGIONID = "ap-g798uangzhou";
+    private static final String KEY = "MyFile1/989zookeeper-3.4.8.tar.gz";
+    private static final String KEY01 = "MyFil989e1/1.jpg";
 
     /**
      * 上传腾讯云
