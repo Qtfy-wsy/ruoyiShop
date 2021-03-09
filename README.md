@@ -43,6 +43,10 @@ https://mojin.localhost/admin  平台管理 admin admin123
 https://mojin.localhost/store  商户管理 admin admin123
 https://mojin.localhost  13146587711 123456
 
+![输入图片说明](https://images.gitee.com/uploads/images/2021/0309/230938_c61cfd44_1530803.jpeg "QQ图片20210309230921.jpg")
+
+![输入图片说明](https://images.gitee.com/uploads/images/2021/0309/230835_e8fee8f1_1530803.jpeg "微信图片_20201110155334.jpg")
+
 ## 演示图
 
 <table>
