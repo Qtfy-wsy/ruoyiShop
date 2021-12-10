@@ -26,7 +26,7 @@ export default {
   },
   data() {
     return {
-      title: '魔金商城平台管理',
+      title: '商城平台管理',
       logo: logoImg
     }
   }

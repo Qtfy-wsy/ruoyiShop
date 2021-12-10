@@ -1,6 +1,7 @@
 package com.ruoyi.web.controller.setting;
 
 
+import com.alibaba.fastjson.JSON;
 import com.ruoyi.setting.bean.BaseInfoSet;
 import com.ruoyi.setting.service.BaseInfoSetService;
 import io.swagger.annotations.Api;
@@ -14,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * Created by 魔金商城 on 2019/5/14.
+ * Created by 商城
  * 信息设置控制器
  */
 @RestController
@@ -50,7 +51,7 @@ public class SettingController {
     /**
      * 修改基本信息设置
      *
-     * @param baseInfoSet 基本信息设置
+     * @param param 基本信息设置
      * @return 成功1 否则失败
      */
     @PutMapping("baseinfoset")
@@ -58,7 +59,8 @@ public class SettingController {
     @ApiResponses({
             @ApiResponse(code = 200, message = "成功1 否则失败", response = Integer.class)
     })
-    public int updateBaseInfoSet(@RequestBody BaseInfoSet baseInfoSet) {
+    public int updateBaseInfoSet(@RequestBody String param) {
+        BaseInfoSet baseInfoSet = JSON.parseObject(param,BaseInfoSet.class);
         return baseInfoSetService.editBaseInfoSet(baseInfoSet, 1);
     }
 

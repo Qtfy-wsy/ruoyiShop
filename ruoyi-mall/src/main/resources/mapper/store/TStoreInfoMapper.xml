@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ruoyi.store.mapper.TStoreInfoMapper">
 
-    <resultMap type="TStoreInfo" id="TStoreInfoResult">
+    <resultMap type="com.ruoyi.store.domain.TStoreInfo" id="TStoreInfoResult">
         <result property="id" column="id"/>
         <result property="storeName" column="store_name"/>
         <result property="status" column="status"/>
@@ -54,9 +54,10 @@
         select id, store_name, status, company_name, company_address, company_phone, company_email, contact_person, contact_phone, legal_person, card_no, card_pic, bus_licenec, bus_licenec_pic, business_scope, org_pic, tax_pic, bank_user_name, bank_account, bank_name, bank_number, bank_address, bank_pic, billing_cycle, ismerge, del_flag, service_qq, reason, ave_score, effective_time, create_time, modify_time, del_time, type, longitude, latitude, business_time, bus_routes, avatar_picture, province_id, city_id, district_id, company_detail_address from t_store_info
     </sql>
 
-    <select id="selectTStoreInfoList" parameterType="TStoreInfo" resultMap="TStoreInfoResult">
+    <select id="selectTStoreInfoList" parameterType="com.ruoyi.store.domain.TStoreInfo" resultMap="TStoreInfoResult">
         <include refid="selectTStoreInfoVo"/>
         <where>
+            effective_time >= sysdate(),
             <if test="storeName != null  and storeName != ''">and store_name like concat('%', #{storeName}, '%')</if>
             <if test="status != null  and status != ''">and status = #{status}</if>
             <if test="companyName != null  and companyName != ''">and company_name like concat('%', #{companyName},
@@ -88,7 +89,6 @@
             <if test="serviceQq != null  and serviceQq != ''">and service_qq = #{serviceQq}</if>
             <if test="reason != null  and reason != ''">and reason = #{reason}</if>
             <if test="aveScore != null ">and ave_score = #{aveScore}</if>
-            <if test="effectiveTime != null ">and effective_time = #{effectiveTime}</if>
             <if test="modifyTime != null ">and modify_time = #{modifyTime}</if>
             <if test="delTime != null ">and del_time = #{delTime}</if>
             <if test="type != null  and type != ''">and type = #{type}</if>
@@ -111,7 +111,7 @@
         where id = #{id}
     </select>
 
-    <insert id="insertTStoreInfo" parameterType="TStoreInfo" useGeneratedKeys="true" keyProperty="id">
+    <insert id="insertTStoreInfo" parameterType="com.ruoyi.store.domain.TStoreInfo" useGeneratedKeys="true" keyProperty="id">
         insert into t_store_info
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="storeName != null">store_name,</if>
@@ -203,7 +203,7 @@
         </trim>
     </insert>
 
-    <update id="updateTStoreInfo" parameterType="TStoreInfo">
+    <update id="updateTStoreInfo" parameterType="com.ruoyi.store.domain.TStoreInfo">
         update t_store_info
         <trim prefix="SET" suffixOverrides=",">
             <if test="storeName != null">store_name = #{storeName},</if>

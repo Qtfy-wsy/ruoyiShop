@@ -12,8 +12,7 @@ import java.util.List;
 /**
  * 订单操作日志Service业务层处理
  *
- * @author 魔金商城
- * @date 2020-07-24
+ * @author 商城
  */
 @Service
 public class OmsOrderOperationLogServiceImpl implements IOmsOrderOperationLogService {

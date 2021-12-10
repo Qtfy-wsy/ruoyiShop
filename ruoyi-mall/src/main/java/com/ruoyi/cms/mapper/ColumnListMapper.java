@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * 栏目列表mapper层
  *
- * @author 魔金商城 on 2017/5/22.
+ * @author 商城
  */
 @Repository
 public interface ColumnListMapper {

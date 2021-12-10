@@ -8,8 +8,7 @@ import java.util.Map;
 /**
  * 提现记录Mapper接口
  *
- * @author 魔金商城
- * @date 2020-07-25
+ * @author 商城
  */
 public interface UmsWithdrawMapper {
     /**

@@ -1,7 +1,7 @@
 package com.ruoyi.store.vo;
 
 /**
- * Created by 魔金商城 on 17/11/23.
+ * Created by 商城
  * 店铺查询条件枚举
  */
 public enum StoreItem {

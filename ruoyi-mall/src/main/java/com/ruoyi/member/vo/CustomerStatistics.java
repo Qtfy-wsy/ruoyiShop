@@ -9,7 +9,7 @@ import java.math.BigDecimal;
 import java.util.Objects;
 
 /**
- * Created by 魔金商城 on 17/12/5.
+ * Created by 商城
  * 会员统计实体
  */
 @Data

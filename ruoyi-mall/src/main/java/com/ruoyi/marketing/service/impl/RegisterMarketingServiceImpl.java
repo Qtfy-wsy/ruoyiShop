@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 /**
  * 注册营销service实现类
  * <p>
- * Created by 魔金商城 on 2017/6/6.
+ * Created by 商城 on
  */
 @Service
 public class RegisterMarketingServiceImpl implements RegisterMarketingService {

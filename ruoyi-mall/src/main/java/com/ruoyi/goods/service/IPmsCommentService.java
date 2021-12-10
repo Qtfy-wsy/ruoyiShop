@@ -10,8 +10,7 @@ import java.util.List;
 /**
  * 单品评论Service接口
  *
- * @author 魔金商城
- * @date 2020-07-24
+ * @author 商城
  */
 public interface IPmsCommentService {
     /**

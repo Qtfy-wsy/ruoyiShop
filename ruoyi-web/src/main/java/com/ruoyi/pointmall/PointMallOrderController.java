@@ -23,7 +23,7 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * 积分商城订单控制器
  *
- * @author 魔金商城 created on 2020/4/22
+ * @author 商城
  */
 @Controller
 @Api(description = "积分商城订单接口")

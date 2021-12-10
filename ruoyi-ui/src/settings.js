@@ -1,5 +1,5 @@
 module.exports = {
-  title: '魔金商城平台管理',
+  title: '商城平台管理',
 
   /**
    * 是否系统布局配置

@@ -328,6 +328,7 @@
     <select id="selectPmsBrandList" parameterType="PmsBrand" resultMap="PmsBrandResult">
         <include refid="selectPmsBrandVo"/>
         <where>
+            del_flag = '0'
             <if test="name != null  and name != ''">and name like concat('%', #{name}, '%')</if>
             <if test="nickName != null  and nickName != ''">and nick_name like concat('%', #{nickName}, '%')</if>
             <if test="status != null  and status != ''">and status = #{status}</if>

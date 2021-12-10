@@ -18,7 +18,7 @@ import java.util.Objects;
 /**
  * 店铺信息实体类
  *
- * @author 魔金商城 on 2017/6/13.
+ * @author 商城
  */
 @Data
 @ApiModel(description = "店铺信息实体类")

@@ -17,7 +17,7 @@ import java.util.Optional;
 import java.util.function.Consumer;
 
 /**
- * Created by 魔金商城 on 17/11/22.
+ * Created by 商城
  * 商品服务接口
  */
 public interface SpuServiceApi {

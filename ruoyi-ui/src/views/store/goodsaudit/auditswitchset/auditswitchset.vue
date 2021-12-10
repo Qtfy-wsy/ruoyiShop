@@ -24,6 +24,7 @@
   } from '@/api/store/auditswitchset';
 
   export default {
+    name: "auditswitchset",
     data() {
       return {
         Value1: true,

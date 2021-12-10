@@ -53,7 +53,7 @@ export function exportType(query) {
 }
 
 /**
- * 检查类型是否关联了商品
+ * 检查类型是否关联了商品  queryThirdCategory
  * @param id 类型id
  */
 export function checkTypeAssociated(id) {
@@ -61,4 +61,14 @@ export function checkTypeAssociated(id) {
     url: '/goods/type/checktypeassociated/' + id,
     method: 'get',
   })
+}
+  /**
+   *   判断类型是否可以删除，如果类型被三级分类关联 则不能删除
+   * @param id 类型id
+   */
+  export function queryThirdCategory() {
+    return request({
+      url: '/goods/type/thirdcategorys/',
+      method: 'get',
+    })
 }

@@ -10,7 +10,7 @@
 
     <name>ruoyi</name>
     <url>http://www.ruoyi.vip</url>
-    <description>魔金商城平台管理</description>
+    <description>商城平台管理</description>
 
     <properties>
         <ruoyi.version>3.0.0</ruoyi.version>

@@ -14,8 +14,7 @@ import java.util.Objects;
 /**
  * 账单记录对象 oms_billing_records
  *
- * @author 魔金商城
- * @date 2020-07-24
+ * @author 商城
  */
 @Data
 public class OmsBillingRecords extends BaseEntity {

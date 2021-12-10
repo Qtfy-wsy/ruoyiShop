@@ -21,7 +21,7 @@ import springfox.documentation.annotations.ApiIgnore;
  * @author 魔金商城 created on 2020/4/21
  */
 @Controller
-@Api(description = "积分商品详情接口")
+@Api( "积分商品详情接口")
 public class PointSkuController {
 
     /**

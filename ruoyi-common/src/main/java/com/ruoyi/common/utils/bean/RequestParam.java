@@ -7,7 +7,7 @@ import lombok.Data;
 /**
  * 发送短信请求变量实体类
  *
- * @author 魔金商城 on 2017/9/7.
+ * @author 商城
  */
 @Data
 public class RequestParam extends SendSmsRequest {

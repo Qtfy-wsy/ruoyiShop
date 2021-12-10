@@ -19,9 +19,14 @@ public class CustomLocalDateTimeDeserializer extends JsonDeserializer<LocalDateT
 
     private static final String DATE_TIME_FORMATTER_PATTERN = "yyyy-MM-dd HH:mm:ss";
 
+    private static final String DATE_TIME_FORMATTER_DATE = "yyyy-MM-dd";
+
     private static DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern(DATE_TIME_FORMATTER_PATTERN);
 
     private static DateTimeFormatter DATE_TIME_FORMATTER_MILLI = DateTimeFormatter.ofPattern(DATE_TIME_FORMATTER_MILLI_PATTERN);
+
+    private static DateTimeFormatter DATE_TIME_FORMATTER_SIMPLY = DateTimeFormatter.ofPattern(DATE_TIME_FORMATTER_DATE);
+
 
     @Override
     public LocalDateTime deserialize(JsonParser jp, DeserializationContext ctxt)
@@ -33,6 +38,9 @@ public class CustomLocalDateTimeDeserializer extends JsonDeserializer<LocalDateT
                 return LocalDateTime.parse(str, DATE_TIME_FORMATTER);
             } else if (DATE_TIME_FORMATTER_MILLI_PATTERN.length() == str.length()) {
                 return LocalDateTime.parse(str, DATE_TIME_FORMATTER_MILLI);
+            }else if (DATE_TIME_FORMATTER_DATE.length() == str.length()){
+                str += " 00:00:00";
+                return LocalDateTime.parse(str, DATE_TIME_FORMATTER);
             }
         }
         if (t == JsonToken.VALUE_NUMBER_INT) {

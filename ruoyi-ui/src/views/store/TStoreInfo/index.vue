@@ -4,6 +4,7 @@
         <el-radio-button :label="0" @click.native="getList(1)">未审核商家列表</el-radio-button>
         <el-radio-button :label="1" @click.native="getList(2)">已审核商家列表</el-radio-button>
         <el-radio-button :label="2" @click.native="getList(3)">审核不通过商家列表</el-radio-button>
+        <el-radio-button :label="3" @click.native="getList(4)">店铺关闭</el-radio-button>
       </el-radio-group>
     <el-form :model="queryParams" ref="queryForm" :inline="true" label-width="68px">
       <el-form-item label="店铺名称" prop="storeName">
@@ -154,7 +155,7 @@
               :key="dict.dictValue"
               :label="dict.dictLabel"
               :value="dict.dictValue"
-            ></el-option>
+            />
           </el-select>
         </el-form-item>
         <el-form-item label="公司名称" prop="companyName">
@@ -239,7 +240,7 @@
           <el-date-picker clearable size="small" style="width: 200px"
             v-model="form.effectiveTime"
             type="date"
-            value-format="yyyy-MM-dd"
+            value-format="yyyy-MM-dd HH:mm:ss"
             placeholder="选择店铺有效期">
           </el-date-picker>
         </el-form-item>
@@ -247,7 +248,7 @@
           <el-date-picker clearable size="small" style="width: 200px"
             v-model="form.modifyTime"
             type="date"
-            value-format="yyyy-MM-dd"
+            value-format="yyyy-MM-dd HH:mm:ss"
             placeholder="选择修改时间">
           </el-date-picker>
         </el-form-item>
@@ -255,7 +256,7 @@
           <el-date-picker clearable size="small" style="width: 200px"
             v-model="form.delTime"
             type="date"
-            value-format="yyyy-MM-dd"
+            value-format="yyyy-MM-dd HH:mm:ss"
             placeholder="选择删除时间">
           </el-date-picker>
         </el-form-item>
@@ -266,7 +267,7 @@
               :key="dict.dictValue"
               :label="dict.dictLabel"
               :value="dict.dictValue"
-            ></el-option>
+            />
           </el-select>
         </el-form-item>
         <el-form-item label="经度" prop="longitude">
@@ -306,8 +307,8 @@
           <el-form label-position="right" :model="form" :rules="rules" ref="form" label-width="100px">
             <el-form-item label="审核">
               <el-select class="filter-item" v-model="auditStatusValue" size="medium" style="width: 150px">
-                <el-option label="通过" value="2"></el-option>
-                <el-option label="打回" value="3"></el-option>
+                <el-option label="通过" value="2"/>
+                <el-option label="打回" value="3"/>
               </el-select>
             </el-form-item>
             <el-form-item v-if="auditStatusValue == 3" prop="reason">

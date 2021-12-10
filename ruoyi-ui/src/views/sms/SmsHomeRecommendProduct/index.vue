@@ -120,19 +120,19 @@
                 style="width: 250px;margin-bottom: 20px"
                 size="small"
                 placeholder="商品名称搜索">
-        <el-button slot="append" icon="el-icon-search" @click="handleSelectSearch()"></el-button>
+        <el-button slot="append" icon="el-icon-search" @click="handleSelectSearch()"/>
       </el-input>
       <el-table :data="dialogData.list"
                 @selection-change="handleDialogSelectionChange" border>
-        <el-table-column type="selection" width="60" align="center"></el-table-column>
+        <el-table-column type="selection" width="60" align="center"/>
         <el-table-column label="商品名称" align="center">
           <template slot-scope="scope">{{scope.row.name}}</template>
         </el-table-column>
-          <el-table-column label="商品图片" width="80">
-                      <template slot-scope="scope"><img :src="scope.row.url" width="50" height="50"></template>
-                    </el-table-column>
+        <el-table-column label="商品图片" width="80">
+          <template slot-scope="scope"><img :src="scope.row.url" width="50" height="50"></template>
+        </el-table-column>
         <el-table-column label="货号" width="160" align="center">
-          <template slot-scope="scope">NO.{{scope.row.productSn}}</template>
+          <template slot-scope="scope">NO.{{scope.row.id}}</template>
         </el-table-column>
         <el-table-column label="价格" width="120" align="center">
           <template slot-scope="scope">￥{{scope.row.price}}</template>
@@ -152,8 +152,8 @@
       </div>
       <div style="clear: both;"></div>
       <div slot="footer">
-        <el-button  size="small" @click="selectDialogVisible = false">取 消</el-button>
-        <el-button  size="small" type="primary" @click="handleSelectDialogConfirm()">确 定</el-button>
+        <el-button size="small" @click="selectDialogVisible = false">取 消</el-button>
+        <el-button size="small" type="primary" @click="handleSelectDialogConfirm()">确 定</el-button>
       </div>
     </el-dialog>
     <el-dialog title="设置排序"
@@ -174,11 +174,20 @@
 </template>
 <script>
 
-   import { listSmsHomeRecommendProduct,updateHotProductSort,updateRecommendStatus, getSmsHomeRecommendProduct, delSmsHomeRecommendProduct, addSmsHomeRecommendProduct, updateSmsHomeRecommendProduct, exportSmsHomeRecommendProduct } from "@/api/sms/SmsHomeRecommendProduct";
-   import {
-      querySimpleSpus,
-      querySimpleSpusUpdate
-    } from '@/api/marketing/editcrowdfunding';
+  import {
+    listSmsHomeRecommendProduct,
+    updateHotProductSort,
+    updateRecommendStatus,
+    getSmsHomeRecommendProduct,
+    delSmsHomeRecommendProduct,
+    addSmsHomeRecommendProduct,
+    updateSmsHomeRecommendProduct,
+    exportSmsHomeRecommendProduct
+  } from "@/api/sms/SmsHomeRecommendProduct";
+  import {
+    querySimpleSpus,
+    querySimpleSpusUpdate
+  } from '@/api/marketing/editcrowdfunding';
 
   const defaultListQuery = {
     pageNum: 0,
@@ -221,29 +230,29 @@
           }
         ],
         operateType: null,
-        selectDialogVisible:false,
-        dialogData:{
+        selectDialogVisible: false,
+        dialogData: {
           list: null,
           total: null,
-          multipleSelection:[],
-          listQuery:{
+          multipleSelection: [],
+          listQuery: {
             keyword: null,
             pageNum: 0,
             pageSize: 10
           }
         },
-        sortDialogVisible:false,
-        sortDialogData:{sort:0,id:null}
+        sortDialogVisible: false,
+        sortDialogData: {sort: 0, id: null}
       }
     },
     created() {
       this.getList();
     },
-    filters:{
-      formatRecommendStatus(status){
-        if(status===1){
+    filters: {
+      formatRecommendStatus(status) {
+        if (status === 1) {
           return '推荐中';
-        }else{
+        } else {
           return '未推荐';
         }
       }
@@ -256,7 +265,7 @@
         this.listQuery.pageNum = 0;
         this.getList();
       },
-      handleSelectionChange(val){
+      handleSelectionChange(val) {
         this.multipleSelection = val;
       },
       handleSizeChange(val) {
@@ -268,13 +277,13 @@
         this.listQuery.pageNum = val;
         this.getList();
       },
-      handleRecommendStatusStatusChange(index,row){
-        this.updateRecommendStatusStatus(row.id,row.recommendStatus);
+      handleRecommendStatusStatusChange(index, row) {
+        this.updateRecommendStatusStatus(row.id, row.recommendStatus);
       },
-      handleDelete(index,row){
+      handleDelete(index, row) {
         this.deleteProduct(row.id);
       },
-      handleBatchOperate(){
+      handleBatchOperate() {
         if (this.multipleSelection < 1) {
           this.$message({
             message: '请选择一条记录',
@@ -289,14 +298,14 @@
         }
         if (this.operateType === 0) {
           //设为推荐
-          this.updateRecommendStatusStatus(ids,1);
+          this.updateRecommendStatusStatus(ids, 1);
         } else if (this.operateType === 1) {
           //取消推荐
-          this.updateRecommendStatusStatus(ids,0);
-        } else if(this.operateType===2){
+          this.updateRecommendStatusStatus(ids, 0);
+        } else if (this.operateType === 2) {
           //删除
           this.deleteProduct(this.multipleSelection[i].id);
-        }else {
+        } else {
           this.$message({
             message: '请选择批量操作类型',
             type: 'warning',
@@ -304,11 +313,11 @@
           });
         }
       },
-      handleSelectProduct(){
-        this.selectDialogVisible=true;
+      handleSelectProduct() {
+        this.selectDialogVisible = true;
         this.getDialogList();
       },
-      handleSelectSearch(){
+      handleSelectSearch() {
         this.getDialogList();
       },
       handleDialogSizeChange(val) {
@@ -320,10 +329,10 @@
         this.dialogData.listQuery.pageNum = val;
         this.getDialogList();
       },
-      handleDialogSelectionChange(val){
+      handleDialogSelectionChange(val) {
         this.dialogData.multipleSelection = val;
       },
-      handleSelectDialogConfirm(){
+      handleSelectDialogConfirm() {
         if (this.dialogData.multipleSelection < 1) {
           this.$message({
             message: '请选择一条记录',
@@ -335,10 +344,10 @@
         let selectProducts = [];
         for (let i = 0; i < this.dialogData.multipleSelection.length; i++) {
           selectProducts.push({
-            productId:this.dialogData.multipleSelection[i].id,
-             pic:this.dialogData.multipleSelection[i].url,
-                          price:this.dialogData.multipleSelection[i].price,
-            productName:this.dialogData.multipleSelection[i].name
+            productId: this.dialogData.multipleSelection[i].id,
+            pic: this.dialogData.multipleSelection[i].url,
+            price: this.dialogData.multipleSelection[i].price,
+            productName: this.dialogData.multipleSelection[i].name
           });
         }
         this.$confirm('使用要进行添加操作?', '提示', {
@@ -346,9 +355,9 @@
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
-          addSmsHomeRecommendProduct(selectProducts).then(response=>{
-            this.selectDialogVisible=false;
-            this.dialogData.multipleSelection=[];
+          addSmsHomeRecommendProduct(selectProducts).then(response => {
+            this.selectDialogVisible = false;
+            this.dialogData.multipleSelection = [];
             this.getList();
             this.$message({
               type: 'success',
@@ -357,19 +366,19 @@
           });
         });
       },
-      handleEditSort(index,row){
-        this.sortDialogVisible=true;
-        this.sortDialogData.sort=row.sort;
-        this.sortDialogData.id=row.id;
+      handleEditSort(index, row) {
+        this.sortDialogVisible = true;
+        this.sortDialogData.sort = row.sort;
+        this.sortDialogData.id = row.id;
       },
-      handleUpdateSort(){
+      handleUpdateSort() {
         this.$confirm('是否要修改排序?', '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
-          updateHotProductSort(this.sortDialogData).then(response=>{
-            this.sortDialogVisible=false;
+          updateHotProductSort(this.sortDialogData).then(response => {
+            this.sortDialogVisible = false;
             this.getList();
             this.$message({
               type: 'success',
@@ -386,16 +395,16 @@
           this.total = response.total;
         })
       },
-      updateRecommendStatusStatus(ids,status){
+      updateRecommendStatusStatus(ids, status) {
         this.$confirm('是否要修改推荐状态?', '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
-          let params=new URLSearchParams();
-          params.append("ids",ids);
-          params.append("recommendStatus",status);
-          updateRecommendStatus(params).then(response=>{
+          let params = new URLSearchParams();
+          params.append("ids", ids);
+          params.append("recommendStatus", status);
+          updateRecommendStatus(params).then(response => {
             this.getList();
             this.$message({
               type: 'success',
@@ -410,15 +419,15 @@
           this.getList();
         });
       },
-      deleteProduct(ids){
+      deleteProduct(ids) {
         this.$confirm('是否要删除该推荐?', '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
-          let params=new URLSearchParams();
-          params.append("ids",ids);
-          delSmsHomeRecommendProduct(ids).then(response=>{
+          let params = new URLSearchParams();
+          params.append("ids", ids);
+          delSmsHomeRecommendProduct(ids).then(response => {
             this.getList();
             this.$message({
               type: 'success',
@@ -427,10 +436,10 @@
           });
         })
       },
-      getDialogList(){
-        querySimpleSpus().then(response=>{
-         this.dialogData.list = response.data;
-                    this.dialogData.total = response.recordsTotal;
+      getDialogList() {
+        querySimpleSpus().then(response => {
+          this.dialogData.list = response.rows;
+          this.dialogData.total = response.total;
 
         })
       }

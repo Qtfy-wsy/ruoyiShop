@@ -12,7 +12,12 @@
       </el-form-item>
       <el-form-item label="交易类型" prop="transType">
         <el-select v-model="queryParams.transType" placeholder="请选择交易类型" clearable size="small">
-          <el-option label="请选择字典生成" value="" />
+          <el-option
+            v-for="dict in status"
+            :key="dict.dictValue"
+            :label="dict.dictLabel"
+            :value="dict.dictValue"
+          />
         </el-select>
       </el-form-item>
       <el-form-item label="金额" prop="money">
@@ -24,7 +29,7 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="当前总金额" prop="currentMoney">
+      <el-form-item label="总金额" prop="currentMoney">
         <el-input
           v-model="queryParams.currentMoney"
           placeholder="请输入当前总金额"
@@ -35,7 +40,12 @@
       </el-form-item>
       <el-form-item label="充值支付状态" prop="status">
         <el-select v-model="queryParams.status" placeholder="请选择充值支付状态" clearable size="small">
-          <el-option label="请选择字典生成" value="" />
+          <el-option
+            v-for="dict in statusOptions"
+            :key="dict.dictValue"
+            :label="dict.dictLabel"
+            :value="dict.dictValue"
+          />
         </el-select>
       </el-form-item>
       <el-form-item label="交易号" prop="transcode">
@@ -102,7 +112,7 @@
       <el-table-column label="金额" align="center" prop="money" />
       <el-table-column label="当前总金额" align="center" prop="currentMoney" />
       <el-table-column label="备注" align="center" prop="remark" />
-      <el-table-column label="充值支付状态 0 未支付 1 支付成功" align="center" prop="status" />
+      <el-table-column label="充值支付状态" align="center" prop="status" />
       <el-table-column label="交易号" align="center" prop="transcode" />
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
@@ -140,7 +150,12 @@
         </el-form-item>
         <el-form-item label="交易类型">
           <el-select v-model="form.transType" placeholder="请选择交易类型">
-            <el-option label="请选择字典生成" value="" />
+            <el-option
+              v-for="dict in status"
+              :key="dict.dictValue"
+              :label="dict.dictLabel"
+              :value="dict.dictValue"
+            />
           </el-select>
         </el-form-item>
         <el-form-item label="金额" prop="money">
@@ -149,9 +164,14 @@
         <el-form-item label="当前总金额" prop="currentMoney">
           <el-input v-model="form.currentMoney" placeholder="请输入当前总金额" />
         </el-form-item>
-        <el-form-item label="充值支付状态 0 未支付 1 支付成功">
+        <el-form-item label="充值支付状态">
           <el-select v-model="form.status" placeholder="请选择充值支付状态 0 未支付 1 支付成功">
-            <el-option label="请选择字典生成" value="" />
+            <el-option
+              v-for="dict in statusOptions"
+              :key="dict.dictValue"
+              :label="dict.dictLabel"
+              :value="dict.dictValue"
+            />
           </el-select>
         </el-form-item>
         <el-form-item label="交易号" prop="transcode">
@@ -185,6 +205,10 @@ export default {
       total: 0,
       // 会员预存款记录表格数据
       UmsPreDepositRecordList: [],
+      //充值状态
+      statusOptions: [],
+      //交易类型
+      status: [],
       // 弹出层标题
       title: "",
       // 是否显示弹出层
@@ -212,6 +236,12 @@ export default {
   },
   created() {
     this.getList();
+    this.getDicts("chongzhi_pay_status").then(response => {
+      this.statusOptions = response.data;
+    })
+    this.getDicts("blance_trans_type").then(response => {
+      this.status = response.data;
+    });
   },
   methods: {
     /** 查询会员预存款记录列表 */

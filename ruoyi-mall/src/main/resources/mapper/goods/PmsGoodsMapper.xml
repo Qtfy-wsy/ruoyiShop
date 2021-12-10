@@ -827,6 +827,7 @@
     <select id="selectPmsGoodsList" parameterType="PmsGoods" resultMap="PmsGoodsResult">
         <include refid="selectPmsGoodsVo"/>
         <where>
+            del_flag = '0'
             <if test="name != null  and name != ''">and name like concat('%', #{name}, '%')</if>
             <if test="storeFcateId != null ">and store_fcate_id = #{storeFcateId}</if>
             <if test="storeScateId != null ">and store_scate_id = #{storeScateId}</if>

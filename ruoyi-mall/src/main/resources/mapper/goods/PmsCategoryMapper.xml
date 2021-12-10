@@ -219,7 +219,7 @@
     </select>
 
     <select id="queryCategoryByParentId" parameterType="java.lang.Long" resultMap="PmsCategoryResult">
-        select * from pms_category where parent_id = #{parentId} order by sort asc
+        select * from pms_category where del_flag = '0' and parent_id = #{parentId} order by sort asc
     </select>
 
 

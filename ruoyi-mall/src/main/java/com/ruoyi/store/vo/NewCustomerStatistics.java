@@ -11,7 +11,7 @@ import lombok.Data;
 import java.time.LocalDateTime;
 
 /**
- * Created by 魔金商城 on 18/2/1
+ * Created by 商城
  * 新增会员统计实体
  */
 @Data

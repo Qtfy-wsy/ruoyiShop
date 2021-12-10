@@ -242,6 +242,7 @@
     <select id="selectPmsTypeList" parameterType="PmsType" resultMap="PmsTypeResult">
         <include refid="selectPmsTypeVo"/>
         <where>
+            del_flag = '0'
             <if test="name != null  and name != ''">and name like concat('%', #{name}, '%')</if>
         </where>
     </select>

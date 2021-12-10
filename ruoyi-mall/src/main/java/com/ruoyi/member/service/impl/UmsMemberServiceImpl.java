@@ -30,8 +30,7 @@ import java.util.stream.Collectors;
 /**
  * 会员Service业务层处理
  *
- * @author 魔金商城
- * @date 2020-07-25
+ * @author 商城
  */
 
 @Service

@@ -14,7 +14,7 @@
         <result property="skuidNums" column="skuId_nums"/>
         <result property="type" column="type"/>
         <result property="reason" column="reason"/>
-        <result property="desc" column="desc"/>
+        <result property="desc" column="order_desc"/>
         <result property="credential" column="credential"/>
         <result property="backType" column="back_type"/>
         <result property="backPrice" column="back_price"/>
@@ -28,7 +28,7 @@
     </resultMap>
 
     <sql id="selectOmsBackOrderVo">
-        select id, back_code, order_id, order_code, store_id, customer_id, skuId_nums, type, reason, 'desc', credential, back_type, back_price, real_back_price, pics, status, predeposit_pay, logis_company_name, waybill_code, create_time from oms_back_order
+        select id, back_code, order_id, order_code, store_id, customer_id, skuId_nums, type, reason, order_desc, credential, back_type, back_price, real_back_price, pics, status, predeposit_pay, logis_company_name, waybill_code, create_time from oms_back_order
     </sql>
 
     <select id="selectOmsBackOrderList" parameterType="OmsBackOrder" resultMap="OmsBackOrderResult">
@@ -62,7 +62,7 @@
             <if test="skuidNums != null">skuId_nums,</if>
             <if test="type != null and type != ''">type,</if>
             <if test="reason != null">reason,</if>
-            <if test="desc != null">desc,</if>
+            <if test="desc != null">order_desc,</if>
             <if test="credential != null">credential,</if>
             <if test="backType != null">back_type,</if>
             <if test="backPrice != null">back_price,</if>
@@ -108,7 +108,7 @@
             <if test="skuidNums != null">skuId_nums = #{skuidNums},</if>
             <if test="type != null and type != ''">type = #{type},</if>
             <if test="reason != null">reason = #{reason},</if>
-            <if test="desc != null">desc = #{desc},</if>
+            <if test="desc != null">order_desc = #{desc},</if>
             <if test="credential != null">credential = #{credential},</if>
             <if test="backType != null">back_type = #{backType},</if>
             <if test="backPrice != null">back_price = #{backPrice},</if>
@@ -163,7 +163,7 @@
                 reason,
             </if>
             <if test="desc != null">
-                `desc`,
+                order_desc,
             </if>
             <if test="credential != null">
                 credential,

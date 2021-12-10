@@ -159,10 +159,10 @@
         <el-form-item label="退单号" prop="backCode">
           <el-input v-model="form.backCode" placeholder="请输入退单号" />
         </el-form-item>
-        <el-form-item label="订单id 对应订单表 oms_order中的id" prop="orderId">
+        <el-form-item label="订单id" prop="orderId">
           <el-input v-model="form.orderId" placeholder="请输入订单id " />
         </el-form-item>
-        <el-form-item label="订单号 对应oms_order 表中的order_code" prop="orderCode">
+        <el-form-item label="订单号" prop="orderCode">
           <el-input v-model="form.orderCode" placeholder="请输入订单号 对应oms_order 表中的order_code" />
         </el-form-item>
         <el-form-item label="店铺id 平台的为0 " prop="storeId">
@@ -181,7 +181,7 @@
               :key="dict.dictValue"
               :label="dict.dictLabel"
               :value="dict.dictValue"
-            ></el-option>
+            />
           </el-select>
         </el-form-item>
         <el-form-item label="退款／退货原因" prop="reason">
@@ -190,21 +190,26 @@
         <el-form-item label="问题说明" prop="desc">
           <el-input v-model="form.desc" type="textarea" placeholder="请输入内容" />
         </el-form-item>
-        <el-form-item label="申请凭据 0 没有任何凭据 1 有发票 2有质检报告" prop="credential">
+        <el-form-item label="申请凭据" prop="credential">
           <el-input v-model="form.credential" placeholder="请输入申请凭据 0 没有任何凭据 1 有发票 2有质检报告" />
         </el-form-item>
-        <el-form-item label="返回方式 1 快递返回 目前只有快递返回 ">
+        <el-form-item label="返回方式">
           <el-select v-model="form.backType" placeholder="请选择返回方式 1 快递返回 目前只有快递返回 ">
-            <el-option label="请选择字典生成" value="" />
+            <el-option
+              v-for="dict in backStatusOptions"
+              :key="dict.dictValue"
+              :label="dict.dictLabel"
+              :value="dict.dictValue"
+            />
           </el-select>
         </el-form-item>
         <el-form-item label="退款／退货金额" prop="backPrice">
           <el-input v-model="form.backPrice" placeholder="请输入退款／退货金额" />
         </el-form-item>
-        <el-form-item label="退货时候实际退款金额" prop="realBackPrice">
+        <el-form-item label="实际退款金额" prop="realBackPrice">
           <el-input v-model="form.realBackPrice" placeholder="请输入退货时候实际退款金额" />
         </el-form-item>
-        <el-form-item label="上传的退款凭证或者质检发票 多个图片 用, 隔开" prop="pics">
+        <el-form-item label="退款凭证" prop="pics">
           <el-input v-model="form.pics" type="textarea" placeholder="请输入内容" />
         </el-form-item>
         <el-form-item label="退款／退货状态">
@@ -214,7 +219,7 @@
               :key="dict.dictValue"
               :label="dict.dictLabel"
               :value="dict.dictValue"
-            ></el-option>
+            />
           </el-select>
         </el-form-item>
         <el-form-item label="是否预存款支付" prop="predepositPay">
@@ -262,6 +267,8 @@ export default {
       typeOptions: [],
       // 退款／退货状态1:退款申请 字典
       statusOptions: [],
+      //返回方式
+      backStatusOptions: [],
       // 查询参数
       queryParams: {
         pageNum: 0,
@@ -306,6 +313,9 @@ export default {
     });
     this.getDicts("afterSaleStatus").then(response => {
       this.statusOptions = response.data;
+    });
+    this.getDicts("back_ways").then(response => {
+      this.backStatusOptions = response.data;
     });
   },
   methods: {

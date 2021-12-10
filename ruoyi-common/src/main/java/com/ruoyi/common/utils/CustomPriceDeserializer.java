@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.math.BigDecimal;
 
 /**
- * Created by 魔金商城 on 17/6/15.
+ * Created by 商城
  * 将价格json 转化成BigDecimal
  */
 public class CustomPriceDeserializer extends JsonDeserializer<BigDecimal> {

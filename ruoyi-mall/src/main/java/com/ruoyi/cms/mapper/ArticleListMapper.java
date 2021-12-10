@@ -10,7 +10,7 @@ import java.util.Map;
 /**
  * 文章信息mapper层
  *
- * @author 魔金商城 on 2017/5/22.
+ * @author 商城
  */
 @Repository
 public interface ArticleListMapper {

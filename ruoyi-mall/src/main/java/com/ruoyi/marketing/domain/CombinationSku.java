@@ -9,7 +9,7 @@ import lombok.Data;
 /**
  * 商品组合与单品的关联实体类
  * <p>
- * Created by 魔金商城 on 2017/6/13.
+ * Created by 商城
  */
 @Data
 @ApiModel(description = "商品组合与单品的关联实体")

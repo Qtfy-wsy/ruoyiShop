@@ -9,7 +9,7 @@ import java.util.Map;
 /**
  * 帮助分类数据库接口
  *
- * Created by 魔金商城 on 2017/5/23.
+ * Created by 商城
  */
 @Repository
 public interface HelpCategoryMapper {

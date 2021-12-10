@@ -10,7 +10,7 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="抢购id 注意是对应sms_marketing_panicbuy表中的id" prop="marketingId">
+      <el-form-item label="抢购id" prop="marketingId">
         <el-input
           v-model="queryParams.marketingId"
           placeholder="请输入抢购id 注意是对应sms_marketing_panicbuy表中的id"
@@ -19,7 +19,7 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="用户已经购买抢购的数量" prop="useNum">
+      <el-form-item label="已抢购的数量" prop="useNum">
         <el-input
           v-model="queryParams.useNum"
           placeholder="请输入用户已经购买抢购的数量"
@@ -28,7 +28,7 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="该抢购的会员限购数量" prop="panicNum">
+      <el-form-item label="会员限购数量" prop="panicNum">
         <el-input
           v-model="queryParams.panicNum"
           placeholder="请输入该抢购的会员限购数量"
@@ -97,7 +97,7 @@
       <el-table-column type="selection" width="55" align="center" />
       <el-table-column label="主键id" align="center" prop="id" />
       <el-table-column label="会员id" align="center" prop="customerId" />
-      <el-table-column label="抢购id 注意是对应sms_marketing_panicbuy表中的id" align="center" prop="marketingId" />
+      <el-table-column label="抢购id" align="center" prop="marketingId" />
       <el-table-column label="用户已经购买抢购的数量" align="center" prop="useNum" />
       <el-table-column label="该抢购的会员限购数量" align="center" prop="panicNum" />
       <el-table-column label="订单id" align="center" prop="orderId" />
@@ -135,7 +135,7 @@
         <el-form-item label="会员id" prop="customerId">
           <el-input v-model="form.customerId" placeholder="请输入会员id" />
         </el-form-item>
-        <el-form-item label="抢购id 注意是对应sms_marketing_panicbuy表中的id" prop="marketingId">
+        <el-form-item label="抢购id" prop="marketingId">
           <el-input v-model="form.marketingId" placeholder="请输入抢购id 注意是对应sms_marketing_panicbuy表中的id" />
         </el-form-item>
         <el-form-item label="用户已经购买抢购的数量" prop="useNum">

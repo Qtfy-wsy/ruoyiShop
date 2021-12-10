@@ -15,7 +15,7 @@ import java.util.Objects;
 /**
  * 拼团活动实体用于c端的展示
  *
- * @author 魔金商城 created on 2020/5/28
+ * @author 商城
  */
 @Data
 @ApiModel(description = "拼团活动实体用于c端的展示")

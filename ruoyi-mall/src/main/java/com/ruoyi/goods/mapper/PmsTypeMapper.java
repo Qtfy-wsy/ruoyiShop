@@ -10,8 +10,7 @@ import java.util.Map;
 /**
  * 商品类型Mapper接口
  *
- * @author 魔金商城
- * @date 2020-07-24
+ * @author 商城
  */
 public interface PmsTypeMapper {
     /**

@@ -6,7 +6,7 @@ function resolve(dir) {
   return path.join(__dirname, dir)
 }
 
-const name = defaultSettings.title || '魔金商城平台管理' // 标题
+const name = defaultSettings.title || '商城平台管理' // 标题
 
 const port = process.env.port || process.env.npm_config_port || 80 // 端口
 

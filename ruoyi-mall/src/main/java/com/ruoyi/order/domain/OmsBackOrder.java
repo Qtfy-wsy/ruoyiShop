@@ -136,7 +136,7 @@ public class OmsBackOrder extends BaseEntity {
      * 9:退货失败（商家不同意退款）
      */
     @Excel(name = "退款／退货状态 1:退款申请 ", readConverterExp = "用=户发送退款请求")
-    private String status;
+    private String status = "";
 
     /**
      * 是否预存款支付  0 否 1 是  默认0
@@ -236,6 +236,10 @@ public class OmsBackOrder extends BaseEntity {
      */
     @JsonIgnore
     public boolean isPlatform() {
+        if(this.storeId == null){
+            //默认平台
+            this.storeId = 0L;
+        }
         return this.storeId == 0;
     }
 

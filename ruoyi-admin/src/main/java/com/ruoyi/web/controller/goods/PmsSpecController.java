@@ -21,7 +21,7 @@ import java.util.stream.Collectors;
 /**
  * 规格Controller
  *
- * @author 魔金商城
+ * @author 商城
  * @date 2020-07-24
  */
 @RestController

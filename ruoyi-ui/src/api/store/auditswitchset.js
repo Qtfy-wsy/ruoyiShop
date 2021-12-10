@@ -6,7 +6,7 @@ import request from '@/utils/request';
  */
 export function queryBaseInfoSet() {
   return request({
-    url: 'goodsauditset',
+    url: '/goodsauditset',
     method: 'get',
   })
 }
@@ -18,7 +18,8 @@ export function queryBaseInfoSet() {
  */
 export function setAuditSwitch(storeSpuAudit) {
   return request({
-    url: 'goodsauditset/' + storeSpuAudit,
+    url: '/goodsauditset',
     method: 'put',
+    data: storeSpuAudit
   })
 }

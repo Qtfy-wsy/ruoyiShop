@@ -8,8 +8,7 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 /**
  * 用户抢购记录对象 ums_member_panic_record
  *
- * @author 魔金商城
- * @date 2020-07-25
+ * @author 商城
  */
 public class UmsMemberPanicRecord extends BaseEntity {
     private static final long serialVersionUID = 1L;

@@ -22,7 +22,7 @@ import java.util.TimeZone;
 import java.util.UUID;
 
 /**
- * Created by 魔金商城 on 17/5/8.
+ * Created by 商城
  * 又拍云上传工具
  */
 public class YunUploadUtils {

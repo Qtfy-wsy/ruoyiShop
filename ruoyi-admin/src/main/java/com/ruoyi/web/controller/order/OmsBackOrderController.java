@@ -1,5 +1,6 @@
 package com.ruoyi.web.controller.order;
 
+import com.alibaba.fastjson.JSON;
 import com.ruoyi.common.annotation.Log;
 import com.ruoyi.common.core.controller.BaseController;
 import com.ruoyi.common.core.domain.AjaxResult;
@@ -17,8 +18,7 @@ import java.util.List;
 /**
  * 退单退款Controller
  *
- * @author 魔金商城
- * @date 2020-07-24
+ * @author 商城
  */
 @RestController
 @RequestMapping("/order/OmsBackOrder")
@@ -64,7 +64,8 @@ public class OmsBackOrderController extends BaseController {
     @PreAuthorize("@ss.hasPermi('order:OmsBackOrder:add')")
     @Log(title = "退单退款", businessType = BusinessType.INSERT)
     @PostMapping
-    public AjaxResult add(@RequestBody OmsBackOrder omsBackOrder) {
+    public AjaxResult add(@RequestBody String param) {
+        OmsBackOrder omsBackOrder = JSON.parseObject(param,OmsBackOrder.class);
         return toAjax(omsBackOrderService.insertOmsBackOrder(omsBackOrder));
     }
 
@@ -74,7 +75,8 @@ public class OmsBackOrderController extends BaseController {
     @PreAuthorize("@ss.hasPermi('order:OmsBackOrder:edit')")
     @Log(title = "退单退款", businessType = BusinessType.UPDATE)
     @PutMapping
-    public AjaxResult edit(@RequestBody OmsBackOrder omsBackOrder) {
+    public AjaxResult edit(@RequestBody String param) {
+        OmsBackOrder omsBackOrder = JSON.parseObject(param,OmsBackOrder.class);
         return toAjax(omsBackOrderService.updateOmsBackOrder(omsBackOrder));
     }
 

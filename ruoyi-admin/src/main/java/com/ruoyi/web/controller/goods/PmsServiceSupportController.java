@@ -1,5 +1,6 @@
 package com.ruoyi.web.controller.goods;
 
+import com.alibaba.fastjson.JSON;
 import com.ruoyi.common.annotation.Log;
 import com.ruoyi.common.core.controller.BaseController;
 import com.ruoyi.common.core.domain.AjaxResult;
@@ -64,7 +65,8 @@ public class PmsServiceSupportController extends BaseController {
     @PreAuthorize("@ss.hasPermi('goods:support:add')")
     @Log(title = "服务支持", businessType = BusinessType.INSERT)
     @PostMapping
-    public AjaxResult add(@RequestBody PmsServiceSupport pmsServiceSupport) {
+    public AjaxResult add(@RequestBody String param) {
+        PmsServiceSupport pmsServiceSupport = JSON.parseObject(param,PmsServiceSupport.class);
         return toAjax(pmsServiceSupportService.insertPmsServiceSupport(pmsServiceSupport));
     }
 

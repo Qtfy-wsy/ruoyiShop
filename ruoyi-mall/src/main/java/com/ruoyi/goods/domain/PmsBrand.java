@@ -3,7 +3,6 @@ package com.ruoyi.goods.domain;
 import com.ruoyi.common.annotation.Excel;
 import com.ruoyi.common.core.domain.BaseEntity;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Data;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
@@ -15,7 +14,6 @@ import java.util.Date;
  * @author 魔金商城
  * @date 2020-07-24
  */
-@Data
 public class PmsBrand extends BaseEntity {
     private static final long serialVersionUID = 1L;
 

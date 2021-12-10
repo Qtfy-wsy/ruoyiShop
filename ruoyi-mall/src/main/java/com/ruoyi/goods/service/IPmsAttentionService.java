@@ -8,8 +8,7 @@ import java.util.List;
 /**
  * 商品关注Service接口
  *
- * @author 魔金商城
- * @date 2020-07-24
+ * @author 商城
  */
 public interface IPmsAttentionService {
     /**

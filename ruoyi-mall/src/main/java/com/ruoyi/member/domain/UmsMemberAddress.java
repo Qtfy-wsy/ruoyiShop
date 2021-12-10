@@ -13,8 +13,7 @@ import java.util.Date;
 /**
  * 用户收货地址对象 ums_member_address
  *
- * @author 魔金商城
- * @date 2020-07-25
+ * @author 商城
  */
 @Data
 public class UmsMemberAddress extends BaseEntity {

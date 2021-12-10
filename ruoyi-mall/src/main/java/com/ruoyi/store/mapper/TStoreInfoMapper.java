@@ -262,6 +262,15 @@ public interface TStoreInfoMapper {
     TStoreInfo queryOneOnSaleStore(@Param("skuId") String skuId, @Param("cityId") long cityId);
 
     /**
+     * 查找一个在售门店(根据经纬度距离排序)
+     *
+     * @param onSaleStoreQueryParam 在售门店搜索参数
+     * @return 门店信息
+     */
+
+    TStoreInfo queryOneOnSaleStoreByCoordinate(OnSaleStoreQueryParam onSaleStoreQueryParam);
+
+    /**
      * 查找在售门店
      *
      * @param skuId  单品id
@@ -270,15 +279,6 @@ public interface TStoreInfoMapper {
      */
 
     List<TStoreInfo> queryOnSaleStoreList(@Param("skuId") String skuId, @Param("cityId") long cityId);
-
-    /**
-     * 查找一个在售门店(根据经纬度距离排序)
-     *
-     * @param onSaleStoreQueryParam 在售门店搜索参数
-     * @return 门店信息
-     */
-
-    TStoreInfo queryOneOnSaleStoreByCoordinate(OnSaleStoreQueryParam onSaleStoreQueryParam);
 
     /**
      * 查找在售门店(根据经纬度距离排序)

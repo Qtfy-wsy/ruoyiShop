@@ -7,8 +7,7 @@ import java.util.List;
 /**
  * 运费方式关联的区域Service接口
  *
- * @author 魔金商城
- * @date 2020-07-24
+ * @author 商城
  */
 public interface IPmsShippingMethodAreaService {
     /**

@@ -11,7 +11,7 @@ import lombok.Data;
 import java.time.LocalDateTime;
 
 /**
- * @author 魔金商城 on 2017/6/12.
+ * @author 商城
  */
 @Data
 @ApiModel(description = "员工实体")

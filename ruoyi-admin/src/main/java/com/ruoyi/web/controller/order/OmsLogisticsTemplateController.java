@@ -23,7 +23,7 @@ import java.util.List;
 /**
  * 物流模版Controller
  *
- * @author 魔金商城
+ * @author 商城
  * @date 2020-07-24
  */
 @RestController

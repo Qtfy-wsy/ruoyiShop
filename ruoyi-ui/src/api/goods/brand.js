@@ -38,7 +38,7 @@ export function updateBrand(data) {
 // 删除品牌
 export function delBrand(id) {
   return request({
-    url: '/goods/brand/' + id,
+    url: '/goods/brand/brand/' + id,
     method: 'delete'
   })
 }

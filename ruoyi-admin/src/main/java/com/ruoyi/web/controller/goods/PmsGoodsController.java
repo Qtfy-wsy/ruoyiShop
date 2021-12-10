@@ -1,5 +1,6 @@
 package com.ruoyi.web.controller.goods;
 
+import com.alibaba.fastjson.JSON;
 import com.ruoyi.common.annotation.Log;
 import com.ruoyi.common.core.controller.BaseController;
 import com.ruoyi.common.core.domain.AjaxResult;
@@ -132,7 +133,8 @@ public class PmsGoodsController extends BaseController {
     @PostMapping("/spu")
     @PreAuthorize("@ss.hasPermi('goods:goods:add')")
     @Log(title = "商品", businessType = BusinessType.INSERT)
-    public int addSpu(@RequestBody PmsGoods spu) {
+    public int addSpu(@RequestBody String param) {
+        PmsGoods spu = JSON.parseObject(param, PmsGoods.class);
         spu.setStoreName("平台自营");
         return pmsGoodsService.insertPmsGoods(spu.setDefaultValuesForAdd(AdminLoginUtils.getInstance().getManagerName(), CommonConstant.ADMIN_STOREID));
     }

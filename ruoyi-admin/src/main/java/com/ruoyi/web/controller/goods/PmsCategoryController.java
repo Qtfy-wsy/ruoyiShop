@@ -1,5 +1,6 @@
 package com.ruoyi.web.controller.goods;
 
+import com.alibaba.fastjson.JSON;
 import com.ruoyi.common.annotation.Log;
 import com.ruoyi.common.core.controller.BaseController;
 import com.ruoyi.common.core.domain.AjaxResult;
@@ -62,7 +63,8 @@ public class PmsCategoryController extends BaseController {
      */
     @PostMapping("/category")
     @PreAuthorize("@ss.hasPermi('goods:category:add')")
-    public int addCategory(@RequestBody PmsCategory category) {
+    public int addCategory(@RequestBody String param) {
+        PmsCategory category = JSON.parseObject(param, PmsCategory.class);
         return pmsCategoryService.addCategory(category.setDefaultsForAdd(AdminLoginUtils.getInstance().getManagerName()));
     }
 

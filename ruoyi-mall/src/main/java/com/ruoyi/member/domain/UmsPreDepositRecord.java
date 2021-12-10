@@ -172,6 +172,9 @@ public class UmsPreDepositRecord extends BaseEntity {
      */
     @JsonIgnore
     public boolean isCurrentMoneyMinus() {
+        if (this.currentMoney == null){
+            this.currentMoney = new BigDecimal("0");
+        }
         return this.currentMoney.intValue() < 0;
     }
 

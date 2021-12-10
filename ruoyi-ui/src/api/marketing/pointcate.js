@@ -1,7 +1,7 @@
 /**
  * 积分商城分类路由
  *
- * @author 魔金商城 created on 2019/7/26
+ * @author 商城
  */
 
 import request from '@/utils/request';

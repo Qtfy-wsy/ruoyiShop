@@ -33,6 +33,8 @@ public class PmsAttention extends BaseEntity {
     @Excel(name = "会员id")
     private Long customerId;
 
+    private Long storeId;
+
     /**
      * 商品id
      */

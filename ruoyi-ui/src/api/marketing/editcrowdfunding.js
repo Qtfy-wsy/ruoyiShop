@@ -6,7 +6,7 @@ import request from '@/utils/request';
  */
 export function querySimpleSpus(params) {
   return request({
-    url: 'crowdfunding/spus',
+    url: '/goods/goods/list',
     method: 'get',
     params: params
   })

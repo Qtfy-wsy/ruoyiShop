@@ -1,5 +1,6 @@
 package com.ruoyi.web.controller.sms;
 
+import com.alibaba.fastjson.JSON;
 import com.ruoyi.common.annotation.Log;
 import com.ruoyi.common.core.controller.BaseController;
 import com.ruoyi.common.core.domain.AjaxResult;
@@ -18,8 +19,6 @@ import java.util.List;
 /**
  * 首页轮播广告Controller
  *
- * @author é­éåå
- * @date 2020-08-06
  */
 @RestController
 @RequestMapping("/sms/SmsHomeAdvertise")
@@ -67,7 +66,8 @@ public class SmsHomeAdvertiseController extends BaseController {
     @PreAuthorize("@ss.hasPermi('sms:SmsHomeAdvertise:add')")
     @Log(title = "首页轮播广告", businessType = BusinessType.INSERT)
     @PostMapping
-    public AjaxResult add(@RequestBody SmsHomeAdvertise smsHomeAdvertise) {
+    public AjaxResult add(@RequestBody String param) {
+        SmsHomeAdvertise smsHomeAdvertise = JSON.parseObject(param,SmsHomeAdvertise.class);
         smsHomeAdvertise.setStoreId(CommonConstant.ADMIN_STOREID);
         return toAjax(smsHomeAdvertiseService.insertSmsHomeAdvertise(smsHomeAdvertise));
     }

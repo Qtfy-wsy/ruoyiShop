@@ -1,5 +1,6 @@
 package com.ruoyi.web.controller.member;
 
+import com.alibaba.fastjson.JSON;
 import com.ruoyi.common.annotation.Log;
 import com.ruoyi.common.core.controller.BaseController;
 import com.ruoyi.common.core.domain.AjaxResult;
@@ -42,8 +43,7 @@ import java.util.List;
 /**
  * 会员Controller
  *
- * @author 魔金商城
- * @date 2020-07-25
+ * @author 商城
  */
 @RestController
 @RequestMapping("/member/UmsMember")
@@ -166,7 +166,8 @@ public class UmsMemberController extends BaseController {
     @PreAuthorize("@ss.hasPermi('member:UmsMember:add')")
     @Log(title = "会员", businessType = BusinessType.INSERT)
     @PostMapping
-    public AjaxResult add(@RequestBody UmsMember umsMember) {
+    public AjaxResult add(@RequestBody String param) {
+        UmsMember umsMember = JSON.parseObject(param,UmsMember.class);
         umsMember.setCreateBy(SecurityUtils.getUsername());
         umsMember.setSource("4");
         return toAjax(umsMemberService.addCustomer(umsMember));

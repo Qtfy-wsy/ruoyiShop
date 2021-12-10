@@ -21,8 +21,6 @@ import java.util.List;
 /**
  * 人气推荐商品Controller
  *
- * @author é­éåå
- * @date 2020-08-06
  */
 @RestController
 @RequestMapping("/sms/SmsHomeRecommendProduct")

@@ -1,7 +1,7 @@
 /**
  * 又拍云设置路由
  *
- * @author 魔金商城 created on 2019/5/28
+ * @author 商城
  */
 
 import request from '@/utils/request';

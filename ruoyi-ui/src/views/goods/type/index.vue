@@ -164,7 +164,7 @@
 </template>
 
 <script>
-import { listType, getType, delType, addType, updateType, exportType,checkTypeAssociated } from "@/api/goods/type";
+import { listType, getType, delType, addType, updateType, exportType,checkTypeAssociated,queryThirdCategory } from "@/api/goods/type";
 
 export default {
   name: "Type",
@@ -256,6 +256,7 @@ export default {
     /** 新增按钮操作 */
     handleAdd() {
    //   this.reset();
+      this.form.attributes = [{name: '', attributeValues: [], sort: '', addAttrValueShow: false}];
       this.open = true;
       this.title = "添加商品类型";
     },

@@ -134,18 +134,28 @@
         </el-form-item>
         <el-form-item label="积分类型">
           <el-select v-model="form.type" placeholder="请选择积分类型">
-            <el-option label="请选择字典生成" value="" />
+            <el-option
+              v-for="dict in statusOptions"
+              :key="dict.dictValue"
+              :label="dict.dictLabel"
+              :value="dict.dictValue"
+            />
           </el-select>
         </el-form-item>
         <el-form-item label="积分纪录来源类型">
           <el-select v-model="form.sourceType" placeholder="请选择积分纪录来源类型">
-            <el-option label="请选择字典生成" value="" />
+            <el-option
+              v-for="dict in status"
+              :key="dict.dictValue"
+              :label="dict.dictLabel"
+              :value="dict.dictValue"
+            />
           </el-select>
         </el-form-item>
         <el-form-item label="积分数量" prop="point">
           <el-input v-model="form.point" placeholder="请输入积分数量 正数表示增加，负数表示减少" />
         </el-form-item>
-        <el-form-item label="签到时间，用于防止重复签到" prop="signData">
+        <el-form-item label="签到时间" prop="signData">
           <el-date-picker clearable size="small" style="width: 200px"
             v-model="form.signData"
             type="date"
@@ -181,6 +191,10 @@ export default {
       total: 0,
       // 会员积分详情表格数据
       UmsMemberPointList: [],
+      //积分类型
+      statusOptions: [],
+      //积分纪录来源类型
+      status: [],
       // 弹出层标题
       title: "",
       // 是否显示弹出层
@@ -208,6 +222,12 @@ export default {
   },
   created() {
     this.getList();
+    this.getDicts("jifen_type").then(response => {
+      this.statusOptions = response.data;
+    });
+    this.getDicts("jifen_source").then(response => {
+      this.status = response.data;
+    });
   },
   methods: {
     /** 查询会员积分详情列表 */

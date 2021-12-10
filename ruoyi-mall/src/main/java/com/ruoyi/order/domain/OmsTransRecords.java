@@ -63,6 +63,10 @@ public class OmsTransRecords extends BaseEntity {
     @Excel(name = "支付时间", width = 30, dateFormat = "yyyy-MM-dd")
     private Date payTime;
 
+    private Long OmsTransRecords;
+
+    private Long storeId;
+
     @Tolerate
     public OmsTransRecords() {
     }
