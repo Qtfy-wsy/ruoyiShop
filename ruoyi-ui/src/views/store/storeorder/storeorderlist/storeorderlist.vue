@@ -181,7 +181,7 @@
 
     <el-dialog title="确认付款" :visible.sync="confirmShow">
       <el-alert title="注意！ 确认付款后订单状态将修改为待发货，你确定要修改吗？" style="margin-bottom: 20px" type="warning" :closable="false"
-                show-icon></el-alert>
+                show-icon/>
       <el-form :model="confirmReason" :rules="confirmRules" ref="confirmForm" label-position="right"
                label-width="100px">
         <el-form-item prop="reason">
@@ -282,10 +282,30 @@
         searchTimeValue: null,// 搜索时间
         oldPrice: 0, // 原始价格 修改订单金额的时候使用
         freightPrice: 0, //运费 修改订单金额的时候使用
+        //订单类型
+        orderTypeOptions: [],
+        //订单来源
+        sourceOptions: [],
+        //预售订单状态
+        presaleStatusOptions: [],
+        //订单状态
+        statusOptions: []
       }
     },
     created() {
-      this.getList()
+      this.getList();
+      this.getDicts("order_type").then(response => {
+        this.orderTypeOptions = response.data;
+      });
+      this.getDicts("order_source").then(response => {
+        this.sourceOptions = response.data;
+      });
+      this.getDicts("pre_sale_status").then(response => {
+        this.presaleStatusOptions = response.data;
+      });
+      this.getDicts("order_status").then(response => {
+        this.statusOptions = response.data;
+      });
     },
     methods: {
       getList() {
