@@ -77,7 +77,7 @@ public class TStoreInfoController extends BaseController {
 	 */
 	@PreAuthorize("@ss.hasPermi('sms:TStoreInfo:delete')")
 	@Log(title = "店铺信息", businessType = BusinessType.DELETE)
-	@DeleteMapping("/{id}")
+	@DeleteMapping("/TStoreInfo/{id}")
 	public AjaxResult deleteTStoreInfoById(@PathVariable Long id) {
 		return toAjax(tStoreInfoService.deleteTStoreInfoById(id));
 	}

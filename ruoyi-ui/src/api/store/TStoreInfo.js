@@ -38,7 +38,7 @@ export function updateTStoreInfo(data) {
 // 删除店铺信息
 export function delTStoreInfo(id) {
   return request({
-    url: '/store/TStoreInfo/' + id,
+    url: '/store/TStoreInfo/TStoreInfo/' + id,
     method: 'delete'
   })
 }
