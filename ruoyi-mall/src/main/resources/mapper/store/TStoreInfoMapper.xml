@@ -57,7 +57,6 @@
     <select id="selectTStoreInfoList" parameterType="com.ruoyi.store.domain.TStoreInfo" resultMap="TStoreInfoResult">
         <include refid="selectTStoreInfoVo"/>
         <where>
-            effective_time >= sysdate(),
             <if test="storeName != null  and storeName != ''">and store_name like concat('%', #{storeName}, '%')</if>
             <if test="status != null  and status != ''">and status = #{status}</if>
             <if test="companyName != null  and companyName != ''">and company_name like concat('%', #{companyName},
@@ -89,6 +88,7 @@
             <if test="serviceQq != null  and serviceQq != ''">and service_qq = #{serviceQq}</if>
             <if test="reason != null  and reason != ''">and reason = #{reason}</if>
             <if test="aveScore != null ">and ave_score = #{aveScore}</if>
+            <if test="effectiveTime != null ">and effective_time >= sysdate()</if>
             <if test="modifyTime != null ">and modify_time = #{modifyTime}</if>
             <if test="delTime != null ">and del_time = #{delTime}</if>
             <if test="type != null  and type != ''">and type = #{type}</if>

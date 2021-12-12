@@ -239,4 +239,18 @@ public interface PmsBrandMapper {
      */
 
     int passCustomBrandByStoreId(long storeId);
+
+    /**
+     * 分页查询待审核品牌
+     * @param pmsBrand 品牌
+     * @return 分页数据
+     */
+    List<PmsBrand> queryBrandToBeAudit(PmsBrand pmsBrand);
+
+    /**
+     * 分页查询自定义品牌
+     * @param pmsBrand 自定义品牌
+     * @return 分页数据
+     */
+    List<PmsBrand> queryMySelfBrands(PmsBrand pmsBrand);
 }

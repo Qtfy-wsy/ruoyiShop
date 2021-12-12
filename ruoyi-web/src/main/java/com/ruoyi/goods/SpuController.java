@@ -8,7 +8,6 @@ import com.ruoyi.appletsutil.UnAuthorizedException;
 import com.ruoyi.common.annotation.UnAuth;
 import com.ruoyi.common.core.domain.AjaxResult;
 import com.ruoyi.common.core.redis.RedisCache;
-import com.ruoyi.common.enums.StatusEnum;
 import com.ruoyi.common.utils.bean.WeChatAppletCodeRequest;
 import com.ruoyi.goods.domain.*;
 import com.ruoyi.goods.service.*;
@@ -30,9 +29,9 @@ import java.util.Objects;
  * 商品控制器
  */
 @RestController
-@Api(description = "商品接口")
+@Api("商品接口")
 @Slf4j
-public class SpuController {
+public class SpuController{
 
     /**
      * 注入评论服务接口

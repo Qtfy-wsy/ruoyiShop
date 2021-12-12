@@ -6,7 +6,7 @@ import request from '@/utils/request';
  */
 export function queryAllStoreToBeAuditdSpus(query) {
   return request({
-    url: 'goodsaudit',
+    url: '/goods/goods/goodsaudit',
     method: 'get',
     params: query
   })

@@ -7,7 +7,7 @@ import request from '@/utils/request';
  */
 export function queryMySelfBrands(query) {
   return request({
-    url: 'custombrandaudit',
+    url: '/goods/brand/custombrandaudit',
     method: 'get',
     params: query
   })

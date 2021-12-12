@@ -43,6 +43,29 @@ public class PmsBrandController extends BaseController {
     }
 
     /**
+     * 分页查询待审核品牌
+     */
+    @PreAuthorize("@ss.hasPermi('goods:brand:list')")
+    @GetMapping("/brandaudit")
+    public TableDataInfo queryBrandToBeAudit(PmsBrand pmsBrand) {
+        startPage();
+        List<PmsBrand> list = pmsBrandService.queryBrandToBeAudit(pmsBrand);
+        return getDataTable(list);
+    }
+
+    /**
+     * 分页查询自定义品牌
+     */
+    @PreAuthorize("@ss.hasPermi('goods:brand:list')")
+    @GetMapping("/custombrandaudit")
+    public TableDataInfo queryMySelfBrands(PmsBrand pmsBrand) {
+        startPage();
+        List<PmsBrand> list = pmsBrandService.queryMySelfBrands(pmsBrand);
+        return getDataTable(list);
+    }
+
+
+    /**
      * 导出品牌列表
      */
     @PreAuthorize("@ss.hasPermi('goods:brand:export')")
@@ -103,4 +126,5 @@ public class PmsBrandController extends BaseController {
     public AjaxResult deletePmsBrandById(@PathVariable Long id) {
         return toAjax(pmsBrandService.deletePmsBrandById(id));
     }
+
 }

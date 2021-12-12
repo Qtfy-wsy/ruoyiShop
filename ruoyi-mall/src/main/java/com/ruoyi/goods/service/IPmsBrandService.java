@@ -8,8 +8,7 @@ import java.util.List;
 /**
  * 品牌Service接口
  *
- * @author 魔金商城
- * @date 2020-07-24
+ * @author 商城
  */
 public interface IPmsBrandService {
     /**
@@ -220,4 +219,18 @@ public interface IPmsBrandService {
      * @return 分页数据
      */
     PageHelper queryStoreBrandsForPage(PageHelper<PmsBrand> pageHelper, long storeId, String name);
+
+    /**
+     * 分页查询待审核品牌
+     * @param pmsBrand 品牌
+     * @return 分页数据
+     */
+    List<PmsBrand> queryBrandToBeAudit(PmsBrand pmsBrand);
+
+    /**
+     * 分页查询自定义品牌
+     * @param pmsBrand 自定义品牌
+     * @return 分页数据
+     */
+    List<PmsBrand> queryMySelfBrands(PmsBrand pmsBrand);
 }

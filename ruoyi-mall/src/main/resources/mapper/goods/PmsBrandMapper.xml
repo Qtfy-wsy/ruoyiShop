@@ -280,7 +280,7 @@
     <select id="queryCustomBrandByStatus" parameterType="java.util.Map" resultMap="brand">
         SELECT lb.id,lb.name,lb.nick_name AS nick_name,lb.url,lb.certificat_url, lsi.store_name AS storeName FROM
         pms_brand AS lb JOIN t_store_info AS lsi ON lb.store_id=lsi.id
-        WHERE lb.`status` = '0' AND lsi.`status` = '2' AND lb. lsi.del_flag = '0'
+        WHERE lb.`status` = '0' AND lsi.`status` = '2' AND lsi.del_flag = '0'
         <if test='brandName != null and !"".equals(brandName)'>
             AND lb.`name` LIKE CONCAT(CONCAT('%',#{brandName}),'%')
         </if>
@@ -292,7 +292,7 @@
     </select>
     <select id="queryCustomBrandCount" parameterType="java.util.Map" resultType="java.lang.Integer">
         SELECT COUNT(1) FROM pms_brand AS lb JOIN t_store_info AS lsi ON lb.store_id=lsi.id
-        WHERE lb.`status` = '0' AND lsi.`status` = '2' AND lb. lsi.del_flag = '0'
+        WHERE lb.`status` = '0' AND lsi.`status` = '2' AND lsi.del_flag = '0'
         <if test='brandName != null and !"".equals(brandName)'>
             AND lb.`name` LIKE CONCAT(CONCAT('%',#{brandName}),'%')
         </if>
@@ -339,6 +339,32 @@
     <select id="selectPmsBrandById" parameterType="Long" resultMap="PmsBrandResult">
         <include refid="selectPmsBrandVo"/>
         where id = #{id}
+    </select>
+    <select id="queryBrandToBeAudit" resultMap="PmsBrandResult">
+        SELECT lb.name,lba.id AS id,lb.url AS url,lb.certificat_url,lba.store_id,
+        lba.brand_id,lba.status,lb.nick_name AS nickName,lba.reason, lba.create_time,
+        lsi.store_name AS storeName
+        FROM pms_brand_apply AS lba JOIN t_store_info AS lsi ON lba.store_id = lsi.id JOIN pms_brand AS lb ON
+        lb.id = lba.brand_id WHERE lsi.`status` = '2' AND lba.`status` = '0'
+        <if test='name != null and !"".equals(name)'>
+            AND lb.name LIKE CONCAT(CONCAT('%',#{name}),'%')
+        </if>
+        <if test='storeName != null and !"".equals(storeName)'>
+            AND lsi.store_Name LIKE CONCAT(CONCAT('%',#{storeName}),'%')
+        </if>
+        ORDER BY lb.create_time DESC
+    </select>
+    <select id="queryMySelfBrands" resultMap="PmsBrandResult">
+        SELECT lb.id,lb.name,lb.nick_name AS nick_name,lb.url,lb.certificat_url, lsi.store_name AS storeName FROM
+        pms_brand AS lb JOIN t_store_info AS lsi ON lb.store_id=lsi.id
+        WHERE lb.`status` = '0' AND lsi.`status` = '2' AND lsi.del_flag = '0'
+        <if test='name != null and !"".equals(name)'>
+            AND lb.`name` LIKE CONCAT(CONCAT('%',#{name}),'%')
+        </if>
+        <if test='storeName != null and !"".equals(storeName)'>
+            AND lsi.store_name LIKE CONCAT(CONCAT('%',#{storeName}),'%')
+        </if>
+        order by lb.create_time desc
     </select>
 
     <insert id="insertPmsBrand" parameterType="PmsBrand" useGeneratedKeys="true" keyProperty="id">

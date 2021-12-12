@@ -367,4 +367,8 @@ public interface PmsGoodsMapper {
      */
 
     int updateSpuLogisticsTemplateId(Map<String, Object> params);
+
+    List<PmsGoods> queryAllStoreToBeAuditdSpus();
+
+    int queryAllStoreToBeAuditdSpusCount(Map<String, Object> params);
 }

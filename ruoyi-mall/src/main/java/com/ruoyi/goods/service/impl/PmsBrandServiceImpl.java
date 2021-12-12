@@ -21,8 +21,7 @@ import java.util.stream.Collectors;
 /**
  * 品牌Service业务层处理
  *
- * @author 魔金商城
- * @date 2020-07-24
+ * @author 商城
  */
 @Service
 public class PmsBrandServiceImpl implements IPmsBrandService {
@@ -278,6 +277,16 @@ public class PmsBrandServiceImpl implements IPmsBrandService {
         params.put("name", name);
         params.put("storeId", storeId);
         return pageHelper.setListDates(brandMapper.queryStoreBrandsForPage(pageHelper.getQueryParams(params, brandMapper.queryStoreBrandsForPageCount(params))));
+    }
+
+    @Override
+    public List<PmsBrand> queryBrandToBeAudit(PmsBrand pmsBrand) {
+        return brandMapper.queryBrandToBeAudit(pmsBrand);
+    }
+
+    @Override
+    public List<PmsBrand> queryMySelfBrands(PmsBrand pmsBrand) {
+        return brandMapper.queryMySelfBrands(pmsBrand);
     }
 
     /**

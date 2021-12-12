@@ -300,7 +300,7 @@
 
     <select id="querySpus" parameterType="java.util.Map" resultMap="spu">
         select * from pms_goods
-        where  store_id = #{storeId}
+        where store_id = #{storeId}
         <if test="name != null and name != '' ">
             AND name like CONCAT(CONCAT('%', #{name}),'%')
         </if>
@@ -332,10 +332,10 @@
             AND shelves_status =#{shelvesStatus}
         </if>
         <if test="maxPrice != null  and  maxPrice!='-1'">
-            AND  #{maxPrice} >=price
+            AND #{maxPrice} >=price
         </if>
         <if test="minPrice != null  and  minPrice!='-1'">
-            AND  price>= #{minPrice}
+            AND price>= #{minPrice}
         </if>
         <if test="status != null  and  status!='-1'">
             AND status =#{status}
@@ -344,7 +344,7 @@
             AND is_virtual =#{isVirtual}
         </if>
         <if test="typeIds != null and typeIds.size > 0 ">
-            AND  type_id in
+            AND type_id in
             <trim prefix="(" suffix=")">
                 <foreach collection="typeIds" index="index" item="id" separator=",">
                     #{id}
@@ -352,7 +352,7 @@
             </trim>
         </if>
         <if test="brandIds != null and brandIds.size > 0 ">
-            AND    brand_id in
+            AND brand_id in
             <trim prefix="(" suffix=")">
                 <foreach collection="brandIds" index="index" item="id" separator=",">
                     #{id}
@@ -360,7 +360,7 @@
             </trim>
         </if>
         <if test="orderBys != null  and  orderBys==1 ">
-          order by create_time desc
+            order by create_time desc
         </if>
         <if test="orderBys != null  and  orderBys==2">
             order by price desc
@@ -373,7 +373,7 @@
 
     <select id="querySpuCount" parameterType="java.util.Map" resultType="java.lang.Integer">
         select count(1) from pms_goods
-        where  store_id = #{storeId}
+        where store_id = #{storeId}
         <if test="name != null and name != '' ">
             AND name like CONCAT(CONCAT('%', #{name}),'%')
         </if>
@@ -412,10 +412,10 @@
             AND is_virtual =#{isVirtual}
         </if>
         <if test="maxPrice != null  and  maxPrice!='-1'">
-            AND  #{maxPrice} >=price
+            AND #{maxPrice} >=price
         </if>
         <if test="minPrice != null  and  minPrice!='-1'">
-            AND  price>= #{minPrice}
+            AND price>= #{minPrice}
         </if>
         <if test="status != null  and  status!='-1'">
             AND status =#{status}
@@ -424,7 +424,7 @@
             AND is_virtual =#{isVirtual}
         </if>
         <if test="typeIds != null and typeIds.size > 0 ">
-            AND  type_id in
+            AND type_id in
             <trim prefix="(" suffix=")">
                 <foreach collection="typeIds" index="index" item="id" separator=",">
                     #{id}
@@ -432,7 +432,7 @@
             </trim>
         </if>
         <if test="brandIds != null and brandIds.size > 0 ">
-            AND   brand_id in
+            AND brand_id in
             <trim prefix="(" suffix=")">
                 <foreach collection="brandIds" index="index" item="id" separator=",">
                     #{id}
@@ -522,7 +522,7 @@
 
     <select id="queryAllStoreSpusCount" parameterType="java.util.Map" resultType="java.lang.Integer">
         select count(1) from pms_goods join t_store_info on pms_goods.store_id = t_store_info.id where
-         1=1
+        1=1
         <if test="storeName != null and storeName != '' ">
             AND t_store_info.store_name = #{storeName}
         </if>
@@ -596,17 +596,25 @@
     </select>
 
     <select id="querySpuByThirdCateId" parameterType="java.lang.Long" resultType="java.lang.Integer">
-        SELECT count(1) FROM pms_goods WHERE del_flag='0' AND third_cate_id=#{ThirdCateId}
+        SELECT count(1)
+        FROM pms_goods
+        WHERE del_flag = '0'
+          AND third_cate_id = #{ThirdCateId}
     </select>
 
 
     <select id="querySpuCountForEs" resultType="java.lang.Integer">
-        select count(1) from pms_goods  where del_flag = '0'
+        select count(1)
+        from pms_goods
+        where del_flag = '0'
     </select>
 
 
     <select id="querySpuForEs" parameterType="java.util.Map" resultMap="spu">
-        select id from pms_goods  where del_flag = '0'   limit #{start},#{size}
+        select id
+        from pms_goods
+        where del_flag = '0'
+        limit #{start},#{size}
     </select>
 
     <update id="updateCommission" parameterType="com.ruoyi.goods.domain.PmsGoods">
@@ -624,11 +632,15 @@
     </update>
 
     <update id="auditPass" parameterType="java.lang.Long">
-        update pms_goods set status ='0' where id = #{spuId}
+        update pms_goods
+        set status ='0'
+        where id = #{spuId}
     </update>
 
     <update id="auditRefuse" parameterType="java.lang.Long">
-        update pms_goods set status ='1' where id = #{spuId}
+        update pms_goods
+        set status ='1'
+        where id = #{spuId}
     </update>
 
 
@@ -659,16 +671,20 @@
 
     </update>
     <select id="querySpuCountByTypeId" parameterType="java.lang.Long" resultType="java.lang.Integer">
-        select COUNT(1) from pms_goods where type_id=#{typeId}
+        select COUNT(1)
+        from pms_goods
+        where type_id = #{typeId}
     </select>
     <select id="querySeoBySpuId" parameterType="java.lang.Long" resultMap="spu">
-        select seo_title,seo_keywords,seo_desc from pms_goods where id=#{spuId};
+        select seo_title, seo_keywords, seo_desc
+        from pms_goods
+        where id = #{spuId};
     </select>
 
 
     <select id="queryStoreSpuList" parameterType="java.util.Map" resultMap="storeSpu">
         select id,name,url from pms_goods
-        where  store_id = 0 and is_virtual='0'
+        where store_id = 0 and is_virtual='0'
         <if test="name != null and name != '' ">
             AND name like CONCAT(CONCAT('%', #{name}),'%')
         </if>
@@ -678,7 +694,7 @@
 
     <select id="queryStoreSpuListCount" parameterType="java.util.Map" resultType="java.lang.Integer">
         select count(1) from pms_goods
-        where  store_id = 0 and is_virtual='0'
+        where store_id = 0 and is_virtual='0'
         <if test="name != null and name != '' ">
             AND name like CONCAT(CONCAT('%', #{name}),'%')
         </if>
@@ -707,7 +723,7 @@
 
     <select id="queryAllSpusWithoutStoreCategory" parameterType="java.util.Map" resultMap="spu">
         select * from pms_goods
-        where  store_id = #{storeId} and store_tcate_id = 0
+        where store_id = #{storeId} and store_tcate_id = 0
         <if test="name != null and name != '' ">
             AND name like CONCAT(CONCAT('%', #{name}),'%')
         </if>
@@ -720,7 +736,7 @@
 
     <select id="queryAllSpusWithoutStoreCategoryCount" parameterType="java.util.Map" resultType="java.lang.Integer">
         select count(1) from pms_goods
-        where  store_id = #{storeId} and store_tcate_id = 0
+        where store_id = #{storeId} and store_tcate_id = 0
         <if test="name != null and name != '' ">
             AND name like CONCAT(CONCAT('%', #{name}),'%')
         </if>
@@ -731,7 +747,7 @@
 
     <select id="queryAllSpusByStoreCategory" parameterType="java.util.Map" resultMap="spu">
         select * from pms_goods
-        where  store_id = #{storeId} and store_tcate_id = #{storeTcateId}
+        where store_id = #{storeId} and store_tcate_id = #{storeTcateId}
         <if test="name != null and name != '' ">
             AND name like CONCAT(CONCAT('%', #{name}),'%')
         </if>
@@ -744,7 +760,7 @@
 
     <select id="queryAllSpusByStoreCategoryCount" parameterType="java.util.Map" resultType="java.lang.Integer">
         select count(1) from pms_goods
-        where  store_id = #{storeId} and store_tcate_id = #{storeTcateId}
+        where store_id = #{storeId} and store_tcate_id = #{storeTcateId}
         <if test="name != null and name != '' ">
             AND name like CONCAT(CONCAT('%', #{name}),'%')
         </if>
@@ -754,8 +770,10 @@
     </select>
 
     <select id="queryAllSpuIdByStoreCategory" parameterType="java.util.Map" resultMap="spu">
-        select id from pms_goods
-        where  store_id = #{storeId} and store_tcate_id = #{storeTcateId}
+        select id
+        from pms_goods
+        where store_id = #{storeId}
+          and store_tcate_id = #{storeTcateId}
     </select>
 
     <update id="updateSpuWithStoreCategory" parameterType="java.util.Map">
@@ -771,7 +789,7 @@
                 store_tcate_id = #{storeTcateId}
             </if>
         </set>
-        where  store_id = #{storeId} and
+        where store_id = #{storeId} and
         id in
         <foreach collection="ids" item="id" index="index" open="(" separator="," close=")">
             #{id}
@@ -780,7 +798,7 @@
 
     <update id="cancelSpuWithStoreCategory" parameterType="java.util.Map">
         update pms_goods set store_fcate_id = 0,store_scate_id = 0,store_tcate_id = 0
-        where  store_id = #{storeId} and
+        where store_id = #{storeId} and
         id in
         <foreach collection="ids" item="id" index="index" open="(" separator="," close=")">
             #{id}
@@ -788,8 +806,12 @@
     </update>
 
     <update id="cancelSpuWithStoreCategoryByStoreTcateId" parameterType="java.util.Map">
-        update pms_goods set store_fcate_id = 0,store_scate_id = 0,store_tcate_id = 0
-        where  store_id = #{storeId} and store_tcate_id = #{storeTcateId}
+        update pms_goods
+        set store_fcate_id = 0,
+            store_scate_id = 0,
+            store_tcate_id = 0
+        where store_id = #{storeId}
+          and store_tcate_id = #{storeTcateId}
     </update>
 
     <select id="querySpuByIdsForExport" parameterType="java.util.Map" resultMap="spu">
@@ -817,11 +839,47 @@
     </select>
 
     <update id="updateSpuLogisticsTemplateId" parameterType="java.util.Map">
-        update pms_goods set logistics_template_id = #{defaultLogisticsTemplateId}
-        where  store_id = #{storeId} and logistics_template_id = #{logisticsTemplateId}
+        update pms_goods
+        set logistics_template_id = #{defaultLogisticsTemplateId}
+        where store_id = #{storeId}
+          and logistics_template_id = #{logisticsTemplateId}
     </update>
     <sql id="selectPmsGoodsVo">
-        select id, name, subtitle, price, pc_desc, mobile_desc, seo_title, seo_keywords, seo_desc, store_id, first_cate_id, second_cate_id, third_cate_id, type_id, brand_id, store_fcate_id, store_scate_id, store_tcate_id, url, del_flag, create_name, modify_name, del_name, create_time, modify_time, del_time, commission_rate, s_commission_rate, status, shelves_status, is_virtual, video, video_pic, logistics_template_id from pms_goods
+        select id,
+               name,
+               subtitle,
+               price,
+               pc_desc,
+               mobile_desc,
+               seo_title,
+               seo_keywords,
+               seo_desc,
+               store_id,
+               first_cate_id,
+               second_cate_id,
+               third_cate_id,
+               type_id,
+               brand_id,
+               store_fcate_id,
+               store_scate_id,
+               store_tcate_id,
+               url,
+               del_flag,
+               create_name,
+               modify_name,
+               del_name,
+               create_time,
+               modify_time,
+               del_time,
+               commission_rate,
+               s_commission_rate,
+               status,
+               shelves_status,
+               is_virtual,
+               video,
+               video_pic,
+               logistics_template_id
+        from pms_goods
     </sql>
 
     <select id="selectPmsGoodsList" parameterType="PmsGoods" resultMap="PmsGoodsResult">
@@ -835,7 +893,7 @@
             <if test="commissionRate != null ">and commission_rate = #{commissionRate}</if>
             <if test="sCommissionRate != null ">and s_commission_rate = #{sCommissionRate}</if>
             <if test="status != null  and status != ''">and status = #{status}</if>
-            <if test="storeId != null ">  and store_id = #{storeId} </if>
+            <if test="storeId != null ">and store_id = #{storeId}</if>
             <if test="isVirtual != null  and isVirtual != ''">and is_virtual = #{isVirtual}</if>
         </where>
     </select>
@@ -843,6 +901,70 @@
     <select id="selectPmsGoodsById" parameterType="Long" resultMap="PmsGoodsResult">
         <include refid="selectPmsGoodsVo"/>
         where id = #{id}
+    </select>
+    <select id="queryAllStoreToBeAuditdSpus" resultType="com.ruoyi.goods.domain.PmsGoods">
+        select pms_goods.*, t_store_info.store_name from pms_goods join t_store_info on pms_goods.store_id =
+        t_store_info.id
+        where 1=1
+       /* AND pms_goods.status != '0'*/
+
+        <if test="storeName != null and storeName != '' ">
+            AND t_store_info.store_name = #{storeName}
+        </if>
+
+        <if test="name != null and name != '' ">
+            AND pms_goods.name like CONCAT(CONCAT('%', #{name}),'%')
+        </if>
+        <if test="id != null and id != '' ">
+            AND pms_goods.id = #{id}
+        </if>
+
+        <if test="firstCateId != null and firstCateId !=0">
+            AND pms_goods.first_cate_id = #{firstCateId}
+        </if>
+        <if test="secondCateId != null and secondCateId!=0">
+            AND pms_goods.second_cate_id = #{secondCateId}
+        </if>
+        <if test="thirdCateId != null  and  thirdCateId!=0">
+            AND pms_goods.third_cate_id =#{thirdCateId}
+        </if>
+        <if test="shelvesStatus != null  and  shelvesStatus!='-1'">
+            AND pms_goods.shelves_status =#{shelvesStatus}
+        </if>
+        <if test="isVirtual != null  and  isVirtual!=-1">
+            AND pms_goods.is_virtual =#{isVirtual}
+        </if>
+        order by create_time desc
+    </select>
+    <select id="queryAllStoreToBeAuditdSpusCount" resultType="java.lang.Integer">
+        select count(1) from pms_goods join t_store_info on pms_goods.store_id = t_store_info.id where
+        1=1
+         and   pms_goods.status != '0'
+        <if test="storeName != null and storeName != '' ">
+            AND t_store_info.store_name = #{storeName}
+        </if>
+
+        <if test="name != null and name != '' ">
+            AND pms_goods.name like CONCAT(CONCAT('%', #{name}),'%')
+        </if>
+        <if test="id != null and id != '' ">
+            AND pms_goods.id = #{id}
+        </if>
+        <if test="firstCateId != null and firstCateId !=0">
+            AND pms_goods.first_cate_id = #{firstCateId}
+        </if>
+        <if test="secondCateId != null and secondCateId!=0">
+            AND pms_goods.second_cate_id = #{secondCateId}
+        </if>
+        <if test="thirdCateId != null  and  thirdCateId!=0">
+            AND pms_goods.third_cate_id =#{thirdCateId}
+        </if>
+        <if test="shelvesStatus != null  and  shelvesStatus!='-1'">
+            AND pms_goods.shelves_status =#{shelvesStatus}
+        </if>
+        <if test="isVirtual != null  and  isVirtual!=-1">
+            AND pms_goods.is_virtual =#{isVirtual}
+        </if>
     </select>
 
     <insert id="insertPmsGoods" parameterType="PmsGoods" useGeneratedKeys="true" keyProperty="id">
@@ -960,7 +1082,9 @@
     </update>
 
     <delete id="deletePmsGoodsById" parameterType="Long">
-        delete from pms_goods where id = #{id}
+        delete
+        from pms_goods
+        where id = #{id}
     </delete>
 
     <delete id="deletePmsGoodsByIds" parameterType="String">
