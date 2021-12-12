@@ -31,8 +31,7 @@ import java.util.stream.Collectors;
 /**
  * 订单Controller
  *
- * @author 魔金商城
- * @date 2020-07-24
+ * @author 商城
  */
 @RestController
 @RequestMapping("/order/OmsOrder")
@@ -49,6 +48,7 @@ public class OmsOrderController extends BaseController {
      */
     @Autowired
     private IOmsLogisticsCompanyService logisticsCompanyService;
+
     /**
      * 查询订单列表
      */
@@ -57,6 +57,17 @@ public class OmsOrderController extends BaseController {
     public TableDataInfo list(OmsOrder omsOrder) {
         startPage();
         List<OmsOrder> list = omsOrderService.selectOmsOrderList(omsOrder);
+        return getDataTable(list);
+    }
+
+    /**
+     * 分页查询店铺订单
+     */
+    @PreAuthorize("@ss.hasPermi('order:OmsOrder:list')")
+    @GetMapping("/storeorders")
+    public TableDataInfo queryStoreOrderList(OmsOrder omsOrder) {
+        startPage();
+        List<OmsOrder> list = omsOrderService.queryStoreOrderList(omsOrder);
         return getDataTable(list);
     }
 

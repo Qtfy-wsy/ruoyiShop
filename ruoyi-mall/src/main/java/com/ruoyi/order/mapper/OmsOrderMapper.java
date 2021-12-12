@@ -744,4 +744,11 @@ public interface OmsOrderMapper {
      * @return 结果
      */
     public int deleteOmsOrderByIds(Long[] ids);
+
+    /**
+     * 分页查询店铺订单
+     * @param omsOrder 订单
+     * @return 订单集
+     */
+    List<OmsOrder> queryStoreOrderList(OmsOrder omsOrder);
 }

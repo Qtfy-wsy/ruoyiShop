@@ -213,4 +213,11 @@ public interface OmsBackOrderMapper {
      * @return 结果
      */
     public int deleteOmsBackOrderByIds(Long[] ids);
+
+    /**
+     *  查询退单列表
+     * @param omsBackOrder 退单
+     * @return 退单集
+     */
+    List<OmsBackOrder> queryStoreBackOrdersList(OmsBackOrder omsBackOrder);
 }

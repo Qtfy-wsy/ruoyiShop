@@ -922,6 +922,11 @@ public class PmsGoodsServiceImpl implements IPmsGoodsService {
         return setBrandAndCategorys(spuMapper.queryAllStoreToBeAuditdSpus());
     }
 
+    @Override
+    public List<PmsGoods> queryAllStoreSpusList(PmsGoods pmsGoods) {
+        return setBrandAndCategorys(spuMapper.queryAllStoreSpusList(pmsGoods));
+    }
+
     /**
      * 设置单品的审核状态
      *

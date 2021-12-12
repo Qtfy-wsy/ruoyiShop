@@ -717,4 +717,11 @@ public interface IOmsOrderService {
      * @return 订单集
      */
     List<OmsOrder> queryCommunityOrders(Long customerId, Long communityBuyId, String status);
+
+    /**
+     * 分页查询店铺订单
+     * @param omsOrder  订单
+     * @return 订单集
+     */
+    List<OmsOrder> queryStoreOrderList(OmsOrder omsOrder);
 }

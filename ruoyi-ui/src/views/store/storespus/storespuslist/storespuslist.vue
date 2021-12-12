@@ -1,51 +1,51 @@
 <template>
   <div class="app-container">
     <div class="filter-container">
-     <el-form :model="listQuery" ref="queryForm" :inline="true" label-width="68px">
-          <el-form-item label="商品名称" prop="name">
-            <el-input
-              v-model="listQuery.name"
-              placeholder="请输入商品名称"
-              clearable
-              size="small"
-              @keyup.enter.native="handleQuery"
-            />
-          </el-form-item>
-    <el-form-item label="店铺名称" prop="storeName">
-                <el-input
-                  v-model="listQuery.storeName"
-                  placeholder="请输入店铺名称"
-                  clearable
-                  size="small"
-                  @keyup.enter.native="handleQuery"
-                />
-              </el-form-item>
+      <el-form :model="listQuery" ref="queryForm" :inline="true" label-width="68px">
+        <el-form-item label="商品名称" prop="name">
+          <el-input
+            v-model="listQuery.name"
+            placeholder="请输入商品名称"
+            clearable
+            size="small"
+            @keyup.enter.native="handleQuery"
+          />
+        </el-form-item>
+        <el-form-item label="店铺名称" prop="storeName">
+          <el-input
+            v-model="listQuery.storeName"
+            placeholder="请输入店铺名称"
+            clearable
+            size="small"
+            @keyup.enter.native="handleQuery"
+          />
+        </el-form-item>
 
-          <el-form-item label="审核状态" prop="status">
-            <el-select v-model="listQuery.status" placeholder="请选择审核状态" clearable size="small">
-              <el-option
-                v-for="dict in statusOptions"
-                :key="dict.dictValue"
-                :label="dict.dictLabel"
-                :value="dict.dictValue"
-              />
-            </el-select>
-          </el-form-item>
-          <el-form-item label="虚拟商品" prop="isVirtual">
-            <el-select v-model="listQuery.isVirtual" placeholder="请选择是否是虚拟商品" clearable size="small">
-              <el-option
-                v-for="dict in isVirtualOptions"
-                :key="dict.dictValue"
-                :label="dict.dictLabel"
-                :value="dict.dictValue"
-              />
-            </el-select>
-          </el-form-item>
-          <el-form-item>
-            <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-            <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
-          </el-form-item>
-        </el-form>
+        <el-form-item label="审核状态" prop="status">
+          <el-select v-model="listQuery.status" placeholder="请选择审核状态" clearable size="small">
+            <el-option
+              v-for="dict in statusOptions"
+              :key="dict.dictValue"
+              :label="dict.dictLabel"
+              :value="dict.dictValue"
+            />
+          </el-select>
+        </el-form-item>
+        <el-form-item label="虚拟商品" prop="isVirtual">
+          <el-select v-model="listQuery.isVirtual" placeholder="请选择是否是虚拟商品" clearable size="small">
+            <el-option
+              v-for="dict in isVirtualOptions"
+              :key="dict.dictValue"
+              :label="dict.dictLabel"
+              :value="dict.dictValue"
+            />
+          </el-select>
+        </el-form-item>
+        <el-form-item>
+          <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
+          <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
+        </el-form-item>
+      </el-form>
 
 
       <br/>
@@ -54,7 +54,7 @@
       </el-button>
       <el-dropdown class="filter-item" style="margin-left: 5px;">
         <el-button size="medium" type="primary">导出商品<i
-          class="el-icon-arrow-down el-icon--right"></i></el-button>
+          class="el-icon-arrow-down el-icon--right"/></el-button>
         <el-dropdown-menu slot="dropdown">
           <el-dropdown-item @click.native="exportStoreAllSpu()">导出所有</el-dropdown-item>
           <el-dropdown-item @click.native="exportStoreCheckedSpu()">导出选中</el-dropdown-item>
@@ -137,6 +137,10 @@
   export default {
     data() {
       return {
+        //审核状态
+        statusOptions: [],
+        //是否是虚拟商品
+        isVirtualOptions: [],
         goodsStateValue: '0',
         goodsVirtualValue: '0',
         brandsValue: '0',
@@ -185,7 +189,13 @@
       }
     },
     created() {
-      this.getList()
+      this.getList();
+      this.getDicts("audit_thress").then(response => {
+        this.statusOptions = response.data;
+      });
+      this.getDicts("is_virture").then(response => {
+        this.isVirtualOptions = response.data;
+      });
     },
     filters: {
       toFixed(value) {
@@ -258,15 +268,16 @@
         this.listQuery.pageSize = val;
         this.getList();
       },
-
       // 过滤查询
       handleQuery() {
-
         this.listQuery.pageNum = 0;
         this.getList();
       },
-
-
+      /** 重置按钮操作 */
+      resetQuery() {
+        this.resetForm("queryForm");
+        this.handleQuery();
+      },
       //违规下架
       tobatchdown() {
         if (!this.selectedIds.length > 0) {

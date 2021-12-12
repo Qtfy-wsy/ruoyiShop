@@ -35,8 +35,7 @@ import java.util.stream.Stream;
 /**
  * 退单退款Service业务层处理
  *
- * @author 魔金商城
- * @date 2020-07-24
+ * @author 商城
  */
 @Service
 public class OmsBackOrderServiceImpl implements IOmsBackOrderService {
@@ -591,5 +590,10 @@ public class OmsBackOrderServiceImpl implements IOmsBackOrderService {
     @Override
     public int deleteOmsBackOrderById(Long id) {
         return omsBackOrderMapper.deleteOmsBackOrderById(id);
+    }
+
+    @Override
+    public List<OmsBackOrder> queryStoreBackOrdersList(OmsBackOrder omsBackOrder) {
+        return backOrderMapper.queryStoreBackOrdersList(omsBackOrder);
     }
 }

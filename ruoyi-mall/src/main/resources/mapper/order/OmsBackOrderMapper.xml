@@ -422,4 +422,21 @@
     <select id="queryInProcessBackOrder" parameterType="java.lang.Long" resultType="java.lang.Integer">
         select count(1) from oms_back_order where status in ('1','4','6','7') and customer_id=#{customerId}
     </select>
+    <select id="queryStoreBackOrdersList" resultMap="OmsBackOrderResult" parameterType="OmsBackOrder">
+        select oms_back_order.*,t_store_info.store_name from oms_back_order join t_store_info on oms_back_order.store_id
+        = t_store_info.id where t_store_info.del_flag = '0'
+        <if test="backCode != null and backCode != '' ">
+            AND oms_back_order.back_code = #{backCode}
+        </if>
+        <if test="storeName != null and storeName != '' ">
+            AND t_store_info.store_name = #{storeName}
+        </if>
+        <if test="orderCode != null and orderCode != '' ">
+            AND oms_back_order.order_code = #{orderCode}
+        </if>
+        <if test='status != null and status != ""'>
+            AND oms_back_order.status = #{status}
+        </if>
+        order by oms_back_order.create_time desc
+    </select>
 </mapper>

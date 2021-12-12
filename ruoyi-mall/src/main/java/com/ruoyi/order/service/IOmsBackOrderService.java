@@ -233,4 +233,11 @@ public interface IOmsBackOrderService {
      * @return 结果
      */
     public int deleteOmsBackOrderById(Long id);
+
+    /**
+     * 查询退单列表
+     * @param omsBackOrder 退单
+     * @return 退单集
+     */
+    List<OmsBackOrder> queryStoreBackOrdersList(OmsBackOrder omsBackOrder);
 }

@@ -395,7 +395,14 @@ public interface IPmsGoodsService {
 
 	/**
 	 * 分页查询所有店铺待审核的商品
-	 * @return 集合
+	 * @return 商品集合
 	 */
 	List<PmsGoods> queryAllStoreToBeAuditdSpus();
+
+	/**
+	 * 分页查询所有店铺的商品信息
+	 * @param pmsGoods 商品
+	 * @return 商品集合
+	 */
+	List<PmsGoods> queryAllStoreSpusList(PmsGoods pmsGoods);
 }

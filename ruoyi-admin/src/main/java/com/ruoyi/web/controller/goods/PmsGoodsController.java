@@ -27,8 +27,7 @@ import java.util.stream.Collectors;
 /**
  * 商品Controller
  *
- * @author 魔金商城
- * @date 2020-07-24
+ * @author 商城
  */
 @RestController
 @RequestMapping("/goods/goods")
@@ -104,6 +103,17 @@ public class PmsGoodsController extends BaseController {
 	}
 
 	/**
+	 * 分页查询所有店铺的商品信息
+	 */
+	@PreAuthorize("@ss.hasPermi('goods:goods:list')")
+	@GetMapping("/storespu")
+	public TableDataInfo queryAllStoreSpusList(PmsGoods pmsGoods) {
+		startPage();
+		List<PmsGoods> list = pmsGoodsService.queryAllStoreSpusList(pmsGoods);
+		return getDataTable(list);
+	}
+
+	/**
 	 * 导出商品列表
 	 */
 	@PreAuthorize("@ss.hasPermi('goods:goods:export')")
@@ -111,7 +121,7 @@ public class PmsGoodsController extends BaseController {
 	@GetMapping("/export")
 	public AjaxResult export(PmsGoods pmsGoods) {
 		List<PmsGoods> list = pmsGoodsService.selectPmsGoodsList(pmsGoods);
-		ExcelUtil<PmsGoods> util = new ExcelUtil<PmsGoods>(PmsGoods.class);
+		ExcelUtil<PmsGoods> util = new ExcelUtil<>(PmsGoods.class);
 		return util.exportExcel(list, "goods");
 	}
 
@@ -127,7 +137,7 @@ public class PmsGoodsController extends BaseController {
 	/**
 	 * 新增商品信息
 	 *
-	 * @param spu 商品信息
+	 * @param param 商品信息
 	 * @return 成功返回1  失败返回0 -1存在单品同时有会员价和批发规则
 	 */
 	@PostMapping("/spu")
@@ -389,7 +399,6 @@ public class PmsGoodsController extends BaseController {
 	public PmsType queryTypeDetailForUpdate(@PathVariable long id) {
 		return typeService.queryTypeDetail(id);
 	}
-
 	@ApiOperation("分页查询所有店铺待审核的商品")
 	@GetMapping("/goodsaudit")
 	@ResponseBody

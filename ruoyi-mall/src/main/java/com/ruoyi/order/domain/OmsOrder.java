@@ -28,8 +28,7 @@ import java.util.stream.IntStream;
 /**
  * 订单对象 oms_order
  *
- * @author 魔金商城
- * @date 2020-07-24
+ * @author 商城
  */
 @Setter
 @Getter

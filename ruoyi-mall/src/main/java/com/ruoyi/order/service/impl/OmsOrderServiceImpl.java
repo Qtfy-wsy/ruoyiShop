@@ -1028,6 +1028,11 @@ public class OmsOrderServiceImpl implements IOmsOrderService {
     }
 
     @Override
+    public List<OmsOrder> queryStoreOrderList(OmsOrder omsOrder) {
+        return orderMapper.queryStoreOrderList(omsOrder);
+    }
+
+    @Override
     public List<OmsOrder> queryCommunityOrdersByIds(List<Long> ids) {
         logger.debug("queryCommunityOrdersByIds and ids:{}", Arrays.toString(ids.toArray()));
         Map<String, Object> params = new HashMap<>();

@@ -7,7 +7,7 @@ import request from '@/utils/request';
  */
 export function queryAllStoreSpus(query) {
   return request({
-    url: 'storespu',
+    url: '/goods/goods/storespu',
     method: 'get',
     params: query
   })

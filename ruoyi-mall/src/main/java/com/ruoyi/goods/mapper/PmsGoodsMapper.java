@@ -371,4 +371,11 @@ public interface PmsGoodsMapper {
     List<PmsGoods> queryAllStoreToBeAuditdSpus();
 
     int queryAllStoreToBeAuditdSpusCount(Map<String, Object> params);
+
+    /**
+     * 分页查询所有店铺的商品信息
+     * @param pmsGoods 商品信息
+     * @return 商品信息集合
+     */
+	List<PmsGoods> queryAllStoreSpusList(PmsGoods pmsGoods);
 }

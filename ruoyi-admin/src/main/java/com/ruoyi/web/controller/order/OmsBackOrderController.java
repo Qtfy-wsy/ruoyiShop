@@ -38,6 +38,17 @@ public class OmsBackOrderController extends BaseController {
     }
 
     /**
+     * 查询退单退款列表
+     */
+    @PreAuthorize("@ss.hasPermi('order:OmsBackOrder:list')")
+    @GetMapping("/storebackorders")
+    public TableDataInfo queryStoreBackOrdersList(OmsBackOrder omsBackOrder) {
+        startPage();
+        List<OmsBackOrder> list = omsBackOrderService.queryStoreBackOrdersList(omsBackOrder);
+        return getDataTable(list);
+    }
+
+    /**
      * 导出退单退款列表
      */
     @PreAuthorize("@ss.hasPermi('order:OmsBackOrder:export')")

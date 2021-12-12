@@ -235,11 +235,25 @@
     </select>
 
     <update id="confirmOrder" parameterType="java.util.Map">
-        update oms_order set status = '2' ,presale_status = '2', modify_time = now() , pay_time = now() where id = #{id} and store_id = #{storeId} and status = '1'
+        update oms_order
+        set status         = '2',
+            presale_status = '2',
+            modify_time    = now(),
+            pay_time       = now()
+        where id = #{id}
+          and store_id = #{storeId}
+          and status = '1'
     </update>
 
     <update id="confirmPreSaleOrder" parameterType="java.util.Map">
-        update oms_order set presale_status = '1', presale_price = price-presale_price, modify_time = now()  where id = #{id} and store_id = #{storeId} and status = '1' and presale_status = '0'
+        update oms_order
+        set presale_status = '1',
+            presale_price  = price - presale_price,
+            modify_time    = now()
+        where id = #{id}
+          and store_id = #{storeId}
+          and status = '1'
+          and presale_status = '0'
     </update>
 
     <update id="cancelOrder" parameterType="java.util.Map">
@@ -272,19 +286,43 @@
     </update>
 
     <update id="modifyPrice" parameterType="java.util.Map">
-        update oms_order set price = price-#{price} , modify_price = modify_price+#{price},modify_time = now() where id = #{id} and store_id = #{storeId}
+        update oms_order
+        set price        = price - #{price},
+            modify_price = modify_price + #{price},
+            modify_time  = now()
+        where id = #{id}
+          and store_id = #{storeId}
     </update>
 
     <select id="queryTemplateId" parameterType="java.util.Map" resultType="java.lang.Long">
-      select freight_template_id from oms_order   where id = #{id} and store_id = #{storeId}
+        select freight_template_id
+        from oms_order
+        where id = #{id}
+          and store_id = #{storeId}
     </select>
 
     <update id="deliverOrder" parameterType="java.util.Map">
-        update oms_order set status = '3' ,waybill_code=#{waybillCode} , logistics_company = #{companyName}, logistics_code=#{companyCode},modify_time = now() ,delivery_time = now() where id = #{id} and store_id = #{storeId} and status = '2'
+        update oms_order
+        set status            = '3',
+            waybill_code=#{waybillCode},
+            logistics_company = #{companyName},
+            logistics_code=#{companyCode},
+            modify_time       = now(),
+            delivery_time     = now()
+        where id = #{id}
+          and store_id = #{storeId}
+          and status = '2'
     </update>
 
     <update id="changeExpressNo" parameterType="java.util.Map">
-        update oms_order set waybill_code=#{waybillCode},logistics_company = #{companyName}, logistics_code=#{companyCode} ,modify_time = now() where id = #{id} and store_id = #{storeId} and status = '3'
+        update oms_order
+        set waybill_code=#{waybillCode},
+            logistics_company = #{companyName},
+            logistics_code=#{companyCode},
+            modify_time = now()
+        where id = #{id}
+          and store_id = #{storeId}
+          and status = '3'
     </update>
     <select id="queryOrderById" parameterType="java.util.Map" resultMap="order">
         select * from oms_order where id = #{id}
@@ -634,7 +672,11 @@
     </insert>
 
     <select id="queryToPayOrder" parameterType="java.util.Map" resultMap="order">
-        select * from oms_order where (order_code = #{orderCode} or master_order_code = #{orderCode}) and status = '1' and customer_id = #{customerId}
+        select *
+        from oms_order
+        where (order_code = #{orderCode} or master_order_code = #{orderCode})
+          and status = '1'
+          and customer_id = #{customerId}
     </select>
     <select id="queryOrderByOrderCode" parameterType="java.util.Map" resultMap="order">
         select * from oms_order where (order_code = #{orderCode} or master_order_code = #{orderCode})
@@ -725,71 +767,132 @@
     </select>
 
     <update id="confirmReceipt" parameterType="java.util.Map">
-        update oms_order set status = '4' , modify_time = now() , receiving_time = now() where id = #{orderId} and customer_id = #{customerId} and status = '3'
+        update oms_order
+        set status         = '4',
+            modify_time    = now(),
+            receiving_time = now()
+        where id = #{orderId}
+          and customer_id = #{customerId}
+          and status = '3'
     </update>
 
     <update id="updateOrderBack" parameterType="java.util.Map">
-          update oms_order set status = #{status} where id = #{orderId}
+        update oms_order
+        set status = #{status}
+        where id = #{orderId}
     </update>
 
     <select id="toPayOrderCount" parameterType="java.lang.Long" resultType="java.lang.Integer">
-        select count(1) from oms_order where customer_id = #{customer_id} and status = '1'
+        select count(1)
+        from oms_order
+        where customer_id = #{customer_id}
+          and status = '1'
     </select>
 
 
     <select id="toDeliverOrderCount" parameterType="java.lang.Long" resultType="java.lang.Integer">
-        select count(1) from oms_order where customer_id = #{customer_id} and status = '2'
+        select count(1)
+        from oms_order
+        where customer_id = #{customer_id}
+          and status = '2'
     </select>
 
 
     <select id="toReceiptOrderCount" parameterType="java.lang.Long" resultType="java.lang.Integer">
-        select count(1) from oms_order where customer_id = #{customer_id} and status = '3'
+        select count(1)
+        from oms_order
+        where customer_id = #{customer_id}
+          and status = '3'
     </select>
 
     <select id="toEvaluateOrderCount" parameterType="java.lang.Long" resultType="java.lang.Integer">
-        select count(1) from oms_order where customer_id = #{customer_id} and status = '4' and  evaluation_status = '0'
+        select count(1)
+        from oms_order
+        where customer_id = #{customer_id}
+          and status = '4'
+          and evaluation_status = '0'
     </select>
 
     <select id="saleNum" parameterType="java.lang.Long" resultType="java.lang.Integer">
-      select IFNULL(sum(oms_order_sku.num),0) from oms_order join oms_order_sku on oms_order.id = oms_order_sku.order_id  where oms_order.status != '1' and oms_order.store_id = #{storeId}
+        select IFNULL(sum(oms_order_sku.num), 0)
+        from oms_order
+                 join oms_order_sku on oms_order.id = oms_order_sku.order_id
+        where oms_order.status != '1'
+          and oms_order.store_id = #{storeId}
     </select>
 
     <update id="updateOrderEvluation" parameterType="java.util.Map">
-        update oms_order set evaluation_status = '1' , evaluation_time = now()  where id = #{orderId} and customer_id = #{customerId} and evaluation_status = '0' and status ='4'
+        update oms_order
+        set evaluation_status = '1',
+            evaluation_time   = now()
+        where id = #{orderId}
+          and customer_id = #{customerId}
+          and evaluation_status = '0'
+          and status = '4'
     </update>
     <select id="queryOrdersForConfirmReceipt" parameterType="java.lang.Integer" resultMap="order">
-        select * from oms_order where delivery_time &lt; DATE_SUB(CURDATE(),INTERVAL #{day} day) and status='3' and pay_type='0'
+        select *
+        from oms_order
+        where delivery_time &lt; DATE_SUB(CURDATE(), INTERVAL #{day} day)
+          and status = '3'
+          and pay_type = '0'
     </select>
 
     <select id="queryOrdersForCancel" resultMap="order">
-        select * from oms_order where create_time &lt; DATE_SUB(CURDATE(),INTERVAL 1 day) and status='1' and pay_type='0'
+        select *
+        from oms_order
+        where create_time &lt; DATE_SUB(CURDATE(), INTERVAL 1 day)
+          and status = '1'
+          and pay_type = '0'
     </select>
     <select id="queryDepositPreSaleOrdersForCancel" resultMap="order">
-        select * from oms_order where presale_time &lt; DATE_SUB(now(),INTERVAL 1 day) and status='1' and order_type='1'
+        select *
+        from oms_order
+        where presale_time &lt; DATE_SUB(now(), INTERVAL 1 day)
+          and status = '1'
+          and order_type = '1'
     </select>
 
     <select id="queryCustomerOrderAmounts" resultMap="customerOrderAmount">
-        select count(1) as amount,customer_id from oms_order where status in ('4','6','7')
-               and  <![CDATA[DATE_FORMAT(receiving_time,'%Y-%m-%d') >= #{startTime} and  DATE_FORMAT(receiving_time,'%Y-%m-%d') <= #{endTime} ]]>
-         group by customer_id  order by amount desc  limit #{startRowNum},#{pageSize}
+        select count(1) as amount, customer_id
+        from oms_order
+        where status in ('4', '6', '7')
+          and  <![CDATA[DATE_FORMAT(receiving_time, '%Y-%m-%d') >= #{startTime}
+          and DATE_FORMAT(receiving_time, '%Y-%m-%d') <= #{endTime} ]]>
+         group by customer_id
+        order by amount desc
+        limit #{startRowNum},#{pageSize}
     </select>
 
     <select id="queryCustomerOrderAmountsCount" resultType="java.lang.Integer">
-        select count(1) from (select customer_id from oms_order where status in ('4','6','7')
-        and  <![CDATA[DATE_FORMAT(receiving_time,'%Y-%m-%d') >= #{startTime} and  DATE_FORMAT(receiving_time,'%Y-%m-%d') <= #{endTime} ]]>
+        select count(1)
+        from (select customer_id
+              from oms_order
+              where status in ('4', '6', '7')
+                and  <![CDATA[DATE_FORMAT(receiving_time, '%Y-%m-%d') >= #{startTime}
+                and DATE_FORMAT(receiving_time, '%Y-%m-%d') <= #{endTime} ]]>
         group by customer_id) as a
     </select>
 
 
     <select id="queryCustomerConsumption" resultMap="customerConsumption">
-        select sum(price)  as consumption ,customer_id from oms_order where status in  ('4','6','7')
-             and  <![CDATA[DATE_FORMAT(receiving_time,'%Y-%m-%d') >= #{startTime} and  DATE_FORMAT(receiving_time,'%Y-%m-%d') <= #{endTime} ]]>
-         group by customer_id order by consumption desc limit #{startRowNum},#{pageSize}
+        select sum(price) as consumption, customer_id
+        from oms_order
+        where status in ('4', '6', '7')
+          and  <![CDATA[DATE_FORMAT(receiving_time, '%Y-%m-%d') >= #{startTime}
+          and DATE_FORMAT(receiving_time, '%Y-%m-%d') <= #{endTime} ]]>
+         group by customer_id
+        order by consumption desc
+        limit #{startRowNum},#{pageSize}
     </select>
 
     <select id="queryCustomerConsumptionCount" resultType="java.lang.Integer">
-       select count(1) from (select customer_id from oms_order where status in ('4','6','7')
-        and  <![CDATA[DATE_FORMAT(receiving_time,'%Y-%m-%d') >= #{startTime} and  DATE_FORMAT(receiving_time,'%Y-%m-%d') <= #{endTime} ]]>
+        select count(1)
+        from (select customer_id
+              from oms_order
+              where status in ('4', '6', '7')
+                and  <![CDATA[DATE_FORMAT(receiving_time, '%Y-%m-%d') >= #{startTime}
+                and DATE_FORMAT(receiving_time, '%Y-%m-%d') <= #{endTime} ]]>
         group by customer_id) as a
     </select>
     <select id="queryStoreSaleVolume" parameterType="java.util.Map" resultMap="storeSaleAmount">
@@ -945,36 +1048,52 @@
     </select>
 
     <select id="querySaleAmountToday" parameterType="java.lang.Long" resultType="java.math.BigDecimal">
-        select sum(price) from oms_order where status in ('4','6','7')
-        and DATE(receiving_time) = DATE(now()) and store_id = #{storeId}
+        select sum(price)
+        from oms_order
+        where status in ('4', '6', '7')
+          and DATE(receiving_time) = DATE(now())
+          and store_id = #{storeId}
     </select>
 
     <select id="querySaleCountToday" parameterType="java.lang.Long" resultType="java.lang.Integer">
-        select count(1) from oms_order where status in ('4','6','7')
-        and DATE(receiving_time) = DATE(now()) and store_id = #{storeId}
+        select count(1)
+        from oms_order
+        where status in ('4', '6', '7')
+          and DATE(receiving_time) = DATE(now())
+          and store_id = #{storeId}
     </select>
 
     <select id="querySaleAmountThisWeek" parameterType="java.lang.Long" resultType="java.math.BigDecimal">
-        select sum(price) from oms_order where status in ('4','6','7') and
-        YEARWEEK(date_format(receiving_time,'%Y-%m-%d')- INTERVAL 1 DAY) = YEARWEEK(now()- INTERVAL 1 DAY)
-        and store_id = #{storeId}
+        select sum(price)
+        from oms_order
+        where status in ('4', '6', '7')
+          and YEARWEEK(date_format(receiving_time, '%Y-%m-%d') - INTERVAL 1 DAY) = YEARWEEK(now() - INTERVAL 1 DAY)
+          and store_id = #{storeId}
     </select>
 
     <select id="querySaleCountThisWeek" parameterType="java.lang.Long" resultType="java.lang.Integer">
-        select count(1) from oms_order where status in ('4','6','7')
-        and YEARWEEK(date_format(receiving_time,'%Y-%m-%d')- INTERVAL 1 DAY) = YEARWEEK(now()- INTERVAL 1 DAY) and store_id = #{storeId}
+        select count(1)
+        from oms_order
+        where status in ('4', '6', '7')
+          and YEARWEEK(date_format(receiving_time, '%Y-%m-%d') - INTERVAL 1 DAY) = YEARWEEK(now() - INTERVAL 1 DAY)
+          and store_id = #{storeId}
     </select>
 
     <select id="querySaleAmountThisWeekGroupByDay" parameterType="java.lang.Long" resultMap="storeSaleAmount">
-        select DATE(receiving_time) new_order_time,sum(price) sales_amount from oms_order where status in ('4','6','7') and
-        YEARWEEK(date_format(receiving_time,'%Y-%m-%d')- INTERVAL 1 DAY) = YEARWEEK(now()- INTERVAL 1 DAY)
-        and store_id = #{storeId}
+        select DATE(receiving_time) new_order_time, sum(price) sales_amount
+        from oms_order
+        where status in ('4', '6', '7')
+          and YEARWEEK(date_format(receiving_time, '%Y-%m-%d') - INTERVAL 1 DAY) = YEARWEEK(now() - INTERVAL 1 DAY)
+          and store_id = #{storeId}
         group by DATE(receiving_time)
     </select>
 
     <select id="querySaleCountThisWeekGroupByDay" parameterType="java.lang.Long" resultMap="storeSaleAmount">
-        select DATE(receiving_time) new_order_time,count(1) sales_volume from oms_order where status in ('4','6','7')
-        and YEARWEEK(date_format(receiving_time,'%Y-%m-%d')- INTERVAL 1 DAY) = YEARWEEK(now()- INTERVAL 1 DAY) and store_id = #{storeId}
+        select DATE(receiving_time) new_order_time, count(1) sales_volume
+        from oms_order
+        where status in ('4', '6', '7')
+          and YEARWEEK(date_format(receiving_time, '%Y-%m-%d') - INTERVAL 1 DAY) = YEARWEEK(now() - INTERVAL 1 DAY)
+          and store_id = #{storeId}
         group by DATE(receiving_time)
     </select>
 
@@ -1008,7 +1127,15 @@
 
 
     <update id="confirmOrderFinished" parameterType="java.util.Map">
-        update oms_order set status = '4' ,presale_status = '2', modify_time = now() , pay_time = now(),receiving_time=now(), delivery_time=now() where id = #{id} and status = '1'
+        update oms_order
+        set status         = '4',
+            presale_status = '2',
+            modify_time    = now(),
+            pay_time       = now(),
+            receiving_time=now(),
+            delivery_time=now()
+        where id = #{id}
+          and status = '1'
     </update>
 
     <select id="queryAllCrowdFundingOrderList" parameterType="java.util.Map" resultMap="order">
@@ -1018,7 +1145,9 @@
         </if>
     </select>
     <update id="updateCrowdFundingOrderLotteryStatus" parameterType="java.lang.Long">
-        update oms_order set lottery_status='1' where id=#{orderId}
+        update oms_order
+        set lottery_status='1'
+        where id = #{orderId}
     </update>
 
 
@@ -1112,11 +1241,18 @@
 
 
     <select id="queryTodayPayedOrderNum" parameterType="java.lang.Long" resultType="java.lang.Integer">
-        select count(1) from oms_order where DATE(pay_time) = DATE(now())  and store_id=#{storeId}
+        select count(1)
+        from oms_order
+        where DATE(pay_time) = DATE(now())
+          and store_id = #{storeId}
     </select>
 
     <select id="queryToDeliveryOrderNum" parameterType="java.lang.Long" resultType="java.lang.Integer">
-        select count(1) from oms_order where store_id=#{storeId} and status = '2'   AND order_type in ('0','1','2','7')
+        select count(1)
+        from oms_order
+        where store_id = #{storeId}
+          and status = '2'
+          AND order_type in ('0', '1', '2', '7')
     </select>
 
     <resultMap id="marketingOrderStatistics" type="com.ruoyi.order.vo.MarketingOrderStatistics">
@@ -1171,7 +1307,12 @@
 
 
     <select id="queryCommunityOrdersForCancel" resultMap="order">
-        select * from oms_order where create_time  &lt; DATE_SUB(NOW(),INTERVAL 30 MINUTE) and status='1' and pay_type='0' and order_type = '8'
+        select *
+        from oms_order
+        where create_time &lt; DATE_SUB(NOW(), INTERVAL 30 MINUTE)
+          and status = '1'
+          and pay_type = '0'
+          and order_type = '8'
     </select>
 
     <select id="queryHeadCommunityOrders" parameterType="java.util.Map" resultMap="order">
@@ -1202,22 +1343,31 @@
     </select>
 
     <select id="queryJoinCommunityOrders" parameterType="java.util.Map" resultMap="order">
-        select * from oms_order where status in ('2','4') and order_type = '8'
-        and community_buy_customer_id = #{communityBuyCustomerId} and community_buy_id = #{communityBuyId}
+        select *
+        from oms_order
+        where status in ('2', '4')
+          and order_type = '8'
+          and community_buy_customer_id = #{communityBuyCustomerId}
+          and community_buy_id = #{communityBuyId}
         group by customer_id
     </select>
 
     <select id="queryJoinCommunityOrdersCount" parameterType="java.util.Map" resultType="java.lang.Integer">
-        select count(1) from (select * from oms_order where status in ('2','4') and order_type = '8'
-        and community_buy_customer_id = #{communityBuyCustomerId} and community_buy_id = #{communityBuyId}
-        group by customer_id) as a
+        select count(1)
+        from (select *
+              from oms_order
+              where status in ('2', '4')
+                and order_type = '8'
+                and community_buy_customer_id = #{communityBuyCustomerId}
+                and community_buy_id = #{communityBuyId}
+              group by customer_id) as a
     </select>
 
     <select id="queryCommunityOrders" parameterType="java.util.Map" resultMap="order">
         select oms_order.*,ums_member.username as community_buy_head_name,ums_member.mobile as
         community_buy_head_mobile
         from oms_order join ums_member on oms_order.community_buy_customer_id = ums_member.id
-        where ums_member. oms_order.order_type = '8'
+        where ums_member.oms_order.order_type = '8'
         <if test="communityBuyHeadMobile != null and communityBuyHeadMobile != ''">
             and ums_member.mobile = #{communityBuyHeadMobile}
         </if>
@@ -1258,42 +1408,41 @@
     </select>
 
     <select id="queryOrdersByCommunityBuyId" parameterType="java.util.Map" resultMap="order">
-        select * from oms_order where status = #{status} and order_type = '8' and  community_buy_id = #{communityBuyId}
+        select *
+        from oms_order
+        where status = #{status}
+          and order_type = '8'
+          and community_buy_id = #{communityBuyId}
     </select>
 
     <select id="queryOrderIdsByCommunityBuyId" parameterType="java.lang.Long" resultType="java.lang.Long">
-        select
-            id
-        from
-            oms_order
-        where
-            status != '5'
-        and
-            order_type = '8'
-        and
-            community_buy_id = #{communityBuyId}
+        select id
+        from oms_order
+        where status != '5'
+          and order_type = '8'
+          and community_buy_id = #{communityBuyId}
     </select>
 
 
     <select id="queryCommunityBuyOrders" parameterType="java.util.Map" resultMap="order">
-        select
-            id,
-            customer_id
-        from
-            oms_order
-        where
-            status = #{status}
-        and
-            order_type = '8'
-        and
-            community_buy_id =#{communityBuyId}
-        and
-            community_buy_customer_id = #{headCustomerId}
+        select id,
+               customer_id
+        from oms_order
+        where status = #{status}
+          and order_type = '8'
+          and community_buy_id = #{communityBuyId}
+          and community_buy_customer_id = #{headCustomerId}
     </select>
 
 
     <update id="confirmCommunityOrderReceipt" parameterType="java.util.Map">
-        update oms_order set status = '4' , modify_time = now() , receiving_time = now() where id = #{orderId} and customer_id = #{customerId} and status = '2'
+        update oms_order
+        set status         = '4',
+            modify_time    = now(),
+            receiving_time = now()
+        where id = #{orderId}
+          and customer_id = #{customerId}
+          and status = '2'
     </update>
 
     <select id="queryCommunityOrdersByIds" parameterType="java.util.Map" resultMap="order">
@@ -1320,14 +1469,68 @@
     </select>
 
     <sql id="selectOmsOrderVo">
-        select id, order_code, master_order_code, customer_id, price, presale_price, original_price, freight_price, modify_price, point_price, coupon_price, red_envelope_price, concessional_rate, status, presale_status, evaluation_status, red_envelope_code, coupon_no, use_point, pay_type, store_id, cancel_reson, predeposit_pay, source, waybill_code, order_type, create_time, pay_time, delivery_time, receiving_time, cancel_time, modify_time, evaluation_time, presale_time, group_head, group_id, group_marketing_id, group_sku_id, group_status, group_num, open_group_time, auto_handle_status, recommended, s_recommended, crowdfunding_id, lottery_status, write_off_code, community_buy_customer_id, community_buy_id, profit, community_name, community_buy_name, logistics_company, logistics_code from oms_order
+        select id,
+               order_code,
+               master_order_code,
+               customer_id,
+               price,
+               presale_price,
+               original_price,
+               freight_price,
+               modify_price,
+               point_price,
+               coupon_price,
+               red_envelope_price,
+               concessional_rate,
+               status,
+               presale_status,
+               evaluation_status,
+               red_envelope_code,
+               coupon_no,
+               use_point,
+               pay_type,
+               store_id,
+               cancel_reson,
+               predeposit_pay,
+               source,
+               waybill_code,
+               order_type,
+               create_time,
+               pay_time,
+               delivery_time,
+               receiving_time,
+               cancel_time,
+               modify_time,
+               evaluation_time,
+               presale_time,
+               group_head,
+               group_id,
+               group_marketing_id,
+               group_sku_id,
+               group_status,
+               group_num,
+               open_group_time,
+               auto_handle_status,
+               recommended,
+               s_recommended,
+               crowdfunding_id,
+               lottery_status,
+               write_off_code,
+               community_buy_customer_id,
+               community_buy_id,
+               profit,
+               community_name,
+               community_buy_name,
+               logistics_company,
+               logistics_code
+        from oms_order
     </sql>
 
     <select id="selectOmsOrderList" parameterType="OmsOrder" resultMap="OmsOrderResult">
         <include refid="selectOmsOrderVo"/>
         <where>
             <if test="orderCode != null  and orderCode != ''">and order_code = #{orderCode}</if>
-            <if test="storeId != null ">  and store_id = #{storeId} </if>
+            <if test="storeId != null ">and store_id = #{storeId}</if>
             <if test="customerId != null ">and customer_id = #{customerId}</if>
             <if test="status != null  and status != 0">and status = #{status}</if>
             <if test="presaleStatus != null  and presaleStatus != ''">and presale_status = #{presaleStatus}</if>
@@ -1341,6 +1544,45 @@
     <select id="selectOmsOrderById" parameterType="Long" resultMap="OmsOrderResult">
         <include refid="selectOmsOrderVo"/>
         where id = #{id}
+    </select>
+    <select id="queryStoreOrderList" resultMap="OmsOrderResult" parameterType="OmsOrder">
+        select oms_order.*,ums_member.username as customer_name , t_store_info.store_name from oms_order join
+        ums_member on oms_order.customer_id =
+        ums_member.id join t_store_info on oms_order.store_id = t_store_info.id where
+        t_store_info.del_flag = '0'
+        <if test="orderCode != null and orderCode != '' ">
+            AND oms_order.order_code = #{orderCode}
+        </if>
+        <if test="customerName != null and customerName != ''">
+            AND ums_member.username like CONCAT(CONCAT('%', #{customerName}),'%')
+        </if>
+        <if test="storeName != null and storeName != '' ">
+            AND t_store_info.store_name like CONCAT(CONCAT('%', #{storeName}),'%')
+        </if>
+        <if test="payType != null and payType != '' ">
+            AND oms_order.pay_type = #{payType}
+        </if>
+        <if test='status != null and status != "" and  status!= "5"'>
+            AND oms_order.status = #{status}
+        </if>
+        <if test='status=="5"'>
+            AND oms_order.status in ('5','6','7')
+            AND oms_order.order_type in ('0','1','2','3','7')
+        </if>
+        <if test="orderType!=null and orderType !=''">
+            AND oms_order.order_type=#{orderType}
+        </if>
+        <if test='status !="5"'>
+            AND oms_order.order_type in('0','1','2','7')
+        </if>
+        <choose>
+            <when test="orderType ==1 ||orderType==2">
+                order by oms_order.pay_time desc
+            </when>
+            <otherwise>
+                order by oms_order.create_time desc
+            </otherwise>
+        </choose>
     </select>
 
     <insert id="insertOmsOrder" parameterType="OmsOrder" useGeneratedKeys="true" keyProperty="id">
@@ -1518,7 +1760,9 @@
     </update>
 
     <delete id="deleteOmsOrderById" parameterType="Long">
-        delete from oms_order where id = #{id}
+        delete
+        from oms_order
+        where id = #{id}
     </delete>
 
     <delete id="deleteOmsOrderByIds" parameterType="String">

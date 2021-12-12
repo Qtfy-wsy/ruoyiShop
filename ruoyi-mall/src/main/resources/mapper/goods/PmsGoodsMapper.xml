@@ -906,7 +906,7 @@
         select pms_goods.*, t_store_info.store_name from pms_goods join t_store_info on pms_goods.store_id =
         t_store_info.id
         where 1=1
-       /* AND pms_goods.status != '0'*/
+        /* AND pms_goods.status != '0'*/
 
         <if test="storeName != null and storeName != '' ">
             AND t_store_info.store_name = #{storeName}
@@ -939,7 +939,7 @@
     <select id="queryAllStoreToBeAuditdSpusCount" resultType="java.lang.Integer">
         select count(1) from pms_goods join t_store_info on pms_goods.store_id = t_store_info.id where
         1=1
-         and   pms_goods.status != '0'
+        and pms_goods.status != '0'
         <if test="storeName != null and storeName != '' ">
             AND t_store_info.store_name = #{storeName}
         </if>
@@ -965,6 +965,40 @@
         <if test="isVirtual != null  and  isVirtual!=-1">
             AND pms_goods.is_virtual =#{isVirtual}
         </if>
+    </select>
+
+    <select id="queryAllStoreSpusList" resultMap="PmsGoodsResult" parameterType="PmsGoods">
+        select pms_goods.*, t_store_info.store_name from pms_goods join t_store_info on pms_goods.store_id =
+        t_store_info.id
+        where 1=1
+        <if test="storeName != null and storeName != '' ">
+            AND t_store_info.store_name = #{storeName}
+        </if>
+        <if test="name != null and name != '' ">
+            AND pms_goods.name like CONCAT(CONCAT('%', #{name}),'%')
+        </if>
+        <if test="id != null and id != '' ">
+            AND pms_goods.id = #{id}
+        </if>
+        <if test="firstCateId != null and firstCateId !=0">
+            AND pms_goods.first_cate_id = #{firstCateId}
+        </if>
+        <if test="secondCateId != null and secondCateId!=0">
+            AND pms_goods.second_cate_id = #{secondCateId}
+        </if>
+        <if test="thirdCateId != null  and  thirdCateId!=0">
+            AND pms_goods.third_cate_id =#{thirdCateId}
+        </if>
+        <if test="status != null  and  status!='-1'">
+            AND pms_goods.status =#{status}
+        </if>
+        <if test="shelvesStatus != null  and  shelvesStatus!='-1'">
+            AND pms_goods.shelves_status =#{shelvesStatus}
+        </if>
+        <if test="isVirtual != null  and  isVirtual!=-1">
+            AND pms_goods.is_virtual =#{isVirtual}
+        </if>
+        order by create_time desc
     </select>
 
     <insert id="insertPmsGoods" parameterType="PmsGoods" useGeneratedKeys="true" keyProperty="id">

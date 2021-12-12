@@ -7,7 +7,7 @@ import request from '@/utils/request';
  */
 export function queryStoreBackOrders(params) {
   return request({
-    url: 'storebackorders',
+    url: '/order/OmsBackOrder/storebackorders',
     method: 'get',
     params: params
   })
