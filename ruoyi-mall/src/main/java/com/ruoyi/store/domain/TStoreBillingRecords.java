@@ -15,7 +15,7 @@ import java.util.Objects;
 /**
  * 门店账单收入支出对象 t_store_billing_records
  *
- * @author 魔金商城
+ * @author 伊甸园商城
  * @date 2020-07-28
  */
 @Data

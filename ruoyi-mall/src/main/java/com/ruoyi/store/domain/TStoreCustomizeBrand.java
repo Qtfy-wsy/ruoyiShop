@@ -8,7 +8,7 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 /**
  * 店铺自定义品牌列对象 t_store_customize_brand
  *
- * @author 魔金商城
+ * @author 伊甸园商城
  * @date 2020-07-28
  */
 public class TStoreCustomizeBrand extends BaseEntity {

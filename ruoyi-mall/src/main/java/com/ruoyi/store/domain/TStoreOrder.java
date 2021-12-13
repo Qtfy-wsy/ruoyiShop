@@ -18,7 +18,7 @@ import java.util.stream.IntStream;
 /**
  * 门店订单对象 t_store_order
  *
- * @author 魔金商城
+ * @author 伊甸园商城
  * @date 2020-07-28
  */
 @Data

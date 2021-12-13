@@ -1,7 +1,7 @@
 package com.ruoyi.appletsutil;
 
 /**
- * Created by 魔金商城 on 17/7/10.
+ * Created by 伊甸园商城 on 17/7/10.
  * 结果返回吗
  */
 public interface ResultCode {

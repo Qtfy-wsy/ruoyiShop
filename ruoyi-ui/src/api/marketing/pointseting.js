@@ -1,7 +1,7 @@
 /**
  * 积分设置路由
  *
- * @author 魔金商城 created on 2019/7/31
+ * @author 伊甸园商城 created on 2019/7/31
  */
 
 import request from '@/utils/request';

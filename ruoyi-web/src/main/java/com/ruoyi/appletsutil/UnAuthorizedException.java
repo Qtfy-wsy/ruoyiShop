@@ -5,7 +5,7 @@ import com.ruoyi.common.md5.MessageSourceUtil;
 import lombok.Data;
 
 /**
- * Created by 魔金商城 on 2018/6/13.
+ * Created by 伊甸园商城 on 2018/6/13.
  * 微信小程序未授权异常
  */
 @Data

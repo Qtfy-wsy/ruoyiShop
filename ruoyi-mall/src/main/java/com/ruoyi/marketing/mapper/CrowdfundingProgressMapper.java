@@ -6,7 +6,7 @@ import com.ruoyi.marketing.domain.CrowdfundingProgress;
 import java.util.List;
 
 /**
- * Created by 魔金商城 on 2018/4/23
+ * Created by 伊甸园商城 on 2018/4/23
  * <p>
  * 众筹进度数据库接口
  */

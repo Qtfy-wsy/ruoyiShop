@@ -8,7 +8,7 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 /**
  * 社区团购设置对象 s_community_buy_setting
  *
- * @author 魔金商城
+ * @author 伊甸园商城
  * @date 2020-07-28
  */
 public class SCommunityBuySetting extends BaseEntity {

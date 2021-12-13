@@ -8,7 +8,7 @@ import lombok.Data;
 /**
  * 门店订单操作日志对象 t_store_order_operation_log
  *
- * @author 魔金商城
+ * @author 伊甸园商城
  * @date 2020-07-28
  */
 @Data

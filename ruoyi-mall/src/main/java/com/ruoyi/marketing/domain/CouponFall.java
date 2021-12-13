@@ -9,7 +9,7 @@ import java.math.BigDecimal;
 /**
  * 优惠券直降实体类
  *
- * @author 魔金商城 on 2017/6/1.
+ * @author 伊甸园商城 on 2017/6/1.
  */
 @Data
 @ApiModel(description = "品牌实体")

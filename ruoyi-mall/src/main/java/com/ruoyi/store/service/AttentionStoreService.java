@@ -7,7 +7,7 @@ import com.ruoyi.util.PageHelper;
 /**
  * 关注的店铺service
  *
- * @author 魔金商城 on 2017/7/4.
+ * @author 伊甸园商城 on 2017/7/4.
  */
 public interface AttentionStoreService {
     /**

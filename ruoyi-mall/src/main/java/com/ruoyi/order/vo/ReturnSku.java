@@ -6,7 +6,7 @@ import lombok.Data;
 import java.math.BigDecimal;
 
 /**
- * Created by 魔金商城 on 17/11/15.
+ * Created by 伊甸园商城 on 17/11/15.
  * 申请退货的单品
  */
 @Data

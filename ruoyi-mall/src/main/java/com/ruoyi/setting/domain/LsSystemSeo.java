@@ -8,7 +8,7 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 /**
  * 系统seo设置对象 ls_system_seo
  *
- * @author 魔金商城
+ * @author 伊甸园商城
  * @date 2020-07-29
  */
 public class LsSystemSeo extends BaseEntity {

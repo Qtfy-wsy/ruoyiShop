@@ -13,7 +13,7 @@ import java.util.List;
 /**
  * 开店信息实体类用于开店流程查询
  *
- * @author 魔金商城 on 2017/6/20.
+ * @author 伊甸园商城 on 2017/6/20.
  */
 @Data
 @ApiModel(description = "开店信息实体类用于开店流程查询")

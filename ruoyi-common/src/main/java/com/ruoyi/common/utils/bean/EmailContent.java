@@ -3,7 +3,7 @@ package com.ruoyi.common.utils.bean;
 import lombok.Data;
 
 /**
- * Created by 魔金商城 on 17/10/14.
+ * Created by 伊甸园商城 on 17/10/14.
  * 邮箱内容
  */
 @Data

@@ -14,7 +14,7 @@ import java.util.Objects;
 import java.util.function.Consumer;
 
 /**
- * Created by 魔金商城 on 18/4/11
+ * Created by 伊甸园商城 on 18/4/11
  * 代客下单服务接口
  */
 @Slf4j

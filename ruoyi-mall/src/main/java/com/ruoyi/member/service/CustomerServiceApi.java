@@ -6,7 +6,7 @@ import com.ruoyi.member.vo.CustomerStatistics;
 import java.io.OutputStream;
 
 /**
- * Created by 魔金商城 on 17/12/5.
+ * Created by 伊甸园商城 on 17/12/5.
  * 会员混合api接口
  */
 public interface CustomerServiceApi {

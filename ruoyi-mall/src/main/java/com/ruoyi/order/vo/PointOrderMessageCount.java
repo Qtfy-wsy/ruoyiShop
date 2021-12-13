@@ -7,7 +7,7 @@ import lombok.Data;
 /**
  * 积分订单消息总数返回实体
  *
- * @author 魔金商城 created on 2020/4/21
+ * @author 伊甸园商城 created on 2020/4/21
  */
 @Data
 @ApiModel(description = "积分订单消息总数返回实体")

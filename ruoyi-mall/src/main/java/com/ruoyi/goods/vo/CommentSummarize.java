@@ -9,7 +9,7 @@ import java.math.RoundingMode;
 
 
 /**
- * Created by 魔金商城 on 17/12/9.
+ * Created by 伊甸园商城 on 17/12/9.
  * 商品评价概括
  */
 @Data

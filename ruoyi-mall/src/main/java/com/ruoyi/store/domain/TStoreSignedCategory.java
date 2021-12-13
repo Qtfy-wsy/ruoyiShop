@@ -9,7 +9,7 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 /**
  * 店铺的签约分类对象 t_store_signed_category
  *
- * @author 魔金商城
+ * @author 伊甸园商城
  * @date 2020-07-28
  */
 public class TStoreSignedCategory extends BaseEntity {

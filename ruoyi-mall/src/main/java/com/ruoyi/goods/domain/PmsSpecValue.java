@@ -13,7 +13,7 @@ import java.util.Date;
 /**
  * 规格值对象 pms_spec_value
  *
- * @author 魔金商城
+ * @author 伊甸园商城
  * @date 2020-07-24
  */
 public class PmsSpecValue extends BaseEntity {

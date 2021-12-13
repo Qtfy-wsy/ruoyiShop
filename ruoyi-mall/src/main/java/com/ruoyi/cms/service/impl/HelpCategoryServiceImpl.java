@@ -18,7 +18,7 @@ import java.util.Map;
 /**
  * 帮助分类service实现类
  *
- * Created by 魔金商城 on 2017/5/23.
+ * Created by 伊甸园商城 on 2017/5/23.
  */
 @Service
 public class HelpCategoryServiceImpl implements HelpCategoryService {

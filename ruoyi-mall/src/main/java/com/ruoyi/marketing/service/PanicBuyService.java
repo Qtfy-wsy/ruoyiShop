@@ -4,7 +4,7 @@ import com.ruoyi.marketing.domain.PanicBuy;
 import com.ruoyi.util.PageHelper;
 
 /**
- * Created by 魔金商城 on 2020/5/15.
+ * Created by 伊甸园商城 on 2020/5/15.
  * 抢购服务接口
  */
 public interface PanicBuyService {

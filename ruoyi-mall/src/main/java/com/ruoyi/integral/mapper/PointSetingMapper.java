@@ -4,7 +4,7 @@ package com.ruoyi.integral.mapper;
 import com.ruoyi.integral.domain.PointSeting;
 
 /**
- * Created by 魔金商城 on 17/5/23.
+ * Created by 伊甸园商城 on 17/5/23.
  * 积分设置数据库接口
  */
 public interface PointSetingMapper {

@@ -20,7 +20,7 @@ import java.util.Map;
 /**
  * 门店预约Service业务层处理
  *
- * @author 魔金商城
+ * @author 伊甸园商城
  * @date 2020-07-28
  */
 @Slf4j

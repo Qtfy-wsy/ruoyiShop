@@ -17,7 +17,7 @@ import java.util.List;
 /**
  * 社区团购设置Controller
  *
- * @author 魔金商城
+ * @author 伊甸园商城
  * @date 2020-07-28
  */
 @RestController

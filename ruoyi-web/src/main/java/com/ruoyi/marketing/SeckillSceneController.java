@@ -20,7 +20,7 @@ import springfox.documentation.annotations.ApiIgnore;
 /**
  * 秒杀场次控制器
  *
- * @author 魔金商城 created on 2020/5/18
+ * @author 伊甸园商城 created on 2020/5/18
  */
 @Controller
 @Api("秒杀场次接口")

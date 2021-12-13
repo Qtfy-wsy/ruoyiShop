@@ -22,7 +22,7 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * 会员分销控制器
  *
- * @author 魔金商城 created on 2020/6/22
+ * @author 伊甸园商城 created on 2020/6/22
  */
 @RestController
 @Api(description = "会员分销接口")

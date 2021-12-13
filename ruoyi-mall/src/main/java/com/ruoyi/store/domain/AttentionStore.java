@@ -15,7 +15,7 @@ import java.util.List;
 /**
  * 关注店铺实体类
  *
- * @author 魔金商城 on 2017/7/4.
+ * @author 伊甸园商城 on 2017/7/4.
  */
 @Data
 @ApiModel(description = "关注店铺实体类")

@@ -24,7 +24,7 @@ import java.util.Objects;
 /**
  * 店铺信息对象 t_store_info
  *
- * @author 魔金商城
+ * @author 伊甸园商城
  * @date 2020-07-28
  */
 @Data

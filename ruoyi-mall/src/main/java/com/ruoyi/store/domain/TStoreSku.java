@@ -10,7 +10,7 @@ import java.math.BigDecimal;
 /**
  * 门店单品对象 t_store_sku
  *
- * @author 魔金商城
+ * @author 伊甸园商城
  * @date 2020-07-28
  */
 public class TStoreSku extends BaseEntity {

@@ -15,7 +15,7 @@ import springfox.documentation.annotations.ApiIgnore;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * Created by 魔金商城 on 18/6/23.
+ * Created by 伊甸园商城 on 18/6/23.
  * 会员积分控制器
  */
 @RestController

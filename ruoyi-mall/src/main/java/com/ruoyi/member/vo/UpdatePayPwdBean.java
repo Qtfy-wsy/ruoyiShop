@@ -6,7 +6,7 @@ import lombok.Data;
 import org.springframework.util.StringUtils;
 
 /**
- * Created by 魔金商城 on 17/11/20.
+ * Created by 伊甸园商城 on 17/11/20.
  * 修改支付密码实体
  */
 @Data

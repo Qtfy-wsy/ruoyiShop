@@ -5,7 +5,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 /**
- * Created by 魔金商城 on 18/02/07.
+ * Created by 伊甸园商城 on 18/02/07.
  * 提现返回实体
  */
 @Data

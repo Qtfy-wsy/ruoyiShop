@@ -15,7 +15,7 @@ import java.util.Locale;
 /**
  * 会员预存款记录对象 ums_pre_deposit_record
  *
- * @author 魔金商城
+ * @author 伊甸园商城
  * @date 2020-07-25
  */
 @Data

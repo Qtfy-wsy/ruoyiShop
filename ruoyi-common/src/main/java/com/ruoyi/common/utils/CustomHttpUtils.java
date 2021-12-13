@@ -33,7 +33,7 @@ import java.util.Objects;
 /**
  * 自定义http工具类
  *
- * @author 魔金商城 created on 2020/4/14
+ * @author 伊甸园商城 created on 2020/4/14
  */
 @Slf4j
 public class CustomHttpUtils {

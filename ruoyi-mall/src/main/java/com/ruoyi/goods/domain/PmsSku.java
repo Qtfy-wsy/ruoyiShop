@@ -21,7 +21,7 @@ import java.util.stream.Collectors;
 /**
  * 单品对象 pms_sku
  *
- * @author 魔金商城
+ * @author 伊甸园商城
  * @date 2020-07-24
  */
 @Slf4j

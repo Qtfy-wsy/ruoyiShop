@@ -16,7 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Objects;
 
 /**
- * Created by 魔金商城 on 17/6/7.
+ * Created by 伊甸园商城 on 17/6/7.
  * 促销模版
  */
 public abstract class MarketingTemplate implements MarketingService {

@@ -17,7 +17,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 /**
- * Created by 魔金商城 on 17/11/2.
+ * Created by 伊甸园商城 on 17/11/2.
  * 店铺结算实体
  */
 @Data

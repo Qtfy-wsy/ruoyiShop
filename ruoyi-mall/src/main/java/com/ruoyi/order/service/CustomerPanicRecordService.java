@@ -4,7 +4,7 @@ package com.ruoyi.order.service;
 import com.ruoyi.order.domain.OmsOrderSku;
 
 /**
- * Created by 魔金商城 on 17/12/27.
+ * Created by 伊甸园商城 on 17/12/27.
  * 会员抢购纪录服务接口
  */
 public interface CustomerPanicRecordService {

@@ -9,7 +9,7 @@ import java.util.Map;
 /**
  * 优惠券券码mapper
  *
- * @author 魔金商城 on 2017/6/1.
+ * @author 伊甸园商城 on 2017/6/1.
  */
 @Repository
 public interface CouponCodeMapper {

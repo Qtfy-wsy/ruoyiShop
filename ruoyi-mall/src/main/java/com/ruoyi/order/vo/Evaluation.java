@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Objects;
 
 /**
- * Created by 魔金商城 on 17/12/5.
+ * Created by 伊甸园商城 on 17/12/5.
  * 评论实体
  */
 @Data

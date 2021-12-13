@@ -5,7 +5,7 @@ import com.ruoyi.setting.bean.BaseInfoSet;
 /**
  * 基本信息设置service层
  *
- * @author 魔金商城 on 2017/5/17.
+ * @author 伊甸园商城 on 2017/5/17.
  */
 public interface BaseInfoSetService {
     /**

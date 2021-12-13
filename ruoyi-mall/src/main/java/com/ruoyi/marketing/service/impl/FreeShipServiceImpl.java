@@ -15,7 +15,7 @@ import java.util.Objects;
 
 
 /**
- * Created by 魔金商城 on 17/6/9.
+ * Created by 伊甸园商城 on 17/6/9.
  * 包邮服务接口
  */
 @Service

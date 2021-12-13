@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Created by 魔金商城 on 17/6/8.
+ * Created by 伊甸园商城 on 17/6/8.
  * 促销单品数据库
  */
 public interface MarketingSkuMapper {

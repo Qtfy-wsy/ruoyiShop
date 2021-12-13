@@ -11,7 +11,7 @@ import org.springframework.util.CollectionUtils;
 import java.util.Objects;
 
 /**
- * Created by 魔金商城 on 17/6/9.
+ * Created by 伊甸园商城 on 17/6/9.
  * 满折促销服务接口
  */
 @Service("fullDiscountService")

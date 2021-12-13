@@ -10,7 +10,7 @@ import java.math.BigDecimal;
 /**
  * 单品和营销的关联对象 pms_sku_marketing
  *
- * @author 魔金商城
+ * @author 伊甸园商城
  * @date 2020-07-24
  */
 public class PmsSkuMarketing extends BaseEntity {

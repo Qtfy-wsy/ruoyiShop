@@ -9,7 +9,7 @@ import java.io.OutputStream;
 import java.util.List;
 
 /**
- * Created by 魔金商城 on 17/11/7.
+ * Created by 伊甸园商城 on 17/11/7.
  * 订单服务接口
  */
 public interface OrderServiceApi {

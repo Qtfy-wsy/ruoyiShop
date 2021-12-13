@@ -8,7 +8,7 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 /**
  * 分类和规格的关联对象 pms_category_spec
  *
- * @author 魔金商城
+ * @author 伊甸园商城
  * @date 2020-07-24
  */
 public class PmsCategorySpec extends BaseEntity {

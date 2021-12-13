@@ -18,7 +18,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 /**
- * Created by 魔金商城 on 2020/5/12.
+ * Created by 伊甸园商城 on 2020/5/12.
  * 秒杀场次折扣服务接口实现
  */
 @Slf4j

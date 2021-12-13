@@ -10,7 +10,7 @@ import java.util.Map;
 /**
  * 商品组合单品关联数据库接口
  * <p>
- * Created by 魔金商城 on 2017/6/13.
+ * Created by 伊甸园商城 on 2017/6/13.
  */
 @Repository
 public interface CombinationSkuMapper {

@@ -8,7 +8,7 @@ import com.ruoyi.order.vo.SkuResponse;
 import java.util.List;
 
 /**
- * Created by 魔金商城 on 17/8/9.
+ * Created by 伊甸园商城 on 17/8/9.
  * 购物车服务接口(混合api)
  */
 public interface ShoppingCartServiceApi {

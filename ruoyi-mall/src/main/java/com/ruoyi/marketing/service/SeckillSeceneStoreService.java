@@ -4,7 +4,7 @@ import com.ruoyi.marketing.domain.SeckillSeceneStore;
 
 
 /**
- * Created by 魔金商城 on 2020/5/13.
+ * Created by 伊甸园商城 on 2020/5/13.
  * 店铺参与秒杀活动的关联服务接口
  */
 public interface SeckillSeceneStoreService {

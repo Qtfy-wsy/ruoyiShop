@@ -14,7 +14,7 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 /**
- * Created by 魔金商城 on 17/6/8.
+ * Created by 伊甸园商城 on 17/6/8.
  * 抢购实体
  */
 @Data

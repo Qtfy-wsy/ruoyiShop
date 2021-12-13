@@ -4,7 +4,7 @@ import com.ruoyi.common.md5.MessageSourceUtil;
 import lombok.Data;
 
 /**
- * Created by 魔金商城 on 17/7/10.
+ * Created by 伊甸园商城 on 17/7/10.
  * 业务异常
  */
 @Data

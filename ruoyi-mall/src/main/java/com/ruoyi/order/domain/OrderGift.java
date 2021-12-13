@@ -5,7 +5,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 /**
- * Created by 魔金商城 on 18/1/2.
+ * Created by 伊甸园商城 on 18/1/2.
  * 订单赠品
  */
 @Data

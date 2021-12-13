@@ -5,7 +5,7 @@ import java.util.Random;
 /**
  * 随机生成字母和数字组合
  *
- * @author 魔金商城 on 2017/6/1.
+ * @author 伊甸园商城 on 2017/6/1.
  */
 public class RandomMathLetter {
     /**

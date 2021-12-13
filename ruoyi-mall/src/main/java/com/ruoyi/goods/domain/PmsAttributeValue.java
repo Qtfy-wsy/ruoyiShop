@@ -10,7 +10,7 @@ import org.springframework.util.StringUtils;
 /**
  * 属性值对象 pms_attribute_value
  *
- * @author 魔金商城
+ * @author 伊甸园商城
  * @date 2020-07-24
  */
 public class PmsAttributeValue extends BaseEntity {

@@ -9,7 +9,7 @@ import lombok.Data;
 import java.time.LocalDateTime;
 
 /**
- * Created by 魔金商城 on 18/1/17.
+ * Created by 伊甸园商城 on 18/1/17.
  * 红包和店铺的关联实体
  */
 @Data

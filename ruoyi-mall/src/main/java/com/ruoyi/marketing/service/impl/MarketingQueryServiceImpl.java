@@ -21,7 +21,7 @@ import javax.annotation.Resource;
 import java.util.*;
 
 /**
- * Created by 魔金商城 on 17/6/8.
+ * Created by 伊甸园商城 on 17/6/8.
  * 促销查询实现接口
  */
 @Service

@@ -17,7 +17,7 @@ import java.util.Map;
 /**
  * 运费方式关联的区域Service业务层处理
  *
- * @author 魔金商城
+ * @author 伊甸园商城
  * @date 2020-07-24
  */
 @Service

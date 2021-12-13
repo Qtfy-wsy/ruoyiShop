@@ -9,7 +9,7 @@ import java.io.Serializable;
 /**
  * 基本信息设置实体类
  *
- * @author 魔金商城 on 2017/5/17.
+ * @author 伊甸园商城 on 2017/5/17.
  */
 
 @Data

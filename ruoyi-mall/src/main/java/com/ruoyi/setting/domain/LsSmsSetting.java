@@ -10,7 +10,7 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 /**
  * 短信接口设置对象 ls_sms_setting
  *
- * @author 魔金商城
+ * @author 伊甸园商城
  * @date 2020-07-28
  */
 @Data

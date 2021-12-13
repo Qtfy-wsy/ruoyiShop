@@ -7,7 +7,7 @@ import com.ruoyi.util.PageHelper;
 import java.util.List;
 
 /**
- * Created by 魔金商城 on 18/2/5
+ * Created by 伊甸园商城 on 18/2/5
  * 新增店铺统计服务接口
  */
 public interface NewStoreInfoStatisticsService {

@@ -14,7 +14,7 @@ import java.util.Objects;
 /**
  * 会员浏览记录对象 ums_browse_record
  *
- * @author 魔金商城
+ * @author 伊甸园商城
  * @date 2020-07-25
  */
 @Data

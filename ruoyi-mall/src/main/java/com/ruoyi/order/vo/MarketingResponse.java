@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Objects;
 
 /**
- * Created by 魔金商城 on 17/8/9.
+ * Created by 伊甸园商城 on 17/8/9.
  * 促销信息返回
  */
 @Data

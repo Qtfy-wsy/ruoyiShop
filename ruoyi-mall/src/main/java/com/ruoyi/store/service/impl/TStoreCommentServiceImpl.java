@@ -23,7 +23,7 @@ import java.util.Objects;
 /**
  * 店铺评论Service业务层处理
  *
- * @author 魔金商城
+ * @author 伊甸园商城
  * @date 2020-07-28
  */
 @Service

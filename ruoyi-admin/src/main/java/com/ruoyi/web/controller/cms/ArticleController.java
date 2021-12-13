@@ -18,7 +18,7 @@ import java.util.List;
 /**
  * 文章控制器
  *
- * @author 魔金商城 created on 2019/5/31
+ * @author 伊甸园商城 created on 2019/5/31
  */
 @RestController
 @Api(description = "文章接口")

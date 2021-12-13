@@ -5,7 +5,7 @@ import lombok.Data;
 import java.util.List;
 
 /**
- * Created by 魔金商城 on 17/11/13.
+ * Created by 伊甸园商城 on 17/11/13.
  * 确认订单支付请求参数实体
  */
 @Data

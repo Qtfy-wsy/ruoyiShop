@@ -9,7 +9,7 @@ import java.util.Map;
 /**
  * 单品评论Mapper接口
  *
- * @author 魔金商城
+ * @author 伊甸园商城
  * @date 2020-07-24
  */
 public interface PmsCommentMapper {

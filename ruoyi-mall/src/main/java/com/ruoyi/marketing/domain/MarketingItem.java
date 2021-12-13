@@ -1,7 +1,7 @@
 package com.ruoyi.marketing.domain;
 
 /**
- * Created by 魔金商城 on 18/1/5.
+ * Created by 伊甸园商城 on 18/1/5.
  * 促销查询条件
  */
 public enum MarketingItem {

@@ -4,7 +4,7 @@ package com.ruoyi.order.service;
 /**
  * 物流模版服务api接口
  *
- * @author 魔金商城 created on 2020/4/24
+ * @author 伊甸园商城 created on 2020/4/24
  */
 public interface LogisticsTemplateServiceApi {
 

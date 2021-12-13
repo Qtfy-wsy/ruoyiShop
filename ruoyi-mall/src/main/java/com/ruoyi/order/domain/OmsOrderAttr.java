@@ -11,7 +11,7 @@ import java.util.Date;
 /**
  * 订单属性对象 oms_order_attr
  *
- * @author 魔金商城
+ * @author 伊甸园商城
  * @date 2020-07-24
  */
 public class OmsOrderAttr extends BaseEntity {

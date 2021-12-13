@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Objects;
 
 /**
- * Created by 魔金商城 on 2018/4/23
+ * Created by 伊甸园商城 on 2018/4/23
  * <p>
  * 众筹进度服务实现接口
  */

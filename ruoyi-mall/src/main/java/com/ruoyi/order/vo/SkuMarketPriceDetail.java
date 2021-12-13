@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Objects;
 
 /**
- * Created by 魔金商城 on 17/11/23.
+ * Created by 伊甸园商城 on 17/11/23.
  * 单品促销价格详情实体(主要是会员价,抢购,团购)
  */
 @Data

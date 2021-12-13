@@ -22,7 +22,7 @@ import static java.util.stream.Collectors.toList;
 /**
  * 用户收货地址Service业务层处理
  *
- * @author 魔金商城
+ * @author 伊甸园商城
  * @date 2020-07-25
  */
 @Service

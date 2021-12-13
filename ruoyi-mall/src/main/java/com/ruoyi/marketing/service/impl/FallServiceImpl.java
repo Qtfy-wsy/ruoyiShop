@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import java.util.Objects;
 
 /**
- * Created by 魔金商城 on 17/6/8.
+ * Created by 伊甸园商城 on 17/6/8.
  * 直降促销接口
  */
 @Service("fallService")

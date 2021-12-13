@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import springfox.documentation.annotations.ApiIgnore;
 
 /**
- * Created by 魔金商城 on 18/7/11
+ * Created by 伊甸园商城 on 18/7/11
  * 预售控制器
  */
 @Controller

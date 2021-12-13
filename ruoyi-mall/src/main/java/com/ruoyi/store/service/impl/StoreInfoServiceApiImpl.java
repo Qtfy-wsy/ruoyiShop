@@ -22,7 +22,7 @@ import org.springframework.stereotype.Service;
 import java.util.Objects;
 
 /**
- * Created by 魔金商城 on 17/11/23.
+ * Created by 伊甸园商城 on 17/11/23.
  * 店铺服务接口实现
  */
 @Service

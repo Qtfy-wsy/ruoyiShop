@@ -1,7 +1,7 @@
 package com.ruoyi.order.service.impl;
 
 /**
- * Created by 魔金商城 on 17/12/22.
+ * Created by 伊甸园商城 on 17/12/22.
  * 支付接口
  */
 @FunctionalInterface

@@ -3,7 +3,7 @@ package com.ruoyi.member.service;
 import java.util.function.Consumer;
 
 /**
- * Created by 魔金商城 on 17/11/18.
+ * Created by 伊甸园商城 on 17/11/18.
  * 注册服务接口
  */
 public interface RegisterService {

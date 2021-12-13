@@ -11,7 +11,7 @@ import java.util.Date;
 /**
  * 区域区对象 ls_district
  *
- * @author 魔金商城
+ * @author 伊甸园商城
  * @date 2020-07-29
  */
 public class LsDistrict extends BaseEntity {

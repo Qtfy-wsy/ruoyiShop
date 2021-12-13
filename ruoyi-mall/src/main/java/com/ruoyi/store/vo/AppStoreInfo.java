@@ -6,7 +6,7 @@ import lombok.Builder;
 import lombok.Data;
 
 /**
- * Created by 魔金商城 on 2019/3/5.
+ * Created by 伊甸园商城 on 2019/3/5.
  * 店铺信息实体
  */
 @Data

@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import springfox.documentation.annotations.ApiIgnore;
 
 /**
- * Created by 魔金商城 on 2018/8/23.
+ * Created by 伊甸园商城 on 2018/8/23.
  * 店铺信息控制器
  */
 @Api(description = "店铺信息接口")

@@ -9,7 +9,7 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 /**
  * 退款退货操作日志对象 oms_back_order_log
  *
- * @author 魔金商城
+ * @author 伊甸园商城
  * @date 2020-07-24
  */
 @Data

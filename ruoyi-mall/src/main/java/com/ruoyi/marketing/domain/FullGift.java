@@ -11,7 +11,7 @@ import java.math.BigDecimal;
 import java.util.List;
 
 /**
- * Created by 魔金商城 on 18/1/2.
+ * Created by 伊甸园商城 on 18/1/2.
  * 满赠实体
  */
 @Data

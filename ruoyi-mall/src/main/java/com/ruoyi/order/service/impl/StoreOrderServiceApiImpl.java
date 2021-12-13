@@ -35,7 +35,7 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 /**
- * Created by 魔金商城 on 2018/4/10.
+ * Created by 伊甸园商城 on 2018/4/10.
  * 门店订单服务接口实现
  */
 @Slf4j

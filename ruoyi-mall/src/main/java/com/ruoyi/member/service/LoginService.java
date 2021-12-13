@@ -9,7 +9,7 @@ import com.ruoyi.member.vo.UnAuthLoginParams;
 import java.util.function.Consumer;
 
 /**
- * Created by 魔金商城 on 17/7/17.
+ * Created by 伊甸园商城 on 17/7/17.
  * 登录接口
  */
 public interface LoginService {

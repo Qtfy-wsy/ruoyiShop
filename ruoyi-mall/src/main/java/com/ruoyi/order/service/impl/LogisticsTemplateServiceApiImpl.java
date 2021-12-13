@@ -16,7 +16,7 @@ import java.util.Objects;
 /**
  * 物流模版服务api接口实现
  *
- * @author 魔金商城 created on 2020/4/24
+ * @author 伊甸园商城 created on 2020/4/24
  */
 @Service
 @Slf4j

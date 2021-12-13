@@ -26,7 +26,7 @@ import java.util.Date;
 import java.util.Objects;
 
 /**
- * Created by 魔金商城 on 2018/6/13.
+ * Created by 伊甸园商城 on 2018/6/13.
  * 访问拦截器
  */
 @Slf4j

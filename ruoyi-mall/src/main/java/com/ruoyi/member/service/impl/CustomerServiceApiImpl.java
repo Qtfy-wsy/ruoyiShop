@@ -34,7 +34,7 @@ import java.util.List;
 import java.util.stream.IntStream;
 
 /**
- * Created by 魔金商城 on 17/12/5.
+ * Created by 伊甸园商城 on 17/12/5.
  * 会员服务api实现类
  */
 @Service

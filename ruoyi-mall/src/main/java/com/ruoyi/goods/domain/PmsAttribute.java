@@ -14,7 +14,7 @@ import java.util.stream.IntStream;
 /**
  * 商品属性对象 pms_attribute
  *
- * @author 魔金商城
+ * @author 伊甸园商城
  * @date 2020-07-24
  */
 public class PmsAttribute extends BaseEntity {

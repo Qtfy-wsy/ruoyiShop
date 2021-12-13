@@ -11,7 +11,7 @@ import java.util.Date;
 /**
  * 门店红包卷吗对象 t_store_red_envelope_code
  *
- * @author 魔金商城
+ * @author 伊甸园商城
  * @date 2020-07-28
  */
 public class TStoreRedEnvelopeCode extends BaseEntity {

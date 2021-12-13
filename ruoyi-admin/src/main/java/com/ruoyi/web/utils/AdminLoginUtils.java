@@ -6,7 +6,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import java.util.Objects;
 
 /**
- * Created by 魔金商城 on 2019/5/15.
+ * Created by 伊甸园商城 on 2019/5/15.
  * 登录帮助类 主要是获得登录信息
  */
 public class AdminLoginUtils {

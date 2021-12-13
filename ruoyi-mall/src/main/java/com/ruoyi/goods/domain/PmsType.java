@@ -14,7 +14,7 @@ import java.util.stream.IntStream;
 /**
  * 商品类型对象 pms_type
  *
- * @author 魔金商城
+ * @author 伊甸园商城
  * @date 2020-07-24
  */
 public class PmsType extends BaseEntity {

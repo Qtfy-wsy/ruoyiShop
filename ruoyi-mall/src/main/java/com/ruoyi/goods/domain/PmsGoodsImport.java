@@ -10,7 +10,7 @@ import java.math.BigDecimal;
 /**
  * 商品导入对象 pms_goods_import
  *
- * @author 魔金商城
+ * @author 伊甸园商城
  * @date 2020-07-24
  */
 public class PmsGoodsImport extends BaseEntity {

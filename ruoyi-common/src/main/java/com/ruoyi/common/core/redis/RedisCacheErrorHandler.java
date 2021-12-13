@@ -7,7 +7,7 @@ import org.springframework.cache.interceptor.CacheErrorHandler;
 import org.springframework.stereotype.Service;
 
 /**
- * Created by 魔金商城 on 18/2/5.
+ * Created by 伊甸园商城 on 18/2/5.
  * redis 异常处理器
  */
 @Service

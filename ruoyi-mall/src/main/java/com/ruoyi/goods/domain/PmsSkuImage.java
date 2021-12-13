@@ -10,7 +10,7 @@ import java.util.Objects;
 /**
  * 单品和图片的关联对象 pms_sku_image
  *
- * @author 魔金商城
+ * @author 伊甸园商城
  * @date 2020-07-24
  */
 public class PmsSkuImage extends BaseEntity {

@@ -11,7 +11,7 @@ import java.util.Date;
 /**
  * 物流公司对象 oms_logistics_company
  *
- * @author 魔金商城
+ * @author 伊甸园商城
  * @date 2020-07-24
  */
 @Data

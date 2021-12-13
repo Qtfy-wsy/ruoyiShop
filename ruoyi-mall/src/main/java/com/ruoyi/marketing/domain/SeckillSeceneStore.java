@@ -3,7 +3,7 @@ package com.ruoyi.marketing.domain;
 import lombok.Data;
 
 /**
- * Created by 魔金商城 on 2020/5/13.
+ * Created by 伊甸园商城 on 2020/5/13.
  * 店铺参与的秒杀场次
  */
 @Data

@@ -2,7 +2,7 @@ package com.ruoyi.common.utils;
 
 
 /**
- * Created by 魔金商城 on 17/11/02.
+ * Created by 伊甸园商城 on 17/11/02.
  * <p>
  * Twitter_Snowflake<br>
  * SnowFlake的结构如下(每部分用-分开):<br>

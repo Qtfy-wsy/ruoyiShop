@@ -7,7 +7,7 @@ import java.math.BigDecimal;
 /**
  * 促销订单统计实体类
  *
- * @author 魔金商城 created on 2019/4/11
+ * @author 伊甸园商城 created on 2019/4/11
  */
 @Data
 public class MarketingOrderStatistics {

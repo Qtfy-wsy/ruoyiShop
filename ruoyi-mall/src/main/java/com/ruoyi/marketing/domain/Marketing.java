@@ -19,7 +19,7 @@ import java.time.LocalDateTime;
 import java.util.*;
 
 /**
- * Created by 魔金商城 on 17/6/7.
+ * Created by 伊甸园商城 on 17/6/7.
  * 促销实体
  */
 @Data

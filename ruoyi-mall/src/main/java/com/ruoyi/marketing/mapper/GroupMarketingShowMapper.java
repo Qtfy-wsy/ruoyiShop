@@ -9,7 +9,7 @@ import java.util.Map;
 /**
  * 拼团活动数据库接口
  *
- * @author 魔金商城 created on 2020/5/28
+ * @author 伊甸园商城 created on 2020/5/28
  */
 public interface GroupMarketingShowMapper {
 

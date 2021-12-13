@@ -14,7 +14,7 @@ import java.util.List;
 /**
  * 帮助分类实体类
  *
- * Created by 魔金商城 on 2017/5/23.
+ * Created by 伊甸园商城 on 2017/5/23.
  */
 @Data
 @ApiModel(description = "帮助分类实体类")

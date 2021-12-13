@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Created by 魔金商城 on 2020/5/11.
+ * Created by 伊甸园商城 on 2020/5/11.
  * 秒杀场次数据库接口
  */
 public interface SeckillSceneMapper {

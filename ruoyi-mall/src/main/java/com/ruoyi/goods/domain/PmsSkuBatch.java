@@ -12,7 +12,7 @@ import java.math.BigDecimal;
 /**
  * 单品起批价格标对象 pms_sku_batch
  *
- * @author 魔金商城
+ * @author 伊甸园商城
  * @date 2020-07-24
  */
 @Data

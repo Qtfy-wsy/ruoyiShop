@@ -1,5 +1,5 @@
 {
-    "name" : "魔金商城",
+    "name" : "商城",
     "appid" : "",
     // 自行更换uniapp appid 可登录查看uniapp提供的用户统计 https://tongji.dcloud.net.cn/
     "description" : "RF商城",
@@ -214,7 +214,7 @@
         "uniStatistics" : {
             "enable" : true
         },
-        "title" : "魔金商城",
+        "title" : "商城",
         "sdkConfigs" : {
             "maps" : {
                 "qqmap" : {

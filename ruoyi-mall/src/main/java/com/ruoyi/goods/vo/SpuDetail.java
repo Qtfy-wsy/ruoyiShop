@@ -21,7 +21,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
- * Created by 魔金商城 on 17/7/13.
+ * Created by 伊甸园商城 on 17/7/13.
  * 商品详情 此类专门给前端详情页返回的数据
  */
 @Data

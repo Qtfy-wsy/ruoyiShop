@@ -8,7 +8,7 @@ import java.math.BigDecimal;
 import java.util.List;
 
 /**
- * Created by 魔金商城 on 18/4/9
+ * Created by 伊甸园商城 on 18/4/9
  * 门店红包服务接口
  */
 public interface StoreRedEnvelopeService {

@@ -1,7 +1,7 @@
 /**
  * 秒杀图片路由
  *
- * @author 魔金商城 created on 2020/5/12
+ * @author 伊甸园商城 created on 2020/5/12
  */
 
 import request from '@/utils/request';

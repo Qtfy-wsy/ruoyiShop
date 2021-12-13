@@ -22,7 +22,7 @@ import java.util.Objects;
 
 
 /**
- * Created by 魔金商城 on 18/1/16.
+ * Created by 伊甸园商城 on 18/1/16.
  * 试用促销
  */
 @Data

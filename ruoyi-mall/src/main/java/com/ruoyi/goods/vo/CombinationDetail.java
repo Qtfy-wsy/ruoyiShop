@@ -9,7 +9,7 @@ import lombok.Data;
 import java.util.List;
 
 /**
- * Created by 魔金商城 on 17/12/26.
+ * Created by 伊甸园商城 on 17/12/26.
  * 商品组合详情
  */
 @Data

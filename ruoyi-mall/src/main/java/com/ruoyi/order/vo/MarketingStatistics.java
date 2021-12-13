@@ -7,7 +7,7 @@ import lombok.Data;
 /**
  * 促销统计实体类
  *
- * @author 魔金商城 created on 2019/4/11
+ * @author 伊甸园商城 created on 2019/4/11
  */
 @Data
 @ApiModel(description = "促销统计实体类")

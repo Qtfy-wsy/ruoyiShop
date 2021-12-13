@@ -8,7 +8,7 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 /**
  * 商品组合下的单品对象_sku
  *
- * @author 魔金商城
+ * @author 伊甸园商城
  * @date 2020-07-24
  */
 public class PmsCombinationSku extends BaseEntity {

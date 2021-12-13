@@ -15,7 +15,7 @@ import java.util.Objects;
 /**
  * 发送短信工具类
  *
- * @author 魔金商城 on 2017/9/7.
+ * @author 伊甸园商城 on 2017/9/7.
  */
 public class SmsUtil {
 

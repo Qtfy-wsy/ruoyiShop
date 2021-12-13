@@ -190,7 +190,7 @@
 								/>
 							</view>
 							<view class="input-item input-item-sms-code">
-								<text class="iconfont iconyanzhengma" :class="'text-' + themeColor.name"></text>
+								<text class="iconfont iconyanzhengma" :class="'text-' + themeColor.name"/>
 								<view class="input-wrapper">
 									<view class="rf-input-wrapper">
 										<input

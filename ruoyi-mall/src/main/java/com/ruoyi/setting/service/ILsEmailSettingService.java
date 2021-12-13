@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * 邮箱设置Service接口
  *
- * @author 魔金商城
+ * @author 伊甸园商城
  * @date 2020-07-28
  */
 public interface ILsEmailSettingService {

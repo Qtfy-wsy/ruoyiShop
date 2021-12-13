@@ -1,7 +1,7 @@
 /**
  * 编辑拼团促销路由
  *
- * @author 魔金商城 created on 2019/8/7
+ * @author 伊甸园商城 created on 2019/8/7
  */
 
 import request from '@/utils/request';

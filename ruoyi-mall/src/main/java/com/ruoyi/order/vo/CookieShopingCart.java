@@ -5,7 +5,7 @@ import lombok.Data;
 
 
 /**
- * Created by 魔金商城 on 17/7/5.
+ * Created by 伊甸园商城 on 17/7/5.
  * cookie中的购物车信息
  */
 @Data

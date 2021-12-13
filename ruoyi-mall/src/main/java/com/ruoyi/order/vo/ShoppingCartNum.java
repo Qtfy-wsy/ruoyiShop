@@ -3,7 +3,7 @@ package com.ruoyi.order.vo;
 import lombok.Data;
 
 /**
- * Created by 魔金商城 on 2018/4/9.
+ * Created by 伊甸园商城 on 2018/4/9.
  * 购物车数量实体类
  */
 @Data

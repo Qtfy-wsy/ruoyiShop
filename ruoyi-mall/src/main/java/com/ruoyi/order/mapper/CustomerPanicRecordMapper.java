@@ -5,7 +5,7 @@ import com.ruoyi.order.domain.CustomerPanicRecord;
 import java.util.Map;
 
 /**
- * Created by 魔金商城 on 17/12/27.
+ * Created by 伊甸园商城 on 17/12/27.
  * 用户抢购纪录数据库接口
  */
 public interface CustomerPanicRecordMapper {

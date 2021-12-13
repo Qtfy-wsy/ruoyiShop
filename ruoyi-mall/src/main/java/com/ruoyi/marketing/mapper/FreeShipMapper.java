@@ -5,7 +5,7 @@ import com.ruoyi.marketing.domain.FreeShip;
 import com.ruoyi.marketing.domain.Marketing;
 
 /**
- * Created by 魔金商城 on 17/6/9.
+ * Created by 伊甸园商城 on 17/6/9.
  * 包邮数据库接口
  */
 public interface FreeShipMapper {

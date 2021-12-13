@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * 浏览历史列表
  * <p>
- * Created by 魔金商城 on 2017/7/4.
+ * Created by 伊甸园商城 on 2017/7/4.
  */
 @Data
 @ApiModel(description = "浏览历史列表实体")

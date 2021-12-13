@@ -22,7 +22,7 @@ import springfox.documentation.annotations.ApiIgnore;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * @author 魔金商城
+ * @author 伊甸园商城
  * @date 2019-12-19 16:40
  * <p>
  * 试用促销接口

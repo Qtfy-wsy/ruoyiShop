@@ -7,7 +7,7 @@ import java.util.Objects;
 /**
  * 支付设置统一类
  *
- * @author 魔金商城 on 2017/5/17.
+ * @author 伊甸园商城 on 2017/5/17.
  */
 
 public class PaySetCommon {

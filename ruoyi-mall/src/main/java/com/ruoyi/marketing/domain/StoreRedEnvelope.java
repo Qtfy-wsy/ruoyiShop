@@ -13,7 +13,7 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 /**
- * Created by 魔金商城 on 18/4/9
+ * Created by 伊甸园商城 on 18/4/9
  * 门店红包实体类
  */
 @Data

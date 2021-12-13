@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * 优惠券详情实体类
  *
- * @author 魔金商城 on 2017/6/6.
+ * @author 伊甸园商城 on 2017/6/6.
  */
 @Data
 @ApiModel(description = "优惠券详情实体")

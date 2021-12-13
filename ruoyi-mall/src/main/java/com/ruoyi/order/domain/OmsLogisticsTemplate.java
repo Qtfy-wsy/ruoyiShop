@@ -15,7 +15,7 @@ import java.util.List;
 /**
  * 物流模版对象 oms_logistics_template
  *
- * @author 魔金商城
+ * @author 伊甸园商城
  * @date 2020-07-24
  */
 public class OmsLogisticsTemplate extends BaseEntity {

@@ -6,7 +6,7 @@ import com.ruoyi.util.PageHelper;
 import java.util.List;
 
 /**
- * Created by 魔金商城 on 2017/5/23.
+ * Created by 伊甸园商城 on 2017/5/23.
  * 帮助分类接口
  */
 public interface HelpCategoryService {

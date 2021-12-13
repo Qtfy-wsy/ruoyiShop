@@ -1,6 +1,6 @@
 export default {
 	// app应用名称
-	appName: '魔金商城',
+	appName: '商城',
 
 	// 购物车在tab的位置
 	cartIndex: 3,

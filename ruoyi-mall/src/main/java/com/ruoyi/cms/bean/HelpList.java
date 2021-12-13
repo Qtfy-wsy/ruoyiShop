@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 /**
  * 帮助列表实体类
  * <p>
- * Created by 魔金商城 on 2017/5/27.
+ * Created by 伊甸园商城 on 2017/5/27.
  */
 @Data
 @ApiModel(description = "帮助列表实体类")

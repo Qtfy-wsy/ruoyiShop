@@ -21,7 +21,7 @@ import springfox.documentation.annotations.ApiIgnore;
 /**
  * 拼团促销控制器
  *
- * @author 魔金商城 created on 2020/6/2
+ * @author 伊甸园商城 created on 2020/6/2
  */
 @Controller
 @Api(description = "拼团促销接口")

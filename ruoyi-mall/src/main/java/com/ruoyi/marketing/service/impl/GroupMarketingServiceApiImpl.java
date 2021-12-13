@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 /**
  * 拼团促销聚合服务接口实现类
  *
- * @author 魔金商城 created on 2020/6/1
+ * @author 伊甸园商城 created on 2020/6/1
  */
 @Service
 @Slf4j

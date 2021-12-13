@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.function.Consumer;
 
 /**
- * Created by 魔金商城 on 17/5/25.
+ * Created by 伊甸园商城 on 17/5/25.
  * 会员积分服务接口
  */
 public interface CustomerPointService {

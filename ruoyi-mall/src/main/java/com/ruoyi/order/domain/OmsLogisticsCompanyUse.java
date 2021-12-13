@@ -8,7 +8,7 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 /**
  * 店铺使用的物流公司对象 oms_logistics_company_use
  *
- * @author 魔金商城
+ * @author 伊甸园商城
  * @date 2020-07-24
  */
 public class OmsLogisticsCompanyUse extends BaseEntity {

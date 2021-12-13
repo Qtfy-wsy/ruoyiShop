@@ -15,7 +15,7 @@ import java.util.Objects;
 /**
  * 运费模版包邮对象 pms_shipping_method_freeship
  *
- * @author 魔金商城
+ * @author 伊甸园商城
  * @date 2020-07-24
  */
 @Data

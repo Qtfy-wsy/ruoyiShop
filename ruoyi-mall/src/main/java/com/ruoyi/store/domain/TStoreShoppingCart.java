@@ -17,7 +17,7 @@ import java.util.Objects;
 /**
  * 门店购物车对象 t_store_shopping_cart
  *
- * @author 魔金商城
+ * @author 伊甸园商城
  * @date 2020-07-28
  */
 @Data

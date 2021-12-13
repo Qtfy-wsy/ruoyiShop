@@ -8,7 +8,7 @@ import java.util.Map;
 /**
  * 促销图片数据库接口
  *
- * @author 魔金商城 created on 2020/5/12
+ * @author 伊甸园商城 created on 2020/5/12
  */
 public interface MarketingPicMapper {
 

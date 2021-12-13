@@ -1,7 +1,7 @@
 /**
  * 积分商城订单列表路由
  *
- * @author 魔金商城 created on 2019/8/1
+ * @author 伊甸园商城 created on 2019/8/1
  */
 
 import request from '@/utils/request';

@@ -12,7 +12,7 @@ import java.util.Map;
 /**
  * 佣金记录对象 oms_commission_records
  *
- * @author 魔金商城
+ * @author 伊甸园商城
  * @date 2020-07-24
  */
 @Data

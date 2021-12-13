@@ -8,7 +8,7 @@ import com.ruoyi.order.vo.SubmitOrderResponse;
 import java.util.List;
 
 /**
- * Created by 魔金商城 on 2018/4/10.
+ * Created by 伊甸园商城 on 2018/4/10.
  * 门店订单服务接口
  */
 public interface StoreOrderServiceApi {

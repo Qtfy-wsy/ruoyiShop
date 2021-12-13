@@ -13,7 +13,7 @@ import java.util.List;
 /**
  * 微信登录和商城用户的关联Service业务层处理
  *
- * @author 魔金商城
+ * @author 伊甸园商城
  * @date 2020-07-29
  */
 @Service

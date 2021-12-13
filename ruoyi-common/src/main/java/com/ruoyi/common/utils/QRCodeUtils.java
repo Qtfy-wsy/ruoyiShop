@@ -15,7 +15,7 @@ import java.io.OutputStream;
 import java.util.Hashtable;
 
 /**
- * Created by 魔金商城 on 17/3/13.
+ * Created by 伊甸园商城 on 17/3/13.
  * 二维码生成器
  */
 public final class QRCodeUtils {

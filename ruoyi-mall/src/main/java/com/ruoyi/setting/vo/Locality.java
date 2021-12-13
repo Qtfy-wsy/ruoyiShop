@@ -5,7 +5,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 /**
- * @author 魔金商城
+ * @author 伊甸园商城
  * @date 2019-12-04 15:09
  * <p>
  * 地区新数据接口实体

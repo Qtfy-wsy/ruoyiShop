@@ -17,7 +17,7 @@ import springfox.documentation.annotations.ApiIgnore;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * Created by 魔金商城 on 18/6/14.
+ * Created by 伊甸园商城 on 18/6/14.
  * 签到控制器
  */
 @Api(description = "签到接口")

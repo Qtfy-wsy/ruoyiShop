@@ -12,7 +12,7 @@ import java.math.BigDecimal;
 import java.util.List;
 
 /**
- * Created by 魔金商城 on 2018/7/19
+ * Created by 伊甸园商城 on 2018/7/19
  * 首页信息统计
  */
 @Data

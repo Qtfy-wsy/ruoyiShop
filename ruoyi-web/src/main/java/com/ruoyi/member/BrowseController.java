@@ -20,7 +20,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.stream.Collectors;
 
 /**
- * Created by 魔金商城 on 18/7/3
+ * Created by 伊甸园商城 on 18/7/3
  * 浏览记录控制器
  */
 @Api(description = "浏览记录接口")

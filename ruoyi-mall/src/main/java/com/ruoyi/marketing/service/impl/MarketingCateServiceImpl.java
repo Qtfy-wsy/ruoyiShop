@@ -20,7 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.*;
 
 /**
- * Created by 魔金商城 on 18/1/10.
+ * Created by 伊甸园商城 on 18/1/10.
  * 促销分类服务实现接口
  */
 @Service

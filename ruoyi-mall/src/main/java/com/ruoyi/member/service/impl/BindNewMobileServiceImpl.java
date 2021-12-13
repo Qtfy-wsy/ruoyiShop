@@ -17,7 +17,7 @@ import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
 /**
- * Created by 魔金商城 on 17/11/20.
+ * Created by 伊甸园商城 on 17/11/20.
  * 重新绑定手机号码服务
  */
 @Service

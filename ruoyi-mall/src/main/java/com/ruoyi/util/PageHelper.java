@@ -10,7 +10,7 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 /**
- * Created by 魔金商城 on 17/5/2.
+ * Created by 伊甸园商城 on 17/5/2.
  * 分页帮助类
  */
 

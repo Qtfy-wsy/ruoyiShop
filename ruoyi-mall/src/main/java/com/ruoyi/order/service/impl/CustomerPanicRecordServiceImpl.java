@@ -16,7 +16,7 @@ import java.util.Map;
 import java.util.Objects;
 
 /**
- * Created by 魔金商城 on 17/12/27.
+ * Created by 伊甸园商城 on 17/12/27.
  * 会员抢购服务接口实现类
  */
 @Service

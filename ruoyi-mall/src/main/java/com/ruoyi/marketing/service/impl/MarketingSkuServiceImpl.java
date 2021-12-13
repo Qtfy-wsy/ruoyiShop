@@ -17,7 +17,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
- * Created by 魔金商城 on 17/6/8.
+ * Created by 伊甸园商城 on 17/6/8.
  * 促销单品服务接口实现
  */
 @Service

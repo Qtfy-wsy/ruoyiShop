@@ -20,7 +20,7 @@ import java.util.Objects;
 /**
  * 订单单品对象 oms_order_sku
  *
- * @author 魔金商城
+ * @author 伊甸园商城
  * @date 2020-07-24
  */
 @Data

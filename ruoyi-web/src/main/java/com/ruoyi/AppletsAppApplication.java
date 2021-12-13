@@ -20,7 +20,7 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 
 /**
- * Created by 魔金商城 on 2019/5/1.
+ * Created by 伊甸园商城 on 2019/5/1.
  * 小程序app后端启动类
  */
 @Slf4j

@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * 帮助列表service层接口
  *
- * Created by 魔金商城 on 2017/5/27.
+ * Created by 伊甸园商城 on 2017/5/27.
  */
 public interface HelpListService {
 

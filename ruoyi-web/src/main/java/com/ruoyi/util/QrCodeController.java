@@ -17,7 +17,7 @@ import java.io.OutputStream;
 /**
  * 二维码控制器
  *
- * @author 魔金商城 created on 2020/6/23
+ * @author 伊甸园商城 created on 2020/6/23
  */
 @Controller
 @Api(description = "二维码接口")

@@ -27,7 +27,7 @@ import java.util.stream.Collectors;
 /**
  * 店铺参与秒杀活动的关联服务接口实现类
  *
- * @author 魔金商城 created on 2020/5/14
+ * @author 伊甸园商城 created on 2020/5/14
  */
 @Service
 @Slf4j

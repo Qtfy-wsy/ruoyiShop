@@ -10,7 +10,7 @@ import java.math.BigDecimal;
 import java.util.List;
 
 /**
- * Created by 魔金商城 on 2019/1/15.
+ * Created by 伊甸园商城 on 2019/1/15.
  * 批量下单接口
  */
 public interface BatchOrderApi {

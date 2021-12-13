@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * 店铺地区统计服务接口
  *
- * @author 魔金商城 created on 2019/4/11
+ * @author 伊甸园商城 created on 2019/4/11
  */
 public interface StoreInfoAreaStatisticsService {
 

@@ -15,7 +15,7 @@ import java.util.Objects;
 /**
  * 试用活动实体用于c端的展示
  *
- * @author 魔金商城 created on 2020/6/8
+ * @author 伊甸园商城 created on 2020/6/8
  */
 @Data
 @ApiModel(description = "试用活动实体用于c端的展示")

@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 /**
- * Created by 魔金商城 on 2020/5/11.
+ * Created by 伊甸园商城 on 2020/5/11.
  * 秒杀场次
  */
 @Data

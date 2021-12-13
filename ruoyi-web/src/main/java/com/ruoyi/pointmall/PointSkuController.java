@@ -18,7 +18,7 @@ import springfox.documentation.annotations.ApiIgnore;
 /**
  * 积分商品详情控制器
  *
- * @author 魔金商城 created on 2020/4/21
+ * @author 伊甸园商城 created on 2020/4/21
  */
 @Controller
 @Api( "积分商品详情接口")

@@ -5,7 +5,7 @@ import com.ruoyi.marketing.domain.MarketingPic;
 /**
  * 促销图片服务接口
  *
- * @author 魔金商城 created on 2020/5/12
+ * @author 伊甸园商城 created on 2020/5/12
  */
 public interface MarketingPicService {
 

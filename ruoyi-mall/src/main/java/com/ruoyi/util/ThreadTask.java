@@ -4,7 +4,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 /**
- * Created by 魔金商城 on 17/6/20.
+ * Created by 伊甸园商城 on 17/6/20.
  * 线程池
  */
 public class ThreadTask {

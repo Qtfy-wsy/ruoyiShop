@@ -12,7 +12,7 @@ import java.util.function.Predicate;
 
 /**
  * 增加一些Java8中不支持的集合操作方法
- * Created by 魔金商城 on 17/6/15.
+ * Created by 伊甸园商城 on 17/6/15.
  */
 public class IteratorUtils {
 

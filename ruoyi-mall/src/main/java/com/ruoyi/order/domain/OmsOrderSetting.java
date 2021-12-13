@@ -7,7 +7,7 @@ import lombok.Data;
 /**
  * 订单设置对象 oms_order_setting
  *
- * @author 魔金商城
+ * @author 伊甸园商城
  * @date 2020-07-24
  */
 @Data

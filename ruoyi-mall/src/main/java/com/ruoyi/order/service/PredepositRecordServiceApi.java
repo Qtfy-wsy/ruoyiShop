@@ -1,7 +1,7 @@
 package com.ruoyi.order.service;
 
 /**
- * Created by 魔金商城 on 2020/4/8.
+ * Created by 伊甸园商城 on 2020/4/8.
  * 预存款服务api接口
  */
 public interface PredepositRecordServiceApi {

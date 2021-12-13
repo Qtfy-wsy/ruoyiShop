@@ -6,7 +6,7 @@ import com.ruoyi.common.utils.bean.WechatSetting;
 /**
  * 微信小程序access_token服务接口
  *
- * @author 魔金商城 created on 2020/4/28
+ * @author 伊甸园商城 created on 2020/4/28
  */
 public interface WxAppletAccessTokenService {
 

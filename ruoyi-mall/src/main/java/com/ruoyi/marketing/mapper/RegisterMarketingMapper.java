@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 /**
  * 注册营销数据库接口
  * <p>
- * Created by 魔金商城 on 2017/6/6.
+ * Created by 伊甸园商城 on 2017/6/6.
  */
 @Repository
 public interface RegisterMarketingMapper {

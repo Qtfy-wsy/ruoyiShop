@@ -15,7 +15,7 @@ import java.util.Objects;
 import java.util.function.Consumer;
 
 /**
- * Created by 魔金商城 on 17/11/18.
+ * Created by 伊甸园商城 on 17/11/18.
  * 注册接口
  */
 @Service
@@ -125,7 +125,7 @@ public class RegisterServiceImpl implements RegisterService {
         }
 
         // 校验验证码是否正确TODO
-        if (code.equals(originCode)) {
+        if (!code.equals(originCode)) {
             logger.error("registerCustomer fail due to code is error...");
             return -1;
         }

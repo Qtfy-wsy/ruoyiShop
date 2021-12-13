@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 /**
  * 预售活动实体用于c端的展示
  *
- * @author 魔金商城 created on 2020/6/12
+ * @author 伊甸园商城 created on 2020/6/12
  */
 @Data
 @ApiModel(description = "预售活动实体用于c端的展示")

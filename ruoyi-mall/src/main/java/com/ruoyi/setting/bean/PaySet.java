@@ -4,7 +4,7 @@ package com.ruoyi.setting.bean;
 /**
  * 支付接口设置数据库映射类
  *
- * @author 魔金商城 on 2017/5/17.
+ * @author 伊甸园商城 on 2017/5/17.
  */
 
 public class PaySet {

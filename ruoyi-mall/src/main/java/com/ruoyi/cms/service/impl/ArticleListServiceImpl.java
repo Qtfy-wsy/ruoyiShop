@@ -19,7 +19,7 @@ import java.util.*;
 /**
  * 文章列表service实现类
  *
- * @author 魔金商城 on 2017/5/22.
+ * @author 伊甸园商城 on 2017/5/22.
  */
 @Service
 public class ArticleListServiceImpl implements ArticleListService {

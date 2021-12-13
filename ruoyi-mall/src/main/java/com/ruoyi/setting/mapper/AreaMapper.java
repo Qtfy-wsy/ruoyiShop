@@ -8,7 +8,7 @@ import com.ruoyi.setting.domain.LsProvince;
 import java.util.List;
 
 /**
- * Created by 魔金商城 on 17/5/15.
+ * Created by 伊甸园商城 on 17/5/15.
  * 地区数据库接口
  */
 public interface AreaMapper {

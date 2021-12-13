@@ -15,7 +15,7 @@ import java.util.Map;
 /**
  * 店铺地区统计服务接口实现类
  *
- * @author 魔金商城 created on 2019/4/11
+ * @author 伊甸园商城 created on 2019/4/11
  */
 @Service
 @Slf4j

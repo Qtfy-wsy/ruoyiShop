@@ -17,7 +17,7 @@ import java.util.Map;
 /**
  * 关注店铺service实现类
  *
- * @author 魔金商城 on 2017/7/4.
+ * @author 伊甸园商城 on 2017/7/4.
  */
 @Service
 public class AttentionStoreServiceImpl implements AttentionStoreService {

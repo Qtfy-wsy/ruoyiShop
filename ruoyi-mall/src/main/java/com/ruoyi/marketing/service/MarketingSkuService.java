@@ -5,7 +5,7 @@ import com.ruoyi.marketing.domain.MarketingSku;
 import java.util.List;
 
 /**
- * Created by 魔金商城 on 17/6/8.
+ * Created by 伊甸园商城 on 17/6/8.
  * 促销单品服务接口
  */
 public interface MarketingSkuService {

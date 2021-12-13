@@ -6,7 +6,7 @@ import lombok.Data;
 import org.springframework.util.ObjectUtils;
 
 /**
- * Created by 魔金商城 on 17/12/1.
+ * Created by 伊甸园商城 on 17/12/1.
  * 通用返回对象
  */
 @Data

@@ -6,7 +6,7 @@ import lombok.Data;
 import org.springframework.util.StringUtils;
 
 /**
- * Created by 魔金商城 on 2018/6/13.
+ * Created by 伊甸园商城 on 2018/6/13.
  * 小程序凭证实体
  */
 @Data

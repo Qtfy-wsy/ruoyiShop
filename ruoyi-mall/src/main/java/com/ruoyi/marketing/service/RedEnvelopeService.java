@@ -8,7 +8,7 @@ import com.ruoyi.util.PageHelper;
 import java.util.List;
 
 /**
- * Created by 魔金商城 on 18/1/15
+ * Created by 伊甸园商城 on 18/1/15
  * 红包服务接口
  */
 public interface RedEnvelopeService {

@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 
 /**
- * Created by 魔金商城 on 2019/5/25.
+ * Created by 伊甸园商城 on 2019/5/25.
  * 错误控制器
  */
 @RestController

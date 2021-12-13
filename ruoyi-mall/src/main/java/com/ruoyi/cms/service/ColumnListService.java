@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * 栏目列表service层接口
  *
- * @author 魔金商城 on 2017/5/22.
+ * @author 伊甸园商城 on 2017/5/22.
  */
 public interface ColumnListService {
     /**

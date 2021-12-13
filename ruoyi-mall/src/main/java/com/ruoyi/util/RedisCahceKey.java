@@ -1,7 +1,7 @@
 package com.ruoyi.util;
 
 /**
- * Created by 魔金商城 on 18/2/6.
+ * Created by 伊甸园商城 on 18/2/6.
  * redis缓存中的key
  */
 public interface RedisCahceKey {

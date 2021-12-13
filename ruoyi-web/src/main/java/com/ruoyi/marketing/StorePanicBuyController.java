@@ -19,7 +19,7 @@ import springfox.documentation.annotations.ApiIgnore;
 /**
  * 店铺秒杀活动控制器
  *
- * @author 魔金商城 created on 2020/5/19
+ * @author 伊甸园商城 created on 2020/5/19
  */
 @Controller
 @Api("店铺秒杀活动接口")

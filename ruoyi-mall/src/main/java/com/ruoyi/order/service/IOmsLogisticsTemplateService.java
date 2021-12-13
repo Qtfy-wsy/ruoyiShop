@@ -8,7 +8,7 @@ import java.util.Set;
 /**
  * 物流模版Service接口
  *
- * @author 魔金商城
+ * @author 伊甸园商城
  * @date 2020-07-24
  */
 public interface IOmsLogisticsTemplateService {

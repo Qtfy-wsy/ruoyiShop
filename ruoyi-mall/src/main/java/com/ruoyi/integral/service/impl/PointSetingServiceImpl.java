@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 import java.util.Objects;
 
 /**
- * Created by 魔金商城 on 17/5/23.
+ * Created by 伊甸园商城 on 17/5/23.
  * 积分设置服务实现接口
  */
 @Service

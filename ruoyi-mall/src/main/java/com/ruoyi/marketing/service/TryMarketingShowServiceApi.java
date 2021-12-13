@@ -7,7 +7,7 @@ import com.ruoyi.util.PageHelper;
 /**
  * 试用活动聚合服务接口
  *
- * @author 魔金商城 created on 2020/6/9
+ * @author 伊甸园商城 created on 2020/6/9
  */
 public interface TryMarketingShowServiceApi {
 

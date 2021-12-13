@@ -6,7 +6,7 @@ import com.ruoyi.member.vo.ForgetPwdRequest;
 import java.util.function.Consumer;
 
 /**
- * Created by 魔金商城 on 17/11/22.
+ * Created by 伊甸园商城 on 17/11/22.
  * 忘记密码服务接口
  */
 public interface ForgetPwdService {

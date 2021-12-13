@@ -1,7 +1,7 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" :inline="true" label-width="68px">
-      <el-form-item label="是否可以退款和退货  0 可以 1 不可以 默认0 " prop="allowBack">
+      <el-form-item label="是否可以退款和退货" prop="allowBack">
         <el-input
           v-model="queryParams.allowBack"
           placeholder="请输入是否可以退款和退货  0 可以 1 不可以 默认0 "
@@ -10,7 +10,7 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="订单自定收货几天前的订单 默认1" prop="aotuConfirm">
+      <el-form-item label="订单自定收货几天前的订单" prop="aotuConfirm">
         <el-input
           v-model="queryParams.aotuConfirm"
           placeholder="请输入订单自定收货几天前的订单 默认1"
@@ -37,7 +37,7 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="是否支持货到付款  0 支付 1 不支持 默认0 " prop="cashonDelivery">
+      <el-form-item label="是否支持货到付款" prop="cashonDelivery">
         <el-input
           v-model="queryParams.cashonDelivery"
           placeholder="请输入是否支持货到付款  0 支付 1 不支持 默认0 "
@@ -96,11 +96,11 @@
     <el-table v-loading="loading" :data="OmsOrderSettingList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
       <el-table-column label="主键id" align="center" prop="id" />
-      <el-table-column label="是否可以退款和退货  0 可以 1 不可以 默认0 " align="center" prop="allowBack" />
-      <el-table-column label="订单自定收货几天前的订单 默认1" align="center" prop="aotuConfirm" />
+      <el-table-column label="是否可以退款和退货" align="center" prop="allowBack" />
+      <el-table-column label="订单自定收货几天前的订单" align="center" prop="aotuConfirm" />
       <el-table-column label="退款说明" align="center" prop="refundsDesc" />
       <el-table-column label="退货说明" align="center" prop="returnDesc" />
-      <el-table-column label="是否支持货到付款  0 支付 1 不支持 默认0 " align="center" prop="cashonDelivery" />
+      <el-table-column label="是否支持货到付款" align="center" prop="cashonDelivery" />
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
@@ -132,11 +132,11 @@
     <!-- 添加或修改订单设置对话框 -->
     <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="是否可以退款和退货  0 可以 1 不可以 默认0 " prop="allowBack">
-          <el-input v-model="form.allowBack" placeholder="请输入是否可以退款和退货  0 可以 1 不可以 默认0 " />
+        <el-form-item label="是否可以退款和退货" prop="allowBack">
+          <el-input v-model="form.allowBack" placeholder="请输入是否可以退款和退货" />
         </el-form-item>
-        <el-form-item label="订单自定收货几天前的订单 默认1" prop="aotuConfirm">
-          <el-input v-model="form.aotuConfirm" placeholder="请输入订单自定收货几天前的订单 默认1" />
+        <el-form-item label="订单自定收货几天前的订单" prop="aotuConfirm">
+          <el-input v-model="form.aotuConfirm" placeholder="请输入订单自定收货几天前的订单" />
         </el-form-item>
         <el-form-item label="退款说明" prop="refundsDesc">
           <el-input v-model="form.refundsDesc" placeholder="请输入退款说明" />
@@ -144,8 +144,8 @@
         <el-form-item label="退货说明" prop="returnDesc">
           <el-input v-model="form.returnDesc" placeholder="请输入退货说明" />
         </el-form-item>
-        <el-form-item label="是否支持货到付款  0 支付 1 不支持 默认0 " prop="cashonDelivery">
-          <el-input v-model="form.cashonDelivery" placeholder="请输入是否支持货到付款  0 支付 1 不支持 默认0 " />
+        <el-form-item label="是否支持货到付款" prop="cashonDelivery">
+          <el-input v-model="form.cashonDelivery" placeholder="请输入是否支持货到付款" />
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">

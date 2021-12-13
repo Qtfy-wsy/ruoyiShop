@@ -27,7 +27,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 /**
- * Created by 魔金商城 on 18/1/15
+ * Created by 伊甸园商城 on 18/1/15
  * 红包服务接口实现类
  */
 @Service

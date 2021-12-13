@@ -14,7 +14,7 @@ import java.util.List;
 /**
  * 单品起批价格标Service业务层处理
  *
- * @author 魔金商城
+ * @author 伊甸园商城
  * @date 2020-07-24
  */
 @Service

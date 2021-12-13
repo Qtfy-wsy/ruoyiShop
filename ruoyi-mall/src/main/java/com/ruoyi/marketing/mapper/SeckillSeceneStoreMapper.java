@@ -8,7 +8,7 @@ import java.util.Map;
 /**
  * 店铺参与秒杀活动的关联数据库接口
  *
- * @author 魔金商城 created on 2020/5/14
+ * @author 伊甸园商城 created on 2020/5/14
  */
 public interface SeckillSeceneStoreMapper {
 

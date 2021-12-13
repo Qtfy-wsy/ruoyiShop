@@ -7,7 +7,7 @@ import com.ruoyi.util.PageHelper;
 /**
  * 秒杀场次折扣聚合服务接口
  *
- * @author 魔金商城 created on 2020/5/15
+ * @author 伊甸园商城 created on 2020/5/15
  */
 public interface SeckillScenePanicbuyServiceApi {
 

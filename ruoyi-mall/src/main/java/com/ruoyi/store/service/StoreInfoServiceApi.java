@@ -6,7 +6,7 @@ import com.ruoyi.store.vo.StoreItem;
 import com.ruoyi.store.vo.StoreResponse;
 
 /**
- * Created by 魔金商城 on 17/11/23.
+ * Created by 伊甸园商城 on 17/11/23.
  * 店铺服务接口
  */
 public interface StoreInfoServiceApi {

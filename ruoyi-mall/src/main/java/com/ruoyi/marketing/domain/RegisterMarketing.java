@@ -15,7 +15,7 @@ import java.util.List;
 /**
  * 注册营销表实体类
  * <p>
- * Created by 魔金商城 on 2017/6/6.
+ * Created by 伊甸园商城 on 2017/6/6.
  */
 @Data
 @ApiModel(description = "注册营销表实体")

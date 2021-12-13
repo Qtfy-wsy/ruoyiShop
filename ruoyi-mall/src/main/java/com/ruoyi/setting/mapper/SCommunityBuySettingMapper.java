@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * 社区团购设置Mapper接口
  *
- * @author 魔金商城
+ * @author 伊甸园商城
  * @date 2020-07-28
  */
 public interface SCommunityBuySettingMapper {

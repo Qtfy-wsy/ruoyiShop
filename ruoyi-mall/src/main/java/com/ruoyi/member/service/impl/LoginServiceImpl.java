@@ -35,7 +35,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.function.Consumer;
 
 /**
- * Created by 魔金商城 on 17/7/17.
+ * Created by 伊甸园商城 on 17/7/17.
  * 登录服务接口
  */
 @Service("loginService")

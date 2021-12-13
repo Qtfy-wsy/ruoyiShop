@@ -20,7 +20,7 @@ import java.util.Objects;
 /**
  * 商品组合service实现类
  * <p>
- * Created by 魔金商城 on 2017/6/12.
+ * Created by 伊甸园商城 on 2017/6/12.
  */
 @Service
 public class GoodsCombinationServiceImpl implements GoodsCombinationService {

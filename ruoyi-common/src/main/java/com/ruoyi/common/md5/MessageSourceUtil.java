@@ -8,7 +8,7 @@ import org.springframework.context.i18n.LocaleContextHolder;
 
 /**
  * 消息资源根据类
- * Created by 魔金商城 on 17/7/10.
+ * Created by 伊甸园商城 on 17/7/10.
  */
 public final class MessageSourceUtil {
     private static MessageSource messageSource;

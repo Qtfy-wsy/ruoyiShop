@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * 微信登录和商城用户的关联Mapper接口
  *
- * @author 魔金商城
+ * @author 伊甸园商城
  * @date 2020-07-29
  */
 public interface LsWxCustomerLinkMapper {

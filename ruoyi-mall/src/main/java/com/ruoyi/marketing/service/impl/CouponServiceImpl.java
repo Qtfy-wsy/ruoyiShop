@@ -34,7 +34,7 @@ import static java.util.stream.Collectors.toList;
 /**
  * 优惠券service实现类
  *
- * @author 魔金商城 on 2017/6/1.
+ * @author 伊甸园商城 on 2017/6/1.
  */
 @Service
 public class CouponServiceImpl implements CouponService {

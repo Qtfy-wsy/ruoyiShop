@@ -8,7 +8,7 @@ import java.util.Map;
 /**
  * 店铺的签约分类Mapper接口
  *
- * @author 魔金商城
+ * @author 伊甸园商城
  * @date 2020-07-28
  */
 public interface TStoreSignedCategoryMapper {

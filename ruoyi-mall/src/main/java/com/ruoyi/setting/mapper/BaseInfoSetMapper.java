@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository;
 /**
  * 基本信息设置mapper层
  *
- * @author 魔金商城 on 2017/5/17.
+ * @author 伊甸园商城 on 2017/5/17.
  */
 @Repository
 public interface BaseInfoSetMapper {

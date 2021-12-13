@@ -1,5 +1,5 @@
 /**
- * Created by 魔金商城 on 2019/6/25.
+ * Created by 伊甸园商城 on 2019/6/25.
  */
 import request from '@/utils/request';
 

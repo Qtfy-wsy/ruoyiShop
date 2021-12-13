@@ -8,7 +8,7 @@ import java.math.BigDecimal;
 import java.util.Objects;
 
 /**
- * Created by 魔金商城 on 2018/4/10.
+ * Created by 伊甸园商城 on 2018/4/10.
  * 门店结算店铺实体
  */
 @Data

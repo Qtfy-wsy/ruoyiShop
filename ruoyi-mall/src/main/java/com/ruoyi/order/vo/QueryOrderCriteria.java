@@ -9,7 +9,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Created by 魔金商城 on 17/6/5.
+ * Created by 伊甸园商城 on 17/6/5.
  * 订单搜索条件
  */
 @Data

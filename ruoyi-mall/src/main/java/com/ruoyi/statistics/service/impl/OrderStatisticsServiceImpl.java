@@ -17,7 +17,7 @@ import java.util.Map;
 
 
 /**
- * Created by 魔金商城 on 18/2/2.
+ * Created by 伊甸园商城 on 18/2/2.
  * 订单统计服务接口
  */
 @Service

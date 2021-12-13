@@ -8,7 +8,7 @@ import lombok.Data;
 import java.math.BigDecimal;
 
 /**
- * Created by 魔金商城 on 17/11/9.
+ * Created by 伊甸园商城 on 17/11/9.
  * 提交订单返回实体
  */
 @Data

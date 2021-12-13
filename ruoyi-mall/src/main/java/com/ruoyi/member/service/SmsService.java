@@ -3,7 +3,7 @@ package com.ruoyi.member.service;
 import java.math.BigDecimal;
 
 /**
- * Created by 魔金商城 on 17/11/18.
+ * Created by 伊甸园商城 on 17/11/18.
  * 短信验证码服务接口
  */
 public interface SmsService {

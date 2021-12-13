@@ -10,7 +10,7 @@ import java.math.BigDecimal;
 /**
  * 单品的会员价对象 pms_sku_member_price
  *
- * @author 魔金商城
+ * @author 伊甸园商城
  * @date 2020-07-24
  */
 public class PmsSkuMemberPrice extends BaseEntity {

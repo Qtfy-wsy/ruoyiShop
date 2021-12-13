@@ -6,7 +6,7 @@ import org.springframework.util.StringUtils;
 /**
  * 支付设置接口-微信支付接口设置实体类
  *
- * @author 魔金商城 on 2017/5/17.
+ * @author 伊甸园商城 on 2017/5/17.
  */
 
 public class WechatPaySet {

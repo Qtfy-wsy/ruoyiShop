@@ -3,7 +3,7 @@ package com.ruoyi.marketing.service;
 import com.ruoyi.marketing.domain.Marketing;
 
 /**
- * Created by 魔金商城 on 17/6/11.
+ * Created by 伊甸园商城 on 17/6/11.
  * 包邮服务接口
  */
 public interface FreeShipService {

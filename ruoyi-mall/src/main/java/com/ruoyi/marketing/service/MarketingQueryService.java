@@ -9,7 +9,7 @@ import com.ruoyi.util.PageHelper;
 import java.util.List;
 
 /**
- * Created by 魔金商城 on 17/6/8.
+ * Created by 伊甸园商城 on 17/6/8.
  * 促销查询接口
  */
 public interface MarketingQueryService {

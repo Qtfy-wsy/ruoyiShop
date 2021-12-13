@@ -15,7 +15,7 @@ import java.util.concurrent.TimeUnit;
 /**
  * 微信小程序access_token服务接口实现类
  *
- * @author 魔金商城 created on 2020/4/28
+ * @author 伊甸园商城 created on 2020/4/28
  */
 @Service
 @Slf4j

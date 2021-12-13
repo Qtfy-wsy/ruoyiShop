@@ -12,7 +12,7 @@ import java.util.Objects;
 /**
  * 抢购单品实体类
  *
- * @author 魔金商城 created on 2020/5/18
+ * @author 伊甸园商城 created on 2020/5/18
  */
 @Data
 @ApiModel(description = "抢购单品实体")

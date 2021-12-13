@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
 /**
  * 预售促销接口实现
  *
- * @author 魔金商城 created on 2020/6/12
+ * @author 伊甸园商城 created on 2020/6/12
  */
 @Service("preSaleService")
 public class PreSaleServiceImpl implements PreSaleService {

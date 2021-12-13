@@ -11,7 +11,7 @@ import java.util.Date;
 /**
  * 品牌对象 pms_brand
  *
- * @author 魔金商城
+ * @author 伊甸园商城
  * @date 2020-07-24
  */
 public class PmsBrand extends BaseEntity {

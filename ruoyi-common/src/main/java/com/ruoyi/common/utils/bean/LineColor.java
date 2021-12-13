@@ -7,7 +7,7 @@ import lombok.Data;
 /**
  * 颜色实体类
  *
- * @author 魔金商城 created on 2020/4/14
+ * @author 伊甸园商城 created on 2020/4/14
  */
 @Data
 @ApiModel(description = "颜色实体")

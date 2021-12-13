@@ -1,7 +1,7 @@
 /**
  * 秒杀活动折扣路由
  *
- * @author 魔金商城 created on 2020/5/15
+ * @author 伊甸园商城 created on 2020/5/15
  */
 
 import request from '@/utils/request';

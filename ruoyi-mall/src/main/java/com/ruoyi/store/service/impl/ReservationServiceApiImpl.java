@@ -25,7 +25,7 @@ import java.util.List;
 import java.util.Objects;
 
 /**
- * Created by 魔金商城 on 18/4/10
+ * Created by 伊甸园商城 on 18/4/10
  * 门店预约服务接口实现类
  */
 @Slf4j

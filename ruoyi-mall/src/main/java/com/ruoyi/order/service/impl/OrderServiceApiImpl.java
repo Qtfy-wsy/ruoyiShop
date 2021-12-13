@@ -54,7 +54,7 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 /**
- * Created by 魔金商城 on 17/11/7.
+ * Created by 商城
  * 订单服务接口
  */
 @Service

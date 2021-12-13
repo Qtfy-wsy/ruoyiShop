@@ -10,7 +10,7 @@ import java.util.Map;
 /**
  * 试用活动数据库接口
  *
- * @author 魔金商城 created on 2020/6/9
+ * @author 伊甸园商城 created on 2020/6/9
  */
 public interface TryMarketingShowMapper {
 

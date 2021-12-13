@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Created by 魔金商城 on 17/7/14.
+ * Created by 伊甸园商城 on 17/7/14.
  * 生成html的控制器
  */
 @Api(description = "生成html接口")

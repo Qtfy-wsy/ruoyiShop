@@ -18,7 +18,7 @@ import java.util.Map;
 /**
  * 提现记录对象 ums_withdraw
  *
- * @author 魔金商城
+ * @author 伊甸园商城
  * @date 2020-07-25
  */
 @Data

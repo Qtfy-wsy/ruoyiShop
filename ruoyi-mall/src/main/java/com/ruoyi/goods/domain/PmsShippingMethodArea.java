@@ -10,7 +10,7 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 /**
  * 运费方式关联的区域对象 pms_shipping_method_area
  *
- * @author 魔金商城
+ * @author 伊甸园商城
  * @date 2020-07-24
  */
 @Data

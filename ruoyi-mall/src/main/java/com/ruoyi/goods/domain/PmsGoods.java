@@ -22,7 +22,7 @@ import java.util.List;
 /**
  * 商品对象 pms_goods
  *
- * @author 魔金商城
+ * @author 伊甸园商城
  * @date 2020-07-24
  */
 @Data

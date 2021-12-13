@@ -17,8 +17,7 @@ import java.util.List;
 /**
  * 订单设置Controller
  *
- * @author 魔金商城
- * @date 2020-07-24
+ * @author 商城
  */
 @RestController
 @RequestMapping("/order/OmsOrderSetting")

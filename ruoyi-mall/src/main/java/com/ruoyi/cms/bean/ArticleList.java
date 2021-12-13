@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 /**
  * 文章信息实体类
  *
- * @author 魔金商城 on 2017/5/22.
+ * @author 伊甸园商城 on 2017/5/22.
  */
 @Data
 @ApiModel(description = "文章信息实体类")

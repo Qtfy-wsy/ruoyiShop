@@ -8,7 +8,7 @@ import java.math.BigDecimal;
 import java.util.List;
 
 /**
- * Created by 魔金商城 on 17/6/7.
+ * Created by 伊甸园商城 on 17/6/7.
  * 促销服务接口
  */
 public interface MarketingService {

@@ -6,7 +6,7 @@ import com.ruoyi.marketing.domain.FullDown;
 import java.util.List;
 
 /**
- * Created by 魔金商城 on 17/6/8.
+ * Created by 伊甸园商城 on 17/6/8.
  * 满减数据库接口
  */
 public interface FullDownMapper {

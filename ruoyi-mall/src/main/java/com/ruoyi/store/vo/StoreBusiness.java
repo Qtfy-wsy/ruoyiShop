@@ -12,7 +12,7 @@ import java.util.List;
 /**
  * 店铺信息实体类用于开店流程添加
  *
- * @author 魔金商城 on 2017/6/19.
+ * @author 伊甸园商城 on 2017/6/19.
  */
 @Data
 @ApiModel(description = "店铺信息实体类用于开店流程添加")

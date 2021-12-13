@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 /**
- * @author 魔金商城
+ * @author 伊甸园商城
  * @date 2019-08-29 15:47
  * <p>
  * 栏目列表接口

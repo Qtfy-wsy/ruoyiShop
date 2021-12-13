@@ -4,7 +4,7 @@ package com.ruoyi.marketing.mapper;
 import com.ruoyi.marketing.domain.Fall;
 
 /**
- * Created by 魔金商城 on 17/6/8.
+ * Created by 伊甸园商城 on 17/6/8.
  * 直降数据库接口
  */
 public interface FallMapper {

@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * 商品组合单品service
  * <p>
- * Created by 魔金商城 on 2017/6/13.
+ * Created by 伊甸园商城 on 2017/6/13.
  */
 public interface CombinationSkuService {
 
