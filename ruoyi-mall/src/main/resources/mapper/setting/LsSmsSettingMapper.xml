@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ruoyi.setting.mapper.LsSmsSettingMapper">
 
-    <resultMap type="LsSmsSetting" id="LsSmsSettingResult">
+    <resultMap type="com.ruoyi.setting.domain.LsSmsSetting" id="LsSmsSettingResult">
         <result property="id" column="id"/>
         <result property="secret" column="secret"/>
         <result property="url" column="url"/>
@@ -22,7 +22,7 @@
         select id, secret, url, sign, template_id, writeoff_template_id, virtual_order_template_id, 'key', audit_template_id, settlement_template_id, withdraw_template_id from ls_sms_setting
     </sql>
 
-    <select id="selectLsSmsSettingList" parameterType="LsSmsSetting" resultMap="LsSmsSettingResult">
+    <select id="selectLsSmsSettingList" parameterType="com.ruoyi.setting.domain.LsSmsSetting" resultMap="LsSmsSettingResult">
         <include refid="selectLsSmsSettingVo"/>
         <where>
             <if test="secret != null  and secret != ''">and secret = #{secret}</if>
@@ -52,7 +52,7 @@
         where id = #{id}
     </select>
 
-    <insert id="insertLsSmsSetting" parameterType="LsSmsSetting" useGeneratedKeys="true" keyProperty="id">
+    <insert id="insertLsSmsSetting" parameterType="com.ruoyi.setting.domain.LsSmsSetting" useGeneratedKeys="true" keyProperty="id">
         insert into ls_sms_setting
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="secret != null and secret != ''">secret,</if>
@@ -80,7 +80,7 @@
         </trim>
     </insert>
 
-    <update id="updateLsSmsSetting" parameterType="LsSmsSetting">
+    <update id="updateLsSmsSetting" parameterType="com.ruoyi.setting.domain.LsSmsSetting">
         update ls_sms_setting
         <trim prefix="SET" suffixOverrides=",">
             <if test="secret != null and secret != ''">secret = #{secret},</if>
@@ -89,7 +89,7 @@
             <if test="templateId != null">template_id = #{templateId},</if>
             <if test="writeoffTemplateId != null">writeoff_template_id = #{writeoffTemplateId},</if>
             <if test="virtualOrderTemplateId != null">virtual_order_template_id = #{virtualOrderTemplateId},</if>
-            <if test="key != null">key = #{key},</if>
+            <if test="key != null">`key` = #{key},</if>
             <if test="auditTemplateId != null">audit_template_id = #{auditTemplateId},</if>
             <if test="settlementTemplateId != null">settlement_template_id = #{settlementTemplateId},</if>
             <if test="withdrawTemplateId != null">withdraw_template_id = #{withdrawTemplateId},</if>
