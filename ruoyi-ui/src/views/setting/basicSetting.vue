@@ -103,12 +103,9 @@
     }
     },
     created() {
-
       queryBaseInfoSet(1).then(response => {
         this.sysSystemSetting = response;
-      })
-      ;
-
+      });
     },
     methods: {
       onSubmit(formName) {
@@ -119,8 +116,7 @@
               cancelButtonText: '取消',
               type: 'warning'
             }).then(() => {
-              if (this.isEdit
-              ) {
+              if (this.isEdit) {
                 updateBaseInfoSet(this.sysSystemSetting).then(response => {
                   this.$refs[formName].resetFields();
                   this.$message({
@@ -129,14 +125,10 @@
                     duration: 1000
                   });
                   this.$router.back();
-
-
-                })
-                ;
+                });
               } else {
                 updateBaseInfoSet(this.sysSystemSetting).then(response => {
-                  if (response.code == 200
-                  ) {
+                  if (response.code == 200) {
                     this.$refs[formName].resetFields();
                     this.sysSystemSetting = Object.assign({},
                       defaultSysSystemSetting)

@@ -2,6 +2,8 @@ package com.ruoyi.web.controller.setting;
 
 
 import com.alibaba.fastjson.JSON;
+import com.ruoyi.common.core.controller.BaseController;
+import com.ruoyi.common.core.domain.AjaxResult;
 import com.ruoyi.setting.bean.BaseInfoSet;
 import com.ruoyi.setting.service.BaseInfoSetService;
 import io.swagger.annotations.Api;
@@ -17,10 +19,11 @@ import org.springframework.web.bind.annotation.RestController;
 /**
  * Created by 商城
  * 信息设置控制器
+ * @author julin
  */
 @RestController
-@Api(description = "信息设置接口")
-public class SettingController {
+@Api("信息设置接口")
+public class SettingController extends BaseController {
 
     /**
      * 注入信息设置实现类
@@ -59,9 +62,9 @@ public class SettingController {
     @ApiResponses({
             @ApiResponse(code = 200, message = "成功1 否则失败", response = Integer.class)
     })
-    public int updateBaseInfoSet(@RequestBody String param) {
+    public AjaxResult updateBaseInfoSet(@RequestBody String param) {
         BaseInfoSet baseInfoSet = JSON.parseObject(param,BaseInfoSet.class);
-        return baseInfoSetService.editBaseInfoSet(baseInfoSet, 1);
+        return toAjax(baseInfoSetService.editBaseInfoSet(baseInfoSet, 1));
     }
 
 }
