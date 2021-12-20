@@ -1,8 +1,6 @@
 package com.ruoyi.common.utils;
 
-import com.aliyun.oss.ClientException;
-import com.aliyun.oss.OSSClient;
-import com.aliyun.oss.OSSException;
+import com.aliyun.oss.*;
 import com.aliyun.oss.model.PutObjectRequest;
 import com.ruoyi.common.utils.bean.OssYunConf;
 import org.apache.commons.lang3.StringUtils;
@@ -160,7 +158,7 @@ public class YunUploadUtils {
             return null;
         }
         String url = null;
-        OSSClient ossClient = new OSSClient(endpoint, accessKeyId, accessKeySecret);
+        OSS ossClient = new OSSClientBuilder().build(endpoint.trim(), accessKeyId.trim(), accessKeySecret.trim());
         try {
             // 带进度条的上传
             ossClient.putObject(new PutObjectRequest(bucketName, key, inputStream));
@@ -197,6 +195,7 @@ public class YunUploadUtils {
      * @return
      */
     public String getKey(final String prefix, final String suffix) {
+        String defaultSuffix = "jpg";
         //生成uuid,替换 - 的目的是因为后期可能会用 - 将key进行split，然后进行分类统计
         String uuid = UUID.randomUUID().toString().replaceAll("-", "");
         //文件路径
@@ -209,7 +208,7 @@ public class YunUploadUtils {
             if (suffix.startsWith(".")) {
                 path = path + suffix;
             } else {
-                path = path + "." + suffix;
+                path = path + "." + defaultSuffix;
             }
         }
         return path;
