@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ruoyi.setting.mapper.LsEmailSettingMapper">
 
-    <resultMap type="LsEmailSetting" id="LsEmailSettingResult">
+    <resultMap type="com.ruoyi.setting.domain.LsEmailSetting" id="LsEmailSettingResult">
         <result property="id" column="id"/>
         <result property="senderMail" column="sender_mail"/>
         <result property="senderName" column="sender_name"/>
@@ -18,7 +18,7 @@
         select id, sender_mail, sender_name, smtp_server, smtp_port, username, password from ls_email_setting
     </sql>
 
-    <select id="selectLsEmailSettingList" parameterType="LsEmailSetting" resultMap="LsEmailSettingResult">
+    <select id="selectLsEmailSettingList" parameterType="com.ruoyi.setting.domain.LsEmailSetting" resultMap="LsEmailSettingResult">
         <include refid="selectLsEmailSettingVo"/>
         <where>
             <if test="senderMail != null  and senderMail != ''">and sender_mail = #{senderMail}</if>
@@ -36,7 +36,7 @@
         where id = #{id}
     </select>
 
-    <insert id="insertLsEmailSetting" parameterType="LsEmailSetting" useGeneratedKeys="true" keyProperty="id">
+    <insert id="insertLsEmailSetting" parameterType="com.ruoyi.setting.domain.LsEmailSetting" useGeneratedKeys="true" keyProperty="id">
         insert into ls_email_setting
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="senderMail != null and senderMail != ''">sender_mail,</if>
@@ -56,7 +56,7 @@
         </trim>
     </insert>
 
-    <update id="updateLsEmailSetting" parameterType="LsEmailSetting">
+    <update id="updateLsEmailSetting" parameterType="com.ruoyi.setting.domain.LsEmailSetting">
         update ls_email_setting
         <trim prefix="SET" suffixOverrides=",">
             <if test="senderMail != null and senderMail != ''">sender_mail = #{senderMail},</if>

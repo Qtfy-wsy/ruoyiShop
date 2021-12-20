@@ -550,7 +550,8 @@
             <if test="communityBuyName != null">
                 community_buy_name,
             </if>
-            create_time
+            create_time,
+            pay_store_id
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="orderCode != null">
@@ -667,7 +668,8 @@
             <if test="communityBuyName != null">
                 #{communityBuyName},
             </if>
-            now()
+            now(),
+            0
         </trim>
     </insert>
 

@@ -104,7 +104,7 @@
       // 查询邮箱设置
       queryEmailSet() {
         getLsEmailSetting(1).then(res => {
-          this.form = res.data;
+          this.form = res;
           if (this.$refs["form"]) {
             this.$refs["form"].resetFields();
           }
