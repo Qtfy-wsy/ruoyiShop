@@ -19,11 +19,10 @@
                       maxlength="2048"></el-input>
           </el-form-item>
           <el-form-item prop="endPoint">
-                      <span slot="label">节点名(endpoint)</span>
-                      <el-input v-model="paySetCommon.aliPaySet.endPoint" type="textarea"
-                                maxlength="2048"></el-input>
-                    </el-form-item>
-
+            <span slot="label">节点名(endpoint)</span>
+            <el-input v-model="paySetCommon.aliPaySet.endPoint" type="textarea"
+                      maxlength="2048"></el-input>
+          </el-form-item>
 
           <el-form-item>
             <el-button type="primary" @click="updatePaySet('aliPaySetForm')">保存设置</el-button>
@@ -35,19 +34,19 @@
                  ref="wechatPaySetForm" label-width="150px" style="margin-top: 20px">
           <el-form-item prop="accessKey">
             <span slot="label">accessKey</span>
-            <el-input v-model="paySetCommon.wechatPaySet.accessKey" maxlength="2048"/>
+            <el-input v-model="paySetCommon.wechatPaySet.accessKeyId" maxlength="2048"/>
           </el-form-item>
           <el-form-item prop="secretKey">
             <span slot="label">secretKey</span>
-            <el-input v-model="paySetCommon.wechatPaySet.secretKey" maxlength="2048"/>
+            <el-input v-model="paySetCommon.wechatPaySet.accessKeySecret" maxlength="2048"/>
           </el-form-item>
           <el-form-item prop="bucket">
             <span slot="label">识别符</span>
-            <el-input v-model="paySetCommon.wechatPaySet.bucket" maxlength="2048"/>
+            <el-input v-model="paySetCommon.wechatPaySet.bucketName" maxlength="2048"/>
           </el-form-item>
           <el-form-item prop="host">
             <span slot="label">外链域名</span>
-            <el-input v-model="paySetCommon.wechatPaySet.host" maxlength="2048"/>
+            <el-input v-model="paySetCommon.wechatPaySet.endPoint" maxlength="2048"/>
           </el-form-item>
 
           <el-form-item>
@@ -56,16 +55,16 @@
         </el-form>
       </el-tab-pane>
       <el-tab-pane label="阿里云短信" name="3">
- <el-form label-position="right" :model="paySetCommon.unionPaySet"
+        <el-form label-position="right" :model="paySetCommon.unionPaySet"
                  ref="unionPaySetForm" label-width="150px" style="margin-top: 20px">
-           <el-form-item prop="accessKey">
-                      <span slot="label">accessKey</span>
-                      <el-input v-model="paySetCommon.unionPaySet.accessKey" maxlength="2048"/>
-                    </el-form-item>
-                    <el-form-item prop="secretKey">
-                      <span slot="label">secretKey</span>
-                      <el-input v-model="paySetCommon.unionPaySet.secretKey" maxlength="2048"/>
-                    </el-form-item>
+          <el-form-item prop="accessKey">
+            <span slot="label">accessKey</span>
+            <el-input v-model="paySetCommon.unionPaySet.accessKeyId" maxlength="2048"/>
+          </el-form-item>
+          <el-form-item prop="secretKey">
+            <span slot="label">secretKey</span>
+            <el-input v-model="paySetCommon.unionPaySet.accessKeySecret" maxlength="2048"/>
+          </el-form-item>
           <el-form-item>
             <el-button type="primary" @click="updatePaySet('unionPaySetForm')">保存设置</el-button>
           </el-form-item>
@@ -78,15 +77,16 @@
 
 <script>
 
- import {getSysSysQiniuConfig,updateSysSysQiniuConfig} from '@/api/setting/upyunset';
+  import {getSysSysQiniuConfig, updateSysSysQiniuConfig} from '@/api/setting/upyunset';
+
   export default {
     data() {
       return {
         isProcess: false, // 接口是否处理中
-        activeName: '1', // 选中的支付设置类别，1 支付宝 2 微信支付(扫码，公众号，H5) 3 银联 4预存款 5 微信支付（app） 6 微信小程序支付
+        activeName: '1', //
         paySetCommon: {
-          aliPaySet: {}, // 支付宝设置
-          wechatPaySet: {}, // 微信支付(扫码，公众号，H5)设置
+          aliPaySet: {}, // 阿里云oss设置
+          wechatPaySet: {}, // 七牛云oss设置
           unionPaySet: {}, // 银联设置
           prePaySet: {}, // 预存款设置
           wechatAppPaySet: {}, // 微信支付（app）设置
@@ -160,20 +160,21 @@
       this.queryPaySet()
     },
     methods: {
-    handleGoods(tab, event) {
-                    this.activeName = tab.name;
-                    this.queryPaySet()
-                  },
+      handleGoods(tab, event) {
+        this.activeName = tab.name;
+        this.queryPaySet()
+      },
       // 查询支付设置
       queryPaySet() {
         getSysSysQiniuConfig(this.activeName).then(res => {
-           if(this.activeName==1){
-                                             this.paySetCommon.aliPaySet=res;
-                                          }else if(this.activeName==2){
-                                                                              this.paySetCommon.wechatPaySet=res.data;
-                                                                           }else if(this.activeName==3){
-                                             this.paySetCommon.unionPaySet=res.data;
-                                          }
+          if (this.activeName == 1) {
+            this.paySetCommon.aliPaySet = res;
+            console.log(res)
+          } else if (this.activeName == 2) {
+            this.paySetCommon.wechatPaySet = res;
+          } else if (this.activeName == 3) {
+            this.paySetCommon.unionPaySet = res;
+          }
           if (this.$refs["aliPaySetForm"]) {
             this.$refs["aliPaySetForm"].resetFields();
           }
@@ -191,24 +192,22 @@
         this.$refs[formName].validate(valid => {
           if (valid && !this.isProcess) {
             this.isProcess = true;
-             var objData;
-                                  if(this.activeName==1){
-                                                          objData = this.paySetCommon.aliPaySet;
-                                                        }else if(this.activeName==2){
-                                    objData = this.paySetCommon.wechatPaySet;
-                                  }else if(this.activeName==3){
-                                     objData = this.paySetCommon.unionPaySet;
-                                  }
-                                  objData.id=this.activeName;
-                                  console.log(objData)
-            updateSysSysQiniuConfig( objData).then(res => {
+            var objData;
+            if (this.activeName == 1) {
+              objData = this.paySetCommon.aliPaySet;
+            } else if (this.activeName == 2) {
+              objData = this.paySetCommon.wechatPaySet;
+            } else if (this.activeName == 3) {
+              objData = this.paySetCommon.unionPaySet;
+            }
+            objData.id = this.activeName;
+            updateSysSysQiniuConfig(objData).then(res => {
               this.isProcess = false;
-
-                this.queryPaySet();
-                this.$message({
-                  type: 'success',
-                  message: '更新成功'
-                });
+              this.queryPaySet();
+              this.$message({
+                type: 'success',
+                message: '更新成功'
+              });
 
             })
           }

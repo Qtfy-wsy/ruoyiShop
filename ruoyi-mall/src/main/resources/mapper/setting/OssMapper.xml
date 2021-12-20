@@ -11,7 +11,6 @@
         <id column="end_point" property="endPoint"/>
         <id column="style_name" property="styleName"/>
         <id column="prefix" property="prefix"/>
-
     </resultMap>
 
     <sql id="Base_Column_List">
@@ -26,14 +25,17 @@
     </sql>
 
 
-    <select id="queryOssSetting" resultMap="ossSetting">
+    <select id="queryOssSetting" resultMap="ossSetting" parameterType="String">
         select
         <include refid="Base_Column_List"/>
-        from ls_aliyun_oss_setting limit 1
+        from ls_oss_setting
+        where id = #{activeName}
+        limit 1
+
     </select>
 
     <update id="updateOss" parameterType="com.ruoyi.setting.bean.OssSetting">
-        update ls_aliyun_oss_setting
+        update ls_oss_setting
         <set>
             <if test='null != accessKeyId'>access_key_id = #{accessKeyId},</if>
             <if test='null != accessKeySecret'>access_key_secret = #{accessKeySecret},</if>

@@ -37,7 +37,7 @@ public class OssServiceImpl implements OssService {
             logger.error("uploadDatas fail  due to params is empty...");
             return Arrays.asList("");
         }
-        return uploadDatas.stream().filter(Objects::nonNull).map(uploadData -> YunUploadUtils.getInstance().uploadToQqOss(queryOssSetting().getUpYunConf(), uploadData.getMultipartFile(), uploadData.getDatas(), uploadData.getFileOriginName(), uploadData.getType())).collect(Collectors.toList());
+        return uploadDatas.stream().filter(Objects::nonNull).map(uploadData -> YunUploadUtils.getInstance().uploadToQqOss(queryOssSetting("1").getUpYunConf(), uploadData.getMultipartFile(), uploadData.getDatas(), uploadData.getFileOriginName(), uploadData.getType())).collect(Collectors.toList());
 
     }
 
@@ -48,7 +48,7 @@ public class OssServiceImpl implements OssService {
             return Arrays.asList("");
         }
         return uploadDatas.stream().filter(Objects::nonNull).map(uploadData -> YunUploadUtils.getInstance().
-                uploadToQqForBase64(queryOssSetting().getUpYunConf(), uploadData.getInputStream(), uploadData.getDatas(), uploadData.getFileOriginName())).collect(Collectors.toList());
+                uploadToQqForBase64(queryOssSetting("1").getUpYunConf(), uploadData.getInputStream(), uploadData.getDatas(), uploadData.getFileOriginName())).collect(Collectors.toList());
 
     }
 
@@ -59,7 +59,7 @@ public class OssServiceImpl implements OssService {
             logger.error("uploadDatas fail  due to params is empty...");
             return Arrays.asList("");
         }
-        return uploadDatas.stream().filter(Objects::nonNull).map(uploadData -> YunUploadUtils.getInstance().uploadToOssYun(queryOssSetting().getUpYunConf(), uploadData.getInputStream(), uploadData.getDatas(), uploadData.getFileOriginName(), uploadData.getType())).collect(Collectors.toList());
+        return uploadDatas.stream().filter(Objects::nonNull).map(uploadData -> YunUploadUtils.getInstance().uploadToOssYun(queryOssSetting("1").getUpYunConf(), uploadData.getInputStream(), uploadData.getDatas(), uploadData.getFileOriginName(), uploadData.getType())).collect(Collectors.toList());
 
     }
 
@@ -71,14 +71,14 @@ public class OssServiceImpl implements OssService {
         }
 
         return uploadDatas.stream().filter(Objects::nonNull).map(uploadData -> YunUploadUtils.getInstance().
-                uploadToQqForBase64(queryOssSetting().getUpYunConf(), uploadData.getInputStream(), uploadData.getDatas(), uploadData.getFileOriginName())).collect(Collectors.toList());
+                uploadToQqForBase64(queryOssSetting("1").getUpYunConf(), uploadData.getInputStream(), uploadData.getDatas(), uploadData.getFileOriginName())).collect(Collectors.toList());
 
     }
 
     @Override
-    public OssSetting queryOssSetting() {
+    public OssSetting queryOssSetting(String activeName) {
         logger.debug("Begin to queryUpYunSetting....");
-        return ossMapper.queryOssSetting();
+        return ossMapper.queryOssSetting(activeName);
     }
 
     @Override

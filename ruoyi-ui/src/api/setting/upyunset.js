@@ -10,10 +10,10 @@ import request from '@/utils/request';
 /**
  * 查询又拍云设置
  */
-export function getSysSysQiniuConfig() {
+export function getSysSysQiniuConfig(activeName) {
   return request({
-    url: '/aliyun/oss/oss',
-    method: 'get',
+    url: '/aliyun/oss/oss/' + activeName ,
+    method: 'get'
   })
 }
 

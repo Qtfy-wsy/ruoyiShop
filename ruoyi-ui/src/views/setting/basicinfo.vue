@@ -1,5 +1,5 @@
 <template>
-<el-card class="form-container" shadow="never">
+  <el-card class="form-container" shadow="never">
 
     <el-alert title="注意！ 基本信息设置，若修改不当，会影响相关网站地址和logo，会造成页面显示和跳转出错。" type="warning" :closable="false"
               show-icon></el-alert>
@@ -18,25 +18,24 @@
         <span slot="label">商城名称</span>
         <el-input v-model="form.siteName" maxlength="256"/>
       </el-form-item>
-       <el-form-item label="浏览器标签图标：" prop="labelLog">
-              <single-upload v-model="form.labelLog"></single-upload>
-            </el-form-item>
-             <el-form-item label="商城LOGO：" prop="logo">
-                    <single-upload v-model="form.logo"></single-upload>
-                  </el-form-item>
-                   <el-form-item label="管理端登录LOGO：" prop="adminLogo">
-                          <single-upload v-model="form.adminLogo"></single-upload>
-                        </el-form-item>
-                         <el-form-item label="管理端LOGO：" prop="adminIndexLogo">
-                                <single-upload v-model="form.adminIndexLogo"></single-upload>
-                              </el-form-item>
-                               <el-form-item label="商城登录页面图片：" prop="siteLoginPic">
-                                      <single-upload v-model="form.siteLoginPic"></single-upload>
-                                    </el-form-item>
-        <el-form-item label="商家登录页面图片：" prop="storeLoginPic">
-                                           <single-upload v-model="form.storeLoginPic"></single-upload>
-                                         </el-form-item>
-
+      <el-form-item label="浏览器标签图标：" prop="labelLog">
+        <single-upload v-model="form.labelLog"></single-upload>
+      </el-form-item>
+      <el-form-item label="商城LOGO：" prop="logo">
+        <single-upload v-model="form.logo"></single-upload>
+      </el-form-item>
+      <el-form-item label="管理端登录LOGO：" prop="adminLogo">
+        <single-upload v-model="form.adminLogo"></single-upload>
+      </el-form-item>
+      <el-form-item label="管理端LOGO：" prop="adminIndexLogo">
+        <single-upload v-model="form.adminIndexLogo"></single-upload>
+      </el-form-item>
+      <el-form-item label="商城登录页面图片：" prop="siteLoginPic">
+        <single-upload v-model="form.siteLoginPic"></single-upload>
+      </el-form-item>
+      <el-form-item label="商家登录页面图片：" prop="storeLoginPic">
+        <single-upload v-model="form.storeLoginPic"></single-upload>
+      </el-form-item>
 
 
       <el-form-item label="商家开店协议">
@@ -53,25 +52,26 @@
       </el-form-item>
     </el-form>
 
-    </el-card>
+  </el-card>
 </template>
 
 <script>
   import Tinymce from '@/components/Tinymce';
 
- import {
+  import {
     queryBaseInfoSet,
     updateBaseInfoSet,
   } from '@/api/basicinfo';
-import { getToken,get } from '@/utils/auth'
+  import {getToken, get} from '@/utils/auth'
   import SingleUpload from '@/components/Upload/singleUpload'
+
   export default {
     components: {Tinymce},
     data() {
       return {
         isProcess: false, // 接口是否处理中
         httpSelect: '1', // 商城前台网址前缀 1 http 2 https
-        uploadApi: process.env.VUE_APP_BASE_API+'/aliyun/oss/uploadToAliOss',// 上传文件路由
+        uploadApi: process.env.VUE_APP_BASE_API + '/aliyun/oss/uploadToAliOss',// 上传文件路由
         headers: { // 设置上传的请求头部
           Authorization: 'Bearer ' + getToken()
         },
@@ -149,7 +149,7 @@ import { getToken,get } from '@/utils/auth'
             }
             this.form.siteUrl = (this.httpSelect == '1' ? 'http://' : 'https://') + this.form.partSiteUrl;
             this.isProcess = true;
-            updateBaseInfoSet(1,this.form).then(res => {
+            updateBaseInfoSet(1, this.form).then(res => {
               this.isProcess = false;
               if (res == 1) {
                 this.queryBaseInfoSet();

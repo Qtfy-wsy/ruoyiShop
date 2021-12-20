@@ -49,7 +49,7 @@ public interface OssService {
      *
      * @return 返回云存储信息
      */
-    OssSetting queryOssSetting();
+    OssSetting queryOssSetting(String activeName);
 
     /**
      * 修改云存储设置信息

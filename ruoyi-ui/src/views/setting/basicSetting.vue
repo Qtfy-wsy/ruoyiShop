@@ -134,7 +134,7 @@
                 })
                 ;
               } else {
-                updateBaseInfoSet( this.sysSystemSetting).then(response => {
+                updateBaseInfoSet(this.sysSystemSetting).then(response => {
                   if (response.code == 200
                   ) {
                     this.$refs[formName].resetFields();

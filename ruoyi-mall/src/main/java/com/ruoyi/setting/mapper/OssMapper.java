@@ -17,7 +17,7 @@ public interface OssMapper {
      * @return 返回云存储信息
      */
 
-    OssSetting queryOssSetting();
+    OssSetting queryOssSetting(String activeName);
 
     /**
      * 修改又拍云信息

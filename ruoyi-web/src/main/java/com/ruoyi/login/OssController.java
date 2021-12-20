@@ -100,14 +100,14 @@ public class OssController {
      *
      * @return 云存储设置信息
      */
-    @GetMapping("/oss")
+    @GetMapping("/oss/{activeName}")
     @PreAuthorize("@ss.hasPermi('setting:ossSetting:list')")
     @ApiOperation(value = "查询阿里云存储设置", notes = "查询阿里云存储设置（需要认证）")
     @ApiResponses({
             @ApiResponse(code = 200, message = "又拍云设置信息", response = OssSetting.class)
     })
-    public OssSetting queryUpYunSet() {
-        return ossService.queryOssSetting();
+    public OssSetting queryUpYunSet(@PathVariable String activeName) {
+        return ossService.queryOssSetting(activeName);
     }
 
     /**

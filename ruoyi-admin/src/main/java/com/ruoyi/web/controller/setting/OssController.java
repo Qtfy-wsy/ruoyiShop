@@ -24,107 +24,107 @@ import java.util.Objects;
 @Api(tags = "OssController", description = "Oss管理")
 @RequestMapping("/aliyun/oss")
 public class OssController {
-    @Resource
-    private OssService ossService;
+	@Resource
+	private OssService ossService;
 
 
-    /**
-     * 上传图片
-     *
-     * @param name 上传文件的name 默认为image
-     * @param type 上传文件的类型 默认为图片 0 图片 1 视频
-     * @return 返回图片在腾讯云的地址
-     * @throws Exception
-     */
-    @PostMapping("uploadToQqOSSYun")
-    @ApiOperation(value = "上传图片", notes = "上传图片（不需要认证）")
-    @ApiImplicitParams({
-            @ApiImplicitParam(paramType = "form", dataType = "String", name = "name", value = "上传文件的name 默认为image"),
-            @ApiImplicitParam(paramType = "form", dataType = "String", name = "type", value = "上传文件的类型 默认为图片 0 图片 1 视频"),
-    })
-    @ApiResponses({
-            @ApiResponse(code = 200, message = "返回图片在腾讯云的地址", response = String.class)
-    })
-    public String uploadToQqOSSYun(MultipartHttpServletRequest request, String name, String type) throws Exception {
-        if (StringUtils.isEmpty(name)) {
-            name = "image";
-        }
+	/**
+	 * 上传图片
+	 *
+	 * @param name 上传文件的name 默认为image
+	 * @param type 上传文件的类型 默认为图片 0 图片 1 视频
+	 * @return 返回图片在腾讯云的地址
+	 * @throws Exception
+	 */
+	@PostMapping("uploadToQqOSSYun")
+	@ApiOperation(value = "上传图片", notes = "上传图片（不需要认证）")
+	@ApiImplicitParams({
+			@ApiImplicitParam(paramType = "form", dataType = "String", name = "name", value = "上传文件的name 默认为image"),
+			@ApiImplicitParam(paramType = "form", dataType = "String", name = "type", value = "上传文件的类型 默认为图片 0 图片 1 视频"),
+	})
+	@ApiResponses({
+			@ApiResponse(code = 200, message = "返回图片在腾讯云的地址", response = String.class)
+	})
+	public String uploadToQqOSSYun(MultipartHttpServletRequest request, String name, String type) throws Exception {
+		if (StringUtils.isEmpty(name)) {
+			name = "image";
+		}
 
-        // 默认上传图片
-        if (StringUtils.isEmpty(type)) {
-            type = CommonConstant.UPLOAD_PIC;
-        }
+		// 默认上传图片
+		if (StringUtils.isEmpty(type)) {
+			type = CommonConstant.UPLOAD_PIC;
+		}
 
-        MultipartFile multipartFile = request.getFile(name);
-        if (Objects.isNull(multipartFile)) {
-            return "";
-        }
-        return ossService.uploadToQqOss(Arrays.asList(UploadData.build(multipartFile.getInputStream(), multipartFile.getBytes(), multipartFile.getOriginalFilename(), type, multipartFile))).stream().findFirst().orElse("");
-    }
+		MultipartFile multipartFile = request.getFile(name);
+		if (Objects.isNull(multipartFile)) {
+			return "";
+		}
+		return ossService.uploadToQqOss(Arrays.asList(UploadData.build(multipartFile.getInputStream(), multipartFile.getBytes(), multipartFile.getOriginalFilename(), type, multipartFile))).stream().findFirst().orElse("");
+	}
 
-    /**
-     * 上传图片
-     *
-     * @param name 上传文件的name 默认为image
-     * @param type 上传文件的类型 默认为图片 0 图片 1 视频
-     * @return 返回图片在阿里云的地址
-     * @throws Exception
-     */
-    @PostMapping("uploadToAliOss")
-    @ApiOperation(value = "上传图片", notes = "上传图片（不需要认证）")
-    @ApiImplicitParams({
-            @ApiImplicitParam(paramType = "form", dataType = "String", name = "name", value = "上传文件的name 默认为image"),
-            @ApiImplicitParam(paramType = "form", dataType = "String", name = "type", value = "上传文件的类型 默认为图片 0 图片 1 视频"),
-    })
-    @ApiResponses({
-            @ApiResponse(code = 200, message = "返回图片在阿里云的地址", response = String.class)
-    })
-    public String uploadToOSSYun(MultipartHttpServletRequest request, String name, String type) throws Exception {
-        if (StringUtils.isEmpty(name)) {
-            name = "image";
-        }
+	/**
+	 * 上传图片
+	 *
+	 * @param name 上传文件的name 默认为image
+	 * @param type 上传文件的类型 默认为图片 0 图片 1 视频
+	 * @return 返回图片在阿里云的地址
+	 * @throws Exception
+	 */
+	@PostMapping("uploadToAliOss")
+	@ApiOperation(value = "上传图片", notes = "上传图片（不需要认证）")
+	@ApiImplicitParams({
+			@ApiImplicitParam(paramType = "form", dataType = "String", name = "name", value = "上传文件的name 默认为image"),
+			@ApiImplicitParam(paramType = "form", dataType = "String", name = "type", value = "上传文件的类型 默认为图片 0 图片 1 视频"),
+	})
+	@ApiResponses({
+			@ApiResponse(code = 200, message = "返回图片在阿里云的地址", response = String.class)
+	})
+	public String uploadToOSSYun(MultipartHttpServletRequest request, String name, String type) throws Exception {
+		if (StringUtils.isEmpty(name)) {
+			name = "image";
+		}
 
-        // 默认上传图片
-        if (StringUtils.isEmpty(type)) {
-            type = CommonConstant.UPLOAD_PIC;
-        }
+		// 默认上传图片
+		if (StringUtils.isEmpty(type)) {
+			type = CommonConstant.UPLOAD_PIC;
+		}
 
-        MultipartFile multipartFile = request.getFile(name);
-        if (Objects.isNull(multipartFile)) {
-            return "";
-        }
-        return ossService.uploadToOss(Arrays.asList(UploadData.build(multipartFile.getInputStream(), multipartFile.getBytes(), multipartFile.getOriginalFilename(), type, multipartFile))).stream().findFirst().orElse("");
-    }
+		MultipartFile multipartFile = request.getFile(name);
+		if (Objects.isNull(multipartFile)) {
+			return "";
+		}
+		return ossService.uploadToOss(Arrays.asList(UploadData.build(multipartFile.getInputStream(), multipartFile.getBytes(), multipartFile.getOriginalFilename(), type, multipartFile))).stream().findFirst().orElse("");
+	}
 
 
-    /**
-     * 查询云存储设置
-     *
-     * @return 云存储设置信息
-     */
-    @GetMapping("/oss")
-    @PreAuthorize("@ss.hasPermi('setting:ossSetting:list')")
-    @ApiOperation(value = "查询阿里云存储设置", notes = "查询阿里云存储设置（需要认证）")
-    @ApiResponses({
-            @ApiResponse(code = 200, message = "又拍云设置信息", response = OssSetting.class)
-    })
-    public OssSetting queryUpYunSet() {
-        return ossService.queryOssSetting();
-    }
+	/**
+	 * 查询云存储设置
+	 *
+	 * @return 云存储设置信息
+	 */
+	@GetMapping("/oss/{activeName}")
+	@PreAuthorize("@ss.hasPermi('setting:ossSetting:list')")
+	@ApiOperation(value = "查询阿里云存储设置", notes = "查询阿里云存储设置（需要认证）")
+	@ApiResponses({
+			@ApiResponse(code = 200, message = "又拍云设置信息", response = OssSetting.class)
+	})
+	public OssSetting queryUpYunSet( @PathVariable String activeName) {
+		return ossService.queryOssSetting(activeName);
+	}
 
-    /**
-     * 修改又拍云设置
-     *
-     * @param ossSetting 又拍云设置信息
-     * @return 成功1 否则失败
-     */
-    @PutMapping("/oss")
-    @ApiOperation(value = "修改阿里云存储设置", notes = "修改阿里云存储设置（需要认证）")
-    @ApiResponses({
-            @ApiResponse(code = 200, message = "成功1 否则失败", response = Integer.class)
-    })
-    public int updateOss(@RequestBody OssSetting ossSetting) {
-        return ossService.updateOss(ossSetting);
-    }
+	/**
+	 * 修改又拍云设置
+	 *
+	 * @param ossSetting 又拍云设置信息
+	 * @return 成功1 否则失败
+	 */
+	@PutMapping("/oss")
+	@ApiOperation(value = "修改阿里云存储设置", notes = "修改阿里云存储设置（需要认证）")
+	@ApiResponses({
+			@ApiResponse(code = 200, message = "成功1 否则失败", response = Integer.class)
+	})
+	public int updateOss(@RequestBody OssSetting ossSetting) {
+		return ossService.updateOss(ossSetting);
+	}
 
 }
