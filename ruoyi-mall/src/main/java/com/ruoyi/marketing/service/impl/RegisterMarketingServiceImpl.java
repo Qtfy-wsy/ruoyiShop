@@ -10,6 +10,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Map;
+
 /**
  * 注册营销service实现类
  * <p>
@@ -72,6 +74,11 @@ public class RegisterMarketingServiceImpl implements RegisterMarketingService {
     public int batchDeleteCoupon(long[] ids) {
         logger.debug("deleteCoupon and id :{}", ids);
         return registerMarketingMapper.batchDeleteCoupon(ids);
+    }
+
+    @Override
+    public int insertregisterMarketing(Map tStoreInfo) {
+        return 1;
     }
 
 }

@@ -2,6 +2,8 @@ package com.ruoyi.marketing.service;
 
 import com.ruoyi.marketing.domain.RegisterMarketing;
 
+import java.util.Map;
+
 /**
  * 注册营销service
  * <p>
@@ -32,4 +34,5 @@ public interface RegisterMarketingService {
      */
     int batchDeleteCoupon(long[] ids);
 
+    int insertregisterMarketing(Map tStoreInfo);
 }

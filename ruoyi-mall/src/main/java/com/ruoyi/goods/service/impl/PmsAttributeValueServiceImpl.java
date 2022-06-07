@@ -38,7 +38,12 @@ public class PmsAttributeValueServiceImpl implements IPmsAttributeValueService {
      */
     @Override
     public List<PmsAttributeValue> selectPmsAttributeValueList(PmsAttributeValue pmsAttributeValue) {
+        String s = "";
+        s.length()
+        String.format()
         return pmsAttributeValueMapper.selectPmsAttributeValueList(pmsAttributeValue);
+
+
     }
 
     /**

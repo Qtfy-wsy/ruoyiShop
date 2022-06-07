@@ -21,3 +21,17 @@ export function updateRegisterMarketing(registerMarketing) {
     method: 'put',
   })
 }
+
+/**
+ * 新增注册促销
+ * @param fromData
+ * @returns {AxiosPromise}
+ */
+export function addRegisterMarketing(fromData) {
+  return request({
+    url: '/marketingmanagement/storemarketing/',
+    method: 'post',
+    data: fromData
+  })
+
+}
